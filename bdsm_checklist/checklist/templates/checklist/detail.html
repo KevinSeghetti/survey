@@ -1,2 +1,20 @@
 <h1>{{ question.question_text }}</h1>
 {{question.question_detail }}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'checklist:set' %}" method="post">
+{% csrf_token %}
+    Rating
+{% for choice in choices.rating %}
+    <input type="radio" name="choice" id="choice{{ choice }}" value="{{ choice }}" />
+    <label for="choice{{ choice }}">{{ choice}}</label>
+{% endfor %}<BR />
+{% for choice in choices.booleans %}
+    <input type="checkbox" name="{{choice.name}}" value="True"> {{choice.description}}
+{% endfor %}<BR />
+
+<input type="submit" value="Vote" />
+</form>
+
+

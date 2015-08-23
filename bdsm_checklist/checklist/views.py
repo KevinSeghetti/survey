@@ -28,7 +28,23 @@ def detail(request, question_id):
     #    question = Question.objects.get(pk=question_id)
     #except Question.DoesNotExist:
     #    raise Http404("Question does not exist")
-    return render(request, 'checklist/detail.html', {'question': question})
+    agregated_choices = []
+    choices = {}
+    choices['rating'] = range(1,5+1)
+    choices['booleans'] = \
+    [
+        # kts eventually store this in a table
+        {"name":'essential' , "description":'Essential' },
+        {"name":'curious'   , "description":'Curious'   },
+        {"name":'soft_limit', "description":'Soft Limit'},
+        {"name":'hard_limit', "description":'Hard Limit'},
+        {"name":'have_done' , "description":'Have Done' },
+    ]
+    agregated_choices.append(choices)
+    agregated_choices[0]['prefix'] = "done_to"
+    agregated_choices.append(choices)
+    agregated_choices[1]['prefix'] = "have_done"
+    return render(request, 'checklist/detail.html', {'question': question, 'choices': choices})
 
 
 

@@ -11,5 +11,7 @@ urlpatterns = [
     url(r'^view/$', views.view, name='view'),
     # ex: /checklist/fill_out/
     url(r'^fill_out/$', views.fill_out, name='fill_out'),
+    # ex: /checklist/set/
+    url(r'^set/$', views.fill_out, name='set'),
 
 ]
