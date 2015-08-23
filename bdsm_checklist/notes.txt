@@ -3,3 +3,6 @@ http://brobin.me/blog/2015/3/22/deploying-django-with-virtualenv-on-dreamhost
 
 kts,Orion1
 
+
+
+/home/kts/venv/lib/python3.4/site-packages/django
