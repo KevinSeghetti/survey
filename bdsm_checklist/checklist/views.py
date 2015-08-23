@@ -28,7 +28,6 @@ def detail(request, question_id):
     #    question = Question.objects.get(pk=question_id)
     #except Question.DoesNotExist:
     #    raise Http404("Question does not exist")
-    agregated_choices = []
     choices = {}
     choices['rating'] = range(1,5+1)
     choices['booleans'] = \
@@ -40,11 +39,12 @@ def detail(request, question_id):
         {"name":'hard_limit', "description":'Hard Limit'},
         {"name":'have_done' , "description":'Have Done' },
     ]
-    agregated_choices.append(choices)
-    agregated_choices[0]['prefix'] = "done_to"
-    agregated_choices.append(choices)
-    agregated_choices[1]['prefix'] = "have_done"
-    return render(request, 'checklist/detail.html', {'question': question, 'choices': choices})
+    choices_context = \
+    [
+        {"prefix":'done_to'   , "description":'Done to you'         },
+        {"prefix":'have_done' , "description":'Have done to others' },
+    ]
+    return render(request, 'checklist/detail.html', {'question': question, 'choices_context': choices_context, 'choices': choices})
 
 
 

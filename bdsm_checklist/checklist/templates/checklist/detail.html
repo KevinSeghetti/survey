@@ -5,13 +5,18 @@
 
 <form action="{% url 'checklist:set' %}" method="post">
 {% csrf_token %}
+{% for context in choices_context %}
+    <h3>
+       {{ context.description }}
+    </h3>
     Rating
-{% for choice in choices.rating %}
-    <input type="radio" name="choice" id="choice{{ choice }}" value="{{ choice }}" />
-    <label for="choice{{ choice }}">{{ choice}}</label>
-{% endfor %}<BR />
-{% for choice in choices.booleans %}
-    <input type="checkbox" name="{{choice.name}}" value="True"> {{choice.description}}
+   {% for choice in choices.rating %}
+       <input type="radio" name="{{context.prefix}}_choice" id="choice{{ choice }}" value="{{ choice }}" />
+       <label for="choice{{ choice }}">{{ choice}}</label>
+   {% endfor %}<BR />
+   {% for choice in choices.booleans %}
+       <input type="checkbox" name="{{context.prefix}}_{{choice.name}}" value="True"> {{choice.description}}
+   {% endfor %}<BR />
 {% endfor %}<BR />
 
 <input type="submit" value="Vote" />
