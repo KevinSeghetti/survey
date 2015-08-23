@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, get_list_or_404,render
 #from django.http import Http404
 
 # Create your views here.
@@ -51,7 +51,27 @@ def detail(request, question_id):
 def view(request):
     return HttpResponse("You're looking at checklist results")
 
-def fill_out(request):
-    response = "You're looking at filling out checklist."
+def edit(request):
+    questions = get_list_or_404(Question)
+    choices = {}
+    choices['rating'] = range(1,5+1)
+    choices['booleans'] = \
+    [
+        # kts eventually store this in a table
+        {"name":'essential' , "description":'Essential' },
+        {"name":'curious'   , "description":'Curious'   },
+        {"name":'soft_limit', "description":'Soft Limit'},
+        {"name":'hard_limit', "description":'Hard Limit'},
+        {"name":'have_done' , "description":'Have Done' },
+    ]
+    choices_context = \
+    [
+        {"prefix":'done_to'   , "description":'Done to you'         },
+        {"prefix":'have_done' , "description":'Have done to others' },
+    ]
+    return render(request, 'checklist/edit.html', {'questions': questions, 'choices_context': choices_context, 'choices': choices})
+
+def set(request):
+    response = "You're looking at post filling out checklist."
     return HttpResponse(response)
 
