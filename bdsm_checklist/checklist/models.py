@@ -11,12 +11,13 @@ class Question(models.Model):
 class Answer(models.Model):
     # kts map to user here
     question = models.ForeignKey(Question)
-    essential = models.BooleanField()
-    curious = models.BooleanField()
-    soft_limit = models.BooleanField()
-    hard_limit = models.BooleanField()
-    have_done = models.BooleanField()
-    rating = models.IntegerField()
+    context = models.CharField(max_length=10)       # enum, should only contained to_me, to_others
+    essential = models.BooleanField(default=False)
+    curious = models.BooleanField(default=False)
+    soft_limit = models.BooleanField(default=False)
+    hard_limit = models.BooleanField(default=False)
+    have_done = models.BooleanField(default=False)
+    rating = models.IntegerField(default=False)
     
     def __str__(self):              # __unicode__ on Python 2
         return (

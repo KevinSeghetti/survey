@@ -11,8 +11,8 @@
     </h3>
     Rating
    {% for choice in choices.rating %}
-       <input type="radio" name="{{context.prefix}}_choice" id="choice{{ choice }}" value="{{ choice }}" />
-       <label for="choice{{ choice }}">{{ choice}}</label>
+       <input type="radio" name="{{context.prefix}}_choice" id="choice{{ choice.name }}" value="{{ choice.name }}" />
+       <label >{{ choice.description }}</label>
    {% endfor %}<BR />
    {% for choice in choices.booleans %}
        <input type="checkbox" name="{{context.prefix}}_{{choice.name}}" value="True"> {{choice.description}}
