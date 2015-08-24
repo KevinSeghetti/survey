@@ -71,8 +71,9 @@ def edit(request):
                 print("@@ creating new answer for ",question.id,":",context['name'])
                 answer = Answer(question=question,context=context['name'])
                 print("creating new answer so we can get defaults")
-                pprint.pprint(answer)
-
+            print("answer =")
+            pprint.pprint(answer)
+            answerslist[str(question.id)+"_"+context["name"]+"_"+'rating'] = str(answer.rating)
             for item in choices['booleans']:
                 answerslist[str(question.id)+"_"+context["name"]+"_"+item["name"]] = getattr(answer,item["name"])
     print("answer list")

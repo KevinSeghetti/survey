@@ -1,5 +1,7 @@
 <h1>BDSM checklist</h1>
 
+{% load checklist_extras %}
+
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="{% url 'checklist:set' %}" method="post">
@@ -9,19 +11,38 @@
    {{question.question_detail }}
 
    {% for context in choices_context %}
-       <h3>
-          {{ context.description }}
-       </h3>
-       <span>
-          Rating
-       </span>
-      {% for choice in choices.rating %}
-          <input type="radio" name="{{question.id}}_{{context.name}}_rating" id="rating_{{ choice.name }}" value="{{ choice.name }}" />
-          <label >{{ choice.description }}</label>
-      {% endfor %}<BR />
-      {% for choice in choices.booleans %}
-          <input type="checkbox" name="{{question.id}}_{{context.name}}_{{choice.name}}" value="True"> {{choice.description}}
-      {% endfor %}<BR />
+      {% with partial_key=question.id|addstr:'_'|addstr:context.name %}
+          <h3>
+             {{ context.description }}
+          </h3>
+          <span>
+             Rating
+          </span>
+         {% with key=partial_key|addstr:'_rating' %}
+            {% with value=answers|keyvalue:key %}
+               {% for choice in choices.rating %}
+                   <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ choice.name }}" 
+                     {% if value == choice.name %}
+                        checked="checked"
+                     {% endif %}
+                   />
+                   <label >{{ choice.description }}</label>
+               {% endfor %}<BR />
+            {% endwith %}
+         {% endwith %}
+
+         {% for choice in choices.booleans %}
+             {% with key=partial_key|addstr:'_'|addstr:choice.name %}
+               {% with value=answers|keyvalue:key %}
+                  <input type="checkbox" name="{{key}}" value="True"
+                  {% if value %}
+                  checked
+                  {% endif %}
+                  > {{choice.description}}
+               {% endwith %}
+             {% endwith %}
+         {% endfor %}<BR />
+      {% endwith %}
    {% endfor %}<BR />
 {% endfor %}<BR />
 
