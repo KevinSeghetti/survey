@@ -1,0 +1,83 @@
+
+div.entire-page .headline {
+    font-size: 36px;
+    line-height: 40px;
+    text-align: center
+}
+
+.topic {
+}
+
+ .topic-headline {
+    display:inline;
+    font-size: 26px;
+    line-height: 40px;
+}
+ .topic-detail {
+    display:inline;
+    font-size: 16px;
+    line-height: 20px;
+    font-style: italic;
+    margin-left: 5%
+}
+
+.context {
+   margin-left: 5%
+}
+
+.context-headline {
+   font-size: 16px;
+   line-height: 20px;
+   font-weight: bold;
+}
+
+.question-headline+.question {
+   display:inline
+}
+
+.question.small {
+   display:inline
+}
+
+.question-headline {
+   font-weight: bold;
+   display:inline
+   font-size: 16px;
+   line-height: 30px;
+}
+
+
+/* kts didn't work
+.entire-page {
+    position: relative;
+    background: #F0F0FF;
+    overflow: hidden;
+}
+/* You could use :after - it doesn't really matter */
+.entire-page:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.2;
+    background-image: url('images/background.png');
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+*/
+
+body {
+   background-image: url('images/background.png');
+
+}
+
+

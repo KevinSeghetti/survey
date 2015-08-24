@@ -1,52 +1,65 @@
-<h1>BDSM checklist</h1>
+{% load staticfiles %}
+<div class="entire-page">
+   <link rel="stylesheet" type="text/css" href="{% static 'checklist/style.css' %}" />
 
-{% load checklist_extras %}
+   <div class ="headline">BDSM checklist</div>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <div instructions>
+        This is an interactive version of a checklist I found
+        <a href="https://web.archive.org/web/20150128121457/http://www.cepemo.com/checklist.html">
+        here</a>
+        Instructions can be found <a href="/static/checklist/instructions.html">
+        here
+        </a>
+    </div>
 
-<form action="{% url 'checklist:set' %}" method="post">
-{% csrf_token %}
-{% for question in questions %}
-   <h2>{{ question.question_text }}</h2>
-   {{question.question_detail }}
+   {% load checklist_extras %}
+   {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-   {% for context in choices_context %}
-      {% with partial_key=question.id|addstr:'_'|addstr:context.name %}
-          <h3>
-             {{ context.description }}
-          </h3>
-          <span>
-             Rating
-          </span>
-         {% with key=partial_key|addstr:'_rating' %}
-            {% with value=answers|keyvalue:key %}
-               {% for choice in choices.rating %}
-                   <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ choice.name }}" 
-                     {% if value == choice.name %}
-                        checked="checked"
-                     {% endif %}
-                   />
-                   <label >{{ choice.description }}</label>
-               {% endfor %}<BR />
-            {% endwith %}
-         {% endwith %}
-
-         {% for choice in choices.booleans %}
-             {% with key=partial_key|addstr:'_'|addstr:choice.name %}
-               {% with value=answers|keyvalue:key %}
-                  <input type="checkbox" name="{{key}}" value="True"
-                  {% if value %}
-                  checked
-                  {% endif %}
-                  > {{choice.description}}
+   <form action="{% url 'checklist:set' %}" method="post">
+   {% csrf_token %}
+   {% for question in questions %}
+         <span class='topic-headline'>{{ question.question_text }}</span>
+         <span class='topic-detail'>{{question.question_detail }}</span>
+      <div class='topic'>
+         {% for context in choices_context %}
+         <span class='context-headline'>
+            {{ context.description }}
+         </span>
+         <div class='context'>
+               {% with partial_key=question.id|addstr:'_'|addstr:context.name %}
+                    <span class='question-headline'>
+                      Rating
+                   </span>
+                   <div class='question'>
+                     {% with key=partial_key|addstr:'_rating' %}
+                        {% with value=answers|keyvalue:key %}
+                           {% for choice in choices.rating %}
+                               <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ choice.name }}" {% if value == choice.name %}checked="checked"{% endif %}/>
+                               <label >{{ choice.description }}</label>
+                           {% endfor %}
+                        {% endwith %}                                               
+                     {% endwith %}
+                   </div>
+                  <div class='booleans' >
+                     {% for choice in choices.booleans %}
+                      <div class='question small'>
+                            {% with key=partial_key|addstr:'_'|addstr:choice.name %}
+                              {% with value=answers|keyvalue:key %}
+                                 <input type="checkbox" name="{{key}}" value="True" {% if value %}checked{% endif %}> {{choice.description}}
+                              {% endwith %}
+                            {% endwith %}
+                      </div>
+                     {% endfor %}
+                  </div>
                {% endwith %}
-             {% endwith %}
-         {% endfor %}<BR />
-      {% endwith %}
+         </div>
+         {% endfor %}
+      </div>
    {% endfor %}<BR />
-{% endfor %}<BR />
 
-<input type="submit" value="Vote" />
-</form>
+   <input type="submit" value="Submit" />
+   </form>
+</div>
 
 
