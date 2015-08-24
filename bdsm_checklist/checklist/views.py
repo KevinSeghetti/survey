@@ -62,22 +62,25 @@ def view(request):
 
 def edit(request):
     questions = get_list_or_404(Question)
-    answers = {}
+    answerslist = {}
     for context in choices_context:
-        answers[context.name] = {}
         for question in questions:
             try:
                 answer = Answer.objects.get(question=question,context=context['name'])
-                print("creating new answer")
-                pprint(answer)
             except:
                 print("@@ creating new answer for ",question.id,":",context['name'])
-                answer = Answer(question=question)
-            answers[context.name][question.name]= answer
+                answer = Answer(question=question,context=context['name'])
+                print("creating new answer so we can get defaults")
+                pprint.pprint(answer)
+
+            for item in choices['booleans']:
+                answerslist[str(question.id)+"_"+context["name"]+"_"+item["name"]] = getattr(answer,item["name"])
+    print("answer list")
+    pprint.pprint(answerslist)
 
     return render(request, 'checklist/edit.html', {
         'questions': questions, 
-        'answers': answers, 
+        'answers': answerslist, 
         'choices_context': choices_context, 
         'choices': choices
         })
@@ -91,11 +94,11 @@ def set(request):
             print("  context = ",context['name'])
             try:
                 answer = Answer.objects.get(question=question,context=context['name'])
-                print("creating new answer")
-                pprint(answer)
             except:
                 print("@@ creating new answer for ",question.id,":",context['name'])
-                answer = Answer(question=question)
+                answer = Answer(question=question,context=context['name'])
+                print("creating new answer")
+            print("About to write to answer:")
             pprint.pprint(answer)
             field_name = str(question.id)+"_"+context['name']+'_rating'
             print("field name = ",field_name)
@@ -111,7 +114,19 @@ def set(request):
                 })
             else:
                 answer.rating = selected_rating
-                print("seledted rating = ",selected_rating)
+
+            for item in choices['booleans']:
+                field_name = str(question.id)+"_"+context["name"]+"_"+item["name"] 
+                print("checking for field named ",field_name)
+                try:
+                    value = request.POST[field_name]
+                except:
+                    # For booleans, not be fould just means it wasn't clicked
+                    setattr(answer,item["name"],False)
+                else:
+                    setattr(answer,item["name"],True)
+                                
+
                 answer.save()
                 # Always return an HttpResponseRedirect after successfully dealing
                 # with POST data. This prevents data from being posted twice if a

@@ -21,19 +21,19 @@ class AnswerAdmin(admin.ModelAdmin):
 #        (None,               {'fields': ['question_text']}),
 #        ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
 #    ]
-    list_display = (
-        'rating'
-        ,'essential' 
-        ,'curious'  
-        ,'soft_limit'
-        ,'hard_limit'
-        ,'have_done' 
+    list_filter = (
+        'question'      ,
+        'context'      ,
+        'rating'       ,
+        'essential'    ,
+        'curious'      ,
+        'soft_limit'   ,
+        'hard_limit'   ,
+        'have_done'    ,
     )
-    list_filter = list_display
+    list_display = list_filter
         
     search_fields = ['rating']
-
-
 
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Answer, AnswerAdmin)
