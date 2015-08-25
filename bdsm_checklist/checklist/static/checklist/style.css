@@ -5,15 +5,15 @@ div.entire-page .headline {
     text-align: center
 }
 
-.topic {
+.question-edit .topic {
 }
 
- .topic-headline {
+.question-edit .topic-headline {
     display:inline;
     font-size: 26px;
     line-height: 40px;
 }
- .topic-detail {
+.question-edit .topic-detail {
     display:inline;
     font-size: 16px;
     line-height: 20px;
@@ -21,31 +21,48 @@ div.entire-page .headline {
     margin-left: 5%
 }
 
-.context {
+.question-edit .context {
    margin-left: 5%
 }
 
-.context-headline {
+.question-edit .context-headline {
    font-size: 16px;
    line-height: 20px;
    font-weight: bold;
 }
 
-.question-headline+.question {
+.question-edit .question-headline+.question {
    display:inline
 }
 
-.question.small {
+.question-edit .question.small {
    display:inline
 }
 
-.question-headline {
+.question-edit .question-headline {
    font-weight: bold;
    display:inline
-   font-size: 16px;
-   line-height: 30px;
+   font-size: 12px;
+   line-height: 20px;
 }
 
+.question-view {
+}
+
+.question-view thead {
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 30px;
+
+}
+.question-view table {
+    border-collapse: collapse;
+}
+.question-view table,.question-view  th,.question-view  td {
+   border: 1px solid black;
+}
 
 /* kts didn't work
 .entire-page {
