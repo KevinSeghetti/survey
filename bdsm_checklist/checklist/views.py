@@ -42,8 +42,8 @@ choices['booleans'] = \
 ]
 choices_context = \
 [
-    {"name":'to_me'     , "description":'Done to you'         },
-    {"name":'to_others' , "description":'Have done to others' },
+    {"name":'to_me'     , "description":'To/For Self'         },
+    {"name":'to_others' , "description":'To/For Others' },
 ]
 
 def detail(request, question_id):
@@ -56,12 +56,12 @@ def detail(request, question_id):
     #    raise Http404("Question does not exist")
     return render(request, 'checklist/detail.html', {'question': question, 'choices_context': choices_context, 'choices': choices})
 
+def questions(request):
+    question_list = Question.objects.order_by('-question_text')
+    context = {'question_list': question_list}
+    return render(request, 'checklist/questions.html', context)
 
-def view(request):
-    return HttpResponse("You're looking at checklist results")
-
-def edit(request):
-    questions = get_list_or_404(Question)
+def get_answers_list (questions):
     answerslist = {}
     for context in choices_context:
         for question in questions:
@@ -78,10 +78,24 @@ def edit(request):
                 answerslist[str(question.id)+"_"+context["name"]+"_"+item["name"]] = getattr(answer,item["name"])
     print("answer list")
     pprint.pprint(answerslist)
+    return answerslist
+
+def view(request):
+    questions = get_list_or_404(Question)
+
+    return render(request, 'checklist/view.html', {
+        'questions': questions, 
+        'answers': get_answers_list(questions), 
+        'choices_context': choices_context, 
+        'choices': choices
+        })
+
+def edit(request):
+    questions = get_list_or_404(Question)
 
     return render(request, 'checklist/edit.html', {
         'questions': questions, 
-        'answers': answerslist, 
+        'answers': get_answers_list(questions), 
         'choices_context': choices_context, 
         'choices': choices
         })
