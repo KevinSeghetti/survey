@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':  'bdsm_checklist',
         'USER': 'bdsm_checklist',
-        'PASSWORD': '',
+        'PASSWORD': 'oj9387gy2hb0s',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
