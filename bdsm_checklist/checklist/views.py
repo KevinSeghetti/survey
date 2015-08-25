@@ -107,45 +107,45 @@ def set(request):
         print("question id = ",question.id)
         for context in choices_context:
             print("  context = ",context['name'])
+            rating_field_name = str(question.id)+"_"+context['name']+'_rating'
+            print("rating field name = ",rating_field_name)
+
             try:
-                answer = Answer.objects.get(question=question,context=context['name'])
+                selected_rating = request.POST[rating_field_name]
             except:
-                print("@@ creating new answer for ",question.id,":",context['name'])
-                answer = Answer(question=question,context=context['name'])
-                print("creating new answer")
-            print("About to write to answer:")
-            pprint.pprint(answer)
-            field_name = str(question.id)+"_"+context['name']+'_rating'
-            print("field name = ",field_name)
-            try:
-                selected_rating = request.POST[field_name]
-            except:
-                # Redisplay the question voting form.
-                return render(request, 'checklist/edit.html', {
-                    'questions': questions, 
-                    'choices_context': choices_context, 
-                    'choices': choices,
-                    'error_message': "You didn't select a rating.",
-                })
+                # rating is required. If no rating, then don't create an
+                # answer for this question. 
+                pass
             else:
+                # ok, we have a rating, lets see if we can find an answer 
+                # to update
+
+                try:
+                    answer = Answer.objects.get(question=question,context=context['name'])
+                except:
+                    print("@@ creating new answer for ",question.id,":",context['name'])
+                    answer = Answer(question=question,context=context['name'])
+
                 answer.rating = selected_rating
 
-            for item in choices['booleans']:
-                field_name = str(question.id)+"_"+context["name"]+"_"+item["name"] 
-                print("checking for field named ",field_name)
-                try:
-                    value = request.POST[field_name]
-                except:
-                    # For booleans, not be fould just means it wasn't clicked
-                    setattr(answer,item["name"],False)
-                else:
-                    setattr(answer,item["name"],True)
-                                
-
+                # now grab any booleans which are set        
+                for item in choices['booleans']:
+                    field_name = str(question.id)+"_"+context["name"]+"_"+item["name"] 
+                    print("checking for field named ",field_name)
+                    try:
+                        value = request.POST[field_name]
+                    except:
+                        # For booleans, not be fould just means it wasn't clicked
+                        setattr(answer,item["name"],False)
+                    else:
+                        setattr(answer,item["name"],True)
+                
+                print("About to write to answer:")
+                pprint.pprint(answer)
                 answer.save()
-                # Always return an HttpResponseRedirect after successfully dealing
-                # with POST data. This prevents data from being posted twice if a
-                # user hits the Back button.
+                    # Always return an HttpResponseRedirect after successfully dealing
+                    # with POST data. This prevents data from being posted twice if a
+                    # user hits the Back button.
     return HttpResponseRedirect(reverse('checklist:index'))
 
 
