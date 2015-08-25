@@ -62,6 +62,7 @@ def questions(request):
     return render(request, 'checklist/questions.html', context)
 
 def get_answers_list (questions):
+    results = { 'questions' : questions }
     answerslist = {}
     for context in choices_context:
         for question in questions:
@@ -77,15 +78,15 @@ def get_answers_list (questions):
             for item in choices['booleans']:
                 answerslist[str(question.id)+"_"+context["name"]+"_"+item["name"]] = getattr(answer,item["name"])
     print("answer list")
-    pprint.pprint(answerslist)
-    return answerslist
+    results['answers'] = answerslist
+    pprint.pprint(results)
+    return results
 
 def view(request):
     questions = get_list_or_404(Question)
 
     return render(request, 'checklist/view.html', {
-        'questions': questions, 
-        'answers': get_answers_list(questions), 
+        'questions': get_answers_list(questions), 
         'choices_context': choices_context, 
         'choices': choices
         })
@@ -94,8 +95,7 @@ def edit(request):
     questions = get_list_or_404(Question)
 
     return render(request, 'checklist/edit.html', {
-        'questions': questions, 
-        'answers': get_answers_list(questions), 
+        'questions': get_answers_list(questions), 
         'choices_context': choices_context, 
         'choices': choices
         })

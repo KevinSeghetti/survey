@@ -26,7 +26,7 @@
             <th>Rating</th>
             {% for choice in choices.booleans %}
                 {% with key=partial_key|addstr:'_'|addstr:choice.name %}
-                  {% with value=answers|keyvalue:key %}
+                  {% with value=questions.answers|keyvalue:key %}
                     <th>
                         {{choice.description}}
                     </th>
@@ -37,13 +37,13 @@
       </tr>
    </thead>
    <tbody>
-      {% for question in questions %}
+      {% for question in questions.questions %}
       <tr>
             <td class='topic-headline'>{{ question.question_text }}</td>
             {% for context in choices_context %}
                {% with partial_key=question.id|addstr:'_'|addstr:context.name %}
                   {% with key=partial_key|addstr:'_rating' %}
-                     {% with value=answers|keyvalue:key %}
+                     {% with value=questions.answers|keyvalue:key %}
                      <td>
                            {% for choice in choices.rating %}
                                {% if value == choice.name %}{{ choice.description }}{% endif %}
@@ -54,7 +54,7 @@
                   {% for choice in choices.booleans %}
                    <td class='question small'>
                          {% with key=partial_key|addstr:'_'|addstr:choice.name %}
-                           {% with value=answers|keyvalue:key %}
+                           {% with value=questions.answers|keyvalue:key %}
                               {% if value == 0 %}
                                  <img src="/static/admin/img/icon-no.gif" alt="False">
                               {% else %}

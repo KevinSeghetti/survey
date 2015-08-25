@@ -18,7 +18,7 @@
 
    <form action="{% url 'checklist:set' %}" method="post">
    {% csrf_token %}
-   {% for question in questions %}
+   {% for question in questions.questions %}
          <span class='topic-headline'>{{ question.question_text }}</span>
          <span class='topic-detail'>{{question.question_detail }}</span>
       <div class='topic'>
@@ -33,7 +33,7 @@
                    </span>
                    <div class='question'>
                      {% with key=partial_key|addstr:'_rating' %}
-                        {% with value=answers|keyvalue:key %}
+                        {% with value=questions.answers|keyvalue:key %}
                            {% for choice in choices.rating %}
                                <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ choice.name }}" {% if value == choice.name %}checked="checked"{% endif %}/>
                                <label >{{ choice.description }}</label>
@@ -45,7 +45,7 @@
                      {% for choice in choices.booleans %}
                       <div class='question small'>
                             {% with key=partial_key|addstr:'_'|addstr:choice.name %}
-                              {% with value=answers|keyvalue:key %}
+                              {% with value=questions.answers|keyvalue:key %}
                                  <input type="checkbox" name="{{key}}" value="True" {% if value %}checked{% endif %}> {{choice.description}}
                               {% endwith %}
                             {% endwith %}
