@@ -1,32 +1,37 @@
 #!/bin/sh
+# run as root
+dnf install -y postgresql-server postgresql-contrib postgresqql-devel
+dnf install -y libpqxx-devel
 
-sudo dnf install postgresql-server postgresql-contrib postgresqql-devel
-sudo systemctl enable postgresql
-sudo systemctl start postgresql
+systemctl enable postgresql
+systemctl start postgresql
 
-sudo postgresql-setup initdb
+postgresql-setup initdb
 
-
-# http://www.mixtmeta.com/blog/python-on-dreamhost-part-1
-
-# custom build of python
-wget https://www.python.org/ftp/python/3.4.1/Python-3.4.1.tgz --no-check-certificate
-tar -xzvf Python-3.4.1.tgz
-cd Python-3.4.1
-./configure --prefix=$HOME/.python3.4
-make
-make install
-
-# create virtualenv
-cd $HOME/.python3.4/bin
-./virtualenv -p $HOME/.python3.4/bin/python3.4 $HOME/venv
-cd $HOME/venv
-source bin/activate
+# old 
+## custom build of python
+#wget https://www.python.org/ftp/python/3.4.1/Python-3.4.1.tgz --no-check-certificate
+#tar -xzvf Python-3.4.1.tgz
+#cd Python-3.4.1
+#./configure --prefix=$HOME/.python3.4
+#make
+#make install
+#
+## create virtualenv
+#cd $HOME/.python3.4/bin
+#./virtualenv -p $HOME/.python3.4/bin/python3.4 $HOME/venv
+#cd $HOME/venv
+#source bin/activate
+#
+#
+#source venv/bin/activate.csh
+#
+#pip install django
+#
+#pip install psycopg2
 
 #===============================================================================
 
-psql -c 'create database bdsm_checklist;'
-
-CREATE USER bdsm_checklist WITH PASSWORD 'oj9387gy2hb0s';
-GRANT ALL PRIVILEGES ON DATABASE bdsm_checklist to bdsm_checklist;
-
+edit
+/var/lib/pgsql/data/pg_hba.conf
+set trust for local and 127 lines
