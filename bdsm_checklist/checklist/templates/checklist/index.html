@@ -1,9 +1,18 @@
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'checklist:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No checklists are available.</p>
-{% endif %}
+{% load staticfiles %}
+<div class="entire-page">
+   <link rel="stylesheet" type="text/css" href="{% static 'checklist/style.css' %}" />
+
+   <div class ="headline">BDSM checklist</div>
+
+    <div instructions>
+        This is an interactive version of a checklist I found
+        <a href="https://web.archive.org/web/20150128121457/http://www.cepemo.com/checklist.html">
+        here</a>
+        Instructions can be found <a href="/static/checklist/instructions.html">
+        here
+        </a>
+    </div>
+
+    <a href="{% url 'checklist:edit' %}">Edit</a><br />
+    <a href="{% url 'checklist:view' %}">Review</a><br />
+    <a href="{% url 'checklist:questions' %}">Question List</a><br />
