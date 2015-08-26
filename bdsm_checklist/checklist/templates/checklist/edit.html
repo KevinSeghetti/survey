@@ -4,56 +4,51 @@
 
    <div class ="headline">BDSM checklist</div>
 
-    <div instructions>
-        This is an interactive version of a checklist I found
-        <a href="https://web.archive.org/web/20150128121457/http://www.cepemo.com/checklist.html">
-        here</a>
-        Instructions can be found <a href="/static/checklist/instructions.html">
-        here
-        </a>
-    </div>
+   <div instructions>
+       This is an interactive version of a checklist I found
+       <a href="https://web.archive.org/web/20150128121457/http://www.cepemo.com/checklist.html">
+       here</a>
+       Instructions can be found <a href="/static/checklist/instructions.html">
+       here
+       </a>
+   </div>
 
    {% load checklist_extras %}
    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
    <form action="{% url 'checklist:set' %}" method="post">
    {% csrf_token %}
-   {% for question in questions.questions %}
-         <span class='topic-headline'>{{ question.question_text }}</span>
-         <span class='topic-detail'>{{question.question_detail }}</span>
+   {% for node in questions %}
+      <span class='topic-headline'>{{ node.question.question_text }}</span>
+      <span class='topic-detail'>{{node.question.question_detail }}</span>
       <div class='topic'>
          {% for context in choices_context %}
-         <span class='context-headline'>
-            {{ context.description }}
-         </span>
-         <div class='context'>
-               {% with partial_key=question.id|addstr:'_'|addstr:context.name %}
-                    <span class='question-headline'>
-                      Rating
-                   </span>
-                   <div class='question'>
-                     {% with key=partial_key|addstr:'_rating' %}
-                        {% with value=questions.answers|keyvalue:key %}
-                           {% for choice in choices.rating %}
-                               <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ choice.name }}" {% if value == choice.name %}checked="checked"{% endif %}/>
-                               <label >{{ choice.description }}</label>
-                           {% endfor %}
-                        {% endwith %}                                               
-                     {% endwith %}
-                   </div>
+            <span class='context-headline'>
+               {{ context.description }}
+            </span>
+            <div class='context'>
+               {% with answer=node.answers|keyvalue:context.name partial_key=node.question.id|addstr:'_'|addstr:context.name %}
+                  <span class='question-headline'>
+                    Rating
+                  </span>
+                  <div class='question'>
+                     {% for choice in choices.rating %}
+                        <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ forloop.counter0 }}" 
+                        {% if answer.rating|integer == forloop.counter0  %}
+                            checked="checked"
+                        {% endif %}/>
+                        <label >{{ choice }}</label>
+                     {% endfor %}
+                  </div>
                   <div class='booleans' >
                      {% for choice in choices.booleans %}
-                      <div class='question small'>
-                            {% with key=partial_key|addstr:'_'|addstr:choice.name %}
-                              {% with value=questions.answers|keyvalue:key %}
-                                 <input type="checkbox" name="{{key}}" value="True" {% if value %}checked{% endif %}> {{choice.description}}
-                              {% endwith %}
-                            {% endwith %}
-                      </div>
+                        <div class='question small'>
+                           <input type="checkbox" name="{{partial_key|addstr:'_'|addstr:choice.name}}"  {% if answer|objgetattr:choice.name %}checked{% endif %}> {{choice.description}}
+                        </div>
                      {% endfor %}
                   </div>
                {% endwith %}
-         </div>
+            </div>
          {% endfor %}
       </div>
    {% endfor %}<BR />

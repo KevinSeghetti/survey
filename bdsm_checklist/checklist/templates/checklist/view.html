@@ -4,10 +4,9 @@
 
    <div class ="headline">BDSM checklist</div>
 
-    <div instructions>
-        This is an interactive version of a checklist I found
-        </a>
-    </div>
+   <div instructions>
+      This is an interactive version of a checklist I found
+   </div>
 
    {% load checklist_extras %}
 
@@ -25,51 +24,42 @@
          {% for context in choices_context %}
             <th>Rating</th>
             {% for choice in choices.booleans %}
-                {% with key=partial_key|addstr:'_'|addstr:choice.name %}
-                  {% with value=questions.answers|keyvalue:key %}
-                    <th>
-                        {{choice.description}}
-                    </th>
-                  {% endwith %}
-                {% endwith %}
+              <th>
+                 {{choice.description}}
+              </th>
             {% endfor %}
          {% endfor %}
       </tr>
    </thead>
    <tbody>
-      {% for question in questions.questions %}
-      <tr>
-            <td class='topic-headline'>{{ question.question_text }}</td>
-            {% for context in choices_context %}
-               {% with partial_key=question.id|addstr:'_'|addstr:context.name %}
-                  {% with key=partial_key|addstr:'_rating' %}
-                     {% with value=questions.answers|keyvalue:key %}
-                     <td>
-                           {% for choice in choices.rating %}
-                               {% if value == choice.name %}{{ choice.description }}{% endif %}
-                           {% endfor %}
-                     </td>
-                     {% endwith %}                                               
-                  {% endwith %}
-                  {% for choice in choices.booleans %}
-                   <td class='question small'>
-                         {% with key=partial_key|addstr:'_'|addstr:choice.name %}
-                           {% with value=questions.answers|keyvalue:key %}
-                              {% if value == 0 %}
-                                 <img src="/static/admin/img/icon-no.gif" alt="False">
-                              {% else %}
-                                 <img src="/static/admin/img/icon-yes.gif" alt="True">
-                              {% endif %}
+      {% for node in questions %}
+         {% if node.answers %}
+            <tr>
+                  <td class='topic-headline'>{{ node.question.question_text }}</td>
+                  {% for context in choices_context %}
+                     {% with answer=node.answers|keyvalue:context.name partial_key=node.question.id|addstr:'_'|addstr:context.name %}
+                        <td>
+                        {% with answerrating=answer.rating %}
+                           {% with choice=choices.rating|listvalue:answerrating %}
+                              {{ choice }}
                            {% endwith %}
-                         {% endwith %}
-                   </td>
+                        {% endwith %}
+                        </td>
+                        {% for choice in choices.booleans %}
+                         <td class='question small'>
+                            {% if answer|objgetattr:choice.name %}
+                               <img src="/static/admin/img/icon-no.gif" alt="False">
+                            {% else %}
+                               <img src="/static/admin/img/icon-yes.gif" alt="True">
+                            {% endif %}
+                         </td>
+                        {% endfor %}
+                     {% endwith %}
                   {% endfor %}
-               {% endwith %}
-            {% endfor %}
-      </tr>
+            </tr>
+         {% endif %}
       {% endfor %}
    </tbody>
-
 </table>
 </div>
 

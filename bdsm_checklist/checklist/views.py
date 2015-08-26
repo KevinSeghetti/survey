@@ -25,11 +25,11 @@ def index(request):
 choices = {}
 choices['rating'] = \
 [
-    {"name":"5", "description":"Love",        },
-    {"name":"4", "description":"Like",        },
-    {"name":"3", "description":"Don't Mind",  },
-    {"name":"2", "description":"Dislike",     },
-    {"name":"1", "description":"Hate"         },
+    "Love"        ,
+    "Like"        ,
+    "Don't Mind"  ,
+    "Dislike"     ,
+    "Hate"        ,
 ]
 choices['booleans'] = \
 [
@@ -62,24 +62,23 @@ def questions(request):
     return render(request, 'checklist/questions.html', context)
 
 def get_answers_list (questions):
-    results = { 'questions' : questions }
-    answerslist = {}
-    for context in choices_context:
-        for question in questions:
+    results = []
+    for question in questions:
+        node = {}
+        results.append(node)
+        node['question'] = question
+        for context in choices_context:
             try:
                 answer = Answer.objects.get(question=question,context=context['name'])
             except:
-                print("@@ creating new answer for ",question.id,":",context['name'])
-                answer = Answer(question=question,context=context['name'])
-                print("creating new answer so we can get defaults")
-            print("answer =")
-            pprint.pprint(answer)
-            answerslist[str(question.id)+"_"+context["name"]+"_"+'rating'] = str(answer.rating)
-            for item in choices['booleans']:
-                answerslist[str(question.id)+"_"+context["name"]+"_"+item["name"]] = getattr(answer,item["name"])
-    print("answer list")
-    results['answers'] = answerslist
-    pprint.pprint(results)
+                # not found, don't bother setting
+                pass
+            else:
+                if 'answers' not in node:
+                    node['answers'] = {}
+                node['answers'][context["name"]] = answer
+    #print("answer list results")
+    #pprint.pprint(results)
     return results
 
 def view(request):
