@@ -11,7 +11,7 @@
 
    {% load checklist_extras %}
 
-<table>
+<table id='view-table'>
    <thead>
       <tr>
          <th rowspan=2>Question</th>
@@ -39,21 +39,23 @@
                   <td class='topic-headline'>{{ node.question.question_text }}</td>
                   {% for context in choices_context %}
                      {% with answer=node.answers|keyvalue:context.name partial_key=node.question.id|addstr:'_'|addstr:context.name %}
-                        <td>
                         {% with answerrating=answer.rating %}
-                           {% with choice=choices.rating|listvalue:answerrating %}
-                              {{ choice }}
-                           {% endwith %}
+                           <td data-order="{{answerrating}}">
+                              {% with choice=choices.rating|listvalue:answerrating %}
+                                 {{ choice }}
+                              {% endwith %}
+                           </td>
                         {% endwith %}
-                        </td>
                         {% for choice in choices.booleans %}
-                         <td class='question small'>
-                            {% if answer|objgetattr:choice.name %}
-                               <img src="/static/admin/img/icon-no.gif" alt="False">
-                            {% else %}
-                               <img src="/static/admin/img/icon-yes.gif" alt="True">
-                            {% endif %}
-                         </td>
+                           {% if answer|objgetattr:choice.name %}
+                              <td class='question small' data-order="1">
+                                 <img src="/static/admin/img/icon-yes.gif" alt="True">
+                              </td>
+                           {% else %}
+                              <td class='question small' data-order="0">
+                                 <img src="/static/admin/img/icon-no.gif" alt="False">
+                              </td>
+                           {% endif %}
                         {% endfor %}
                      {% endwith %}
                   {% endfor %}
@@ -63,6 +65,12 @@
    </tbody>
 </table>
 </div>
+
+<script>
+    $(document).ready( function () {
+        $('#view-table').DataTable();
+    } );
+</script>
 
 {% endblock %}
 

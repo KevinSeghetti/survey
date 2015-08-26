@@ -46,20 +46,38 @@ div.entire-page .headline {
    line-height: 20px;
 }
 
-.question-view {
-}
-
-.question-view thead {
+#content .question-view thead {
     background-color: green;
     color: white;
     font-weight: bold;
     font-size: 20px;
     line-height: 30px;
-
+    padding: 5px 5px;
 }
-.question-view table {
+
+#content .question-view th {
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 5px 5px;
+}
+
+
+#content .question-view table {
     border-collapse: collapse;
 }
+
+
+#content .question-view td {
+    border-collapse: collapse;
+    font-size: 16px;
+    line-height: 20px;
+    padding: 5px 5px;
+
+}
+
 .question-view table,.question-view  th,.question-view  td {
    border: 1px solid black;
 }
