@@ -1,6 +1,8 @@
-{% load staticfiles %}
+{% extends "checklist/base.html" %}
+
+{% block content %}
+
 <div class="entire-page question-edit">
-   <link rel="stylesheet" type="text/css" href="{% static 'checklist/style.css' %}" />
 
    <div class ="headline">BDSM checklist</div>
 
@@ -57,4 +59,5 @@
    </form>
 </div>
 
+{% endblock %}
 

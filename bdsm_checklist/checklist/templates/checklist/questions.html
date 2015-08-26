@@ -1,16 +1,20 @@
-{% load staticfiles %}
-<div class="entire-page">
-   <link rel="stylesheet" type="text/css" href="{% static 'checklist/style.css' %}" />
+{% extends "checklist/base.html" %}
+{% block content %}
 
-   <div class ="headline">BDSM checklist - Question list</div>
+   <div class="entire-page">
 
-{% if question_list %}
-    <ul>
-    {% for question in question_list %}
-        {#<li><a href="{% url 'checklist:detail' question.id %}">{{ question.question_text }}</a> - {{question.question_detail}}</li>#}
-        <li>{{ question.question_text }} - {{question.question_detail}}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No checklists are available.</p>
-{% endif %}
+      <div class ="headline">BDSM checklist - Question list</div>
+
+   {% if question_list %}
+       <ul>
+       {% for question in question_list %}
+           {#<li><a href="{% url 'checklist:detail' question.id %}">{{ question.question_text }}</a> - {{question.question_detail}}</li>#}
+           <li>{{ question.question_text }} - {{question.question_detail}}</li>
+       {% endfor %}
+       </ul>
+   {% else %}
+       <p>No checklists are available.</p>
+   {% endif %}
+
+{% endblock %}
+
