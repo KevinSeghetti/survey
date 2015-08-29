@@ -2,13 +2,14 @@ from django.shortcuts import get_object_or_404, get_list_or_404,render
 #from django.http import Http404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 import pprint
-# Create your views here.
 
 from django.http import HttpResponse
 #from django.template import RequestContext, loader
 from .models import Question,Answer
 
+@login_required
 def index(request):
     latest_question_list = Question.objects.order_by('-question_text')[:5]
     # this is a shortcut
@@ -46,6 +47,7 @@ choices_context = \
     {"name":'to_others' , "description":'To/For Others' },
 ]
 
+@login_required
 def detail(request, question_id):
     # this shortcut
     question = get_object_or_404(Question, pk=question_id)
@@ -81,6 +83,7 @@ def get_answers_list (questions):
     #pprint.pprint(results)
     return results
 
+@login_required
 def view(request):
     questions = get_list_or_404(Question)
 
@@ -90,6 +93,7 @@ def view(request):
         'choices': choices
         })
 
+@login_required
 def edit(request):
     questions = get_list_or_404(Question)
 
@@ -99,6 +103,7 @@ def edit(request):
         'choices': choices
         })
 
+@login_required
 def set(request):
     questions = get_list_or_404(Question)
     print("---- set!!")

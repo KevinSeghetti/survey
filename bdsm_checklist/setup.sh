@@ -40,6 +40,7 @@ source venv/bin/activate.csh
 
 pip install django
 pip install psycopg2
+pip install django-registration-redux
 
 cd $DEST_PATH/bdsm_checklist
 

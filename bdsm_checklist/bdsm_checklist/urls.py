@@ -16,7 +16,15 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+#from registration.backends.simple.views import RegistrationView
+#class MyRegistrationView(RegistrationView):
+#        def get_success_url(self, request, user):
+#            return '/checklist/'
+
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^checklist/', include('checklist.urls',namespace="checklist")),
+   url(r'^admin/', include(admin.site.urls)),
+   url(r'^checklist/', include('checklist.urls',namespace="checklist")),
+   url(r'^accounts/', include('registration.backends.simple.urls')),
+#   url(r'^$', 'checklist.views.index', name='index'),
+   url(r'^checklist/', 'checklist.views.index', name='registration_complete'),
 ]
