@@ -63,7 +63,8 @@ def questions(request):
     context = {'question_list': question_list}
     return render(request, 'checklist/questions.html', context)
 
-def get_answers_list (questions):
+def get_answers_list (user, questions):
+    print("get_answers_list: usert = ",user)
     results = []
     for question in questions:
         node = {}
@@ -71,7 +72,7 @@ def get_answers_list (questions):
         node['question'] = question
         for context in choices_context:
             try:
-                answer = Answer.objects.get(question=question,context=context['name'])
+                answer = Answer.objects.get(user=user,question=question,context=context['name'])
             except:
                 # not found, don't bother setting
                 pass
@@ -88,7 +89,7 @@ def view(request):
     questions = get_list_or_404(Question)
 
     return render(request, 'checklist/view.html', {
-        'questions': get_answers_list(questions), 
+        'questions': get_answers_list(request.user,questions), 
         'choices_context': choices_context, 
         'choices': choices
         })
@@ -98,7 +99,7 @@ def edit(request):
     questions = get_list_or_404(Question)
 
     return render(request, 'checklist/edit.html', {
-        'questions': get_answers_list(questions), 
+        'questions': get_answers_list(request.user, questions), 
         'choices_context': choices_context, 
         'choices': choices
         })
@@ -125,10 +126,10 @@ def set(request):
                 # to update
 
                 try:
-                    answer = Answer.objects.get(question=question,context=context['name'])
+                    answer = Answer.objects.get(user=request.user,question=question,context=context['name'])
                 except:
                     print("@@ creating new answer for ",question.id,":",context['name'])
-                    answer = Answer(question=question,context=context['name'])
+                    answer = Answer(user=request.user,question=question,context=context['name'])
 
                 answer.rating = selected_rating
 

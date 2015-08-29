@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Question(models.Model):
@@ -10,6 +11,7 @@ class Question(models.Model):
 # answers apply to all questions
 class Answer(models.Model):
     # kts map to user here
+    user     = models.ForeignKey(User)
     question = models.ForeignKey(Question)
     CONTEXT_CHOICES = (
     ('to_me', 'Done to me'),
