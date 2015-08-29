@@ -11,6 +11,8 @@ urlpatterns = [
     url(r'^questions/$', views.questions, name='questions'),
     # ex: /checklist/edit/
     url(r'^edit/$', views.edit, name='edit'),
+    # ex: /checklist/edit/unanswered
+    #url(r'^edit/(?P<option>[\w\d])+/$', views.edit, name='edit_with_option'),
     # ex: /checklist/view/
     url(r'^view/$', views.view, name='view'),
     # ex: /checklist/set/

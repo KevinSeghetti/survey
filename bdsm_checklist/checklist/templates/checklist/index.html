@@ -4,9 +4,7 @@
 
 <div class="entire-page">
 
-   <div class ="headline">BDSM checklist</div>
-
-    <div instructions>
+    <div>
         This is an interactive version of a checklist I found
         <a href="https://web.archive.org/web/20150128121457/http://www.cepemo.com/checklist.html">
         here</a>
@@ -16,6 +14,7 @@
     </div>
 
     <a href="{% url 'checklist:edit' %}">Edit</a><br />
+    {#<a href="{% url 'checklist:edit_with_options/unanswered' %}">Edit Unanswered</a><br /> #}
     <a href="{% url 'checklist:view' %}">Review</a><br />
     <a href="{% url 'checklist:questions' %}">Question List</a><br />
 

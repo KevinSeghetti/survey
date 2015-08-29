@@ -4,15 +4,37 @@
 <html lang="en">
 <head>
        <link rel="stylesheet" type="text/css" href="{% static 'js/DataTables/datatables.min.css' %}"/>
-       <link rel="stylesheet" type="text/css" href="{% static 'checklist/style.css' %}" />
+       <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+       {% block cssincludes %}{%endblock%}
        <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
        <script type="text/javascript" src="{% static 'js//DataTables/datatables.min.js' %}"></script>
+       {% block scriptincludes %}{%endblock%}
     <title>{% block title %}BDSM Checklist{% endblock %}</title>
 </head>
 
 <body>
-    <div id="content">
-        {% block content %}{% endblock %}
-    </div>
+<div class="entire-page">
+
+   <div class='site-header'>
+   {% block header %}BDSM Checklist{% endblock %}
+   </div>
+
+   <div id="content">
+       {% block content %}{% endblock %}
+   </div>
+
+   <div class='site-footer'>
+       {% block footer %}
+       {# kts can't figure out how to reverse lookup logout #}
+       You are logged in as {{ request.user }} <a href=/accounts/logout>
+         Logout
+       </a>
+         <div class ='credits'>
+             Created by Kevin Seghetti. <a href="mailto:tenetti.org?Subject=BDSM checklist" target="_top">Email me</a> with questions or feedback
+         </div>
+       {% endblock %}
+   </div>
+</div>
+
 </body>
 </html>
