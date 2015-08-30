@@ -45,7 +45,7 @@ INSTALLED_APPS = (
 REGISTRATION_OPEN = True            # If True, users can register
 ACCOUNT_ACTIVATION_DAYS = 7         # One-week activation window; you may, of course, use a different value.
 REGISTRATION_AUTO_LOGIN = True      # If True, the user will be automatically logged in.
-LOGIN_REDIRECT_URL = '/checkddlist/'  # The page you want users to arrive at after they successful log in
+#LOGIN_REDIRECT_URL = '/checklist/'  # The page you want users to arrive at after they successful log in
 LOGIN_URL = '/accounts/login/'      # The page users are directed to if they are not logged in,
                                     # and are trying to access pages requiring authentication
 
@@ -91,15 +91,36 @@ WSGI_APPLICATION = 'bdsm_checklist.wsgi.application'
 #        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #    }
 #}
+
+PROJECT_DIR = os.path.dirname(__file__)
+DBNAME=os.path.join(PROJECT_DIR,'bdsm_checklist.sq3')
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':  'bdsm_checklist',
-        'USER': 'bdsm_checklist',
-        'PASSWORD': 'oj9387gy2hb0s',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+        'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': DBNAME,
+    },
+
+
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME':  'bdsm_checklist',
+#        'USER': 'bdsm_checklist',
+#        'PASSWORD': 'oj9387gy2hb0s',
+#        'HOST': '127.0.0.1',
+#        'PORT': '5432',
+#    },
+#    'default': {
+#        # mysql -u tenettiquiz2 -p -h mysql.quiz.tenetti.org tenetti_quiz 
+#        # You can also go to http://mysql.quiz.tenetti.org/ to manage your MySQL database from the web.
+#        'ENGINE': 'mysql.connector.django',
+#        'NAME':  'tenetti_quiz',
+#        'USER': 'tenettiquiz2',
+#        'PASSWORD': 'oj9387gy2hb0s',
+#        'HOST': 'mysql.quiz.tenetti.org',
+#        'PORT': '5432',
+#    }
+
 }
 
 
@@ -121,6 +142,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.dirname(BASE_DIR) + '/public/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
