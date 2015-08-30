@@ -16,7 +16,16 @@
 <div class="entire-page">
 
    <div class='site-header'>
-   {% block header %}BDSM Checklist{% endblock %}
+      {% block header %}
+         <div class='headline'>BDSM Checklist</div>
+         <div class='toolbar'>
+            <a href="{% url 'checklist:index' %}">Home</a>
+            <a href="{% url 'checklist:edit' %}">Edit</a>
+            <a href="{% url 'checklist:view' %}">Review</a>
+            <a href="{% url 'checklist:questions' %}">Question List</a>
+
+         </div>
+      {% endblock %}
    </div>
 
    <div id="content">
@@ -31,7 +40,7 @@
          Logout
        </a>
          <div class ='credits'>
-             Created by Kevin Seghetti. <a href="mailto:tenetti.org?Subject=BDSM checklist" target="_top">Email me</a> with questions or feedback
+             Created by Kevin Seghetti. <a href="mailto:kts@tenetti.org?Subject=BDSM checklist" target="_top">Email me</a> with questions or feedback
          </div>
        {% endblock %}
    </div>
