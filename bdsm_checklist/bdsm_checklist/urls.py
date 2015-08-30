@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 #from registration.backends.simple.views import RegistrationView
 #class MyRegistrationView(RegistrationView):
@@ -22,6 +23,7 @@ from django.contrib import admin
 #            return '/checklist/'
 
 urlpatterns = [
+   url(r'^$', RedirectView.as_view(url='checklist')),
    url(r'^admin/', include(admin.site.urls)),
    url(r'^checklist/', include('checklist.urls',namespace="checklist")),
    url(r'^accounts/', include('registration.backends.simple.urls')),
