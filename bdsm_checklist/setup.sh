@@ -38,7 +38,14 @@ cd $DEST_PATH
 pyvenv-3.4 venv
 source venv/bin/activate.csh
 
+pip install --upgrade pip
+
 pip install django
+pip install django-mysql
+#pip install MySQL-python        # doesn't support python3
+#pip3.4 install --allow-external mysql-connector-python mysql-connector-python
+#pip install git+https://github.com/multiplay/mysql-connector-python
+
 pip install psycopg2
 pip install django-registration-redux
 
