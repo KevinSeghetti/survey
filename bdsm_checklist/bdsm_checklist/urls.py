@@ -28,5 +28,5 @@ urlpatterns = [
    url(r'^checklist/', include('checklist.urls',namespace="checklist")),
    url(r'^accounts/', include('registration.backends.simple.urls')),
 #   url(r'^$', 'checklist.views.index', name='index'),
-   url(r'^checklist/', 'checklist.views.index', name='registration_complete'),
+   url(r'^checklist/$', 'checklist.views.index', name='registration_complete'),
 ]
