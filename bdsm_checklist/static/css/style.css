@@ -1,61 +1,88 @@
-
-div.site-header {
-}
-
 div.site-header .headline {
-   font-size: 36px;
-   line-height: 40px;
-   text-align: center;
-}
-div.site-header .toolbar {
-   font-size: 16px;
-   line-height: 20px;
-   text-align: center;
-}
+  font-size: 36px;
+  line-height: 40px;
+  text-align: center; }
+div.site-header div.toolbar {
+  width: 510px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
+  font-family: Verdana;
+  line-height: 20px; }
+  div.site-header div.toolbar ul {
+    margin: 0px;
+    padding: 0;
+    list-style: none;
+    width: 510px;
+    overflow: auto; }
+    div.site-header div.toolbar ul li {
+      display: inline; }
+      div.site-header div.toolbar ul li a {
+        text-decoration: none;
+        display: block;
+        padding: 5px 0px;
+        width: 120px;
+        background: #808a0d;
+        color: #f5fcae;
+        float: left;
+        text-align: center;
+        border-top: 2px solid #b3bd41;
+        border-right: 2px solid #656e00;
+        border-bottom: 2px solid #656e00;
+        border-left: 2px solid #b3bd41; }
+      div.site-header div.toolbar ul li a:hover {
+        background: #b3bd41;
+        color: #656e00;
+        border-top: 2px solid #656e00;
+        border-right: 2px solid #f5fcae;
+        border-bottom: 2px solid #f5fcae;
+        border-left: 2px solid #656e00; }
 
+div#content {
+  clear: left; }
 
 div.site-footer {
-    font-size: 16px;
-    line-height: 22px;
-
-    bottom: 0;
-    height: 45px;
-    left: 0;
-    position: absolute;
-    width: 100%;
-}
+  font-size: 16px;
+  line-height: 22px;
+  bottom: 0;
+  height: 45px;
+  left: 0;
+  position: absolute;
+  width: 100%; }
 
 div.site-footer .credits {
-    font-size: 12px;
-    line-height: 20px;
-    text-align: center;
-}
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center; }
 
 div.entire-page {
-   box-sizing: border-box;
-   min-height: 100%;
-   padding: 0 0 20px;
-   position: relative;
-}
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 0 0 20px;
+  position: relative;
+  background-color: #f79788;
+  color: #000000; }
+
+#content .question-view th {
+  background-color: #374783; }
+
+a {
+  color: #990033; }
 
 div.entire-page .headline {
-    font-size: 36px;
-    line-height: 40px;
-    text-align: center
-}
+  font-size: 30px;
+  line-height: 32px;
+  text-align: center; }
 
 html,
 body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-div .index-page { 
-   min-height: 100%;
-   background: url('../images/background.png');
-}
+  height: 100%;
+  margin: 0;
+  padding: 0; }
 
-
+div .index-page {
+  min-height: 100%;
+  background: url("../images/background.png"); }
 
 /* kts didn't work
 .entire-page {
@@ -86,7 +113,6 @@ div .index-page {
     background-size: cover;
 }
 */
-
 /*
 html {
    background: url('images/background.png') no-repeat center center fixed;
@@ -95,7 +121,3 @@ html {
    background-size: cover;
 }
 */
-
-
-
-

@@ -33,25 +33,25 @@ div.site-header {
                display: block;
                padding:5px 0px;
                width:120px;
-               background:$color-secondary-2-0;
+               background:$color-secondary-2-3;
                color:$color-secondary-2-1;
                float:left;
                text-align:center;
                //border-left:1px solid $color-secondary-2-3;
 
-               border-top:   2px solid  $color-secondary-2-1;
-               border-right: 2px solid  $color-secondary-2-3;
-               border-bottom:2px solid  $color-secondary-2-3;
-               border-left:  2px solid  $color-secondary-2-1;
+               border-top:   2px solid  $color-secondary-2-0;
+               border-right: 2px solid  $color-secondary-2-4;
+               border-bottom:2px solid  $color-secondary-2-4;
+               border-left:  2px solid  $color-secondary-2-0;
             }
             a:hover {
-                 background:$color-secondary-2-3;
-                 color:$color-secondary-2-0;
+                 background:$color-secondary-2-0;
+                 color:$color-secondary-2-4;
 
-               border-top:   2px solid  $color-secondary-2-3;
+               border-top:   2px solid  $color-secondary-2-4;
                border-right: 2px solid  $color-secondary-2-1;
                border-bottom:2px solid  $color-secondary-2-1;
-               border-left:  2px solid  $color-secondary-2-3;
+               border-left:  2px solid  $color-secondary-2-4;
 
             }
          }
