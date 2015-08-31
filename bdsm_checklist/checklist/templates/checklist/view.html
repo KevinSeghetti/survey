@@ -4,8 +4,8 @@
 
 <div class="question-view">
 
-   <div>
-      This is an interactive version of a checklist I found
+   <div class='headline'>
+       Results of checklist for user {{ request.user }}
    </div>
 
    {% load checklist_extras %}
@@ -52,7 +52,6 @@
                               </td>
                            {% else %}
                               <td class='question small' data-order="0">
-                                 <img src="/static/admin/img/icon-no.gif" alt="False">
                               </td>
                            {% endif %}
                         {% endfor %}

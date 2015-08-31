@@ -1,7 +1,7 @@
 import sys, os
 cwd = os.getcwd()
 sys.path.append(cwd)
-sys.path.append(cwd + '/my_project')
+sys.path.append(cwd + '/quiz')
 
 INTERP = os.path.expanduser("~/venv/bin/python")
 
@@ -11,6 +11,7 @@ sys.path.insert(0,'$HOME/venv/bin')
 sys.path.insert(0,'$HOME/venv/lib/python3.4/site-packages/django')
 sys.path.insert(0,'$HOME/venv/lib/python3.4/site-packages')
 
-os.environ['DJANGO_SETTINGS_MODULE'] = "my_project.settings"
+os.environ['DJANGO_SETTINGS_MODULE'] = "bdsm_checklist.settings"
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
+

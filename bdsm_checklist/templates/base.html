@@ -19,11 +19,12 @@
       {% block header %}
          <div class='headline'>BDSM Checklist</div>
          <div class='toolbar'>
-            <a href="{% url 'checklist:index' %}">Home</a>
-            <a href="{% url 'checklist:edit' %}">Edit</a>
-            <a href="{% url 'checklist:view' %}">Review</a>
-            <a href="{% url 'checklist:questions' %}">Question List</a>
-
+            <ul>
+               <li><a href="{% url 'checklist:index' %}">Home</a>             </li>
+               <li><a href="{% url 'checklist:edit' %}">Edit</a>              </li>
+               <li><a href="{% url 'checklist:view' %}">Review</a>            </li>
+               <li><a href="{% url 'checklist:questions' %}">Question List</a></li>
+            </ul>
          </div>
       {% endblock %}
    </div>
