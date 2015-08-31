@@ -3,17 +3,23 @@ from django.shortcuts import get_object_or_404, get_list_or_404,render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 import pprint
 
 from django.http import HttpResponse
 #from django.template import RequestContext, loader
 from .models import Question,Answer
 
-@login_required
 def index(request):
     latest_question_list = Question.objects.order_by('-question_text')[:5]
     # this is a shortcut
-    context = {'latest_question_list': latest_question_list}
+    publish_url = ""
+    if(request.user.is_authenticated() ):
+        publish_url  = request.get_host()+ reverse('checklist:view',args=str(request.user.id))
+
+    context = {'latest_question_list': latest_question_list,
+               'publish_url': publish_url
+               }
     return render(request, 'checklist/index.html', context)
     # for this
 
@@ -22,6 +28,10 @@ def index(request):
     #    'latest_question_list': latest_question_list,
     #})
     #return HttpResponse(template.render(context))
+
+def instructions(request):
+    return render(request, 'checklist/instructions.html')
+
 
 choices = {}
 choices['rating'] = \
@@ -85,14 +95,27 @@ def get_answers_list (user, questions):
     return results
 
 @login_required
-def view(request):
+def review(request):
     questions = get_list_or_404(Question)
 
     return render(request, 'checklist/view.html', {
         'questions': get_answers_list(request.user,questions), 
         'choices_context': choices_context, 
-        'choices': choices
+        'choices': choices,
+        'user' : request.user,
         })
+
+def view(request,user_id):
+    questions = get_list_or_404(Question)
+    user = get_object_or_404(User,id=user_id)
+
+    return render(request, 'checklist/view.html', {
+        'questions': get_answers_list(user,questions),
+        'choices_context': choices_context,
+        'choices': choices,
+        'user' : user,
+        })
+
 
 @login_required
 def edit(request):

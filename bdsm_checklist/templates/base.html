@@ -20,15 +20,17 @@
          <div class='headline'>BDSM Checklist</div>
          <div class='toolbar'>
             <ul>
-               <li><a href="{% url 'checklist:index' %}">Home</a>             </li>
-               <li><a href="{% url 'checklist:edit' %}">Edit</a>              </li>
-               <li><a href="{% url 'checklist:view' %}">Review</a>            </li>
+               <li><a href="{% url 'checklist:index'  %}">Home         </a></li>
+               {% if request.user.is_authenticated %}
+                  <li><a href="{% url 'checklist:edit'      %}">Edit         </a></li>
+                  <li><a href="{% url 'checklist:review'    %}">Review       </a></li>
+                {% endif %}
                <li><a href="{% url 'checklist:questions' %}">Question List</a></li>
             </ul>
          </div>
       {% endblock %}
    </div>
-
+   <br />
    <div id="content">
        {% block content %}{% endblock %}
    </div>
@@ -37,12 +39,18 @@
    <div class='site-footer'>
        {% block footer %}
        {# kts can't figure out how to reverse lookup logout #}
-       You are logged in as {{ request.user }} <a href=/accounts/logout>
-         Logout
-       </a>
-         <div class ='credits'>
-             Created by Kevin Seghetti. <a href="mailto:kts@tenetti.org?Subject=BDSM checklist" target="_top">Email me</a> with questions or feedback
-         </div>
+       {% if request.user.is_authenticated %}
+         You are logged in as {{ request.user }}
+         <a href=/accounts/logout>Logout</a>
+       {% else %}
+         You are not logged in
+         <a href=/accounts/login>Login</a>
+         <a href=/accounts/register>Register</a>
+
+       {% endif %}
+       <div class ='credits'>
+           Created by Kevin Seghetti. <a href="mailto:kts@tenetti.org?Subject=BDSM checklist" target="_top">Email me</a> with questions or feedback
+       </div>
        {% endblock %}
    </div>
 </div>
