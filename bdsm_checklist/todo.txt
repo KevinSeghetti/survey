@@ -1,6 +1,8 @@
 make table dropdown allow showing 200 entries
 
-get graphic back on main page
+fix bug in routing after logging in 
+check routing after account creation
+*get graphic back on main page
 write more copy for main page
 add download as CSV or excel link
 make printable version
@@ -10,10 +12,10 @@ add per item editor, linked from review page (only when logged in)(
 make logged out page better
 make login page better
 make register page better
-make footer better when not logged in (show login link instead of logout link) 
+*make footer better when not logged in (show login link instead of logout link) 
 release source on github
 look for more artwork
 add user settings page, change password, delete account, etc.
 add user controls over visibility of answers 
-add 'publish' link
+*add 'publish' link
 get email working
