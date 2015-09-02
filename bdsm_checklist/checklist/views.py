@@ -116,6 +116,18 @@ def view(request,user_id):
         'user' : user,
         })
 
+@login_required
+def resume(request):
+
+    questions = Question.objects.exclude(
+       id__in=Question.objects.filter(answer__user=request.user, answer__question__isnull=False)
+    )
+
+    return render(request, 'checklist/edit.html', {
+        'questions': get_answers_list(request.user, questions),
+        'choices_context': choices_context,
+        'choices': choices
+        })
 
 @login_required
 def edit(request):

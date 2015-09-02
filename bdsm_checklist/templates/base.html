@@ -20,10 +20,11 @@
          <div class='headline'>BDSM Checklist</div>
          <div class='toolbar'>
             <ul>
-               <li><a href="{% url 'checklist:index'  %}">Home         </a></li>
+               <li><a href="{% url 'checklist:index'  %}">Home            </a></li>
                {% if request.user.is_authenticated %}
-                  <li><a href="{% url 'checklist:edit'      %}">Edit         </a></li>
-                  <li><a href="{% url 'checklist:review'    %}">Review       </a></li>
+                  <li><a href="{% url 'checklist:edit'      %}">Edit      </a></li>
+                  <li><a href="{% url 'checklist:resume'    %}">Resume    </a></li>
+                  <li><a href="{% url 'checklist:review'    %}">Review    </a></li>
                 {% endif %}
                <li><a href="{% url 'checklist:questions' %}">Question List</a></li>
             </ul>
