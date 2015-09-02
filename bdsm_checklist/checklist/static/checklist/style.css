@@ -1,29 +1,27 @@
+.question-edit .odd {
+  background-color: #c05442; }
+.question-edit .even {
+  background-color: #f79788; }
 .question-edit .topic-headline {
   display: inline;
   font-size: 26px;
   line-height: 40px; }
-
 .question-edit .topic-detail {
   display: inline;
   font-size: 16px;
   line-height: 20px;
   font-style: italic;
   margin-left: 5%; }
-
 .question-edit .context {
   margin-left: 5%; }
-
 .question-edit .context-headline {
   font-size: 16px;
   line-height: 20px;
   font-weight: bold; }
-
 .question-edit .question-headline + .question {
   display: inline; }
-
 .question-edit .question.small {
   display: inline; }
-
 .question-edit .question-headline {
   font-weight: bold;
   display: inline;
@@ -31,7 +29,7 @@
   line-height: 20px; }
 
 #content .question-view {
-  color: #f79788; }
+  color: black; }
   #content .question-view thead {
     background-color: green;
     color: white;

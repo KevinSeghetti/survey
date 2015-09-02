@@ -1,46 +1,57 @@
 @import '_colors';
 
-.question-edit .topic {
-}
 
-.question-edit .topic-headline {
-    display:inline;
-    font-size: 26px;
-    line-height: 40px;
-}
-.question-edit .topic-detail {
-    display:inline;
-    font-size: 16px;
-    line-height: 20px;
-    font-style: italic;
-    margin-left: 5%
-}
+.question-edit {
 
-.question-edit .context {
-   margin-left: 5%
-}
+    .topic {
+   }
 
-.question-edit .context-headline {
-   font-size: 16px;
-   line-height: 20px;
-   font-weight: bold;
-}
+   .odd {
+      background-color:   $color-primary-0;
+   }
 
-.question-edit .question-headline+.question {
-   display:inline
-}
+   .even {
+      background-color:   $color-primary-2;
 
-.question-edit .question.small {
-   display:inline
-}
+   }
+   .topic-headline {
+       display:inline;
+       font-size: 26px;
+       line-height: 40px;
+   }
+   .topic-detail {
+       display:inline;
+       font-size: 16px;
+       line-height: 20px;
+       font-style: italic;
+       margin-left: 5%
+   }
 
-.question-edit .question-headline {
-   font-weight: bold;
-   display:inline;
-   font-size: 12px;
-   line-height: 20px;
-}
+   .context {
+      margin-left: 5%
+   }
 
+   .context-headline {
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: bold;
+   }
+
+   .question-headline+.question {
+      display:inline
+   }
+
+   .question.small {
+      display:inline
+   }
+
+   .question-headline {
+      font-weight: bold;
+      display:inline;
+      font-size: 12px;
+      line-height: 20px;
+   }
+}
 
 #content .question-view {
     color:   black;

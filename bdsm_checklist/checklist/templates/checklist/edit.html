@@ -5,13 +5,15 @@
 <div class="question-edit">
 
    <div>
-       This is an interactive version of a checklist I found
-       <a href="https://web.archive.org/web/20150128121457/http://www.cepemo.com/checklist.html">
-       here</a>
+       Select A rating for each question. You don't have to fill this out all at once, you can save your progress
+       and come back to the rest later. (select resume to get a question list containing only the questions
+       you haven't answered yet.
+
        Instructions can be found <a href="/static/checklist/instructions.html">
        here
        </a>
    </div>
+    <hr>
 
    {% load checklist_extras %}
    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -19,37 +21,39 @@
    <form action="{% url 'checklist:set' %}" method="post">
    {% csrf_token %}
    {% for node in questions %}
-      <span class='topic-headline'>{{ node.question.question_text }}</span>
-      <span class='topic-detail'>{{node.question.question_detail }}</span>
-      <div class='topic'>
-         {% for context in choices_context %}
-            <span class='context-headline'>
-               {{ context.description }}
-            </span>
-            <div class='context'>
-               {% with answer=node.answers|keyvalue:context.name partial_key=node.question.id|addstr:'_'|addstr:context.name %}
-                  <span class='question-headline'>
-                    Rating
-                  </span>
-                  <div class='question'>
-                     {% for choice in choices.rating %}
-                        <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ forloop.counter0 }}" 
-                        {% if answer.rating|integer == forloop.counter0  %}
-                            checked="checked"
-                        {% endif %}/>
-                        <label >{{ choice }}</label>
-                     {% endfor %}
-                  </div>
-                  <div class='booleans' >
-                     {% for choice in choices.booleans %}
-                        <div class='question small'>
-                           <input type="checkbox" name="{{partial_key|addstr:'_'|addstr:choice.name}}"  {% if answer|objgetattr:choice.name %}checked{% endif %}> {{choice.description}}
-                        </div>
-                     {% endfor %}
-                  </div>
-               {% endwith %}
-            </div>
-         {% endfor %}
+      <div class="question {% cycle 'odd' 'even' %}" >
+         <span class='topic-headline'>{{ node.question.question_text }}</span>
+         <span class='topic-detail'>{{node.question.question_detail }}</span>
+         <div class='topic'>
+            {% for context in choices_context %}
+               <span class='context-headline'>
+                  {{ context.description }}
+               </span>
+               <div class='context'>
+                  {% with answer=node.answers|keyvalue:context.name partial_key=node.question.id|addstr:'_'|addstr:context.name %}
+                     <span class='question-headline'>
+                       Rating
+                     </span>
+                     <div class='question'>
+                        {% for choice in choices.rating %}
+                           <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ forloop.counter0 }}"
+                           {% if answer.rating|integer == forloop.counter0  %}
+                               checked="checked"
+                           {% endif %}/>
+                           <label >{{ choice }}</label>
+                        {% endfor %}
+                     </div>
+                     <div class='booleans' >
+                        {% for choice in choices.booleans %}
+                           <div class='question small'>
+                              <input type="checkbox" name="{{partial_key|addstr:'_'|addstr:choice.name}}"  {% if answer|objgetattr:choice.name %}checked{% endif %}> {{choice.description}}
+                           </div>
+                        {% endfor %}
+                     </div>
+                  {% endwith %}
+               </div>
+            {% endfor %}
+         </div>
       </div>
    {% endfor %}<BR />
 
