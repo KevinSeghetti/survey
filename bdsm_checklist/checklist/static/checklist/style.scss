@@ -43,6 +43,8 @@
 
 
 #content .question-view {
+    color:   black;
+
     thead {
        background-color: green;
        color: white;
@@ -64,6 +66,7 @@
 
    tbody {
       background-color:   $color-secondary-1-1;
+      color:   black;
    }
 
    table#view-table {
