@@ -69,18 +69,22 @@
    table#view-table {
       background-color:   $color-secondary-1-1;
        border-collapse: collapse;
-       tr {
-         background-color:   $color-secondary-1-1;
-       }
    }
 
    td {
-      background-color:   $color-secondary-1-2;
        border-collapse: collapse;
        font-size: 16px;
        line-height: 20px;
        padding: 5px 5px;
 
+   }
+
+   tr.even {
+      background-color:   $color-secondary-1-2;
+   }
+
+   tr.odd {
+      background-color:   $color-secondary-1-1;
    }
 
    #view-table_info {
