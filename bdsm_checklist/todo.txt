@@ -1,6 +1,6 @@
 
+make alt text for checkbox images, so they print
 write more copy for main page
-make printable version
 add 'N/A' to rating
 make logged out page better
 make login page better
@@ -15,6 +15,7 @@ add user controls over visibility of answers
 add download as CSV or excel link
 get email working
 
+*make printable version
 *add per item editor, linked from review page (only when logged in)(
 *make footer better when not logged in (show login link instead of logout link)
 *add 'publish' link
