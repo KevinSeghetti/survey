@@ -1,28 +1,28 @@
-.question-edit .odd {
+.question-edit .odd, .question-detail .odd {
   background-color: #c05442; }
-.question-edit .even {
+.question-edit .even, .question-detail .even {
   background-color: #f79788; }
-.question-edit .topic-headline {
+.question-edit .topic-headline, .question-detail .topic-headline {
   display: inline;
   font-size: 26px;
   line-height: 40px; }
-.question-edit .topic-detail {
+.question-edit .topic-detail, .question-detail .topic-detail {
   display: inline;
   font-size: 16px;
   line-height: 20px;
   font-style: italic;
   margin-left: 5%; }
-.question-edit .context {
+.question-edit .context, .question-detail .context {
   margin-left: 5%; }
-.question-edit .context-headline {
+.question-edit .context-headline, .question-detail .context-headline {
   font-size: 16px;
   line-height: 20px;
   font-weight: bold; }
-.question-edit .question-headline + .question {
+.question-edit .question-headline + .question, .question-detail .question-headline + .question {
   display: inline; }
-.question-edit .question.small {
+.question-edit .question.small, .question-detail .question.small {
   display: inline; }
-.question-edit .question-headline {
+.question-edit .question-headline, .question-detail .question-headline {
   font-weight: bold;
   display: inline;
   font-size: 12px;

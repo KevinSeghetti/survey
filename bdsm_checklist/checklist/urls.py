@@ -8,7 +8,7 @@ urlpatterns = [
     # ex: /checklist/instructions
     url(r'^instructions/$', views.instructions, name='instructions'),
     # ex: /polls/5/
-    url(r'^(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
+    url(r'^detail/(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
     # ex: /checklist/questions/
     url(r'^questions/$', views.questions, name='questions'),
     # ex: /checklist/edit/

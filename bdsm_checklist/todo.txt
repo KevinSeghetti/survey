@@ -1,21 +1,26 @@
-make table dropdown allow showing 200 entries
 
-fix bug in routing after logging in 
+fix bug in routing after logging in
 check routing after account creation
-*get graphic back on main page
 write more copy for main page
-add download as CSV or excel link
 make printable version
-make edit only items not yet filled out
 add 'N/A' to rating
-add per item editor, linked from review page (only when logged in)(
 make logged out page better
 make login page better
 make register page better
-*make footer better when not logged in (show login link instead of logout link) 
+add a notes section to each answer, plus an overall notes section
+
+add ability to create new questions, and have question groups
 release source on github
 look for more artwork
 add user settings page, change password, delete account, etc.
-add user controls over visibility of answers 
-*add 'publish' link
+add user controls over visibility of answers
+add download as CSV or excel link
 get email working
+
+*add per item editor, linked from review page (only when logged in)(
+*make footer better when not logged in (show login link instead of logout link)
+*add 'publish' link
+*get graphic back on main page
+*make edit only items not yet filled out
+*make table dropdown allow showing 200 entries
+

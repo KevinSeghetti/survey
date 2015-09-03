@@ -66,7 +66,13 @@ def detail(request, question_id):
     #    question = Question.objects.get(pk=question_id)
     #except Question.DoesNotExist:
     #    raise Http404("Question does not exist")
-    return render(request, 'checklist/detail.html', {'question': question, 'choices_context': choices_context, 'choices': choices})
+    return render(request, 'checklist/detail.html', {
+        'node': get_answers_list(request.user, [question])[0],
+        'choices_context': choices_context,
+        'choices': choices,
+        'user' : request.user,
+        })
+
 
 def questions(request):
     question_list = Question.objects.order_by('-question_text')
@@ -90,8 +96,8 @@ def get_answers_list (user, questions):
                 if 'answers' not in node:
                     node['answers'] = {}
                 node['answers'][context["name"]] = answer
-    #print("answer list results")
-    #pprint.pprint(results)
+    print("answer list results")
+    pprint.pprint(results)
     return results
 
 @login_required

@@ -35,7 +35,15 @@
       {% for node in questions %}
          {% if node.answers %}
             <tr>
-                  <td class='topic-headline'>{{ node.question.question_text }}</td>
+                  <td class='topic-headline'>
+                     {% if request.user.is_authenticated %}
+                        <a href="{% url 'checklist:detail' node.question.id %} " >
+                           {{ node.question.question_text }}
+                        </a>
+                      {% else %}
+                           {{ node.question.question_text }}
+                      {% endif %}
+                  </td>
                   {% for context in choices_context %}
                      {% with answer=node.answers|keyvalue:context.name partial_key=node.question.id|addstr:'_'|addstr:context.name %}
                         {% with answerrating=answer.rating %}
