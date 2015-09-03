@@ -4,24 +4,24 @@
  *
  * To rebuild or modify this file with the latest versions of the included
  * software please visit:
- *   https://datatables.net/download/#dt/dt-1.10.8,cr-1.2.0,fh-3.0.0,r-1.0.7,sc-1.3.0
+ *   https://datatables.net/download/#dt/dt-1.10.9,b-1.0.3,b-colvis-1.0.3,b-print-1.0.3,fh-3.0.0,r-1.0.7,sc-1.3.0
  *
  * Included libraries:
- *   DataTables 1.10.8, ColReorder 1.2.0, FixedHeader 3.0.0, Responsive 1.0.7, Scroller 1.3.0
+ *   DataTables 1.10.9, Buttons 1.0.3, Column visibility 1.0.3, Print view 1.0.3, FixedHeader 3.0.0, Responsive 1.0.7, Scroller 1.3.0
  */
 
-/*! DataTables 1.10.8
- * ©2008-2014 SpryMedia Ltd - datatables.net/license
+/*! DataTables 1.10.9
+ * ©2008-2015 SpryMedia Ltd - datatables.net/license
  */
 
 /**
  * @summary     DataTables
  * @description Paginate, search and order HTML tables
- * @version     1.10.8
+ * @version     1.10.9
  * @file        jquery.dataTables.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
  * @contact     www.sprymedia.co.uk/contact
- * @copyright   Copyright 2008-2014 SpryMedia Ltd.
+ * @copyright   Copyright 2008-2015 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:
  *   MIT license - http://datatables.net/license
@@ -34,7 +34,7 @@
  */
 
 /*jslint evil: true, undef: true, browser: true */
-/*globals $,require,jQuery,define,_selector_run,_selector_opts,_selector_first,_selector_row_indexes,_ext,_Api,_api_register,_api_registerPlural,_re_new_lines,_re_html,_re_formatted_numeric,_re_escape_regex,_empty,_intVal,_numToDecimal,_isNumber,_isHtml,_htmlNumeric,_pluck,_pluck_order,_range,_stripHtml,_unique,_fnBuildAjax,_fnAjaxUpdate,_fnAjaxParameters,_fnAjaxUpdateDraw,_fnAjaxDataSrc,_fnAddColumn,_fnColumnOptions,_fnAdjustColumnSizing,_fnVisibleToColumnIndex,_fnColumnIndexToVisible,_fnVisbleColumns,_fnGetColumns,_fnColumnTypes,_fnApplyColumnDefs,_fnHungarianMap,_fnCamelToHungarian,_fnLanguageCompat,_fnBrowserDetect,_fnAddData,_fnAddTr,_fnNodeToDataIndex,_fnNodeToColumnIndex,_fnGetCellData,_fnSetCellData,_fnSplitObjNotation,_fnGetObjectDataFn,_fnSetObjectDataFn,_fnGetDataMaster,_fnClearTable,_fnDeleteIndex,_fnInvalidate,_fnGetRowElements,_fnCreateTr,_fnBuildHead,_fnDrawHead,_fnDraw,_fnReDraw,_fnAddOptionsHtml,_fnDetectHeader,_fnGetUniqueThs,_fnFeatureHtmlFilter,_fnFilterComplete,_fnFilterCustom,_fnFilterColumn,_fnFilter,_fnFilterCreateSearch,_fnEscapeRegex,_fnFilterData,_fnFeatureHtmlInfo,_fnUpdateInfo,_fnInfoMacros,_fnInitialise,_fnInitComplete,_fnLengthChange,_fnFeatureHtmlLength,_fnFeatureHtmlPaginate,_fnPageChange,_fnFeatureHtmlProcessing,_fnProcessingDisplay,_fnFeatureHtmlTable,_fnScrollDraw,_fnApplyToChildren,_fnCalculateColumnWidths,_fnThrottle,_fnConvertToWidth,_fnGetWidestNode,_fnGetMaxLenString,_fnStringToCss,_fnScrollBarWidth,_fnSortFlatten,_fnSort,_fnSortAria,_fnSortListener,_fnSortAttachListener,_fnSortingClasses,_fnSortData,_fnSaveState,_fnLoadState,_fnSettingsFromNode,_fnLog,_fnMap,_fnBindAction,_fnCallbackReg,_fnCallbackFire,_fnLengthOverflow,_fnRenderer,_fnDataSource,_fnRowAttributes*/
+/*globals $,require,jQuery,define,_selector_run,_selector_opts,_selector_first,_selector_row_indexes,_ext,_Api,_api_register,_api_registerPlural,_re_new_lines,_re_html,_re_formatted_numeric,_re_escape_regex,_empty,_intVal,_numToDecimal,_isNumber,_isHtml,_htmlNumeric,_pluck,_pluck_order,_range,_stripHtml,_unique,_fnBuildAjax,_fnAjaxUpdate,_fnAjaxParameters,_fnAjaxUpdateDraw,_fnAjaxDataSrc,_fnAddColumn,_fnColumnOptions,_fnAdjustColumnSizing,_fnVisibleToColumnIndex,_fnColumnIndexToVisible,_fnVisbleColumns,_fnGetColumns,_fnColumnTypes,_fnApplyColumnDefs,_fnHungarianMap,_fnCamelToHungarian,_fnLanguageCompat,_fnBrowserDetect,_fnAddData,_fnAddTr,_fnNodeToDataIndex,_fnNodeToColumnIndex,_fnGetCellData,_fnSetCellData,_fnSplitObjNotation,_fnGetObjectDataFn,_fnSetObjectDataFn,_fnGetDataMaster,_fnClearTable,_fnDeleteIndex,_fnInvalidate,_fnGetRowElements,_fnCreateTr,_fnBuildHead,_fnDrawHead,_fnDraw,_fnReDraw,_fnAddOptionsHtml,_fnDetectHeader,_fnGetUniqueThs,_fnFeatureHtmlFilter,_fnFilterComplete,_fnFilterCustom,_fnFilterColumn,_fnFilter,_fnFilterCreateSearch,_fnEscapeRegex,_fnFilterData,_fnFeatureHtmlInfo,_fnUpdateInfo,_fnInfoMacros,_fnInitialise,_fnInitComplete,_fnLengthChange,_fnFeatureHtmlLength,_fnFeatureHtmlPaginate,_fnPageChange,_fnFeatureHtmlProcessing,_fnProcessingDisplay,_fnFeatureHtmlTable,_fnScrollDraw,_fnApplyToChildren,_fnCalculateColumnWidths,_fnThrottle,_fnConvertToWidth,_fnGetWidestNode,_fnGetMaxLenString,_fnStringToCss,_fnSortFlatten,_fnSort,_fnSortAria,_fnSortListener,_fnSortAttachListener,_fnSortingClasses,_fnSortData,_fnSaveState,_fnLoadState,_fnSettingsFromNode,_fnLog,_fnMap,_fnBindAction,_fnCallbackReg,_fnCallbackFire,_fnLengthOverflow,_fnRenderer,_fnDataSource,_fnRowAttributes*/
 
 (/** @lends <global> */function( window, document, undefined ) {
 
@@ -526,52 +526,76 @@
 	 */
 	function _fnBrowserDetect( settings )
 	{
-		var browser = settings.oBrowser;
+		// We don't need to do this every time DataTables is constructed, the values
+		// calculated are specific to the browser and OS configuration which we
+		// don't expect to change between initialisations
+		if ( ! DataTable.__browser ) {
+			var browser = {};
+			DataTable.__browser = browser;
 	
-		// Scrolling feature / quirks detection
-		var n = $('<div/>')
-			.css( {
-				position: 'fixed',
-				top: 0,
-				left: 0,
-				height: 1,
-				width: 1,
-				overflow: 'hidden'
-			} )
-			.append(
-				$('<div/>')
-					.css( {
-						position: 'absolute',
-						top: 1,
-						left: 1,
-						width: 100,
-						overflow: 'scroll'
-					} )
-					.append(
-						$('<div class="test"/>')
-							.css( {
-								width: '100%',
-								height: 10
-							} )
-					)
-			)
-			.appendTo( 'body' );
+			// Scrolling feature / quirks detection
+			var n = $('<div/>')
+				.css( {
+					position: 'fixed',
+					top: 0,
+					left: 0,
+					height: 1,
+					width: 1,
+					overflow: 'hidden'
+				} )
+				.append(
+					$('<div/>')
+						.css( {
+							position: 'absolute',
+							top: 1,
+							left: 1,
+							width: 100,
+							overflow: 'scroll'
+						} )
+						.append(
+							$('<div/>')
+								.css( {
+									width: '100%',
+									height: 10
+								} )
+						)
+				)
+				.appendTo( 'body' );
 	
-		var test = n.find('.test');
+			var outer = n.children();
+			var inner = outer.children();
 	
-		// IE6/7 will oversize a width 100% element inside a scrolling element, to
-		// include the width of the scrollbar, while other browsers ensure the inner
-		// element is contained without forcing scrolling
-		browser.bScrollOversize = test[0].offsetWidth === 100;
+			// Numbers below, in order, are:
+			// inner.offsetWidth, inner.clientWidth, outer.offsetWidth, outer.clientWidth
+			//
+			// IE6 XP:                           100 100 100  83
+			// IE7 Vista:                        100 100 100  83
+			// IE 8+ Windows:                     83  83 100  83
+			// Evergreen Windows:                 83  83 100  83
+			// Evergreen Mac with scrollbars:     85  85 100  85
+			// Evergreen Mac without scrollbars: 100 100 100 100
 	
-		// In rtl text layout, some browsers (most, but not all) will place the
-		// scrollbar on the left, rather than the right.
-		browser.bScrollbarLeft = Math.round( test.offset().left ) !== 1;
+			// Get scrollbar width
+			browser.barWidth = outer[0].offsetWidth - outer[0].clientWidth;
 	
-		// IE8- don't provide height and width for getBoundingClientRect
-		browser.bBounding = n[0].getBoundingClientRect().width ? true : false;
+			// IE6/7 will oversize a width 100% element inside a scrolling element, to
+			// include the width of the scrollbar, while other browsers ensure the inner
+			// element is contained without forcing scrolling
+			//console.log( inner.offsetWidth );
+			browser.bScrollOversize = inner[0].offsetWidth === 100 && outer[0].clientWidth !== 100;
 	
-		n.remove();
+			// In rtl text layout, some browsers (most, but not all) will place the
+			// scrollbar on the left, rather than the right.
+			browser.bScrollbarLeft = Math.round( inner.offset().left ) !== 1;
+	
+			// IE8- don't provide height and width for getBoundingClientRect
+			browser.bBounding = n[0].getBoundingClientRect().width ? true : false;
+	
+			n.remove();
+		}
+	
+		$.extend( settings.oBrowser, DataTable.__browser );
+		settings.oScroll.iBarWidth = DataTable.__browser.barWidth;
 	}
 	
 	
@@ -1038,14 +1062,10 @@
 		/* Create the cells */
 		var nTd, sThisType;
 		var columns = oSettings.aoColumns;
+	
+		// Invalidate the column types as the new data needs to be revalidated
 		for ( var i=0, iLen=columns.length ; i<iLen ; i++ )
 		{
-			// When working with a row, the data source object must be populated. In
-			// all other cases, the data source object is already populated, so we
-			// don't overwrite it, which might break bindings etc
-			if ( nTr ) {
-				_fnSetCellData( oSettings, iRow, i, _fnGetCellData( oSettings, iRow, i ) );
-			}
 			columns[i].sType = null;
 		}
 	
@@ -1283,8 +1303,10 @@
 							innerSrc = a.join('.');
 	
 							// Traverse each entry in the array getting the properties requested
-							for ( var j=0, jLen=data.length ; j<jLen ; j++ ) {
-								out.push( fetchData( data[j], type, innerSrc ) );
+							if ( $.isArray( data ) ) {
+								for ( var j=0, jLen=data.length ; j<jLen ; j++ ) {
+									out.push( fetchData( data[j], type, innerSrc ) );
+								}
 							}
 	
 							// If a string is given in between the array notation indicators, that
@@ -1384,11 +1406,21 @@
 						innerSrc = b.join('.');
 	
 						// Traverse each entry in the array setting the properties requested
-						for ( var j=0, jLen=val.length ; j<jLen ; j++ )
+						if ( $.isArray( val ) )
 						{
-							o = {};
-							setData( o, val[j], innerSrc );
-							data[ a[i] ].push( o );
+							for ( var j=0, jLen=val.length ; j<jLen ; j++ )
+							{
+								o = {};
+								setData( o, val[j], innerSrc );
+								data[ a[i] ].push( o );
+							}
+						}
+						else
+						{
+							// We've been asked to save data to an array, but it
+							// isn't array data to be saved. Best that can be done
+							// is to just save the value.
+							data[ a[i] ] = val;
 						}
 	
 						// The inner call to setData has already traversed through the remainder
@@ -1461,6 +1493,7 @@
 		settings.aoData.length = 0;
 		settings.aiDisplayMaster.length = 0;
 		settings.aiDisplay.length = 0;
+		settings.aIds = {};
 	}
 	
 	
@@ -1598,7 +1631,11 @@
 			objectRead = settings._rowReadObject;
 	
 		// Allow the data object to be passed in, or construct
-		d = d || objectRead ? {} : [];
+		d = d !== undefined ?
+			d :
+			objectRead ?
+				{} :
+				[];
 	
 		var attr = function ( str, td  ) {
 			if ( typeof str === 'string' ) {
@@ -1668,9 +1705,14 @@
 		}
 	
 		// Read the ID from the DOM if present
-		var id = row.getAttribute( 'id' );
-		if ( id ) {
-			_fnSetObjectDataFn( settings.rowId )( d, id );
+		var rowNode = td ? row : row.nTr;
+	
+		if ( rowNode ) {
+			var id = rowNode.getAttribute( 'id' );
+	
+			if ( id ) {
+				_fnSetObjectDataFn( settings.rowId )( d, id );
+			}
 		}
 	
 		return {
@@ -2945,7 +2987,7 @@
 			// So the array reference doesn't break set the results into the
 			// existing array
 			displayRows.length = 0;
-			displayRows.push.apply( displayRows, rows );
+			$.merge( displayRows, rows );
 		}
 	}
 	
@@ -4148,7 +4190,11 @@
 		     columnCount == headerCells.length
 		) {
 			for ( i=0 ; i<columnCount ; i++ ) {
-				columns[i].sWidth = _fnStringToCss( headerCells.eq(i).width() );
+				var colIdx = _fnVisibleToColumnIndex( oSettings, i );
+	
+				if ( colIdx ) {
+					columns[ colIdx ].sWidth = _fnStringToCss( headerCells.eq(i).width() );
+				}
 			}
 		}
 		else
@@ -4442,40 +4488,6 @@
 	}
 	
 	
-	/**
-	 * Get the width of a scroll bar in this browser being used
-	 *  @returns {int} width in pixels
-	 *  @memberof DataTable#oApi
-	 */
-	function _fnScrollBarWidth ()
-	{
-		// On first run a static variable is set, since this is only needed once.
-		// Subsequent runs will just use the previously calculated value
-		var width = DataTable.__scrollbarWidth;
-	
-		if ( width === undefined ) {
-			var sizer = $('<p/>').css( {
-					position: 'absolute',
-					top: 0,
-					left: 0,
-					width: '100%',
-					height: 150,
-					padding: 0,
-					overflow: 'scroll',
-					visibility: 'hidden'
-				} )
-				.appendTo('body');
-	
-			width = sizer[0].offsetWidth - sizer[0].clientWidth;
-			DataTable.__scrollbarWidth = width;
-	
-			sizer.remove();
-		}
-	
-		return width;
-	}
-	
-	
 	
 	function _fnSortFlatten ( settings )
 	{
@@ -4495,7 +4507,7 @@
 				}
 				else {
 					// 2D array
-					nestedSort.push.apply( nestedSort, a );
+					$.merge( nestedSort, a );
 				}
 			};
 	
@@ -6291,6 +6303,9 @@
 			
 			oSettings.rowIdFn = _fnGetObjectDataFn( oInit.rowId );
 			
+			/* Browser support detection */
+			_fnBrowserDetect( oSettings );
+			
 			var oClasses = oSettings.oClasses;
 			
 			// @todo Remove in 1.11
@@ -6320,11 +6335,6 @@
 			}
 			$this.addClass( oClasses.sTable );
 			
-			/* Calculate the scroll bar width and cache it for use later on */
-			if ( oSettings.oScroll.sX !== "" || oSettings.oScroll.sY !== "" )
-			{
-				oSettings.oScroll.iBarWidth = _fnScrollBarWidth();
-			}
 			
 			if ( oSettings.iInitDisplayStart === undefined )
 			{
@@ -6435,7 +6445,7 @@
 					return cell.getAttribute( 'data-'+name ) !== null ? name : null;
 				};
 			
-				$.each( _fnGetRowElements( oSettings, rowOne[0] ).cells, function (i, cell) {
+				$( rowOne[0] ).children('th, td').each( function (i, cell) {
 					var col = oSettings.aoColumns[i];
 			
 					if ( col.mData === i ) {
@@ -6516,9 +6526,6 @@
 			 * Final init
 			 * Cache the header, body and footer as required, creating them if needed
 			 */
-			
-			/* Browser support detection */
-			_fnBrowserDetect( oSettings );
 			
 			// Work around for Webkit bug 83867 - store the caption-side before removing from doc
 			var captions = $this.children('caption').each( function () {
@@ -6765,7 +6772,7 @@
 		var ctxSettings = function ( o ) {
 			var a = _toSettings( o );
 			if ( a ) {
-				settings.push.apply( settings, a );
+				settings = settings.concat( a );
 			}
 		};
 	
@@ -6783,7 +6790,7 @@
 	
 		// Initial data
 		if ( data ) {
-			this.push.apply( this, data.toArray ? data.toArray() : data );
+			$.merge( this, data );
 		}
 	
 		// selector
@@ -6798,7 +6805,9 @@
 	
 	DataTable.Api = _Api;
 	
-	_Api.prototype = /** @lends DataTables.Api */{
+	// Don't destroy the existing prototype, just extend it. Required for jQuery 2's
+	// isPlainObject.
+	$.extend( _Api.prototype, {
 		any: function ()
 		{
 			return this.count() !== 0;
@@ -7044,7 +7053,7 @@
 	
 	
 		unshift: __arrayProto.unshift
-	};
+	} );
 	
 	
 	_Api.extend = function ( scope, obj, ext )
@@ -7594,7 +7603,7 @@
 				res = selectFn( typeof a[j] === 'string' ? $.trim(a[j]) : a[j] );
 	
 				if ( res && res.length ) {
-					out.push.apply( out, res );
+					out = out.concat( res );
 				}
 			}
 		}
@@ -7607,7 +7616,7 @@
 			}
 		}
 	
-		return out;
+		return _unique( out );
 	};
 	
 	
@@ -7878,6 +7887,7 @@
 	
 		this.iterator( 'row', function ( settings, row, thatIdx ) {
 			var data = settings.aoData;
+			var rowData = data[ row ];
 	
 			data.splice( row, 1 );
 	
@@ -7895,6 +7905,12 @@
 	
 			// Check for an 'overflow' they case for displaying the table
 			_fnLengthOverflow( settings );
+	
+			// Remove the row's ID reference if there is one
+			var id = settings.rowIdFn( rowData._aData );
+			if ( id !== undefined ) {
+				delete settings.aIds[ id ];
+			}
 		} );
 	
 		this.iterator( 'table', function ( settings ) {
@@ -7929,7 +7945,7 @@
 		// Return an Api.rows() extended instance, so rows().nodes() etc can be used
 		var modRows = this.rows( -1 );
 		modRows.pop();
-		modRows.push.apply( modRows, newRows.toArray() );
+		$.merge( modRows, newRows );
 	
 		return modRows;
 	} );
@@ -8511,7 +8527,7 @@
 	
 						if ( fnSelector ) {
 							// Selector - function
-							host = settings.aoData[ row ];
+							host = data[ row ];
 	
 							if ( s( o, _fnGetCellData(settings, row, j), host.anCells ? host.anCells[j] : null ) ) {
 								a.push( o );
@@ -8536,7 +8552,19 @@
 			return allCells
 				.filter( s )
 				.map( function (i, el) {
-					row = el.parentNode._DT_RowIndex;
+					if ( el.parentNode ) {
+						row = el.parentNode._DT_RowIndex;
+					}
+					else {
+						// If no parent node, then the cell is hidden and we'll need
+						// to traverse the array to find it
+						for ( i=0, ien=data.length ; i<ien ; i++ ) {
+							if ( $.inArray( el, data[i].anCells ) !== -1 ) {
+								row = i;
+								break;
+							}
+						}
+					}
 	
 					return {
 						row: row,
@@ -9236,7 +9264,7 @@
 	 *  @type string
 	 *  @default Version number
 	 */
-	DataTable.version = "1.10.8";
+	DataTable.version = "1.10.9";
 
 	/**
 	 * Private data store, containing all of the settings objects that are
@@ -12955,7 +12983,14 @@
 			 *  @type boolean
 			 *  @default false
 			 */
-			"bBounding": false
+			"bBounding": false,
+	
+			/**
+			 * Browser scrollbar width
+			 *  @type integer
+			 *  @default 0
+			 */
+			"barWidth": 0
 		},
 	
 	
@@ -14892,7 +14927,6 @@
 		_fnGetWidestNode: _fnGetWidestNode,
 		_fnGetMaxLenString: _fnGetMaxLenString,
 		_fnStringToCss: _fnStringToCss,
-		_fnScrollBarWidth: _fnScrollBarWidth,
 		_fnSortFlatten: _fnSortFlatten,
 		_fnSort: _fnSort,
 		_fnSortAria: _fnSortAria,
@@ -15107,1244 +15141,1486 @@
 
 
 
-jQuery.fn.dataTable.ext.builder = "dt\/dt-1.10.8,cr-1.2.0,fh-3.0.0,r-1.0.7,sc-1.3.0";
+jQuery.fn.dataTable.ext.builder = "dt\/dt-1.10.9,b-1.0.3,b-colvis-1.0.3,b-print-1.0.3,fh-3.0.0,r-1.0.7,sc-1.3.0";
 
-/*! ColReorder 1.2.0
- * ©2010-2014 SpryMedia Ltd - datatables.net/license
+/*! Buttons for DataTables 1.0.3
+ * ©2015 SpryMedia Ltd - datatables.net/license
  */
-
-/**
- * @summary     ColReorder
- * @description Provide the ability to reorder columns in a DataTable
- * @version     1.2.0
- * @file        dataTables.colReorder.js
- * @author      SpryMedia Ltd (www.sprymedia.co.uk)
- * @contact     www.sprymedia.co.uk/contact
- * @copyright   Copyright 2010-2014 SpryMedia Ltd.
- *
- * This source file is free software, available under the following license:
- *   MIT license - http://datatables.net/license/mit
- *
- * This source file is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the license files for details.
- *
- * For details please refer to: http://www.datatables.net
- */
-
 (function(window, document, undefined) {
-
-
-/**
- * Switch the key value pairing of an index array to be value key (i.e. the old value is now the
- * key). For example consider [ 2, 0, 1 ] this would be returned as [ 1, 2, 0 ].
- *  @method  fnInvertKeyValues
- *  @param   array aIn Array to switch around
- *  @returns array
- */
-function fnInvertKeyValues( aIn )
-{
-	var aRet=[];
-	for ( var i=0, iLen=aIn.length ; i<iLen ; i++ )
-	{
-		aRet[ aIn[i] ] = i;
-	}
-	return aRet;
-}
-
-
-/**
- * Modify an array by switching the position of two elements
- *  @method  fnArraySwitch
- *  @param   array aArray Array to consider, will be modified by reference (i.e. no return)
- *  @param   int iFrom From point
- *  @param   int iTo Insert point
- *  @returns void
- */
-function fnArraySwitch( aArray, iFrom, iTo )
-{
-	var mStore = aArray.splice( iFrom, 1 )[0];
-	aArray.splice( iTo, 0, mStore );
-}
-
-
-/**
- * Switch the positions of nodes in a parent node (note this is specifically designed for
- * table rows). Note this function considers all element nodes under the parent!
- *  @method  fnDomSwitch
- *  @param   string sTag Tag to consider
- *  @param   int iFrom Element to move
- *  @param   int Point to element the element to (before this point), can be null for append
- *  @returns void
- */
-function fnDomSwitch( nParent, iFrom, iTo )
-{
-	var anTags = [];
-	for ( var i=0, iLen=nParent.childNodes.length ; i<iLen ; i++ )
-	{
-		if ( nParent.childNodes[i].nodeType == 1 )
-		{
-			anTags.push( nParent.childNodes[i] );
-		}
-	}
-	var nStore = anTags[ iFrom ];
-
-	if ( iTo !== null )
-	{
-		nParent.insertBefore( nStore, anTags[iTo] );
-	}
-	else
-	{
-		nParent.appendChild( nStore );
-	}
-}
-
 
 
 var factory = function( $, DataTable ) {
 "use strict";
 
-/**
- * Plug-in for DataTables which will reorder the internal column structure by taking the column
- * from one position (iFrom) and insert it into a given point (iTo).
- *  @method  $.fn.dataTableExt.oApi.fnColReorder
- *  @param   object oSettings DataTables settings object - automatically added by DataTables!
- *  @param   int iFrom Take the column to be repositioned from this point
- *  @param   int iTo and insert it into this point
- *  @returns void
- */
-$.fn.dataTableExt.oApi.fnColReorder = function ( oSettings, iFrom, iTo )
-{
-	var i, iLen, j, jLen, iCols=oSettings.aoColumns.length, nTrs, oCol;
-	var attrMap = function ( obj, prop, mapping ) {
-		if ( ! obj[ prop ] || typeof obj[ prop ] === 'function' ) {
-			return;
-		}
+// Used for namespacing events added to the document by each instance, so they
+// can be removed on destroy
+var _instCounter = 0;
 
-		var a = obj[ prop ].split('.');
-		var num = a.shift();
+// Button namespacing counter for namespacing events on individual buttons
+var _buttonCounter = 0;
 
-		if ( isNaN( num*1 ) ) {
-			return;
-		}
-
-		obj[ prop ] = mapping[ num*1 ]+'.'+a.join('.');
-	};
-
-	/* Sanity check in the input */
-	if ( iFrom == iTo )
-	{
-		/* Pointless reorder */
-		return;
-	}
-
-	if ( iFrom < 0 || iFrom >= iCols )
-	{
-		this.oApi._fnLog( oSettings, 1, "ColReorder 'from' index is out of bounds: "+iFrom );
-		return;
-	}
-
-	if ( iTo < 0 || iTo >= iCols )
-	{
-		this.oApi._fnLog( oSettings, 1, "ColReorder 'to' index is out of bounds: "+iTo );
-		return;
-	}
-
-	/*
-	 * Calculate the new column array index, so we have a mapping between the old and new
-	 */
-	var aiMapping = [];
-	for ( i=0, iLen=iCols ; i<iLen ; i++ )
-	{
-		aiMapping[i] = i;
-	}
-	fnArraySwitch( aiMapping, iFrom, iTo );
-	var aiInvertMapping = fnInvertKeyValues( aiMapping );
-
-
-	/*
-	 * Convert all internal indexing to the new column order indexes
-	 */
-	/* Sorting */
-	for ( i=0, iLen=oSettings.aaSorting.length ; i<iLen ; i++ )
-	{
-		oSettings.aaSorting[i][0] = aiInvertMapping[ oSettings.aaSorting[i][0] ];
-	}
-
-	/* Fixed sorting */
-	if ( oSettings.aaSortingFixed !== null )
-	{
-		for ( i=0, iLen=oSettings.aaSortingFixed.length ; i<iLen ; i++ )
-		{
-			oSettings.aaSortingFixed[i][0] = aiInvertMapping[ oSettings.aaSortingFixed[i][0] ];
-		}
-	}
-
-	/* Data column sorting (the column which the sort for a given column should take place on) */
-	for ( i=0, iLen=iCols ; i<iLen ; i++ )
-	{
-		oCol = oSettings.aoColumns[i];
-		for ( j=0, jLen=oCol.aDataSort.length ; j<jLen ; j++ )
-		{
-			oCol.aDataSort[j] = aiInvertMapping[ oCol.aDataSort[j] ];
-		}
-
-		// Update the column indexes
-		oCol.idx = aiInvertMapping[ oCol.idx ];
-	}
-
-	// Update 1.10 optimised sort class removal variable
-	$.each( oSettings.aLastSort, function (i, val) {
-		oSettings.aLastSort[i].src = aiInvertMapping[ val.src ];
-	} );
-
-	/* Update the Get and Set functions for each column */
-	for ( i=0, iLen=iCols ; i<iLen ; i++ )
-	{
-		oCol = oSettings.aoColumns[i];
-
-		if ( typeof oCol.mData == 'number' ) {
-			oCol.mData = aiInvertMapping[ oCol.mData ];
-
-			// regenerate the get / set functions
-			oSettings.oApi._fnColumnOptions( oSettings, i, {} );
-		}
-		else if ( $.isPlainObject( oCol.mData ) ) {
-			// HTML5 data sourced
-			attrMap( oCol.mData, '_',      aiInvertMapping );
-			attrMap( oCol.mData, 'filter', aiInvertMapping );
-			attrMap( oCol.mData, 'sort',   aiInvertMapping );
-			attrMap( oCol.mData, 'type',   aiInvertMapping );
-
-			// regenerate the get / set functions
-			oSettings.oApi._fnColumnOptions( oSettings, i, {} );
-		}
-	}
-
-
-	/*
-	 * Move the DOM elements
-	 */
-	if ( oSettings.aoColumns[iFrom].bVisible )
-	{
-		/* Calculate the current visible index and the point to insert the node before. The insert
-		 * before needs to take into account that there might not be an element to insert before,
-		 * in which case it will be null, and an appendChild should be used
-		 */
-		var iVisibleIndex = this.oApi._fnColumnIndexToVisible( oSettings, iFrom );
-		var iInsertBeforeIndex = null;
-
-		i = iTo < iFrom ? iTo : iTo + 1;
-		while ( iInsertBeforeIndex === null && i < iCols )
-		{
-			iInsertBeforeIndex = this.oApi._fnColumnIndexToVisible( oSettings, i );
-			i++;
-		}
-
-		/* Header */
-		nTrs = oSettings.nTHead.getElementsByTagName('tr');
-		for ( i=0, iLen=nTrs.length ; i<iLen ; i++ )
-		{
-			fnDomSwitch( nTrs[i], iVisibleIndex, iInsertBeforeIndex );
-		}
-
-		/* Footer */
-		if ( oSettings.nTFoot !== null )
-		{
-			nTrs = oSettings.nTFoot.getElementsByTagName('tr');
-			for ( i=0, iLen=nTrs.length ; i<iLen ; i++ )
-			{
-				fnDomSwitch( nTrs[i], iVisibleIndex, iInsertBeforeIndex );
-			}
-		}
-
-		/* Body */
-		for ( i=0, iLen=oSettings.aoData.length ; i<iLen ; i++ )
-		{
-			if ( oSettings.aoData[i].nTr !== null )
-			{
-				fnDomSwitch( oSettings.aoData[i].nTr, iVisibleIndex, iInsertBeforeIndex );
-			}
-		}
-	}
-
-	/*
-	 * Move the internal array elements
-	 */
-	/* Columns */
-	fnArraySwitch( oSettings.aoColumns, iFrom, iTo );
-
-	/* Search columns */
-	fnArraySwitch( oSettings.aoPreSearchCols, iFrom, iTo );
-
-	/* Array array - internal data anodes cache */
-	for ( i=0, iLen=oSettings.aoData.length ; i<iLen ; i++ )
-	{
-		var data = oSettings.aoData[i];
-
-		if ( data.anCells ) {
-			fnArraySwitch( data.anCells, iFrom, iTo );
-		}
-
-		// For DOM sourced data, the invalidate will reread the cell into
-		// the data array, but for data sources as an array, they need to
-		// be flipped
-		if ( data.src !== 'dom' && $.isArray( data._aData ) ) {
-			fnArraySwitch( data._aData, iFrom, iTo );
-		}
-	}
-
-	/* Reposition the header elements in the header layout array */
-	for ( i=0, iLen=oSettings.aoHeader.length ; i<iLen ; i++ )
-	{
-		fnArraySwitch( oSettings.aoHeader[i], iFrom, iTo );
-	}
-
-	if ( oSettings.aoFooter !== null )
-	{
-		for ( i=0, iLen=oSettings.aoFooter.length ; i<iLen ; i++ )
-		{
-			fnArraySwitch( oSettings.aoFooter[i], iFrom, iTo );
-		}
-	}
-
-	// Invalidate row cached data for sorting, filtering etc
-	var api = new $.fn.dataTable.Api( oSettings );
-	api.rows().invalidate();
-
-	/*
-	 * Update DataTables' event handlers
-	 */
-
-	/* Sort listener */
-	for ( i=0, iLen=iCols ; i<iLen ; i++ )
-	{
-		$(oSettings.aoColumns[i].nTh).off('click.DT');
-		this.oApi._fnSortAttachListener( oSettings, oSettings.aoColumns[i].nTh, i );
-	}
-
-
-	/* Fire an event so other plug-ins can update */
-	$(oSettings.oInstance).trigger( 'column-reorder.dt', [ oSettings, {
-		from: iFrom,
-		to: iTo,
-		mapping: aiInvertMapping,
-
-		// Old style parameters for compatibility
-		iFrom: iFrom,
-		iTo: iTo,
-		aiInvertMapping: aiInvertMapping
-	} ] );
-};
-
+var _dtButtons = DataTable.ext.buttons;
 
 /**
- * ColReorder provides column visibility control for DataTables
- * @class ColReorder
- * @constructor
- * @param {object} dt DataTables settings object
- * @param {object} opts ColReorder options
+ * [Buttons description]
+ * @param {[type]}
+ * @param {[type]}
  */
-var ColReorder = function( dt, opts )
+var Buttons = function( dt, config )
 {
-	var settings = new $.fn.dataTable.Api( dt ).settings()[0];
-
-	// Ensure that we can't initialise on the same table twice
-	if ( settings._colReorder ) {
-		return settings._colReorder;
+	// Allow a boolean true for defaults
+	if ( config === true ) {
+		config = {};
 	}
 
-	// Allow the options to be a boolean for defaults
-	if ( opts === true ) {
-		opts = {};
+	// For easy configuration of buttons an array can be given
+	if ( $.isArray( config ) ) {
+		config = { buttons: config };
 	}
 
-	// Convert from camelCase to Hungarian, just as DataTables does
-	var camelToHungarian = $.fn.dataTable.camelToHungarian;
-	if ( camelToHungarian ) {
-		camelToHungarian( ColReorder.defaults, ColReorder.defaults, true );
-		camelToHungarian( ColReorder.defaults, opts || {} );
+	this.c = $.extend( true, {}, Buttons.defaults, config );
+
+	// Don't want a deep copy for the buttons
+	if ( config.buttons ) {
+		this.c.buttons = config.buttons;
 	}
 
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Public class variables
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	/**
-	 * @namespace Settings object which contains customisable information for ColReorder instance
-	 */
 	this.s = {
-		/**
-		 * DataTables settings object
-		 *  @property dt
-		 *  @type     Object
-		 *  @default  null
-		 */
-		"dt": null,
-
-		/**
-		 * Initialisation object used for this instance
-		 *  @property init
-		 *  @type     object
-		 *  @default  {}
-		 */
-		"init": $.extend( true, {}, ColReorder.defaults, opts ),
-
-		/**
-		 * Number of columns to fix (not allow to be reordered)
-		 *  @property fixed
-		 *  @type     int
-		 *  @default  0
-		 */
-		"fixed": 0,
-
-		/**
-		 * Number of columns to fix counting from right (not allow to be reordered)
-		 *  @property fixedRight
-		 *  @type     int
-		 *  @default  0
-		 */
-		"fixedRight": 0,
-
-		/**
-		 * Callback function for once the reorder has been done
-		 *  @property reorderCallback
-		 *  @type     function
-		 *  @default  null
-		 */
-		"reorderCallback": null,
-
-		/**
-		 * @namespace Information used for the mouse drag
-		 */
-		"mouse": {
-			"startX": -1,
-			"startY": -1,
-			"offsetX": -1,
-			"offsetY": -1,
-			"target": -1,
-			"targetIndex": -1,
-			"fromIndex": -1
-		},
-
-		/**
-		 * Information which is used for positioning the insert cusor and knowing where to do the
-		 * insert. Array of objects with the properties:
-		 *   x: x-axis position
-		 *   to: insert point
-		 *  @property aoTargets
-		 *  @type     array
-		 *  @default  []
-		 */
-		"aoTargets": []
+		dt: new DataTable.Api( dt ),
+		buttons: [],
+		subButtons: [],
+		listenKeys: '',
+		namespace: 'dtb'+(_instCounter++)
 	};
 
-
-	/**
-	 * @namespace Common and useful DOM elements for the class instance
-	 */
 	this.dom = {
-		/**
-		 * Dragging element (the one the mouse is moving)
-		 *  @property drag
-		 *  @type     element
-		 *  @default  null
-		 */
-		"drag": null,
-
-		/**
-		 * The insert cursor
-		 *  @property pointer
-		 *  @type     element
-		 *  @default  null
-		 */
-		"pointer": null
+		container: $('<'+this.c.dom.container.tag+'/>')
+			.addClass( this.c.dom.container.className )
 	};
 
-
-	/* Constructor logic */
-	this.s.dt = settings;
-	this.s.dt._colReorder = this;
-	this._fnConstruct();
-
-	return this;
+	this._constructor();
 };
 
 
-
-ColReorder.prototype = {
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+$.extend( Buttons.prototype, {
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	/**
-	 * Reset the column ordering to the original ordering that was detected on
-	 * start up.
-	 *  @return {this} Returns `this` for chaining.
-	 *
-	 *  @example
-	 *    // DataTables initialisation with ColReorder
-	 *    var table = $('#example').dataTable( {
-	 *        "sDom": 'Rlfrtip'
-	 *    } );
-	 *
-	 *    // Add click event to a button to reset the ordering
-	 *    $('#resetOrdering').click( function (e) {
-	 *        e.preventDefault();
-	 *        $.fn.dataTable.ColReorder( table ).fnReset();
-	 *    } );
 	 */
-	"fnReset": function ()
-	{
-		var a = [];
-		for ( var i=0, iLen=this.s.dt.aoColumns.length ; i<iLen ; i++ )
-		{
-			a.push( this.s.dt.aoColumns[i]._ColReorder_iOrigCol );
-		}
-
-		this._fnOrderColumns( a );
-
-		return this;
-	},
 
 	/**
-	 * `Deprecated` - Get the current order of the columns, as an array.
-	 *  @return {array} Array of column identifiers
-	 *  @deprecated `fnOrder` should be used in preference to this method.
-	 *      `fnOrder` acts as a getter/setter.
-	 */
-	"fnGetCurrentOrder": function ()
-	{
-		return this.fnOrder();
-	},
-
-	/**
-	 * Get the current order of the columns, as an array. Note that the values
-	 * given in the array are unique identifiers for each column. Currently
-	 * these are the original ordering of the columns that was detected on
-	 * start up, but this could potentially change in future.
-	 *  @return {array} Array of column identifiers
-	 *
-	 *  @example
-	 *    // Get column ordering for the table
-	 *    var order = $.fn.dataTable.ColReorder( dataTable ).fnOrder();
+	 * Get the action of a button
+	 * @param  {int|string} Button index
+	 * @return {function}
 	 *//**
-	 * Set the order of the columns, from the positions identified in the
-	 * ordering array given. Note that ColReorder takes a brute force approach
-	 * to reordering, so it is possible multiple reordering events will occur
-	 * before the final order is settled upon.
-	 *  @param {array} [set] Array of column identifiers in the new order. Note
-	 *    that every column must be included, uniquely, in this array.
-	 *  @return {this} Returns `this` for chaining.
-	 *
-	 *  @example
-	 *    // Swap the first and second columns
-	 *    $.fn.dataTable.ColReorder( dataTable ).fnOrder( [1, 0, 2, 3, 4] );
-	 *
-	 *  @example
-	 *    // Move the first column to the end for the table `#example`
-	 *    var curr = $.fn.dataTable.ColReorder( '#example' ).fnOrder();
-	 *    var first = curr.shift();
-	 *    curr.push( first );
-	 *    $.fn.dataTable.ColReorder( '#example' ).fnOrder( curr );
-	 *
-	 *  @example
-	 *    // Reverse the table's order
-	 *    $.fn.dataTable.ColReorder( '#example' ).fnOrder(
-	 *      $.fn.dataTable.ColReorder( '#example' ).fnOrder().reverse()
-	 *    );
+	 * Set the action of a button
+	 * @param  {int|string} Button index
+	 * @param  {function} Function to set
+	 * @return {Buttons} Self for chaining
 	 */
-	"fnOrder": function ( set )
+	action: function ( idx, action )
 	{
-		if ( set === undefined )
-		{
-			var a = [];
-			for ( var i=0, iLen=this.s.dt.aoColumns.length ; i<iLen ; i++ )
-			{
-				a.push( this.s.dt.aoColumns[i]._ColReorder_iOrigCol );
-			}
-			return a;
+		var button = this._indexToButton( idx ).conf;
+
+		if ( action === undefined ) {
+			return button.action;
 		}
 
-		this._fnOrderColumns( fnInvertKeyValues( set ) );
+		button.action = action;
 
 		return this;
 	},
 
+	/**
+	 * Add an active class to the button to make to look active
+	 * @param  {int|string} Button index
+	 * @param  {boolean} [flag=true] Enable / disable flag
+	 * @return {Buttons} Self for chaining
+	 */
+	active: function ( idx, flag ) {
+		var button = this._indexToButton( idx );
+		button.node.toggleClass(
+			this.c.dom.button.active,
+			flag === undefined ? true : flag
+		);
 
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Private methods (they are of course public in JS, but recommended as private)
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+		return this;
+	},
 
 	/**
-	 * Constructor logic
-	 *  @method  _fnConstruct
-	 *  @returns void
-	 *  @private
+	 * Add a new button
+	 * @param {int|string} Button index for where to insert the button
+	 * @param {object} Button configuration object, base string name or function
+	 * @return {Buttons} Self for chaining
 	 */
-	"_fnConstruct": function ()
+	add: function ( idx, config )
 	{
-		var that = this;
-		var iLen = this.s.dt.aoColumns.length;
-		var table = this.s.dt.nTable;
-		var i;
-
-		/* Columns discounted from reordering - counting left to right */
-		if ( this.s.init.iFixedColumns )
-		{
-			this.s.fixed = this.s.init.iFixedColumns;
-		}
-
-		if ( this.s.init.iFixedColumnsLeft )
-		{
-			this.s.fixed = this.s.init.iFixedColumnsLeft;
-		}
-
-		/* Columns discounted from reordering - counting right to left */
-		this.s.fixedRight = this.s.init.iFixedColumnsRight ?
-			this.s.init.iFixedColumnsRight :
-			0;
-
-		/* Drop callback initialisation option */
-		if ( this.s.init.fnReorderCallback )
-		{
-			this.s.reorderCallback = this.s.init.fnReorderCallback;
-		}
-
-		/* Add event handlers for the drag and drop, and also mark the original column order */
-		for ( i = 0; i < iLen; i++ )
-		{
-			if ( i > this.s.fixed-1 && i < iLen - this.s.fixedRight )
-			{
-				this._fnMouseListener( i, this.s.dt.aoColumns[i].nTh );
-			}
-
-			/* Mark the original column order for later reference */
-			this.s.dt.aoColumns[i]._ColReorder_iOrigCol = i;
-		}
-
-		/* State saving */
-		this.s.dt.oApi._fnCallbackReg( this.s.dt, 'aoStateSaveParams', function (oS, oData) {
-			that._fnStateSave.call( that, oData );
-		}, "ColReorder_State" );
-
-		/* An initial column order has been specified */
-		var aiOrder = null;
-		if ( this.s.init.aiOrder )
-		{
-			aiOrder = this.s.init.aiOrder.slice();
-		}
-
-		/* State loading, overrides the column order given */
-		if ( this.s.dt.oLoadedState && typeof this.s.dt.oLoadedState.ColReorder != 'undefined' &&
-		  this.s.dt.oLoadedState.ColReorder.length == this.s.dt.aoColumns.length )
-		{
-			aiOrder = this.s.dt.oLoadedState.ColReorder;
-		}
-
-		/* If we have an order to apply - do so */
-		if ( aiOrder )
-		{
-			/* We might be called during or after the DataTables initialisation. If before, then we need
-			 * to wait until the draw is done, if after, then do what we need to do right away
-			 */
-			if ( !that.s.dt._bInitComplete )
-			{
-				var bDone = false;
-				$(table).on( 'draw.dt.colReorder', function () {
-					if ( !that.s.dt._bInitComplete && !bDone )
-					{
-						bDone = true;
-						var resort = fnInvertKeyValues( aiOrder );
-						that._fnOrderColumns.call( that, resort );
-					}
-				} );
-			}
-			else
-			{
-				var resort = fnInvertKeyValues( aiOrder );
-				that._fnOrderColumns.call( that, resort );
-			}
+		if ( typeof idx === 'string' && idx.indexOf('-') !== -1 ) {
+			var idxs = idx.split('-');
+			this.c.buttons[idxs[0]*1].buttons.splice( idxs[1]*1, 0, config );
 		}
 		else {
-			this._fnSetColumnIndexes();
+			this.c.buttons.splice( idx*1, 0, config );
 		}
 
-		// Destroy clean up
-		$(table).on( 'destroy.dt.colReorder', function () {
-			$(table).off( 'destroy.dt.colReorder draw.dt.colReorder' );
-			$(that.s.dt.nTHead).find( '*' ).off( '.ColReorder' );
+		this.dom.container.empty();
+		this._buildButtons( this.c.buttons );
 
-			$.each( that.s.dt.aoColumns, function (i, column) {
-				$(column.nTh).removeAttr('data-column-index');
-			} );
-
-			that.s.dt._colReorder = null;
-			that.s = null;
-		} );
+		return this;
 	},
 
+	/**
+	 * Get the container node for the buttons
+	 * @return {jQuery} Buttons node
+	 */
+	container: function ()
+	{
+		return this.dom.container;
+	},
 
 	/**
-	 * Set the column order from an array
-	 *  @method  _fnOrderColumns
-	 *  @param   array a An array of integers which dictate the column order that should be applied
-	 *  @returns void
-	 *  @private
+	 * Disable a button
+	 * @param  {int|string} Button index
+	 * @return {Buttons} Self for chaining
 	 */
-	"_fnOrderColumns": function ( a )
+	disable: function ( idx ) {
+		var button = this._indexToButton( idx );
+		button.node.addClass( this.c.dom.button.disabled );
+
+		return this;
+	},
+
+	/**
+	 * Destroy the instance, cleaning up event handlers and removing DOM
+	 * elements
+	 * @return {Buttons} Self for chaining
+	 */
+	destroy: function ()
 	{
-		if ( a.length != this.s.dt.aoColumns.length )
-		{
-			this.s.dt.oInstance.oApi._fnLog( this.s.dt, 1, "ColReorder - array reorder does not "+
-				"match known number of columns. Skipping." );
-			return;
-		}
+		// Key event listener
+		$('body').off( 'keyup.'+this.s.namespace );
 
-		for ( var i=0, iLen=a.length ; i<iLen ; i++ )
-		{
-			var currIndex = $.inArray( i, a );
-			if ( i != currIndex )
-			{
-				/* Reorder our switching array */
-				fnArraySwitch( a, currIndex, i );
-
-				/* Do the column reorder in the table */
-				this.s.dt.oInstance.fnColReorder( currIndex, i );
-			}
-		}
-
-		/* When scrolling we need to recalculate the column sizes to allow for the shift */
-		if ( this.s.dt.oScroll.sX !== "" || this.s.dt.oScroll.sY !== "" )
-		{
-			this.s.dt.oInstance.fnAdjustColumnSizing( false );
-		}
-
-		/* Save the state */
-		this.s.dt.oInstance.oApi._fnSaveState( this.s.dt );
-
-		this._fnSetColumnIndexes();
+		// Individual button destroy (so they can remove their own events if
+		// needed
+		var buttons = this.s.buttons;
+		var subButtons = this.s.subButtons;
+		var i, ien, j, jen;
 		
-		if ( this.s.reorderCallback !== null )
-		{
-			this.s.reorderCallback.call( this );
-		}
-	},
+		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+			this.removePrep( i );
 
-
-	/**
-	 * Because we change the indexes of columns in the table, relative to their starting point
-	 * we need to reorder the state columns to what they are at the starting point so we can
-	 * then rearrange them again on state load!
-	 *  @method  _fnStateSave
-	 *  @param   object oState DataTables state
-	 *  @returns string JSON encoded cookie string for DataTables
-	 *  @private
-	 */
-	"_fnStateSave": function ( oState )
-	{
-		var i, iLen, aCopy, iOrigColumn;
-		var oSettings = this.s.dt;
-		var columns = oSettings.aoColumns;
-
-		oState.ColReorder = [];
-
-		/* Sorting */
-		if ( oState.aaSorting ) {
-			// 1.10.0-
-			for ( i=0 ; i<oState.aaSorting.length ; i++ ) {
-				oState.aaSorting[i][0] = columns[ oState.aaSorting[i][0] ]._ColReorder_iOrigCol;
-			}
-
-			var aSearchCopy = $.extend( true, [], oState.aoSearchCols );
-
-			for ( i=0, iLen=columns.length ; i<iLen ; i++ )
-			{
-				iOrigColumn = columns[i]._ColReorder_iOrigCol;
-
-				/* Column filter */
-				oState.aoSearchCols[ iOrigColumn ] = aSearchCopy[i];
-
-				/* Visibility */
-				oState.abVisCols[ iOrigColumn ] = columns[i].bVisible;
-
-				/* Column reordering */
-				oState.ColReorder.push( iOrigColumn );
+			for ( j=0, jen=subButtons[i].length ; j<jen ; j++ ) {
+				this.removePrep( i+'-'+j );
 			}
 		}
-		else if ( oState.order ) {
-			// 1.10.1+
-			for ( i=0 ; i<oState.order.length ; i++ ) {
-				oState.order[i][0] = columns[ oState.order[i][0] ]._ColReorder_iOrigCol;
-			}
 
-			var stateColumnsCopy = $.extend( true, [], oState.columns );
+		this.removeCommit();
 
-			for ( i=0, iLen=columns.length ; i<iLen ; i++ )
-			{
-				iOrigColumn = columns[i]._ColReorder_iOrigCol;
+		// Container
+		this.dom.container.remove();
 
-				/* Columns */
-				oState.columns[ iOrigColumn ] = stateColumnsCopy[i];
+		// Remove from the settings object collection
+		var buttonInsts = this.s.dt.settings()[0];
 
-				/* Column reordering */
-				oState.ColReorder.push( iOrigColumn );
-			}
-		}
-	},
-
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Mouse drop and drag
-	 */
-
-	/**
-	 * Add a mouse down listener to a particluar TH element
-	 *  @method  _fnMouseListener
-	 *  @param   int i Column index
-	 *  @param   element nTh TH element clicked on
-	 *  @returns void
-	 *  @private
-	 */
-	"_fnMouseListener": function ( i, nTh )
-	{
-		var that = this;
-		$(nTh).on( 'mousedown.ColReorder', function (e) {
-			e.preventDefault();
-			that._fnMouseDown.call( that, e, nTh );
-		} );
-	},
-
-
-	/**
-	 * Mouse down on a TH element in the table header
-	 *  @method  _fnMouseDown
-	 *  @param   event e Mouse event
-	 *  @param   element nTh TH element to be dragged
-	 *  @returns void
-	 *  @private
-	 */
-	"_fnMouseDown": function ( e, nTh )
-	{
-		var that = this;
-
-		/* Store information about the mouse position */
-		var target = $(e.target).closest('th, td');
-		var offset = target.offset();
-		var idx = parseInt( $(nTh).attr('data-column-index'), 10 );
-
-		if ( idx === undefined ) {
-			return;
-		}
-
-		this.s.mouse.startX = e.pageX;
-		this.s.mouse.startY = e.pageY;
-		this.s.mouse.offsetX = e.pageX - offset.left;
-		this.s.mouse.offsetY = e.pageY - offset.top;
-		this.s.mouse.target = this.s.dt.aoColumns[ idx ].nTh;//target[0];
-		this.s.mouse.targetIndex = idx;
-		this.s.mouse.fromIndex = idx;
-
-		this._fnRegions();
-
-		/* Add event handlers to the document */
-		$(document)
-			.on( 'mousemove.ColReorder', function (e) {
-				that._fnMouseMove.call( that, e );
-			} )
-			.on( 'mouseup.ColReorder', function (e) {
-				that._fnMouseUp.call( that, e );
-			} );
-	},
-
-
-	/**
-	 * Deal with a mouse move event while dragging a node
-	 *  @method  _fnMouseMove
-	 *  @param   event e Mouse event
-	 *  @returns void
-	 *  @private
-	 */
-	"_fnMouseMove": function ( e )
-	{
-		var that = this;
-
-		if ( this.dom.drag === null )
-		{
-			/* Only create the drag element if the mouse has moved a specific distance from the start
-			 * point - this allows the user to make small mouse movements when sorting and not have a
-			 * possibly confusing drag element showing up
-			 */
-			if ( Math.pow(
-				Math.pow(e.pageX - this.s.mouse.startX, 2) +
-				Math.pow(e.pageY - this.s.mouse.startY, 2), 0.5 ) < 5 )
-			{
-				return;
-			}
-			this._fnCreateDragNode();
-		}
-
-		/* Position the element - we respect where in the element the click occured */
-		this.dom.drag.css( {
-			left: e.pageX - this.s.mouse.offsetX,
-			top: e.pageY - this.s.mouse.offsetY
-		} );
-
-		/* Based on the current mouse position, calculate where the insert should go */
-		var bSet = false;
-		var lastToIndex = this.s.mouse.toIndex;
-
-		for ( var i=1, iLen=this.s.aoTargets.length ; i<iLen ; i++ )
-		{
-			if ( e.pageX < this.s.aoTargets[i-1].x + ((this.s.aoTargets[i].x-this.s.aoTargets[i-1].x)/2) )
-			{
-				this.dom.pointer.css( 'left', this.s.aoTargets[i-1].x );
-				this.s.mouse.toIndex = this.s.aoTargets[i-1].to;
-				bSet = true;
+		for ( i=0, ien=buttonInsts.length ; i<ien ; i++ ) {
+			if ( buttonInsts.inst === this ) {
+				buttonInsts.splice( i, 1 );
 				break;
 			}
 		}
 
-		// The insert element wasn't positioned in the array (less than
-		// operator), so we put it at the end
-		if ( !bSet )
-		{
-			this.dom.pointer.css( 'left', this.s.aoTargets[this.s.aoTargets.length-1].x );
-			this.s.mouse.toIndex = this.s.aoTargets[this.s.aoTargets.length-1].to;
+		return this;
+	},
+
+	/**
+	 * Enable / disable a button
+	 * @param  {int|string} Button index
+	 * @param  {boolean} [flag=true] Enable / disable flag
+	 * @return {Buttons} Self for chaining
+	 */
+	enable: function ( idx, flag )
+	{
+		if ( flag === false ) {
+			return this.disable( idx );
 		}
 
-		// Perform reordering if realtime updating is on and the column has moved
-		if ( this.s.init.bRealtime && lastToIndex !== this.s.mouse.toIndex ) {
-			this.s.dt.oInstance.fnColReorder( this.s.mouse.fromIndex, this.s.mouse.toIndex );
-			this.s.mouse.fromIndex = this.s.mouse.toIndex;
-			this._fnRegions();
+		var button = this._indexToButton( idx );
+		button.node.removeClass( this.c.dom.button.disabled );
+
+		return this;
+	},
+
+	/**
+	 * Get the instance name for the button set selector
+	 * @return {string} Instance name
+	 */
+	name: function ()
+	{
+		return this.c.name;
+	},
+
+	/**
+	 * Get a button's node
+	 * @param  {int|string} Button index
+	 * @return {jQuery} Button element
+	 */
+	node: function ( idx )
+	{
+		var button = this._indexToButton( idx );
+		return button.node;
+	},
+
+	/**
+	 * Tidy up any buttons that have been scheduled for removal. This is
+	 * required so multiple buttons can be removed without upsetting the button
+	 * indexes while removing them.
+	 * @param  {int|string} Button index
+	 * @return {Buttons} Self for chaining
+	 */
+	removeCommit: function ()
+	{
+		var buttons = this.s.buttons;
+		var subButtons = this.s.subButtons;
+		var i, ien, j;
+
+		for ( i=buttons.length-1 ; i>=0 ; i-- ) {
+			if ( buttons[i] === null ) {
+				buttons.splice( i, 1 );
+				subButtons.splice( i, 1 );
+				this.c.buttons.splice( i, 1 );
+			}
+		}
+
+		for ( i=0, ien=subButtons.length ; i<ien ; i++ ) {
+			for ( j=subButtons[i].length-1 ; j>=0 ; j-- ) {
+				if ( subButtons[i][j] === null ) {
+					subButtons[i].splice( j, 1 );
+					this.c.buttons[i].buttons.splice( j, 1 );
+				}
+			}
+		}
+
+		return this;
+	},
+
+	/**
+	 * Scheduled a button for removal. This is required so multiple buttons can
+	 * be removed without upsetting the button indexes while removing them.
+	 * @return {Buttons} Self for chaining
+	 */
+	removePrep: function ( idx )
+	{
+		var button;
+		var dt = this.s.dt;
+
+		if ( typeof idx === 'number' || idx.indexOf('-') === -1 ) {
+			// Top level button
+			button = this.s.buttons[ idx*1 ];
+
+			if ( button.conf.destroy ) {
+				button.conf.destroy.call( dt.button(idx), dt, button, button.conf );
+			}
+
+			button.node.remove();
+			this._removeKey( button.conf );
+			this.s.buttons[ idx*1 ] = null;
+		}
+		else {
+			// Collection button
+			var idxs = idx.split('-');
+			button = this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ];
+
+			if ( button.conf.destroy ) {
+				button.conf.destroy.call( dt.button(idx), dt, button, button.conf );
+			}
+
+			button.node.remove();
+			this._removeKey( button.conf );
+			this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ] = null;
+		}
+
+		return this;
+	},
+
+	/**
+	 * Get the text for a button
+	 * @param  {int|string} Button index
+	 * @return {string} Button text
+	 *//**
+	 * Set the text for a button
+	 * @param  {int|string|function} Button index
+	 * @param  {string} Text
+	 * @return {Buttons} Self for chaining
+	 */
+	text: function ( idx, label )
+	{
+		var button = this._indexToButton( idx );
+		var linerTag = this.c.dom.buttonLiner.tag;
+		var dt = this.s.dt;
+		var text = function ( opt ) {
+			return typeof opt === 'function' ?
+				opt( dt, button.node, button.conf ) :
+				opt;
+		};
+
+		if ( label === undefined ) {
+			return text( button.conf.text );
+		}
+
+		button.conf.text = label;
+
+		if ( linerTag ) {
+			button.node.children( linerTag ).html( text(label) );
+		}
+		else {
+			button.node.html( text(label) );
+		}
+
+		return this;
+	},
+
+	/**
+	 * Calculate button index from a node
+	 * @param  {node} Button node (_not_ a jQuery object)
+	 * @return {string} Index. Undefined if not found
+	 */
+	toIndex: function ( node )
+	{
+		var i, ien, j, jen;
+		var buttons = this.s.buttons;
+		var subButtons = this.s.subButtons;
+
+		// Loop the main buttons first
+		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+			if ( buttons[i].node[0] === node ) {
+				return i+'';
+			}
+		}
+
+		// Then the sub-buttons
+		for ( i=0, ien=subButtons.length ; i<ien ; i++ ) {
+			for ( j=0, jen=subButtons[i].length ; j<jen ; j++ ) {
+				if ( subButtons[i][j].node[0] === node ) {
+					return i+'-'+j;
+				}
+			}
 		}
 	},
 
 
-	/**
-	 * Finish off the mouse drag and insert the column where needed
-	 *  @method  _fnMouseUp
-	 *  @param   event e Mouse event
-	 *  @returns void
-	 *  @private
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Constructor
 	 */
-	"_fnMouseUp": function ( e )
+
+	/**
+	 * Buttons constructor
+	 * @private
+	 */
+	_constructor: function ()
 	{
 		var that = this;
+		var dt = this.s.dt;
+		var dtSettings = dt.settings()[0];
 
-		$(document).off( 'mousemove.ColReorder mouseup.ColReorder' );
-
-		if ( this.dom.drag !== null )
-		{
-			/* Remove the guide elements */
-			this.dom.drag.remove();
-			this.dom.pointer.remove();
-			this.dom.drag = null;
-			this.dom.pointer = null;
-
-			/* Actually do the reorder */
-			this.s.dt.oInstance.fnColReorder( this.s.mouse.fromIndex, this.s.mouse.toIndex );
-			this._fnSetColumnIndexes();
-
-			/* When scrolling we need to recalculate the column sizes to allow for the shift */
-			if ( this.s.dt.oScroll.sX !== "" || this.s.dt.oScroll.sY !== "" )
-			{
-				this.s.dt.oInstance.fnAdjustColumnSizing( false );
-			}
-
-			/* Save the state */
-			this.s.dt.oInstance.oApi._fnSaveState( this.s.dt );
-
-			if ( this.s.reorderCallback !== null )
-			{
-				this.s.reorderCallback.call( this );
-			}
+		if ( ! dtSettings._buttons ) {
+			dtSettings._buttons = [];
 		}
+
+		dtSettings._buttons.push( {
+			inst: this,
+			name: this.c.name
+		} );
+
+		this._buildButtons( this.c.buttons );
+
+		dt.on( 'destroy', function () {
+			that.destroy();
+		} );
+
+		// Global key event binding to listen for button keys
+		$('body').on( 'keyup.'+this.s.namespace, function ( e ) {
+			if ( ! document.activeElement || document.activeElement === document.body ) {
+				// SUse a string of characters for fast lookup of if we need to
+				// handle this
+				var character = String.fromCharCode(e.keyCode).toLowerCase();
+
+				if ( that.s.listenKeys.toLowerCase().indexOf( character ) !== -1 ) {
+					that._keypress( character, e );
+				}
+			}
+		} );
 	},
 
 
-	/**
-	 * Calculate a cached array with the points of the column inserts, and the
-	 * 'to' points
-	 *  @method  _fnRegions
-	 *  @returns void
-	 *  @private
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * Private methods
 	 */
-	"_fnRegions": function ()
+
+	/**
+	 * Add a new button to the key press listener
+	 * @param {object} Resolved button configuration object
+	 * @private
+	 */
+	_addKey: function ( conf )
 	{
-		var aoColumns = this.s.dt.aoColumns;
+		if ( conf.key ) {
+			this.s.listenKeys += $.isPlainObject( conf.key ) ?
+				conf.key.key :
+				conf.key;
+		}
+	},
 
-		this.s.aoTargets.splice( 0, this.s.aoTargets.length );
+	/**
+	 * Create buttons from an array of buttons
+	 * @param  {array} Buttons to create
+	 * @param  {jQuery} Container node into which the created button should be
+	 *   inserted.
+	 * @param  {int} Counter for sub-buttons to be stored in a collection
+	 * @private
+	 */
+	_buildButtons: function ( buttons, container, collectionCounter )
+	{
+		var dt = this.s.dt;
 
-		this.s.aoTargets.push( {
-			"x":  $(this.s.dt.nTable).offset().left,
-			"to": 0
-		} );
+		if ( ! container ) {
+			container = this.dom.container;
+			this.s.buttons = [];
+			this.s.subButtons = [];
+		}
 
-		var iToPoint = 0;
-		for ( var i=0, iLen=aoColumns.length ; i<iLen ; i++ )
-		{
-			/* For the column / header in question, we want it's position to remain the same if the
-			 * position is just to it's immediate left or right, so we only incremement the counter for
-			 * other columns
-			 */
-			if ( i != this.s.mouse.fromIndex )
-			{
-				iToPoint++;
+		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
+			var conf = this._resolveExtends( buttons[i] );
+
+			if ( ! conf ) {
+				continue;
 			}
 
-			if ( aoColumns[i].bVisible )
-			{
-				this.s.aoTargets.push( {
-					"x":  $(aoColumns[i].nTh).offset().left + $(aoColumns[i].nTh).outerWidth(),
-					"to": iToPoint
+			// If the configuration is an array, then expand the buttons at this
+			// point
+			if ( $.isArray( conf ) ) {
+				this._buildButtons( conf, container, collectionCounter );
+				continue;
+			}
+
+			var button = this._buildButton(
+				conf,
+				collectionCounter!==undefined ? true : false
+			);
+
+			if ( ! button ) {
+				continue;
+			}
+
+			var buttonNode = button.node;
+			container.append( button.inserter );
+
+			if ( collectionCounter === undefined ) {
+				this.s.buttons.push( {
+					node:     buttonNode,
+					conf:     conf,
+					inserter: button.inserter
+				} );
+				this.s.subButtons.push( [] );
+			}
+			else {
+				this.s.subButtons[ collectionCounter ].push( {
+					node:     buttonNode,
+					conf:     conf,
+					inserter: button.inserter
 				} );
 			}
-		}
 
-		/* Disallow columns for being reordered by drag and drop, counting right to left */
-		if ( this.s.fixedRight !== 0 )
-		{
-			this.s.aoTargets.splice( this.s.aoTargets.length - this.s.fixedRight );
-		}
+			if ( conf.buttons ) {
+				var collectionDom = this.c.dom.collection;
+				conf._collection = $('<'+collectionDom.tag+'/>')
+					.addClass( collectionDom.className );
 
-		/* Disallow columns for being reordered by drag and drop, counting left to right */
-		if ( this.s.fixed !== 0 )
-		{
-			this.s.aoTargets.splice( 0, this.s.fixed );
+				this._buildButtons( conf.buttons, conf._collection, i );
+			}
+
+			// init call is made here, rather than buildButton as it needs to
+			// have been added to the buttons / subButtons array first
+			if ( conf.init ) {
+				conf.init.call( dt.button( buttonNode ), dt, buttonNode, conf );
+			}
 		}
 	},
 
-
 	/**
-	 * Copy the TH element that is being drags so the user has the idea that they are actually
-	 * moving it around the page.
-	 *  @method  _fnCreateDragNode
-	 *  @returns void
-	 *  @private
+	 * Create an individual button
+	 * @param  {object} config            Resolved button configuration
+	 * @param  {boolean} collectionButton `true` if a collection button
+	 * @return {jQuery} Created button node (jQuery)
+	 * @private
 	 */
-	"_fnCreateDragNode": function ()
+	_buildButton: function ( config, collectionButton )
 	{
-		var scrolling = this.s.dt.oScroll.sX !== "" || this.s.dt.oScroll.sY !== "";
+		var that = this;
+		var buttonDom = this.c.dom.button;
+		var linerDom = this.c.dom.buttonLiner;
+		var collectionDom = this.c.dom.collection;
+		var dt = this.s.dt;
+		var text = function ( opt ) {
+			return typeof opt === 'function' ?
+				opt( dt, button, config ) :
+				opt;
+		};
 
-		var origCell = this.s.dt.aoColumns[ this.s.mouse.targetIndex ].nTh;
-		var origTr = origCell.parentNode;
-		var origThead = origTr.parentNode;
-		var origTable = origThead.parentNode;
-		var cloneCell = $(origCell).clone();
+		if ( collectionButton && collectionDom.button ) {
+			buttonDom = collectionDom.button;
+		}
 
-		// This is a slightly odd combination of jQuery and DOM, but it is the
-		// fastest and least resource intensive way I could think of cloning
-		// the table with just a single header cell in it.
-		this.dom.drag = $(origTable.cloneNode(false))
-			.addClass( 'DTCR_clonedTable' )
-			.append(
-				$(origThead.cloneNode(false)).append(
-					$(origTr.cloneNode(false)).append(
-						cloneCell[0]
-					)
-				)
-			)
-			.css( {
-				position: 'absolute',
-				top: 0,
-				left: 0,
-				width: $(origCell).outerWidth(),
-				height: $(origCell).outerHeight()
+		if ( collectionButton && collectionDom.buttonLiner ) {
+			linerDom = collectionDom.buttonLiner;
+		}
+
+		// Make sure that the button is available based on whatever requirements
+		// it has. For example, Flash buttons require Flash
+		if ( config.available && ! config.available( dt, config ) ) {
+			return false;
+		}
+
+		var button = $('<'+buttonDom.tag+'/>')
+			.addClass( buttonDom.className )
+			.attr( 'tabindex', this.s.dt.settings()[0].iTabIndex )
+			.attr( 'aria-controls', this.s.dt.table().node().id )
+			.on( 'click.dtb', function (e) {
+				e.preventDefault();
+
+				if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
+					config.action.call( dt.button( button ), e, dt, button, config );
+				}
+
+				button.blur();
 			} )
-			.appendTo( 'body' );
+			.on( 'keyup.dtb', function (e) {
+				if ( e.keyCode === 13 ) {
+					if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
+						config.action.call( dt.button( button ), e, dt, button, config );
+					}
+				}
+			} );
 
-		this.dom.pointer = $('<div></div>')
-			.addClass( 'DTCR_pointer' )
-			.css( {
-				position: 'absolute',
-				top: scrolling ?
-					$('div.dataTables_scroll', this.s.dt.nTableWrapper).offset().top :
-					$(this.s.dt.nTable).offset().top,
-				height : scrolling ?
-					$('div.dataTables_scroll', this.s.dt.nTableWrapper).height() :
-					$(this.s.dt.nTable).height()
-			} )
-			.appendTo( 'body' );
+		if ( linerDom.tag ) {
+			button.append(
+				$('<'+linerDom.tag+'/>')
+					.html( text( config.text ) )
+					.addClass( linerDom.className )
+			);
+		}
+		else {
+			button.html( text( config.text ) );
+		}
+
+		if ( config.enabled === false ) {
+			button.addClass( buttonDom.disabled );
+		}
+
+		if ( config.className ) {
+			button.addClass( config.className );
+		}
+
+		if ( ! config.namespace ) {
+			config.namespace = '.dt-button-'+(_buttonCounter++);
+		}
+
+		var buttonContainer = this.c.dom.buttonContainer;
+		var inserter;
+		if ( buttonContainer ) {
+			inserter = $('<'+buttonContainer.tag+'/>')
+				.addClass( buttonContainer.className )
+				.append( button );
+		}
+		else {
+			inserter = button;
+		}
+
+		this._addKey( config );
+
+		return {
+			node: button,
+			inserter: inserter
+		};
 	},
 
+	/**
+	 * Get a button's host information from a button index
+	 * @param  {int|string} Button index
+	 * @return {object} Button information - object contains `node` and `conf`
+	 *   properties
+	 * @private
+	 */
+	_indexToButton: function ( idx )
+	{
+		if ( typeof idx === 'number' || idx.indexOf('-') === -1 ) {
+			return this.s.buttons[ idx*1 ];
+		}
+
+		var idxs = idx.split('-');
+		return this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ];
+	},
 
 	/**
-	 * Add a data attribute to the column headers, so we know the index of
-	 * the row to be reordered. This allows fast detection of the index, and
-	 * for this plug-in to work with FixedHeader which clones the nodes.
-	 *  @private
+	 * Handle a key press - determine if any button's key configured matches
+	 * what was typed and trigger the action if so.
+	 * @param  {string} The character pressed
+	 * @param  {object} Key event that triggered this call
+	 * @private
 	 */
-	"_fnSetColumnIndexes": function ()
+	_keypress: function ( character, e )
 	{
-		$.each( this.s.dt.aoColumns, function (i, column) {
-			$(column.nTh).attr('data-column-index', i);
-		} );
+		var i, ien, j, jen;
+		var buttons = this.s.buttons;
+		var subButtons = this.s.subButtons;
+		var run = function ( conf, node ) {
+			if ( ! conf.key ) {
+				return;
+			}
+
+			if ( conf.key === character ) {
+				node.click();
+			}
+			else if ( $.isPlainObject( conf.key ) ) {
+				if ( conf.key.key !== character ) {
+					return;
+				}
+
+				if ( conf.key.shiftKey && ! e.shiftKey ) {
+					return;
+				}
+
+				if ( conf.key.altKey && ! e.altKey ) {
+					return;
+				}
+
+				if ( conf.key.ctrlKey && ! e.ctrlKey ) {
+					return;
+				}
+
+				if ( conf.key.metaKey && ! e.metaKey ) {
+					return;
+				}
+
+				// Made it this far - it is good
+				node.click();
+			}
+		};
+
+		// Loop the main buttons first
+		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+			run( buttons[i].conf, buttons[i].node );
+		}
+
+		// Then the sub-buttons
+		for ( i=0, ien=subButtons.length ; i<ien ; i++ ) {
+			for ( j=0, jen=subButtons[i].length ; j<jen ; j++ ) {
+				run( subButtons[i][j].conf, subButtons[i][j].node );
+			}
+		}
+	},
+
+	/**
+	 * Remove a key from the key listener for this instance (to be used when a
+	 * button is removed)
+	 * @param  {object} Button configuration
+	 */
+	_removeKey: function ( conf )
+	{
+		if ( conf.key ) {
+			var character = $.isPlainObject( conf.key ) ?
+				conf.key.key :
+				conf.key;
+
+			// Remove only one character, as multiple buttons could have the
+			// same listening key
+			var a = this.s.listenKeys.split('');
+			var idx = $.inArray( character, a );
+			a.splice( idx, 1 );
+			this.s.listenKeys = a.join('');
+		}
+	},
+
+	/**
+	 * Resolve a button configuration
+	 * @param  {string|function|object} Button config to resolve
+	 * @return {object} Button configuration
+	 */
+	_resolveExtends: function ( conf )
+	{
+		var dt = this.s.dt;
+		var i, ien;
+		var toConfObject = function ( base ) {
+			var loop = 0;
+
+			// Loop until we have resolved to a button configuration, or an
+			// array of button configurations (which will be iterated
+			// separately)
+			while ( ! $.isPlainObject(base) && ! $.isArray(base) ) {
+				if ( typeof base === 'function' ) {
+					base = base( dt, conf );
+
+					if ( ! base ) {
+						return false;
+					}
+				}
+				else if ( typeof base === 'string' ) {
+					if ( ! _dtButtons[ base ] ) {
+						throw 'Unknown button type: '+base;
+					}
+
+					base = _dtButtons[ base ];
+				}
+
+				loop++;
+				if ( loop > 30 ) {
+					// Protect against misconfiguration killing the browser
+					throw 'Buttons: Too many iterations';
+				}
+			}
+
+			return $.isArray( base ) ?
+				base :
+				$.extend( {}, base );
+		};
+
+		conf = toConfObject( conf );
+
+		while ( conf && conf.extend ) {
+			// Use `toConfObject` in case the button definition being extended
+			// is itself a string or a function
+			var objArray = toConfObject( _dtButtons[ conf.extend ] );
+			if ( $.isArray( objArray ) ) {
+				return objArray;
+			}
+
+			// Stash the current class name
+			var originalClassName = objArray.className;
+
+			conf = $.extend( {}, objArray, conf );
+
+			// The extend will have overwritten the original class name if the
+			// `conf` object also assigned a class, but we want to concatenate
+			// them so they are list that is combined from all extended buttons
+			if ( originalClassName && conf.className !== originalClassName ) {
+				conf.className = originalClassName+' '+conf.className;
+			}
+
+			// Buttons to be added to a collection  -gives the ability to define
+			// if buttons should be added to the start or end of a collection
+			var postfixButtons = conf.postfixButtons;
+			if ( postfixButtons ) {
+				if ( ! conf.buttons ) {
+					conf.buttons = [];
+				}
+
+				for ( i=0, ien=postfixButtons.length ; i<ien ; i++ ) {
+					conf.buttons.push( postfixButtons[i] );
+				}
+
+				conf.postfixButtons = null;
+			}
+
+			var prefixButtons = conf.prefixButtons;
+			if ( prefixButtons ) {
+				if ( ! conf.buttons ) {
+					conf.buttons = [];
+				}
+
+				for ( i=0, ien=prefixButtons.length ; i<ien ; i++ ) {
+					conf.buttons.splice( i, 0, prefixButtons[i] );
+				}
+
+				conf.prefixButtons = null;
+			}
+
+			// Although we want the `conf` object to overwrite almost all of
+			// the properties of the object being extended, the `extend`
+			// property should come from the object being extended
+			conf.extend = objArray.extend;
+		}
+
+		return conf;
+	}
+} );
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Statics
+ */
+
+/**
+ * Show / hide a background layer behind a collection
+ * @param  {boolean} Flag to indicate if the background should be shown or
+ *   hidden 
+ * @param  {string} Class to assign to the background
+ * @static
+ */
+Buttons.background = function ( show, className, fade ) {
+	if ( fade === undefined ) {
+		fade = 400;
+	}
+
+	if ( show ) {
+		$('<div/>')
+			.addClass( className )
+			.css( 'display', 'none' )
+			.appendTo( 'body' )
+			.fadeIn( fade );
+	}
+	else {
+		$('body > div.'+className)
+			.fadeOut( fade, function () {
+				$(this).remove();
+			} );
 	}
 };
 
+/**
+ * Instance selector - select Buttons instances based on an instance selector
+ * value from the buttons assigned to a DataTable. This is only useful if
+ * multiple instances are attached to a DataTable.
+ * @param  {string|int|array} Instance selector - see `instance-selector`
+ *   documentation on the DataTables site
+ * @param  {array} Button instance array that was attached to the DataTables
+ *   settings object
+ * @return {array} Buttons instances
+ * @static
+ */
+Buttons.instanceSelector = function ( group, buttons )
+{
+	if ( ! group ) {
+		return $.map( buttons, function ( v ) {
+			return v.inst;
+		} );
+	}
 
+	var ret = [];
+	var names = $.map( buttons, function ( v ) {
+		return v.name;
+	} );
 
+	// Flatten the group selector into an array of single options
+	var process = function ( input ) {
+		if ( $.isArray( input ) ) {
+			for ( var i=0, ien=input.length ; i<ien ; i++ ) {
+				process( input[i] );
+			}
+			return;
+		}
 
+		if ( typeof input === 'string' ) {
+			if ( input.indexOf( ',' ) !== -1 ) {
+				// String selector, list of names
+				process( input.split(',') );
+			}
+			else {
+				// String selector individual name
+				var idx = $.inArray( $.trim(input), names );
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Static parameters
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+				if ( idx !== -1 ) {
+					ret.push( buttons[ idx ].inst );
+				}
+			}
+		}
+		else if ( typeof input === 'number' ) {
+			// Index selector
+			ret.push( buttons[ input ].inst );
+		}
+	};
+	
+	process( group );
 
+	return ret;
+};
 
 /**
- * ColReorder default settings for initialisation
- *  @namespace
- *  @static
+ * Button selector - select one or more buttons from a selector input so some
+ * operation can be performed on them.
+ * @param  {array} Button instances array that the selector should operate on
+ * @param  {string|int|node|jQuery|array} Button selector - see
+ *   `button-selector` documentation on the DataTables site
+ * @return {array} Array of objects containing `inst` and `idx` properties of
+ *   the selected buttons so you know which instance each button belongs to.
+ * @static
  */
-ColReorder.defaults = {
-	/**
-	 * Predefined ordering for the columns that will be applied automatically
-	 * on initialisation. If not specified then the order that the columns are
-	 * found to be in the HTML is the order used.
-	 *  @type array
-	 *  @default null
-	 *  @static
-	 */
-	aiOrder: null,
+Buttons.buttonSelector = function ( insts, selector )
+{
+	var ret = [];
+	var run = function ( selector, inst ) {
+		var i, ien, j, jen;
+		var buttons = [];
 
-	/**
-	 * Redraw the table's column ordering as the end user draws the column
-	 * (`true`) or wait until the mouse is released (`false` - default). Note
-	 * that this will perform a redraw on each reordering, which involves an
-	 * Ajax request each time if you are using server-side processing in
-	 * DataTables.
-	 *  @type boolean
-	 *  @default false
-	 *  @static
-	 */
-	bRealtime: true,
+		$.each( inst.s.buttons, function (i, v) {
+			if ( v !== null ) {
+				buttons.push( {
+					node: v.node[0],
+					name: v.name
+				} );
+			}
+		} );
 
-	/**
-	 * Indicate how many columns should be fixed in position (counting from the
-	 * left). This will typically be 1 if used, but can be as high as you like.
-	 *  @type int
-	 *  @default 0
-	 *  @static
-	 */
-	iFixedColumnsLeft: 0,
+		$.each( inst.s.subButtons, function (i, v) {
+			$.each( v, function (j, w) {
+				if ( w !== null ) {
+					buttons.push( {
+						node: w.node[0],
+						name: w.name
+					} );
+				}
+			} );
+		} );
 
-	/**
-	 * As `iFixedColumnsRight` but counting from the right.
-	 *  @type int
-	 *  @default 0
-	 *  @static
-	 */
-	iFixedColumnsRight: 0,
+		var nodes = $.map( buttons, function (v) {
+			return v.node;
+		} );
 
-	/**
-	 * Callback function that is fired when columns are reordered. The `column-
-	 * reorder` event is preferred over this callback
-	 *  @type function():void
-	 *  @default null
-	 *  @static
-	 */
-	fnReorderCallback: null
+		if ( $.isArray( selector ) || selector instanceof $ ) {
+			for ( i=0, ien=selector.length ; i<ien ; i++ ) {
+				run( selector[i], inst );
+			}
+			return;
+		}
+
+		if ( selector === null || selector === undefined || selector === '*' ) {
+			// Select all
+			for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+				ret.push( {
+					inst: inst,
+					idx: inst.toIndex( buttons[i].node )
+				} );
+			}
+		}
+		else if ( typeof selector === 'number' ) {
+			// Main button index selector
+			ret.push( {
+				inst: inst,
+				idx: selector
+			} );
+		}
+		else if ( typeof selector === 'string' ) {
+			if ( selector.indexOf( ',' ) !== -1 ) {
+				// Split
+				var a = selector.split(',');
+
+				for ( i=0, ien=a.length ; i<ien ; i++ ) {
+					run( $.trim(a[i]), inst );
+				}
+			}
+			else if ( selector.match( /^\d+(\-\d+)?$/ ) ) {
+				// Sub-button index selector
+				ret.push( {
+					inst: inst,
+					idx: selector
+				} );
+			}
+			else if ( selector.indexOf( ':name' ) !== -1 ) {
+				// Button name selector
+				var name = selector.replace( ':name', '' );
+
+				for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+					if ( buttons[i].name === name ) {
+						ret.push( {
+							inst: inst,
+							idx: inst.toIndex( buttons[i].node )
+						} );
+					}
+				}
+			}
+			else {
+				// jQuery selector on the nodes
+				$( nodes ).filter( selector ).each( function () {
+					ret.push( {
+						inst: inst,
+						idx: inst.toIndex( this )
+					} );
+				} );
+			}
+		}
+		else if ( typeof selector === 'object' && selector.nodeName ) {
+			// Node selector
+			var idx = $.inArray( selector, nodes );
+
+			if ( idx !== -1 ) {
+				ret.push( {
+					inst: inst,
+					idx: inst.toIndex( nodes[ idx ] )
+				} );
+			}
+		}
+	};
+
+
+	for ( var i=0, ien=insts.length ; i<ien ; i++ ) {
+		var inst = insts[i];
+
+		run( selector, inst );
+	}
+
+	return ret;
 };
 
 
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Constants
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+ * Buttons defaults. For full documentation, please refer to the docs/option
+ * directory or the DataTables site.
+ * @type {Object}
+ * @static
+ */
+Buttons.defaults = {
+	buttons: [ 'copy', 'excel', 'csv', 'pdf', 'print' ],
+	name: 'main',
+	tabIndex: 0,
+	dom: {
+		container: {
+			tag: 'div',
+			className: 'dt-buttons'
+		},
+		collection: {
+			tag: 'div',
+			className: 'dt-button-collection'
+		},
+		button: {
+			tag: 'a',
+			className: 'dt-button',
+			active: 'active',
+			disabled: 'disabled'
+		},
+		buttonLiner: {
+			tag: 'span',
+			className: ''
+		}
+	}
+};
 
 /**
- * ColReorder version
- *  @constant  version
- *  @type      String
- *  @default   As code
+ * Version information
+ * @type {string}
+ * @static
  */
-ColReorder.version = "1.2.0";
+Buttons.version = '1.0.3';
 
 
+$.extend( _dtButtons, {
+	collection: {
+		text: function ( dt, button, config ) {
+			return dt.i18n( 'buttons.collection', 'Collection' );
+		},
+		className: 'buttons-collection',
+		action: function ( e, dt, button, config ) {
+			var background;
+			var host = button;
+			var hostOffset = host.offset();
+			var tableContainer = $( dt.table().container() );
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DataTables interfaces
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+			config._collection
+				.addClass( config.collectionLayout )
+				.css( 'display', 'none' )
+				.appendTo( 'body' )
+				.fadeIn( config.fade );
 
-// Expose
-$.fn.dataTable.ColReorder = ColReorder;
-$.fn.DataTable.ColReorder = ColReorder;
+			if ( config._collection.css( 'position' ) === 'absolute' ) {
+				config._collection.css( {
+					top: hostOffset.top + host.outerHeight(),
+					left: hostOffset.left
+				} );
 
-
-// Register a new feature with DataTables
-if ( typeof $.fn.dataTable == "function" &&
-     typeof $.fn.dataTableExt.fnVersionCheck == "function" &&
-     $.fn.dataTableExt.fnVersionCheck('1.10.8') )
-{
-	$.fn.dataTableExt.aoFeatures.push( {
-		"fnInit": function( settings ) {
-			var table = settings.oInstance;
-
-			if ( ! settings._colReorder ) {
-				var dtInit = settings.oInit;
-				var opts = dtInit.colReorder || dtInit.oColReorder || {};
-
-				new ColReorder( settings, opts );
+				var listRight = hostOffset.left + config._collection.outerWidth();
+				var tableRight = tableContainer.offset().left + tableContainer.width();
+				if ( listRight > tableRight ) {
+					config._collection.css( 'left', hostOffset.left - ( listRight - tableRight ) );
+				}
 			}
 			else {
-				table.oApi._fnLog( settings, 1, "ColReorder attempted to initialise twice. Ignoring second" );
+				// Fix position - centre on screen
+				var top = config._collection.height() / 2;
+				if ( top > $(window).height() / 2 ) {
+					top = $(window).height() / 2;
+				}
+
+				config._collection.css( 'marginTop', top*-1 );
 			}
 
-			return null; /* No node for DataTables to insert */
+			if ( config.background ) {
+				Buttons.background( true, config.backgroundClassName, config.fade );
+			}
+
+			// Need to break the 'thread' for the collection button being
+			// activated by a click - it would also trigger this event
+			setTimeout( function () {
+				$(document).on( 'click.dtb-collection', function (e) {
+					if ( ! $(e.target).parents().andSelf().filter( config._collection ).length ) {
+						config._collection
+							.fadeOut( config.fade, function () {
+								config._collection.detach();
+							} );
+
+						Buttons.background( false, config.backgroundClassName, config.fade );
+
+						$(document).off( 'click.dtb-collection' );
+					}
+				} );
+			}, 10 );
 		},
-		"cFeature": "R",
-		"sFeature": "ColReorder"
+		background: true,
+		collectionLayout: '',
+		backgroundClassName: 'dt-button-background',
+		fade: 400
+	},
+	copy: function ( dt, conf ) {
+		if ( conf.preferHtml && _dtButtons.copyHtml5 ) {
+			return 'copyHtml5';
+		}
+
+		// Common option that will use the HTML5 or Flash export buttons
+		// For copy, the Flash option gets priority since it is one click only
+		if ( _dtButtons.copyFlash && _dtButtons.copyFlash.available( dt, conf ) ) {
+			return 'copyFlash';
+		}
+		if ( _dtButtons.copyHtml5 ) {
+			return 'copyHtml5';
+		}
+	},
+	csv: function ( dt, conf ) {
+		// Common option that will use the HTML5 or Flash export buttons
+		if ( _dtButtons.csvHtml5 && _dtButtons.csvHtml5.available( dt, conf ) ) {
+			return 'csvHtml5';
+		}
+		if ( _dtButtons.csvFlash && _dtButtons.csvFlash.available( dt, conf ) ) {
+			return 'csvFlash';
+		}
+	},
+	excel: function ( dt, conf ) {
+		// Common option that will use the HTML5 or Flash export buttons
+		if ( _dtButtons.excelHtml5 && _dtButtons.excelHtml5.available( dt, conf ) ) {
+			return 'excelHtml5';
+		}
+		if ( _dtButtons.excelFlash && _dtButtons.excelFlash.available( dt, conf ) ) {
+			return 'excelFlash';
+		}
+	},
+	pdf: function ( dt, conf ) {
+		// Common option that will use the HTML5 or Flash export buttons
+		if ( _dtButtons.pdfHtml5 && _dtButtons.pdfHtml5.available( dt, conf ) ) {
+			return 'pdfHtml5';
+		}
+		if ( _dtButtons.pdfFlash && _dtButtons.pdfFlash.available( dt, conf ) ) {
+			return 'pdfFlash';
+		}
+	}
+} );
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables API
+ *
+ * For complete documentation, please refer to the docs/api directory or the
+ * DataTables site
+ */
+
+// Buttons group and individual button selector
+DataTable.Api.register( 'buttons()', function ( group, selector ) {
+	// Argument shifting
+	if ( selector === undefined ) {
+		selector = group;
+		group = undefined;
+	}
+
+	return this.iterator( true, 'table', function ( ctx ) {
+		if ( ctx._buttons ) {
+			return Buttons.buttonSelector(
+				Buttons.instanceSelector( group, ctx._buttons ),
+				selector
+			);
+		}
+	}, true );
+} );
+
+// Individual button selector
+DataTable.Api.register( 'button()', function ( group, selector ) {
+	// just run buttons() and truncate
+	var buttons = this.buttons( group, selector );
+
+	if ( buttons.length > 1 ) {
+		buttons.splice( 1, buttons.length );
+	}
+
+	return buttons;
+} );
+
+// Active buttons
+DataTable.Api.register( ['buttons().active()', 'button().active()'], function ( flag ) {
+	return this.each( function ( set ) {
+		set.inst.active( set.idx, flag );
 	} );
-}
-else {
-	alert( "Warning: ColReorder requires DataTables 1.10.8 or greater - www.datatables.net/download");
-}
+} );
+
+// Get / set button action
+DataTable.Api.registerPlural( 'buttons().action()', 'button().action()', function ( action ) {
+	if ( action === undefined ) {
+		return this.map( function ( set ) {
+			 return set.inst.action( set.idx );
+		} );
+	}
+
+	return this.each( function ( set ) {
+		set.inst.action( set.idx, action );
+	} );
+} );
+
+// Enable / disable buttons
+DataTable.Api.register( ['buttons().enable()', 'button().enable()'], function ( flag ) {
+	return this.each( function ( set ) {
+		set.inst.enable( set.idx, flag );
+	} );
+} );
+
+// Disable buttons
+DataTable.Api.register( ['buttons().disable()', 'button().disable()'], function () {
+	return this.each( function ( set ) {
+		set.inst.disable( set.idx );
+	} );
+} );
+
+// Get button nodes
+DataTable.Api.registerPlural( 'buttons().nodes()', 'button().node()', function () {
+	var jq = $();
+
+	// jQuery will automatically reduce duplicates to a single entry
+	$( this.each( function ( set ) {
+		jq = jq.add( set.inst.node( set.idx ) );
+	} ) );
+
+	return jq;
+} );
+
+// Get / set button text (i.e. the button labels)
+DataTable.Api.registerPlural( 'buttons().text()', 'button().text()', function ( label ) {
+	if ( label === undefined ) {
+		return this.map( function ( set ) {
+			 return set.inst.text( set.idx );
+		} );
+	}
+
+	return this.each( function ( set ) {
+		set.inst.text( set.idx, label );
+	} );
+} );
+
+// Trigger a button's action
+DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', function () {
+	return this.each( function ( set ) {
+		set.inst.node( set.idx ).trigger( 'click' );
+	} );
+} );
+
+// Get the container elements for the button sets selected
+DataTable.Api.registerPlural( 'buttons().containers()', 'buttons().container()', function () {
+	var jq = $();
+
+	// jQuery will automatically reduce duplicates to a single entry
+	$( this.each( function ( set ) {
+		jq = jq.add( set.inst.container() );
+	} ) );
+
+	return jq;
+} );
+
+// Add a new button
+DataTable.Api.register( 'button().add()', function ( idx, conf ) {
+	if ( this.length === 1 ) {
+		this[0].inst.add( idx, conf );
+	}
+
+	return this.button( idx );
+} );
+
+// Destroy the button sets selected
+DataTable.Api.register( 'buttons().destroy()', function ( idx ) {
+	this.pluck( 'inst' ).unique().each( function ( inst ) {
+		inst.destroy();
+	} );
+
+	return this;
+} );
+
+// Remove a button
+DataTable.Api.registerPlural( 'buttons().remove()', 'buttons().remove()', function () {
+	// Need to split into prep and commit so the indexes remain constant during the remove
+	this.each( function ( set ) {
+		set.inst.removePrep( set.idx );
+	} );
+
+	this.pluck( 'inst' ).unique().each( function ( inst ) {
+		inst.removeCommit();
+	} );
+
+	return this;
+} );
+
+// Information box that can be used by buttons
+var _infoTimer;
+DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
+	var that = this;
+
+	if ( title === false ) {
+		$('#datatables_buttons_info').fadeOut( function () {
+			$(this).remove();
+		} );
+		clearTimeout( _infoTimer );
+		_infoTimer = null;
+
+		return this;
+	}
+
+	if ( _infoTimer ) {
+		clearTimeout( _infoTimer );
+	}
+
+	if ( $('#datatables_buttons_info').length ) {
+		$('#datatables_buttons_info').remove();
+	}
+
+	title = title ? '<h2>'+title+'</h2>' : '';
+
+	$('<div id="datatables_buttons_info" class="dt-button-info"/>')
+		.html( title )
+		.append( $('<div/>')[ typeof message === 'string' ? 'html' : 'append' ]( message ) )
+		.css( 'display', 'none' )
+		.appendTo( 'body' )
+		.fadeIn();
+
+	if ( time !== undefined && time !== 0 ) {
+		_infoTimer = setTimeout( function () {
+			that.buttons.info( false );
+		}, time );
+	}
+
+	return this;
+} );
+
+// Get data from the table for export - this is common to a number of plug-in
+// buttons so it is included in the Buttons core library
+DataTable.Api.register( 'buttons.exportData()', function ( options ) {
+	if ( this.context.length ) {
+		return _exportData( new DataTable.Api( this.context[0] ), options );
+	}
+} );
+
+var _exportData = function ( dt, inOpts )
+{
+	var config = $.extend( true, {}, {
+		rows:          null,
+		columns:       '',
+		modifier:      {
+			search: 'applied',
+			order:  'applied'
+		},
+		orthogonal:    'display',
+		stripHtml:     true,
+		stripNewlines: true,
+		trim:          true
+	}, inOpts );
+
+	var strip = function ( str ) {
+		if ( typeof str !== 'string' ) {
+			return str;
+		}
+
+		if ( config.stripHtml ) {
+			str = str.replace( /<.*?>/g, '' );
+		}
+
+		if ( config.trim ) {
+			str = str.replace( /^\s+|\s+$/g, '' );
+		}
+
+		if ( config.stripNewlines ) {
+			str = str.replace( /\n/g, ' ' );
+		}
+
+		return str;
+	};
+
+	var header = dt.columns( config.columns ).indexes().map( function (idx, i) {
+		return strip( dt.column( idx ).header().innerHTML );
+	} ).toArray();
+
+	var footer = dt.table().footer() ?
+		dt.columns( config.columns ).indexes().map( function (idx, i) {
+			var el = dt.column( idx ).footer();
+			return el ?
+				strip( el.innerHTML ) :
+				'';
+		} ).toArray() :
+		null;
+
+	var cells = dt
+		.cells( config.rows, config.columns, config.modifier )
+		.render( config.orthogonal )
+		.toArray();
+	var columns = header.length;
+	var rows = cells.length / columns;
+	var body = new Array( rows );
+	var cellCounter = 0;
+
+	for ( var i=0, ien=rows ; i<ien ; i++ ) {
+		var row = new Array( columns );
+
+		for ( var j=0 ; j<columns ; j++ ) {
+			row[j] = strip( cells[ cellCounter ] );
+			cellCounter++;
+		}
+
+		body[i] = row;
+	}
+
+	return {
+		header: header,
+		footer: footer,
+		body:   body
+	};
+};
 
 
-// Attach a listener to the document which listens for DataTables initialisation
-// events so we can automatically initialise
-$(document).on( 'preInit.dt.colReorder', function (e, settings) {
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables interface
+ */
+
+// Attach to DataTables objects for global access
+$.fn.dataTable.Buttons = Buttons;
+$.fn.DataTable.Buttons = Buttons;
+
+
+
+// DataTables creation - check if the buttons have been defined for this table,
+// they will have been if the `B` option was used in `dom`, otherwise we should
+// create the buttons instance here so they can be inserted into the document
+// using the API
+$(document).on( 'init.dt.dtb', function (e, settings, json) {
 	if ( e.namespace !== 'dt' ) {
 		return;
 	}
 
-	var init = settings.oInit.colReorder;
-	var defaults = DataTable.defaults.colReorder;
+	var opts = settings.oInit.buttons || DataTable.defaults.buttons;
 
-	if ( init || defaults ) {
-		var opts = $.extend( {}, init, defaults );
-
-		if ( init !== false ) {
-			new ColReorder( settings, opts  );
-		}
+	if ( opts && ! settings._buttons ) {
+		new Buttons( settings, opts ).container();
 	}
 } );
 
+// DataTables `dom` feature option
+DataTable.ext.feature.push( {
+	fnInit: function( settings ) {
+		var api = new DataTable.Api( settings );
+		var opts = api.init().buttons;
 
-// API augmentation
-$.fn.dataTable.Api.register( 'colReorder.reset()', function () {
-	return this.iterator( 'table', function ( ctx ) {
-		ctx._colReorder.fnReset();
-	} );
-} );
-
-$.fn.dataTable.Api.register( 'colReorder.order()', function ( set ) {
-	if ( set ) {
-		return this.iterator( 'table', function ( ctx ) {
-			ctx._colReorder.fnOrder( set );
-		} );
-	}
-
-	return this.context.length ?
-		this.context[0]._colReorder.fnOrder() :
-		null;
+		return new Buttons( api, opts ).container();
+	},
+	cFeature: "B"
 } );
 
 
-return ColReorder;
+return Buttons;
 }; // /factory
 
 
@@ -16356,13 +16632,295 @@ else if ( typeof exports === 'object' ) {
     // Node/CommonJS
     factory( require('jquery'), require('datatables') );
 }
-else if ( jQuery && !jQuery.fn.dataTable.ColReorder ) {
+else if ( jQuery && !jQuery.fn.dataTable.Buttons ) {
 	// Otherwise simply initialise as normal, stopping multiple evaluation
 	factory( jQuery, jQuery.fn.dataTable );
 }
 
 
 })(window, document);
+
+
+
+/*!
+ * Column visibility buttons for Buttons and DataTables.
+ * 2015 SpryMedia Ltd - datatables.net/license
+ */
+
+(function($, DataTable) {
+"use strict";
+
+
+$.extend( DataTable.ext.buttons, {
+	// A collection of column visibility buttons
+	colvis: function ( dt, conf ) {
+		return {
+			extend: 'collection',
+			text: function ( dt ) {
+				return dt.i18n( 'buttons.colvis', 'Column visibility' );
+			},
+			className: 'buttons-colvis',
+			buttons: [ {
+				extend: 'columnsToggle',
+				columns: conf.columns
+			} ]
+		};
+	},
+
+	// Selected columns with individual buttons - toggle column visibility
+	columnsToggle: function ( dt, conf ) {
+		var columns = dt.columns( conf.columns ).indexes().map( function ( idx ) {
+			return {
+				extend: 'columnToggle',
+				columns: idx
+			};
+		} ).toArray();
+
+		return columns;
+	},
+
+	// Single button to toggle column visibility
+	columnToggle: function ( dt, conf ) {
+		return {
+			extend: 'columnVisibility',
+			columns: conf.columns
+		};
+	},
+
+	// Selected columns with individual buttons - set column visibility
+	columnsVisibility: function ( dt, conf ) {
+		var columns = dt.columns( conf.columns ).indexes().map( function ( idx ) {
+			return {
+				extend: 'columnVisibility',
+				columns: idx,
+				visibility: conf.visibility
+			};
+		} ).toArray();
+
+		return columns;
+	},
+
+	// Single button to set column visibility
+	columnVisibility: {
+		columns: null, // column selector
+		text: function ( dt, button, conf ) {
+			return conf._columnText( dt, conf.columns );
+		},
+		className: 'buttons-columnVisibility',
+		action: function ( e, dt, button, conf ) {
+			var col = dt.column( conf.columns );
+
+			col.visible( conf.visibility !== undefined ?
+				conf.visibility :
+				! col.visible()
+			);
+		},
+		init: function ( dt, button, conf ) {
+			var that = this;
+			var col = dt.column( conf.columns );
+
+			dt
+				.on( 'column-visibility.dt'+conf.namespace, function (e, settings, column, state) {
+					if ( column === conf.columns ) {
+						that.active( state );
+					}
+				} )
+				.on( 'column-reorder.dt'+conf.namespace, function (e, settings, details) {
+					var col = dt.column( conf.columns );
+
+					button.text( conf._columnText( dt, conf.columns ) );
+					that.active( col.visible() );
+				} );
+
+			this.active( col.visible() );
+		},
+		destroy: function ( dt, button, conf ) {
+			dt
+				.off( 'column-visibility.dt'+conf.namespace )
+				.off( 'column-reorder.dt'+conf.namespace );
+		},
+
+		_columnText: function ( dt, col ) {
+			// Use DataTables' internal data structure until this is presented
+			// is a public API. The other option is to use
+			// `$( column(col).node() ).text()` but the node might not have been
+			// populated when Buttons is constructed.
+			var idx = dt.column( col ).index();
+			return dt.settings()[0].aoColumns[ idx ].sTitle
+				.replace(/\n/g," ")        // remove new lines
+				.replace( /<.*?>/g, "" )   // strip HTML
+				.replace(/^\s+|\s+$/g,""); // trim
+		}
+	},
+
+
+	colvisRestore: {
+		className: 'buttons-colvisRestore',
+
+		text: function ( dt ) {
+			return dt.i18n( 'buttons.colvisRestore', 'Restore visibility' );
+		},
+
+		init: function ( dt, button, conf ) {
+			conf._visOriginal = dt.columns().indexes().map( function ( idx ) {
+				return dt.column( idx ).visible();
+			} ).toArray();
+		},
+
+		action: function ( e, dt, button, conf ) {
+			dt.columns().every( function ( i ) {
+				this.visible( conf._visOriginal[ i ] );
+			} );
+		}
+	},
+
+
+	colvisGroup: {
+		className: 'buttons-colvisGroup',
+
+		action: function ( e, dt, button, conf ) {
+			dt.columns( conf.show ).visible( true );
+			dt.columns( conf.hide ).visible( false );
+		},
+
+		show: [],
+
+		hide: []
+	}
+} );
+
+
+})(jQuery, jQuery.fn.dataTable);
+
+
+/*!
+ * Print button for Buttons and DataTables.
+ * 2015 SpryMedia Ltd - datatables.net/license
+ */
+
+(function($, DataTable) {
+"use strict";
+
+
+var _link = document.createElement( 'a' );
+
+/**
+ * Convert a `link` tag's URL from a relative to an absolute address so it will
+ * work correctly in the popup window which has no base URL.
+ *
+ * @param  {node}     el Element to convert
+ */
+var _relToAbs = function( el ) {
+	var url;
+	var clone = $(el).clone()[0];
+	var linkHost;
+
+	if ( clone.nodeName.toLowerCase() === 'link' ) {
+		_link.href = clone.href;
+		linkHost = _link.host;
+
+		// IE doesn't have a trailing slash on the host
+		// Chrome has it on the pathname
+		if ( linkHost.indexOf('/') === -1 && _link.pathname.indexOf('/') !== 0) {
+			linkHost += '/';
+		}
+
+		clone.href = _link.protocol+"//"+linkHost+_link.pathname+_link.search;
+	}
+
+	return clone.outerHTML;
+};
+
+
+DataTable.ext.buttons.print = {
+	className: 'buttons-print',
+
+	text: function ( dt ) {
+		return dt.i18n( 'buttons.print', 'Print' );
+	},
+
+	action: function ( e, dt, button, config ) {
+		var data = dt.buttons.exportData( config.exportOptions );
+		var addRow = function ( d, tag ) {
+			var str = '<tr>';
+
+			for ( var i=0, ien=d.length ; i<ien ; i++ ) {
+				str += '<'+tag+'>'+d[i]+'</'+tag+'>';
+			}
+
+			return str + '</tr>';
+		};
+
+		// Construct a table for printing
+		var html = '<table class="'+dt.table().node().className+'">';
+
+		if ( config.header ) {
+			html += '<thead>'+ addRow( data.header, 'th' ) +'</thead>';
+		}
+
+		html += '<tbody>';
+		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
+			html += addRow( data.body[i], 'td' );
+		}
+		html += '</tbody>';
+
+		if ( config.footer ) {
+			html += '<thead>'+ addRow( data.footer, 'th' ) +'</thead>';
+		}
+
+		// Open a new window for the printable table
+		var win = window.open( '', '' );
+		var title = config.title.replace( '*', $('title').text() );
+
+		win.document.close();
+
+		// Inject the title and also a copy of the style and link tags from this
+		// document so the table can retain its base styling. Note that we have
+		// to use string manipulation as IE won't allow elements to be created
+		// in the host document and then appended to the new window.
+		var head = '<title>'+title+'</title>';
+		$('style, link').each( function () {
+			head += _relToAbs( this );
+		} );
+
+		$(win.document.head).html( head );
+
+		// Inject the table and other surrounding information
+		$(win.document.body).html(
+			'<h1>'+title+'</h1>'+
+			'<div>'+config.message+'</div>'+
+			html
+		);
+
+		if ( config.customize ) {
+			config.customize( win );
+		}
+
+		setTimeout( function () {
+			if ( config.autoPrint ) {
+				win.print(); // blocking - so close will not
+				win.close(); // execute until this is done
+			}
+		}, 250 );
+	},
+
+	title: '*',
+
+	message: '',
+
+	exportOptions: {},
+
+	header: true,
+
+	footer: false,
+
+	autoPrint: true,
+
+	customize: null
+};
+
+
+})(jQuery, jQuery.fn.dataTable);
 
 
 /*! FixedHeader 3.0.0
