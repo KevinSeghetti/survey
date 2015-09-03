@@ -1,6 +1,4 @@
 
-fix bug in routing after logging in
-check routing after account creation
 write more copy for main page
 make printable version
 add 'N/A' to rating
@@ -23,4 +21,7 @@ get email working
 *get graphic back on main page
 *make edit only items not yet filled out
 *make table dropdown allow showing 200 entries
+*fix bug in routing after logging in
+*check routing after account creation
+
 
