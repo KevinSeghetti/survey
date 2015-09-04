@@ -55,6 +55,8 @@
     font-size: 16px;
     line-height: 20px;
     padding: 5px 5px; }
+  #content .question-view .question.bool {
+    text-align: center; }
   #content .question-view tr.even {
     background-color: #6573a7; }
   #content .question-view tr.odd {
