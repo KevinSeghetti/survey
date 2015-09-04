@@ -55,8 +55,9 @@
                         {% endwith %}
                         {% for choice in choices.booleans %}
                            {% if answer|objgetattr:choice.name %}
-                              <td class='question small' data-order="1">
-                                 <img src="/static/admin/img/icon-yes.gif" alt="True">
+                              <td class='question bool small' data-order="1">
+                                 {{ choice.description }}
+                                 {# <img src="/static/admin/img/icon-yes.gif" alt="True"> #}
                               </td>
                            {% else %}
                               <td class='question small' data-order="0">
@@ -78,7 +79,7 @@
             "lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]],
                     dom: 'Bfrtip',
                     buttons: [
-                        'print'
+                        'print', 'excel', 'pdf', 'copy',
                     ]
         }
             );
