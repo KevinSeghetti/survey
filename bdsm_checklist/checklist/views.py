@@ -14,7 +14,7 @@ def index(request):
     latest_question_list = Question.objects.order_by('-question_text')[:5]
     # this is a shortcut
     publish_url = ""
-    public_url_text =""
+    publish_url_text =""
     if(request.user.is_authenticated() ):
         publish_url  = reverse('checklist:view',args=str(request.user.id))
         publish_url_text = request.get_host()+ publish_url

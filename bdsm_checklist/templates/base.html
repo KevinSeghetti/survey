@@ -20,6 +20,20 @@
    <div class='site-header'>
       {% block header %}
          <div class='headline'>BDSM Checklist</div>
+         <div class='logo'>
+             <img src="{% static 'images/logo.png'  %}" alt="logo" height="38" width="38">
+         </div>
+         <div class="login-status">
+          {# kts can't figure out how to reverse lookup logout #}
+          {% if request.user.is_authenticated %}
+            Logged in as {{ request.user }}
+            <a href=/accounts/logout>Logout</a>
+          {% else %}
+            <a href=/accounts/login>Login</a> or
+            <a href=/accounts/register>Register</a>
+          {% endif %}
+         </div>
+
          <div class='toolbar'>
             <ul>
                <li><a href="{% url 'checklist:index'  %}">Home            </a></li>
@@ -41,16 +55,6 @@
     <br />
    <div class='site-footer'>
        {% block footer %}
-       {# kts can't figure out how to reverse lookup logout #}
-       {% if request.user.is_authenticated %}
-         You are logged in as {{ request.user }}
-         <a href=/accounts/logout>Logout</a>
-       {% else %}
-         You are not logged in
-         <a href=/accounts/login>Login</a>
-         <a href=/accounts/register>Register</a>
-
-       {% endif %}
        <div class ='credits'>
            Created by Kevin Seghetti. <a href="mailto:kts@tenetti.org?Subject=BDSM checklist" target="_top">Email me</a> with questions or feedback
        </div>

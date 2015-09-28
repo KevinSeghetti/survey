@@ -5,25 +5,24 @@
 {% block content %}
 
 <div>
-
     <div>
         Welcome to the online BDSM checklist. This is an interactive version of a checklist I found
         <a href="https://web.archive.org/web/20150128121457/http://www.cepemo.com/checklist.html">
         here</a>. <br />
         I love this checklist, but found using it on paper cumbersome. For example, once filled
         out, I wanted a quick way to view all items marked 'love'.<br />
-        All of the questions and instructions are blatently taken from there (I have begun looking for the
+        All of the questions and instructions are blatently taken from there (I have been looking for the
         original author, if anyone knows who that is drop me an email through the link at the bottom of this page).
         <br />
-        Instructions can be found <a href="/static/checklist/instructions.html">
-        here
-        </a>
-       {% if request.user.is_authenticated %}
 
-          To publish your results, copy the following link:
+
+       {% if request.user.is_authenticated %}
+          <br />To publish your results for anyone to be able to view, copy the following link:
           <a href="{{ publish_url }}">
                    {{ publish_url_text }}
           </a>
+       {% else %}
+        <br />To Create an account click on the register link at the bottom of the page
        {% endif %}
     </div>
 

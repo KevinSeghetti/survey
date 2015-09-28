@@ -5,6 +5,10 @@ div.site-header .headline {
   font-size: 36px;
   line-height: 40px;
   text-align: center; }
+div.site-header .logo {
+  float: left; }
+div.site-header .logo3 {
+  float: right; }
 div.site-header div.toolbar {
   display: table;
   margin: 0 auto;
@@ -38,6 +42,10 @@ div.site-header div.toolbar {
         border-right: 2px solid #efd2e1;
         border-bottom: 2px solid #efd2e1;
         border-left: 2px solid #19000d; }
+div.site-header div.login-status {
+  display: inline;
+  float: right;
+  margin: 0 0 10px 10px; }
 
 div#content {
   clear: left; }

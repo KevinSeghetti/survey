@@ -8,8 +8,14 @@ div.site-header {
      text-align: center;
    }
 
+   .logo {
+   float: left;
+   }
+   .logo3 {
+   float: right;
+   }
+
    div.toolbar {
-      
       display: table;
       margin: 0 auto;
 
@@ -55,6 +61,12 @@ div.site-header {
             }
          }
       }
+   }
+
+   div.login-status {
+      display:inline;
+       float: right;
+      margin: 0 0 10px 10px;
    }
 }
 
