@@ -1,10 +1,9 @@
 
 write more copy for main page
-add 'N/A' to rating
 make logged out page better
 make login page better
 make register page better
-add a notes section to each answer, plus an overall notes section
+add an overall notes section
 
 add ability to create new questions, and have question groups
 release source on github
@@ -13,6 +12,8 @@ add user settings page, change password, delete account, etc.
 add user controls over visibility of answers
 get email working
 
+*add a notes section to each answer
+*add 'N/A' to rating
 *make printable version
 *add per item editor, linked from review page (only when logged in)(
 *make footer better when not logged in (show login link instead of logout link)
