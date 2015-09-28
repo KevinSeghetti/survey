@@ -1,7 +1,10 @@
+/* Main Primary color */
+/* Main Secondary color (1) */
+/* Main Secondary color (2) */
 .question-edit .odd, .question-detail .odd {
-  background-color: #c05442; }
+  background-color: #aa4139; }
 .question-edit .even, .question-detail .even {
-  background-color: #f79788; }
+  background-color: #f09891; }
 .question-edit .topic-headline, .question-detail .topic-headline {
   display: inline;
   font-size: 26px;
@@ -38,17 +41,17 @@
     line-height: 30px;
     padding: 5px 5px; }
   #content .question-view th {
-    background-color: #374783;
+    background-color: #aa6f39;
     color: white;
     font-weight: bold;
     font-size: 16px;
     line-height: 20px;
     padding: 5px 5px; }
   #content .question-view tbody {
-    background-color: #919dc8;
+    background-color: #ffefe0;
     color: black; }
   #content .question-view table#view-table {
-    background-color: #919dc8;
+    background-color: #ffefe0;
     border-collapse: collapse; }
   #content .question-view td {
     border-collapse: collapse;
@@ -58,11 +61,11 @@
   #content .question-view .question.bool {
     text-align: center; }
   #content .question-view tr.even {
-    background-color: #6573a7; }
+    background-color: #f0bf91; }
   #content .question-view tr.odd {
-    background-color: #919dc8; }
+    background-color: #ffefe0; }
   #content .question-view #view-table_info {
-    color: #f79788; }
+    color: #f09891; }
 
 .question-view table, .question-view th, .question-view td {
   border: 1px solid black; }

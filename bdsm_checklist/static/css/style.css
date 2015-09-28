@@ -1,3 +1,6 @@
+/* Main Primary color */
+/* Main Secondary color (1) */
+/* Main Secondary color (2) */
 div.site-header .headline {
   font-size: 36px;
   line-height: 40px;
@@ -20,21 +23,21 @@ div.site-header div.toolbar {
         display: block;
         padding: 5px 0px;
         width: 120px;
-        background: #808a0d;
-        color: #f5fcae;
+        background: #52052c;
+        color: #efd2e1;
         float: left;
         text-align: center;
-        border-top: 2px solid #b3bd41;
-        border-right: 2px solid #656e00;
-        border-bottom: 2px solid #656e00;
-        border-left: 2px solid #b3bd41; }
+        border-top: 2px solid #8c2f5e;
+        border-right: 2px solid #19000d;
+        border-bottom: 2px solid #19000d;
+        border-left: 2px solid #8c2f5e; }
       div.site-header div.toolbar ul li a:hover {
-        background: #b3bd41;
-        color: #656e00;
-        border-top: 2px solid #656e00;
-        border-right: 2px solid #f5fcae;
-        border-bottom: 2px solid #f5fcae;
-        border-left: 2px solid #656e00; }
+        background: #8c2f5e;
+        color: #19000d;
+        border-top: 2px solid #19000d;
+        border-right: 2px solid #efd2e1;
+        border-bottom: 2px solid #efd2e1;
+        border-left: 2px solid #19000d; }
 
 div#content {
   clear: left; }
@@ -58,11 +61,11 @@ div.entire-page {
   min-height: 100%;
   padding: 0 0 20px;
   position: relative;
-  background-color: #c05442;
+  background-color: #aa4139;
   color: #000000; }
 
 #content .question-view th {
-  background-color: #374783; }
+  background-color: #aa6f39; }
 
 a {
   color: #990033; }
