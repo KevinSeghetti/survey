@@ -1,5 +1,4 @@
 
-make alt text for checkbox images, so they print
 write more copy for main page
 add 'N/A' to rating
 make logged out page better
@@ -12,7 +11,6 @@ release source on github
 look for more artwork
 add user settings page, change password, delete account, etc.
 add user controls over visibility of answers
-add download as CSV or excel link
 get email working
 
 *make printable version
@@ -24,5 +22,7 @@ get email working
 *make table dropdown allow showing 200 entries
 *fix bug in routing after logging in
 *check routing after account creation
+*add download as CSV or excel link
+*make alt text for checkbox images, so they print
 
 
