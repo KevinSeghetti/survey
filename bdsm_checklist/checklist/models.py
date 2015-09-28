@@ -25,6 +25,7 @@ class Answer(models.Model):
     hard_limit = models.BooleanField(default=False)
     have_done = models.BooleanField(default=False)
     rating = models.IntegerField(default=False)
+    notes = models.TextField(default="")
     
     def __str__(self):              # __unicode__ on Python 2
         return (

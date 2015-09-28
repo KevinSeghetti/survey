@@ -28,6 +28,9 @@
                         </div>
                      {% endfor %}
                   </div>
+                  <div class='notes' >
+                     Notes<input type="text" name="{{partial_key}}_notes"  value="{{ answer.notes }}">
+                  </div>
                {% endwith %}
             </div>
          {% endfor %}

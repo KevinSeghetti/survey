@@ -39,6 +39,7 @@ def instructions(request):
 choices = {}
 choices['rating'] = \
 [
+    "N/A"        ,
     "Love"        ,
     "Like"        ,
     "Don't Mind"  ,
@@ -176,6 +177,16 @@ def set(request):
                     answer = Answer(user=request.user,question=question,context=context['name'])
 
                 answer.rating = selected_rating
+
+                notes_field_name = str(question.id)+"_"+context['name']+'_notes'
+                print("notes field name = ",notes_field_name)
+                try:
+                    value = request.POST[notes_field_name]
+                except:
+                    # text field not found
+                    pass
+                else:
+                    answer.notes = value
 
                 # now grab any booleans which are set        
                 for item in choices['booleans']:
