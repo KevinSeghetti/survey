@@ -4,4 +4,5 @@
 *.vpwhistu
 *.vtg
 venv
+.sass-cache/
 
