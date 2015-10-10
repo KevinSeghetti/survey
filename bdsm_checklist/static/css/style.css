@@ -27,21 +27,21 @@ div.site-header div.toolbar {
         display: block;
         padding: 5px 0px;
         width: 120px;
-        background: #52052c;
-        color: #efd2e1;
+        background: #52052C;
+        color: #EFD2E1;
         float: left;
         text-align: center;
-        border-top: 2px solid #8c2f5e;
-        border-right: 2px solid #19000d;
-        border-bottom: 2px solid #19000d;
-        border-left: 2px solid #8c2f5e; }
+        border-top: 2px solid #8C2F5E;
+        border-right: 2px solid #19000D;
+        border-bottom: 2px solid #19000D;
+        border-left: 2px solid #8C2F5E; }
       div.site-header div.toolbar ul li a:hover {
-        background: #8c2f5e;
-        color: #19000d;
-        border-top: 2px solid #19000d;
-        border-right: 2px solid #efd2e1;
-        border-bottom: 2px solid #efd2e1;
-        border-left: 2px solid #19000d; }
+        background: #8C2F5E;
+        color: #19000D;
+        border-top: 2px solid #19000D;
+        border-right: 2px solid #EFD2E1;
+        border-bottom: 2px solid #EFD2E1;
+        border-left: 2px solid #19000D; }
 div.site-header div.login-status {
   display: inline;
   float: right;
@@ -69,11 +69,20 @@ div.entire-page {
   min-height: 100%;
   padding: 0 0 20px;
   position: relative;
-  background-color: #aa4139;
+  background-color: #AA4139;
   color: #000000; }
+  div.entire-page input[type='checkbox'] {
+    margin: 5px 3px 3px 6px; }
+  div.entire-page input[type='radio'] {
+    margin: 4px 3px 0px 6px; }
+  div.entire-page .notes input[type='text'] {
+    width: 300px;
+    height: 20px;
+    padding: 4px;
+    margin: 4px; }
 
 #content .question-view th {
-  background-color: #aa6f39; }
+  background-color: #AA6F39; }
 
 a {
   color: #990033; }

@@ -1,38 +1,64 @@
    {% load checklist_extras %}
 
-      <span class='topic-headline'>{{ node.question.question_text }}</span>
-      <span class='topic-detail'>{{node.question.question_detail }}</span>
-      <div class='topic-body'>
-         {% for context in choices_context %}
-            <span class='context-headline'>
-               {{ context.description }}
-            </span>
-            <div class='context'>
-               {% with answer=node.answers|keyvalue:context.name partial_key=node.question.id|addstr:'_'|addstr:context.name %}
-                  <span class='question-headline'>
-                    Rating
-                  </span>
-                  <div class='question'>
-                     {% for choice in choices.rating %}
-                        <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ forloop.counter0 }}"
-                        {% if answer.rating|integer == forloop.counter0  %}
-                            checked="checked"
-                        {% endif %}/>
-                        <label >{{ choice }}</label>
-                     {% endfor %}
-                  </div>
-                  <div class='booleans' >
-                     {% for choice in choices.booleans %}
-                        <div class='question small'>
-                           <input type="checkbox" name="{{partial_key|addstr:'_'|addstr:choice.name}}"  {% if answer|objgetattr:choice.name %}checked{% endif %}> {{choice.description}}
-                        </div>
-                     {% endfor %}
-                  </div>
-                  <div class='notes' >
-                     Notes<input type="text" name="{{partial_key}}_notes"  value="{{ answer.notes }}">
-                  </div>
-               {% endwith %}
-            </div>
-         {% endfor %}
+      <div class="row" >
+          <div class='col-xs-12'>
+            <div class='topic-headline'>{{ node.question.question_text  }}</div>
+            <div class='topic-detail'  >{{node.question.question_detail }}</div>
+          </div>
       </div>
+      {% for context in choices_context %}
+         <div class='context-headline row'>
+             <div class='col-xs-12' >
+               {{ context.description }}
+             </div>
+         </div>
+         {% with answer=node.answers|keyvalue:context.name partial_key=node.question.id|addstr:'_'|addstr:context.name %}
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-6">
+                  <div class='row'>
+                     <div class="col-xs-12">
+                        <div class='row' >
+                           <div class='question-headline col-xs-1'>
+                           </div>
+                           <div class='question-headline col-xs-1'>
+                             Rating
+                           </div>
+                           <div class='col-xs-10' >
+                              {% for choice in choices.rating %}
+                                 <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ forloop.counter0 }}"
+                                 {% if answer.rating|integer == forloop.counter0  %}
+                                     checked="checked"
+                                 {% endif %}/>
+                                 <label >{{ choice }}</label>
+                              {% endfor %}
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class='row'>
+                     <div class="col-xs-12">
+                         <div class='row' >
+                           <div class='col-xs-2'>
+                           </div>
+                           <div class='col-xs-10' >
+                              <div class='booleans' >
+                                 {% for choice in choices.booleans %}
+                                    <div class='question small'>
+                                       <input type="checkbox" name="{{partial_key|addstr:'_'|addstr:choice.name}}"  {% if answer|objgetattr:choice.name %}checked{% endif %}> {{choice.description}}
+                                    </div>
+                                 {% endfor %}
+                              </div>
+                           </div>
+                         </div>
+                     </div>
+                  </div>
+               </div>
+            <div class='notes col-xs-6'>
+               Notes<input type="text" name="{{partial_key}}_notes"  value="{{ answer.notes }}">
+            </div>
+
+            </div>
+
+         {% endwith %}
+      {% endfor %}
 
