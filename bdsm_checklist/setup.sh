@@ -40,14 +40,16 @@ source venv/bin/activate.csh
 
 pip install --upgrade pip
 
-pip install django
-pip install django-mysql
+
+pip install django==1.8.4
+pip install django-mysql=0.2.2
 #pip install MySQL-python        # doesn't support python3
 #pip3.4 install --allow-external mysql-connector-python mysql-connector-python
 #pip install git+https://github.com/multiplay/mysql-connector-python
 
-pip install psycopg2
-pip install django-registration-redux
+#pip install psycopg2
+pip install django-registration-redux==1,2
+#pip install mysql-connector-python==2.0.4
 
 cd $DEST_PATH/bdsm_checklist
 
