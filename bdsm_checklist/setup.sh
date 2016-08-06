@@ -43,6 +43,8 @@ pip install --upgrade pip
 
 pip install django==1.8.4
 pip install django-mysql=0.2.2
+pip install djangorestframework
+pip install markdown
 #pip install MySQL-python        # doesn't support python3
 #pip3.4 install --allow-external mysql-connector-python mysql-connector-python
 #pip install git+https://github.com/multiplay/mysql-connector-python
