@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'registration',
     'checklist',
 )
@@ -122,6 +123,20 @@ DATABASES = {
 #    }
 
 }
+
+# REST FRAMEWORK
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+#    'DEFAULT_PERMISSION_CLASSES': [
+        # kts TODO: learn more about Django REST interface authentication model
+        # right now, if I enable this, it won't let us view details
+#        'rest_framework.permissions.DjangoModelPermissions'
+#        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#    ]
+}
+
 
 
 # Internationalization

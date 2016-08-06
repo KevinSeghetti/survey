@@ -14,8 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
+from rest_framework import routers
 from django.contrib import admin
 from django.views.generic import RedirectView
+
+from checklist import views
+
+
+router = routers.DefaultRouter()
+router.register(r'questions', views.QuestionViewSet)
+router.register(r'answers', views.AnswerViewSet)
+
 
 #from registration.backends.simple.views import RegistrationView
 #class MyRegistrationView(RegistrationView):
@@ -29,4 +38,7 @@ urlpatterns = [
    url(r'^accounts/', include('registration.backends.simple.urls')),
 #   url(r'^$', 'checklist.views.index', name='index'),
    url(r'^checklist/$', 'checklist.views.index', name='registration_complete'),
+   url(r'^rest/', include(router.urls)),
+   url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 ]

@@ -1,14 +1,17 @@
+import pprint
+
 from django.shortcuts import get_object_or_404, get_list_or_404,render
 #from django.http import Http404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-import pprint
+from rest_framework import viewsets
 
 from django.http import HttpResponse
 #from django.template import RequestContext, loader
 from .models import Question,Answer
+from .serializers import QuestionSerializer, AnswerSerializer
 
 def index(request):
     latest_question_list = Question.objects.order_by('-question_text')[:5]
@@ -208,4 +211,25 @@ def set(request):
                     # user hits the Back button.
     return HttpResponseRedirect(reverse('checklist:index'))
 
+
+#===============================================================================
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+
+    queryset = Question.objects.all().order_by('-question_text')
+    serializer_class = QuestionSerializer
+
+#===============================================================================
+
+class AnswerViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Answer.objects.all().order_by('-question__question_text')
+    serializer_class = AnswerSerializer
+
+#===============================================================================
 

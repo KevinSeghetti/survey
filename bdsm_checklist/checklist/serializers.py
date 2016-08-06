@@ -10,7 +10,7 @@ class QuestionSerializer(serializers.HyperlinkedModelSerializer):
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Answer
-        fields = ('answer_test', 'answer_detail',)
+        fields = ('curious', 'essential',)
 
 
 
