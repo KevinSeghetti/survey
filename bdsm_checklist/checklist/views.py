@@ -11,7 +11,7 @@ from rest_framework import viewsets
 from django.http import HttpResponse
 #from django.template import RequestContext, loader
 from .models import Question,Answer
-from .serializers import QuestionSerializer, AnswerSerializer
+from .serializers import QuestionSerializer, AnswerSerializer, UserSerializer
 
 def index(request):
     latest_question_list = Question.objects.order_by('-question_text')[:5]
@@ -211,7 +211,6 @@ def set(request):
                     # user hits the Back button.
     return HttpResponseRedirect(reverse('checklist:index'))
 
-
 #===============================================================================
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -230,6 +229,15 @@ class AnswerViewSet(viewsets.ModelViewSet):
     """
     queryset = Answer.objects.all().order_by('-question__question_text')
     serializer_class = AnswerSerializer
+
+#===============================================================================
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
 
 #===============================================================================
 
