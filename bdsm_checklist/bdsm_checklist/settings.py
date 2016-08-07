@@ -127,14 +127,21 @@ DATABASES = {
 # REST FRAMEWORK
 
 REST_FRAMEWORK = {
+    'PAGE_SIZE': 10,
+
+
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-#    'DEFAULT_PERMISSION_CLASSES': [
+    'DEFAULT_PERMISSION_CLASSES': [
         # kts TODO: learn more about Django REST interface authentication model
+
+#        'rest_framework.permissions.IsAdminUser',
+   'rest_framework.permissions.AllowAny',
+
         # right now, if I enable this, it won't let us view details
 #        'rest_framework.permissions.DjangoModelPermissions'
 #        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-#    ]
+    ],
 }
 
 
