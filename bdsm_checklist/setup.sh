@@ -42,7 +42,7 @@ pip install --upgrade pip
 
 
 pip install django==1.8.4
-pip install django-mysql=0.2.2
+pip install django-mysql==0.2.2
 pip install djangorestframework
 pip install markdown
 #pip install MySQL-python        # doesn't support python3
@@ -50,12 +50,17 @@ pip install markdown
 #pip install git+https://github.com/multiplay/mysql-connector-python
 
 #pip install psycopg2
-pip install django-registration-redux==1,2
+pip install django-registration-redux==1.2
 #pip install mysql-connector-python==2.0.4
+
+pip install httpie
 
 cd $DEST_PATH/bdsm_checklist
 
+#python manage.py createsuperuser
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('kts', 'kts@tenetti.org', 'jdo08589fj2')" | ./manage.py shell
+
+
 python manage.py migrate
 python manage.py loaddata question.fixture.json
 python manage.py runserver
