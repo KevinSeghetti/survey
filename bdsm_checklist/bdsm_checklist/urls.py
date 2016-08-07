@@ -24,6 +24,7 @@ from checklist import views
 router = routers.DefaultRouter()
 router.register(r'questions', views.QuestionViewSet)
 router.register(r'answers', views.AnswerViewSet)
+router.register(r'users', views.UserViewSet)
 
 
 #from registration.backends.simple.views import RegistrationView
