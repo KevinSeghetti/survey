@@ -13,7 +13,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class QuestionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Question
-        fields = ('url','question_text', 'question_detail',)
+        fields = ('id', 'url','question_text', 'question_detail',)
 
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
 

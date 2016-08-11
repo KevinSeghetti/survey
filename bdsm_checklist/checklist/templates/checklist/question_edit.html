@@ -1,0 +1,84 @@
+{% extends "checklist/base.html" %}
+{% block content %}
+
+{% load staticfiles %}
+
+
+   <script id="question_edit_handlebar" type="text/x-handlebars-template"  >
+   This is the handlbars template for single question not currently used
+   {{ question_text }}
+   {{ question_detail }}
+   </script>
+
+
+   <div>
+
+      <div class ="headline">Question editor</div>
+
+<div id="container">Loading...</div>
+
+
+
+<script>
+
+
+
+    console.log("question_edit: start")
+
+    $(document).ready(function() {
+        console.log("question_edit: document ready")
+        //var brandNewQuestion = new QuestionModel({ question_text: 'sample question', question_detail: 'sample question detail' });
+        //brandNewQuestion.save();
+
+        var assetList =
+        [
+            { url: '{% static "checklist/handlebar/question_edit.handlebar" %}' , loadHandler: templateLoaderFunction, name: 'question_edit' },
+        ]
+        Handlebars.templates = Handlebars.templates || {};
+
+        chainLoadAssets(assetList, function()
+        {
+
+            var human = new QuestionModel({ name: "Thomas", age: 67});
+            human.set({idquestion_detail: 'Stewie Griffin'}); // This triggers a change and wil
+
+
+            var question = new QuestionModel(id=1)
+            var appView = new QuestionView({model: question});
+
+            //var questions = new QuestionCollection()
+            //
+            //questions.on('change', function(msg) {
+            //    console.log("questions loaded",questions)
+            //}
+            //)
+            //
+            //questions.on('change:question_detail', function(msg) {
+            //    console.log("questions loaded",questions)
+            //}
+            //)
+
+            //console.log("about to fetch question")
+            //question.fetch({
+            //    success: function (questionsResults) {
+            //        console.log("question loaded")
+            //        console.log(JSON.stringify(question));
+            //        console.log("questionview construction")
+            //        var appView = new QuestionView({model: question});
+
+
+
+
+            //    }
+            //})
+
+        })
+
+
+    })
+
+</script>
+
+{% endblock %}
+
+
