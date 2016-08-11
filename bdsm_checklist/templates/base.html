@@ -19,6 +19,10 @@
    <script type="text/javascript" src="{% static 'js/handlebars-v4.0.2.js'         %}" ></script>
    {% block scriptincludes %}{%endblock%}
    <title>{% block title %}BDSM Checklist{% endblock %}</title>
+
+    <meta content="authenticity_token" name="csrf-param" />
+    <meta content="{{ csrf_token }}" name="csrf-token" />
+
 </head>
 
 <body>

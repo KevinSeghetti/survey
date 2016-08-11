@@ -8,6 +8,10 @@
        {% endblock %}
 
        {% block scriptincludes %}
+        <script type="text/javascript" src="{% static 'checklist/js/utility.js'               %}" ></script>
+        <script type="text/javascript" src="{% static 'checklist/js/Question.js'              %}" ></script>
+        <script type="text/javascript" src="{% static 'checklist/js/main.js'                  %}" ></script>
+
          {% block checklist_scriptincludes %}
          {% endblock %}
        {% endblock %}

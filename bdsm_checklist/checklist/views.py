@@ -86,6 +86,16 @@ def questions(request):
     context = {'question_list': question_list}
     return render(request, 'checklist/questions.html', context)
 
+def questions_edit(request):
+    question_list = Question.objects.order_by('-question_text')
+    context = {'question_list': question_list}
+    return render(request, 'checklist/questions_edit.html', context)
+
+def question_edit(request,question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    context = {'question': question}
+    return render(request, 'checklist/question_edit.html', context)
+
 def get_answers_list (user, questions):
     print("get_answers_list: usert = ",user)
     results = []

@@ -142,6 +142,10 @@ REST_FRAMEWORK = {
 #        'rest_framework.permissions.DjangoModelPermissions'
 #        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        #'rest_framework.renderers.BrowsableAPIRenderer',
+    )
 }
 
 
