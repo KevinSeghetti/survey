@@ -2,23 +2,23 @@
 
 QuestionModel = Backbone.Model.extend({
 //  urlRoot: '/rest/questions/1/?format=json',
-	urlRoot: '/rest/questions/',
+    urlRoot: '/rest/questions/',
     defaults: {
-        id: 1,          // kts temp
-        question_detail: 'Fetus',
-        age: 0
+        question_text: '',
+        question_detail: '',
     },
     initialize: function(){
          console.log("QuestionModel initialize");
+
         this.on("change:question_detail", function(model){
           var name = model.get("question_detail"); // 'Stewie Griffin'
           console.log("Changed my name to " + name );
         });
   }
 
-	//url: function() {
-	//	return this.urlRoot + '/' + this.id;
- 	//}
+    //url: function() {
+    //  return this.urlRoot + '/' + this.id;
+    //}
 });
 
 
