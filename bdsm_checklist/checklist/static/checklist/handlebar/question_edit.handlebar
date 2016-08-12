@@ -1,9 +1,4 @@
 
-
-This is a handlebar template for the question editor so there
-text{{  question_text }} <br />
-detail{{  question_detail }}
-
 <div id="question_view">
       <label>Question Text:   <input type="text" name="text"   class="text"   value="{{ question_text }}"  ></label><br />
       <label>Question Detail: <input type="text" name="detail" class="detail" value="{{ question_detail }}"></label><br />

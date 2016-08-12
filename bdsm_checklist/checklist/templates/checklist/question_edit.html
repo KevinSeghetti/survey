@@ -43,7 +43,7 @@
             human.set({idquestion_detail: 'Stewie Griffin'}); // This triggers a change and wil
 
 
-            var question = new QuestionModel(id=1)
+            var question = new QuestionModel({id: {{question.id}} })
             var appView = new QuestionView({model: question});
 
             //var questions = new QuestionCollection()
