@@ -45,11 +45,11 @@
             <ul>
                <li><a href="{% url 'checklist:index'  %}">Home            </a></li>
                {% if request.user.is_authenticated %}
-                  <li><a href="{% url 'checklist:edit'      %}">Edit      </a></li>
-                  <li><a href="{% url 'checklist:resume'    %}">Resume    </a></li>
-                  <li><a href="{% url 'checklist:review'    %}">Review    </a></li>
+                  <li><a href="{% url 'checklist:edit'      %}">Fill out checklist</a></li>
+                  <li><a href="{% url 'checklist:resume'    %}">Resume checklist  </a></li>
+                  <li><a href="{% url 'checklist:review'    %}">View Results      </a></li>
                 {% endif %}
-               <li><a href="{% url 'checklist:questions' %}">Question List</a></li>
+               <li><a href="{% url 'checklist:questions' %}">View question list</a></li>
             </ul>
          </div>
       {% endblock %}

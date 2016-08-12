@@ -21,12 +21,33 @@
           <a href="{{ publish_url }}">
                    {{ publish_url_text }}
           </a>
+        <br />
+            <p>To use: The first step is to click the Fill out checklist button, and start answering questions.
+            You do not have to answer all of the questions in a single sitting, but you do need to
+            scroll to the bottom of the page and click submit to save what answered you have filled out.
+            </p>
+            <p>
+            After saving a partially filled out checklist, you may resume by clicing "Resume checklist"
+            to view only the questioms you have not answered yet.
+            </p>
+            <p>
+
+            You may return at any time and edit your answers by clicking 'Fill out checklist' again.
+            </p>
+            <p>
+            Once you have finished the questionaire, the "View Results" page can be used to display/print/download
+            your answers. This page can also filter for certain results, as well as sort the results.
+            </p>
+
+
        {% else %}
-        <br />To Create an account click on the register link at the bottom of the page
+        <br />To Create an account click on the register link on the upper left corner of the page
        {% endif %}
     </div>
 
     {#<a href="{% url 'checklist:edit_with_options/unanswered' %}">Edit Unanswered</a><br /> #}
+
+
 
 {% endblock %}
 
