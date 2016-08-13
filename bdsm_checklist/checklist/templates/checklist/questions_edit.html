@@ -3,17 +3,76 @@
 
 {% load staticfiles %}
 
+<div class ="headline">Question list</div>
 
-   <script id="question_edit_handlebar" type="text/x-handlebars-template"  >
-   This is the handlbars template
-   </script>
+<div id="container">
+    Loading...
+      <ul class="question-list">shouldn't see this</ul>
+
+    <div class="question-create">
+        <b>Add a QuestionCollection</b>
+        <label>Question text  : <input id="question_text"   type="text"></label>
+        <label>Question detail: <input id="question_detail" type="text"></label>
+        <button class="create">Create Question</button>
+    </div>
+
+</div>
+
+<script>
+
+    console.log("question_edit: start")
+
+    $(document).ready(function() {
+        console.log("question_edit: document ready")
+        //var brandNewQuestion = new QuestionModel({ question_text: 'sample question', question_detail: 'sample question detail' });
+        //brandNewQuestion.save();
+
+        var assetList =
+        [
+            { url: '{% static "checklist/handlebar/question_edit.handlebar" %}' , loadHandler: templateLoaderFunction, name: 'question_edit' },
+        ]
+        Handlebars.templates = Handlebars.templates || {};
+
+        chainLoadAssets(assetList, function()
+        {
+            var questionList = new QuestionCollection();
+            var muppetsView = new QuestionListView({collection: questionList});
+            questionList.fetch();
+
+            //var appView = new QuestionCollectionView({model: QuestionModel});
+
+            //var questions = new QuestionCollection()
+            //
+            //questions.on('change', function(msg) {
+            //    console.log("questions loaded",questions)
+            //}
+            //)
+            //
+            //questions.on('change:question_detail', function(msg) {
+            //    console.log("questions loaded",questions)
+            //}
+            //)
+
+            //console.log("about to fetch question")
+            //question.fetch({
+            //    success: function (questionsResults) {
+            //        console.log("question loaded")
+            //        console.log(JSON.stringify(question));
+            //        console.log("questionview construction")
+            //        var appView = new QuestionView({model: question});
 
 
-   <div>
 
-      <div class ="headline">Question list editor</div>
 
-<div id="container">Loading...</div>
+            //    }
+            //})
+
+        })
+
+
+    })
+
+</script>
 
 
 {% endblock %}
