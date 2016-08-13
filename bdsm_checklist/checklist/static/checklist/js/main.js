@@ -3,21 +3,20 @@
 
 Backbone._sync = Backbone.sync;
 Backbone.sync = function(method, model, options) {
-    console.log("## backbone sync ##")
+    console.log("## overridden backbone _sync ##")
   if (!options.noCSRF) {
     var beforeSend = options.beforeSend;
 
     // Set X-CSRF-Token HTTP header
     options.beforeSend = function(xhr) {
-        console.log("## backbone sync beforesend ##")
+        console.log("## overridden backbone _sync beforesend ##")
       var token = $('meta[name="csrf-token"]').attr('content');
-        console.log("## backbone sync beforesend: token ##",token)
+        console.log("## overridden backbone _sync beforesend: token ##",token)
       if (token) { xhr.setRequestHeader('X-CSRFToken', token); }
       if (beforeSend) { return beforeSend.apply(this, arguments); }
     };
   }
-  console.log("## backbone sync returning ##")
-
+  console.log("## overridden backbone _sync calling through ##")
   return Backbone._sync(method, model, options);
 };
 
