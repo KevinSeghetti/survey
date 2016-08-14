@@ -1,7 +1,6 @@
 
 <div id="question_view">
-      <label>Question Text:   <input type="text" name="text"   class="text"   value="{{ question_text }}"  ></label><br />
-      <label>Question Detail: <input type="text" name="detail" class="detail" value="{{ question_detail }}"></label><br />
-    <button class="save">Save</button>
+      <label>Question Text:   <input type="text" name="text"   class="text"   value="{{ question_text }}"  ></label>
+      <label>Question Detail: <input type="text" name="detail" class="detail" value="{{ question_detail }}"></label>
 </div>
 

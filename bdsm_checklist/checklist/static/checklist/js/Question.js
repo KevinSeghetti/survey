@@ -75,7 +75,7 @@ var QuestionDetailView = Backbone.View.extend( {
         console.log("model attributes = ", this.model.toJSON())
 
         //var result = this.question_edit_template(content)
-        var result = Handlebars.templates.question_edit(this.model.toJSON())
+        var result = Handlebars.templates.questiondetail_edit(this.model.toJSON())
         console.log("result = ", result)
         //this.$el.html("Hello TutorialsPoint!!!");
         this.$el.html(result);
