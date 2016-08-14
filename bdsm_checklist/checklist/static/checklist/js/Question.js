@@ -100,7 +100,7 @@ var QuestionCollection = Backbone.Collection.extend( {
 
 var QuestionView = Backbone.View.extend( {
 
-    tagName: 'li',
+    tagName: 'div',
 
     events: {
         'change .text': 'onChangeText',
@@ -182,7 +182,7 @@ var QuestionListView = Backbone.View.extend( {
     render: function() {
         console.log("QuestionListView:render:")
 
-        var $list = this.$('ul.question-list').empty();
+        var $list = this.$('div.question-list').empty();
 
         this.collection.each(function(model) {
             console.log("QuestionListView:render: each")

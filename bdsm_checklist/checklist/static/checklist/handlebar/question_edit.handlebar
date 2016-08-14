@@ -1,6 +1,10 @@
 
-<div id="question_view">
-      <label>Question Text:   <input type="text" name="text"   class="text"   value="{{ question_text }}"  ></label>
-      <label>Question Detail: <input type="text" name="detail" class="detail" value="{{ question_detail }}"></label>
+<div id="question_view" class="row">
+      <div class="col-md-6 col-sm-12">
+          <label for "question_{{index}}_text" >Question Text:   <input id="question_{{index}}_text" type="text" name="text"   class="text form-control"   value="{{ question_text }}"  ></label>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <label>Question Detail: <input type="text" name="detail" class="detail form-control" value="{{ question_detail }}"></label>
+      </div>
 </div>
 
