@@ -13,11 +13,11 @@ QuestionModel = Backbone.Model.extend( {
                 var detail = model.get("question_detail");
                 console.log("Changed question detail to " + detail);
             });
-    }
+    },
 
-    //url: function() {
-    //  return this.urlRoot + '/' + this.id;
-    //}
+    url: function() {
+      return this.urlRoot + this.id + '/';
+    }
 });
 
 
@@ -76,7 +76,7 @@ var QuestionDetailView = Backbone.View.extend( {
 
         //var result = this.question_edit_template(content)
         var result = Handlebars.templates.questiondetail_edit(this.model.toJSON())
-        console.log("result = ", result)
+        //console.log("result = ", result)
         //this.$el.html("Hello TutorialsPoint!!!");
         this.$el.html(result);
         return this
@@ -112,9 +112,11 @@ var QuestionView = Backbone.View.extend( {
 
     onChangeText: function(evt) {
         this.model.set('question_text', evt.currentTarget.value);
+        this.model.save();
     },
     onChangeDetail: function(evt) {
         this.model.set('question_detail', evt.currentTarget.value);
+        this.model.save();
     },
 
     onSave: function(evt) {
@@ -151,7 +153,7 @@ var QuestionView = Backbone.View.extend( {
 
         //var result = this.question_edit_template(content)
         var result = Handlebars.templates.question_edit(this.model.toJSON())
-        console.log("result = ", result)
+        //console.log("result = ", result)
         //this.$el.html("Hello TutorialsPoint!!!");
         this.$el.html(result);
         return this
