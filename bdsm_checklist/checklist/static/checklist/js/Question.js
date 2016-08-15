@@ -88,16 +88,56 @@ var QuestionDetailView = Backbone.View.extend( {
 });
 
 
-var QuestionCollection = Backbone.Collection.extend( {
+
+Backbone.DjangoPageableCollection = Backbone.PageableCollection.extend({
+
+  // Name of the attribute containing the array of records
+
+  state: {
+    resultsField      : 'results'      ,
+    totalRecordsField : 'count'        ,
+    nextField         : 'next'         ,
+    previousField     : 'previous'     ,
+
+  },
+
+  parseRecords: function (resp, options) {
+
+    if (resp && _.has(resp, this.state.resultsField) && _.isArray(resp[this.state.resultsField])) {
+      return resp[this.state.resultsField];
+    } else {
+      return Backbone.PageableCollection.prototype.parseRecords.apply(this, arguments);
+    }
+  },
+
+
+  parseState: function (resp, queryParams, state, options) {
+    return state =
+      {totalRecords: resp[this.state.totalRecordsField]};
+  },
+
+  parseLinks: function (resp, options) {
+    let links;
+    return links = {
+      prev: resp[this.state.previousField],
+      next: resp[this.state.nextField],
+      first: null
+    }
+  },
+})
+
+
+
+var QuestionCollection = Backbone.DjangoPageableCollection.extend( {
     model: QuestionModel,
     url: '/rest/questions/',
     initialize: function() {
         console.log("QuestionCollection initialize");
     },
 
-    parse: function(data) {
-        return data.results;
-    },
+    //parse: function(data) {
+    //    return data.results;
+    //},
 
 });
 
@@ -217,8 +257,31 @@ var QuestionListView = Backbone.View.extend( {
 
 
     events: {
-        'click .create': 'onCreate'
+        'click .create': 'onCreate',
+        'click .page_first': 'onPageFirst',
+        'click .page_prev' : 'onPagePrev',
+        'click .page_next' : 'onPageNext',
+        'click .page_last' : 'onPageLast',
     },
+
+
+    onPageFirst : function() {
+         console.log('QuestionCollectionView: onPage');
+         this.collection.getFirstPage()
+    },
+    onPagePrev  : function() {
+        console.log('QuestionCollectionView: onPage');
+        this.collection.getPreviousPage()
+    },
+    onPageNext  : function() {
+        console.log('QuestionCollectionView: onPage');
+        this.collection.getNextPage()
+    },
+    onPageLast  : function() {
+        console.log('QuestionCollectionView: onPage');
+        this.collection.getLastPage()
+    },
+
 
     onCreate: function() {
         console.log('QuestionCollectionView: onCreate');

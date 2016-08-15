@@ -11,11 +11,45 @@
       </div>
 
     <div class="question-create">
-        <b>Add a QuestionCollection</b>
-        <label>Question text  : <input id="question_text"   type="text"></label>
-        <label>Question detail: <input id="question_detail" type="text"></label>
-        <button class="create">Create Question</button>
+        <b>Add a Question</b>
+      <div class ='row'>
+        <div class ='form-group'>
+            <div class=" col-md-1 col-xs-12">
+              <label for="question_{{index}}_text" >Question:</label>
+            </div>
+            <div class=" col-md-3 col-xs-12">
+              <input type="text" id="question_text" name="text"   class="text form-control"    >
+          </div>
+            <div class=" col-md-1 col-xs-12">
+              <label  for="question_{{index}}_text" >Detail:</label>
+            </div>
+            <div class=" col-md-5 col-xs-12">
+              <input type="text" id="question_detail" name="detail" class="detail form-control" >
+            </div>
+            <div class=" col-md-2 col-xs-12">
+                <button class="create btn ">Create Question</button>
+            </div>
+        </div>
+      </div>
     </div>
+
+      <div class ='row'>
+        <div class ='form-group'>
+            <div class=" col-md-2 col-xs-12">
+                <button class="btn page_first">First Page</button>
+            </div>
+            <div class=" col-md-2 col-xs-12">
+                <button class="btn page_prev">Prev Page</button>
+            </div>
+            <div class=" col-md-2 col-xs-12">
+                <button class="btn page_next">Next Page</button>
+            </div>
+            <div class=" col-md-2 col-xs-12">
+                <button class="btn page_last">Last Page</button>
+            </div>
+        </div>
+      </div>
+
 
 </div>
 
