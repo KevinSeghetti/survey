@@ -16,7 +16,11 @@ QuestionModel = Backbone.Model.extend( {
     },
 
     url: function() {
-      return this.urlRoot + this.id + '/';
+      if(this.id)
+      {
+          return this.urlRoot + this.id + '/';
+      }
+      return this.urlRoot;
     }
 });
 
