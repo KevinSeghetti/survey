@@ -2,16 +2,16 @@
 <div id="question_view" class="">
       <div class ='row'>
         <div class ='form-group'>
-            <div class=" col-md-2 col-xs-12">
-              <label for="question_{{index}}_text" >Question Text:</label>
+            <div class=" col-md-1 col-xs-12">
+              <label for="question_{{index}}_text" >Question:</label>
             </div>
             <div class=" col-md-4 col-xs-12">
               <input type="text" id="question_{{index}}_text" name="text"   class="text form-control"   value="{{ question_text }}"  >
           </div>
-            <div class=" col-md-2 col-xs-12">
-              <label  for="question_{{index}}_text" >Question Detail:</label>
+            <div class=" col-md-1 col-xs-12">
+              <label  for="question_{{index}}_text" >Detail:</label>
             </div>
-            <div class=" col-md-4 col-xs-12">
+            <div class=" col-md-6 col-xs-12">
               <input type="text" id="question_{{index}}_detail" name="detail" class="detail form-control" value="{{ question_detail }}">
             </div>
         </div>

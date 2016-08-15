@@ -1,7 +1,27 @@
 
 <div id="question_view">
-      <label>Question Text:   <input type="text" name="text"   class="text"   value="{{ question_text }}"  ></label><br />
-      <label>Question Detail: <input type="text" name="detail" class="detail" value="{{ question_detail }}"></label><br />
-    <button class="save">Save</button>
+      <div class ='row'>
+        <div class ='form-group'>
+            <div class=" col-md-2 col-xs-12">
+              <label for="question_{{index}}_text" >Question Text:</label>
+            </div>
+            <div class=" col-md-4 col-xs-12">
+              <input type="text" id="question_{{index}}_text" name="text"   class="text form-control"   value="{{ question_text }}"  >
+          </div>
+            <div class=" col-md-2 col-xs-12">
+              <label  for="question_{{index}}_text" >Question Detail:</label>
+            </div>
+            <div class=" col-md-4 col-xs-12">
+              <input type="text" id="question_{{index}}_detail" name="detail" class="detail form-control" value="{{ question_detail }}">
+            </div>
+        </div>
+     </div>
+     <div class ='row'>
+            <div class=" col-md-2 col-xs-12">
+              <button class="save">Save</button>
+            </div>
+        </div>
+      </div>
+
 </div>
 
