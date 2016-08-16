@@ -12,8 +12,23 @@ Backbone.DjangoPageableCollection = Backbone.PageableCollection.extend({
 
   parseRecords: function (resp, options) {
 
+    var fields = ['question_text', 'question_detail']
     if (resp && _.has(resp, this.state.resultsField) && _.isArray(resp[this.state.resultsField])) {
-      return resp[this.state.resultsField];
+
+      var records = resp[this.state.resultsField]
+
+      for (var i = 0; i < records.length; i++) {
+        var record = records[i]
+        if (record.question) {
+           for (var index in fields) {
+             var key = fields[index]
+             if (record.question.hasOwnProperty(key)) {
+               record[key] = record.question[key]
+             }
+           }
+        }
+      }
+      return records
     } else {
       return Backbone.PageableCollection.prototype.parseRecords.apply(this, arguments);
     }

@@ -17,11 +17,12 @@ class QuestionSerializer(serializers.HyperlinkedModelSerializer):
 
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
 
-    question = serializers.HyperlinkedRelatedField(
-        many=False,
-        read_only=True,
-        view_name='question-detail'
-    )
+    question = QuestionSerializer()
+#   question = serializers.HyperlinkedRelatedField(
+#       many=False,
+#       read_only=True,
+#       view_name='question-detail'
+#   )
 
     user = serializers.HyperlinkedRelatedField(
     #user = serializers.PrimaryKeyRelatedField(
@@ -29,7 +30,6 @@ class AnswerSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True,
         view_name='user-detail'
     )
-
 
     class Meta:
         model = Answer

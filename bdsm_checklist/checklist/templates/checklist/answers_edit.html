@@ -49,6 +49,11 @@
 
         // Column definitions
         var columns = [{
+          name: "question_text",
+          label: "Question",
+          cell: "string"
+        }, {
+
           name: "context",
           label: "Context",
           cell: "string"
@@ -80,10 +85,6 @@
           name: "Notes",
           label: "Notes",
           cell: "string"
-        }, {
-          name: "url",
-          label: "URL",
-          cell: "uri" // Renders the value in an HTML <a> element
         }];
 
         // Initialize a new Grid instance
