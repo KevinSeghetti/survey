@@ -93,13 +93,7 @@ var AnswerCollection = Backbone.DjangoPageableCollection.extend( {
     initialize: function() {
         console.log("AnswerCollection initialize");
     },
-
-    //parse: function(data) {
-    //    return data.results;
-    //},
-
 });
-
 
 var AnswerView = Backbone.View.extend( {
 
