@@ -9,9 +9,9 @@ QuestionModel = Backbone.Model.extend( {
     initialize: function() {
         console.log("QuestionModel initialize");
 
-        this.on("change:question_detail", function(model) {
-                var detail = model.get("question_detail");
-                console.log("Changed question detail to " + detail);
+        this.on("change", function(model,options) {
+            if (options && options.save === false) return;
+                model.save();
             });
     },
 
@@ -255,33 +255,9 @@ var QuestionListView = Backbone.View.extend( {
         this.$el.html(result);
     },
 
-
     events: {
         'click .create': 'onCreate',
-        'click .page_first': 'onPageFirst',
-        'click .page_prev' : 'onPagePrev',
-        'click .page_next' : 'onPageNext',
-        'click .page_last' : 'onPageLast',
     },
-
-
-    onPageFirst : function() {
-         console.log('QuestionCollectionView: onPage');
-         this.collection.getFirstPage()
-    },
-    onPagePrev  : function() {
-        console.log('QuestionCollectionView: onPage');
-        this.collection.getPreviousPage()
-    },
-    onPageNext  : function() {
-        console.log('QuestionCollectionView: onPage');
-        this.collection.getNextPage()
-    },
-    onPageLast  : function() {
-        console.log('QuestionCollectionView: onPage');
-        this.collection.getLastPage()
-    },
-
 
     onCreate: function() {
         console.log('QuestionCollectionView: onCreate');

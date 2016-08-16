@@ -33,24 +33,6 @@
       </div>
     </div>
 
-      <div class ='row'>
-        <div class ='form-group'>
-            <div class=" col-md-2 col-xs-12">
-                <button class="btn page_first">First Page</button>
-            </div>
-            <div class=" col-md-2 col-xs-12">
-                <button class="btn page_prev">Prev Page</button>
-            </div>
-            <div class=" col-md-2 col-xs-12">
-                <button class="btn page_next">Next Page</button>
-            </div>
-            <div class=" col-md-2 col-xs-12">
-                <button class="btn page_last">Last Page</button>
-            </div>
-        </div>
-      </div>
-
-
 </div>
 
 <script>
@@ -71,38 +53,64 @@
         chainLoadAssets(assetList, function()
         {
             var questionList = new QuestionCollection();
-            var muppetsView = new QuestionListView({collection: questionList});
+            //var questionView = new QuestionListView({collection: questionList});
+
+            // Column definitions
+            var columns = [{
+              name: "id", // The key of the model attribute
+              label: "ID", // The name to display in the header
+              editable: false, // By default every cell in a column is editable, but *ID* shouldn't be
+              // Defines a cell type, and ID is displayed as an integer without the ',' separating 1000s.
+              cell: Backgrid.IntegerCell.extend({
+                orderSeparator: ''
+              })
+            }, {
+              name: "question_text",
+              label: "Question",
+              // The cell type can be a reference of a Backgrid.Cell subclass, any Backgrid.Cell subclass instances like *id* above, or a string
+              cell: "string" // This is converted to "StringCell" and a corresponding class in the Backgrid package namespace is looked up
+            }, {
+              name: "question_detail",
+              label: "Detail",
+              cell: "string"
+            }, {
+              name: "url",
+              label: "URL",
+              cell: "uri" // Renders the value in an HTML <a> element
+            }];
+
+           // Initialize a new Grid instance
+            var grid = new Backgrid.Grid({
+                columns: [{
+                  // enable the select-all extension
+                  name: "",
+                  cell: "select-row",
+                  headerCell: "select-all"
+                }].concat(columns),
+              collection: questionList,
+            });
+
+            // Render the grid and attach the Grid's root to your HTML document
+            $(".question-list").append(grid.render().el);
+
+
+
+            // Initialize the paginator
+            var paginator = new Backgrid.Extension.Paginator({
+              collection: questionList
+            });
+
+            // Render the paginator
+            $(".question-list").after(paginator.render().el);
+
+
             questionList.fetch();
 
-            //var appView = new QuestionCollectionView({model: QuestionModel});
 
-            //var questions = new QuestionCollection()
-            //
-            //questions.on('change', function(msg) {
-            //    console.log("questions loaded",questions)
-            //}
-            //)
-            //
-            //questions.on('change:question_detail', function(msg) {
-            //    console.log("questions loaded",questions)
-            //}
-            //)
-
-            //console.log("about to fetch question")
-            //question.fetch({
-            //    success: function (questionsResults) {
-            //        console.log("question loaded")
-            //        console.log(JSON.stringify(question));
-            //        console.log("questionview construction")
-            //        var appView = new QuestionView({model: question});
-
-
-
-
-            //    }
-            //})
 
         })
+
+
 
 
     })
