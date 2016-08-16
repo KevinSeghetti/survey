@@ -1,0 +1,121 @@
+{% extends "checklist/base.html" %}
+{% block content %}
+
+{% load staticfiles %}
+
+<div class ="headline">Answer list</div>
+
+<div id="container">
+      <div class="answer-list">
+        Loading...
+      </div>
+
+    <div class="answer-create">
+        <b>Add a Answer</b>
+      <div class ='row'>
+        <div class ='form-group'>
+            <div class=" col-md-1 col-xs-12">
+              <label for="answer_{{index}}_text" >Answer:</label>
+            </div>
+            <div class=" col-md-3 col-xs-12">
+              <input type="text" id="answer_text" name="text"   class="text form-control"    >
+          </div>
+            <div class=" col-md-1 col-xs-12">
+              <label  for="answer_{{index}}_text" >Detail:</label>
+            </div>
+            <div class=" col-md-5 col-xs-12">
+              <input type="text" id="answer_detail" name="detail" class="detail form-control" >
+            </div>
+            <div class=" col-md-2 col-xs-12">
+                <button class="create btn ">Create Answer</button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<script>
+
+    console.log("answer_edit: start")
+
+    $(document).ready(function() {
+        console.log("answer_edit: document ready")
+        //var brandNewAnswer = new AnswerModel({ answer_text: 'sample answer', answer_detail: 'sample answer detail' });
+        //brandNewAnswer.save();
+
+        var answerList = new AnswerCollection();
+        //var answerView = new AnswerListView({collection: answerList});
+
+        // Column definitions
+        var columns = [{
+          name: "context",
+          label: "Context",
+          cell: "string"
+        }, {
+          name: "rating",
+          label: "Rating",
+          cell: "string"
+        }, {
+          name: "essential",
+          label: "Essential",
+          cell: "boolean"
+        }, {
+          name: "curious",
+          label: "Curious",
+          cell: "boolean"
+        }, {
+          name: "soft_limit",
+          label: "Soft Limit",
+          cell: "boolean"
+        }, {
+          name: "hard_limit",
+          label: "Hard Limit",
+          cell: "boolean"
+        }, {
+          name: "have_done",
+          label: "Have Done",
+          cell: "boolean"
+        }, {
+          name: "Notes",
+          label: "Notes",
+          cell: "string"
+        }, {
+          name: "url",
+          label: "URL",
+          cell: "uri" // Renders the value in an HTML <a> element
+        }];
+
+        // Initialize a new Grid instance
+        var grid = new Backgrid.Grid({
+            columns: [{
+              // enable the select-all extension
+              name: "",
+              cell: "select-row",
+              headerCell: "select-all"
+            }].concat(columns),
+          collection: answerList,
+        });
+
+        // Render the grid and attach the Grid's root to your HTML document
+        $(".answer-list").html(grid.render().el);
+
+
+        // Initialize the paginator
+        var paginator = new Backgrid.Extension.Paginator({
+          collection: answerList
+        });
+
+        // Render the paginator
+        $(".answer-list").after(paginator.render().el);
+
+        answerList.fetch();
+
+
+    })
+
+</script>
+
+{% endblock %}
+
+

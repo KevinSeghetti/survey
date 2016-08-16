@@ -96,8 +96,17 @@ def question_edit(request,question_id):
     context = {'question': question}
     return render(request, 'checklist/question_edit.html', context)
 
+#===============================================================================
+
+def answers_edit(request):
+    answer_list = Answer.objects.order_by('-question__question_text')
+    context = {'answer_list': answer_list}
+    return render(request, 'checklist/answers_edit.html', context)
+
+#===============================================================================
+
 def get_answers_list (user, questions):
-    print("get_answers_list: usert = ",user)
+    print("get_answers_list: user = ",user)
     results = []
     for question in questions:
         node = {}
@@ -225,7 +234,7 @@ def set(request):
 
 class QuestionViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows questions to be viewed or edited.
     """
 
     queryset = Question.objects.all().order_by('-question_text')
@@ -235,7 +244,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
 class AnswerViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows answers to be viewed or edited.
     """
     queryset = Answer.objects.all().order_by('-question__question_text')
     serializer_class = AnswerSerializer

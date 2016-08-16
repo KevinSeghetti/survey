@@ -1,12 +1,12 @@
 
-QuestionModel = Backbone.Model.extend( {
-    urlRoot: '/rest/questions/',
+AnswerModel = Backbone.Model.extend( {
+    urlRoot: '/rest/answers/',
     defaults: {
-        question_text: '',
-        question_detail: '',
+        answer_text: '',
+        answer_detail: '',
     },
     initialize: function() {
-        console.log("QuestionModel initialize");
+        console.log("AnswerModel initialize");
 
         this.on("change", function(model,options) {
             if (options && options.save === false) return;
@@ -24,7 +24,7 @@ QuestionModel = Backbone.Model.extend( {
 });
 
 
-var QuestionDetailView = Backbone.View.extend( {
+var AnswerDetailView = Backbone.View.extend( {
 
     // el - stands for element. Every view has an element associated with HTML content, will be rendered.
     el: '#container',
@@ -38,10 +38,10 @@ var QuestionDetailView = Backbone.View.extend( {
 
 
     onChangeText: function(evt) {
-        this.model.set('question_text', evt.currentTarget.value);
+        this.model.set('answer_text', evt.currentTarget.value);
     },
     onChangeDetail: function(evt) {
-        this.model.set('question_detail', evt.currentTarget.value);
+        this.model.set('answer_detail', evt.currentTarget.value);
     },
 
     onSave: function(evt) {
@@ -55,11 +55,11 @@ var QuestionDetailView = Backbone.View.extend( {
 
     // It's the first function called when this view is instantiated.
     initialize: function() {
-        console.log('QuestionDetailView: initilize');
+        console.log('AnswerDetailView: initilize');
 
-        //var source   = $("#question_edit_handlebar")[0].innerHTML
+        //var source   = $("#answer_edit_handlebar")[0].innerHTML
         //console.log("source = ",source)
-        //this.question_edit_template = Handlebars.compile(source);
+        //this.answer_edit_template = Handlebars.compile(source);
 
         //this.on('change', function(){
         //    console.log('- Values for this model have changed.');
@@ -73,12 +73,12 @@ var QuestionDetailView = Backbone.View.extend( {
     },
     // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
     render: function() {
-        console.log('QuestionDetailView: render')
+        console.log('AnswerDetailView: render')
         console.trace()
         console.log("model attributes = ", this.model.toJSON())
 
-        //var result = this.question_edit_template(content)
-        var result = Handlebars.templates.questiondetail_edit(this.model.toJSON())
+        //var result = this.answer_edit_template(content)
+        var result = Handlebars.templates.answerdetail_edit(this.model.toJSON())
         //console.log("result = ", result)
         //this.$el.html("Hello TutorialsPoint!!!");
         this.$el.html(result);
@@ -87,11 +87,11 @@ var QuestionDetailView = Backbone.View.extend( {
 });
 
 
-var QuestionCollection = Backbone.DjangoPageableCollection.extend( {
-    model: QuestionModel,
-    url: '/rest/questions/',
+var AnswerCollection = Backbone.DjangoPageableCollection.extend( {
+    model: AnswerModel,
+    url: '/rest/answers/',
     initialize: function() {
-        console.log("QuestionCollection initialize");
+        console.log("AnswerCollection initialize");
     },
 
     //parse: function(data) {
@@ -101,7 +101,7 @@ var QuestionCollection = Backbone.DjangoPageableCollection.extend( {
 });
 
 
-var QuestionView = Backbone.View.extend( {
+var AnswerView = Backbone.View.extend( {
 
     tagName: 'div',
 
@@ -114,11 +114,11 @@ var QuestionView = Backbone.View.extend( {
 
 
     onChangeText: function(evt) {
-        this.model.set('question_text', evt.currentTarget.value);
+        this.model.set('answer_text', evt.currentTarget.value);
         this.model.save();
     },
     onChangeDetail: function(evt) {
-        this.model.set('question_detail', evt.currentTarget.value);
+        this.model.set('answer_detail', evt.currentTarget.value);
         this.model.save();
     },
 
@@ -133,11 +133,11 @@ var QuestionView = Backbone.View.extend( {
 
     // It's the first function called when this view is instantiated.
     initialize: function() {
-        console.log('QuestionView: initilize');
+        console.log('AnswerView: initilize');
 
-        //var source   = $("#question_edit_handlebar")[0].innerHTML
+        //var source   = $("#answer_edit_handlebar")[0].innerHTML
         //console.log("source = ",source)
-        //this.question_edit_template = Handlebars.compile(source);
+        //this.answer_edit_template = Handlebars.compile(source);
 
         //this.on('change', function(){
         //    console.log('- Values for this model have changed.');
@@ -151,11 +151,11 @@ var QuestionView = Backbone.View.extend( {
     },
     // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
     render: function() {
-        console.log('QuestionView: render')
+        console.log('AnswerView: render')
         //console.log("model attributes = ", this.model.toJSON())
 
-        //var result = this.question_edit_template(content)
-        var result = Handlebars.templates.question_edit(this.model.toJSON())
+        //var result = this.answer_edit_template(content)
+        var result = Handlebars.templates.answer_edit(this.model.toJSON())
         //console.log("result = ", result)
         //this.$el.html("Hello TutorialsPoint!!!");
         this.$el.html(result);
@@ -164,16 +164,16 @@ var QuestionView = Backbone.View.extend( {
 });
 
 
-var QuestionListView = Backbone.View.extend( {
+var AnswerListView = Backbone.View.extend( {
     // el - stands for element. Every view has an element associated with HTML content, will be rendered.
     el: '#container',
     // It's the first function called when this view is instantiated.
     initialize: function() {
-        console.log('QuestionCollectionView: initilize');
+        console.log('AnswerCollectionView: initilize');
 
-        //var source   = $("#question_edit_handlebar")[0].innerHTML
+        //var source   = $("#answer_edit_handlebar")[0].innerHTML
         //console.log("source = ",source)
-        //this.question_edit_template = Handlebars.compile(source);
+        //this.answer_edit_template = Handlebars.compile(source);
         this.listenTo(this.collection, 'sync', this.render);
 
         this.on('change', function() {
@@ -185,30 +185,30 @@ var QuestionListView = Backbone.View.extend( {
     // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello TutorialsPoint in this case.
 
     render: function() {
-        console.log("QuestionListView:render:")
+        console.log("AnswerListView:render:")
 
-        var $list = this.$('div.question-list').empty();
+        var $list = this.$('div.answer-list').empty();
 
         this.collection.each(function(model) {
-            console.log("QuestionListView:render: each")
-                var item = new QuestionView({model:model})
+            console.log("AnswerListView:render: each")
+                var item = new AnswerView({model:model})
                 $list.append(item.render().$el);
             }, this);
 
-        //this.$('ul.question-list').html($list);
+        //this.$('ul.answer-list').html($list);
         return this;
     },
 
 
     oldrender: function() {
-        console.log('QuestionCollectionView: render');
+        console.log('AnswerCollectionView: render');
 
 
         var content = this.model.attributes
         console.log("model attributes = ", this.model.attributes)
 
-        //var result = this.question_edit_template(content)
-        var result = Handlebars.templates.question_edit(content)
+        //var result = this.answer_edit_template(content)
+        var result = Handlebars.templates.answer_edit(content)
         console.log("result = ", result)
         //this.$el.html("Hello TutorialsPoint!!!");
         this.$el.html(result);
@@ -219,14 +219,14 @@ var QuestionListView = Backbone.View.extend( {
     },
 
     onCreate: function() {
-        console.log('QuestionCollectionView: onCreate');
-        var $text = this.$('#question_text');
-        var $detail = this.$('#question_detail');
+        console.log('AnswerCollectionView: onCreate');
+        var $text = this.$('#answer_text');
+        var $detail = this.$('#answer_detail');
 
         if ($text.val()) {
           this.collection.create({
-              question_text  : $text.val(),
-              question_detail: $detail.val()
+              answer_text  : $text.val(),
+              answer_detail: $detail.val()
           });
 
           $text  .val('');

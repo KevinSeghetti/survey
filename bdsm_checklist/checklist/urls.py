@@ -13,6 +13,9 @@ urlpatterns = [
     url(r'^questions/$', views.questions, name='questions'),
     url(r'^questions/edit/$', views.questions_edit, name='questions_edit'),
     url(r'^questions/edit/(?P<question_id>[0-9]+)/$', views.question_edit, name='question_edit'),
+
+    url(r'^answers/edit/$', views.answers_edit, name='answers_edit'),
+
     # ex: /checklist/edit/
     url(r'^edit/$', views.edit, name='edit'),
     url(r'^resume/$', views.resume, name='resume'),

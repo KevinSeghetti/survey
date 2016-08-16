@@ -44,79 +44,62 @@
         //var brandNewQuestion = new QuestionModel({ question_text: 'sample question', question_detail: 'sample question detail' });
         //brandNewQuestion.save();
 
-        var assetList =
-        [
-            { url: '{% static "checklist/handlebar/question_edit.handlebar" %}' , loadHandler: templateLoaderFunction, name: 'question_edit' },
-        ]
-        Handlebars.templates = Handlebars.templates || {};
+        var questionList = new QuestionCollection();
+        //var questionView = new QuestionListView({collection: questionList});
 
-        chainLoadAssets(assetList, function()
-        {
-            var questionList = new QuestionCollection();
-            //var questionView = new QuestionListView({collection: questionList});
+        // Column definitions
+        var columns = [{
+          name: "id", // The key of the model attribute
+          label: "ID", // The name to display in the header
+          editable: false, // By default every cell in a column is editable, but *ID* shouldn't be
+          // Defines a cell type, and ID is displayed as an integer without the ',' separating 1000s.
+          cell: Backgrid.IntegerCell.extend({
+            orderSeparator: ''
+          })
+        }, {
+          name: "question_text",
+          label: "Question",
+          // The cell type can be a reference of a Backgrid.Cell subclass, any Backgrid.Cell subclass instances like *id* above, or a string
+          cell: "string" // This is converted to "StringCell" and a corresponding class in the Backgrid package namespace is looked up
+        }, {
+          name: "question_detail",
+          label: "Detail",
+          cell: "string"
+        }, {
+          name: "url",
+          label: "URL",
+          cell: "uri" // Renders the value in an HTML <a> element
+        }];
 
-            // Column definitions
-            var columns = [{
-              name: "id", // The key of the model attribute
-              label: "ID", // The name to display in the header
-              editable: false, // By default every cell in a column is editable, but *ID* shouldn't be
-              // Defines a cell type, and ID is displayed as an integer without the ',' separating 1000s.
-              cell: Backgrid.IntegerCell.extend({
-                orderSeparator: ''
-              })
-            }, {
-              name: "question_text",
-              label: "Question",
-              // The cell type can be a reference of a Backgrid.Cell subclass, any Backgrid.Cell subclass instances like *id* above, or a string
-              cell: "string" // This is converted to "StringCell" and a corresponding class in the Backgrid package namespace is looked up
-            }, {
-              name: "question_detail",
-              label: "Detail",
-              cell: "string"
-            }, {
-              name: "url",
-              label: "URL",
-              cell: "uri" // Renders the value in an HTML <a> element
-            }];
+        // Initialize a new Grid instance
+        var grid = new Backgrid.Grid({
+            columns: [{
+              // enable the select-all extension
+              name: "",
+              cell: "select-row",
+              headerCell: "select-all"
+            }].concat(columns),
+          collection: questionList,
+        });
 
-           // Initialize a new Grid instance
-            var grid = new Backgrid.Grid({
-                columns: [{
-                  // enable the select-all extension
-                  name: "",
-                  cell: "select-row",
-                  headerCell: "select-all"
-                }].concat(columns),
-              collection: questionList,
-            });
-
-            // Render the grid and attach the Grid's root to your HTML document
-            $(".question-list").html(grid.render().el);
+        // Render the grid and attach the Grid's root to your HTML document
+        $(".question-list").html(grid.render().el);
 
 
+        // Initialize the paginator
+        var paginator = new Backgrid.Extension.Paginator({
+          collection: questionList
+        });
 
-            // Initialize the paginator
-            var paginator = new Backgrid.Extension.Paginator({
-              collection: questionList
-            });
+        // Render the paginator
+        $(".question-list").after(paginator.render().el);
 
-            // Render the paginator
-            $(".question-list").after(paginator.render().el);
-
-
-            questionList.fetch();
-
-
-
-        })
-
-
+        questionList.fetch();
 
 
     })
 
 </script>
-
 
 {% endblock %}
 
