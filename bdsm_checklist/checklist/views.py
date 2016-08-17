@@ -6,7 +6,10 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from rest_framework import viewsets
+from rest_framework import (
+    viewsets,
+    permissions,
+)
 
 from django.http import HttpResponse
 #from django.template import RequestContext, loader
@@ -237,6 +240,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     API endpoint that allows questions to be viewed or edited.
     """
 
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Question.objects.all().order_by('-question_text')
     serializer_class = QuestionSerializer
 
@@ -246,6 +250,7 @@ class AnswerViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows answers to be viewed or edited.
     """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Answer.objects.all().order_by('-question__question_text')
     serializer_class = AnswerSerializer
 
@@ -255,6 +260,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
