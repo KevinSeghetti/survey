@@ -89,12 +89,7 @@
 
         // Initialize a new Grid instance
         var grid = new Backgrid.Grid({
-            columns: [{
-              // enable the select-all extension
-              name: "",
-              cell: "select-row",
-              headerCell: "select-all"
-            }].concat(columns),
+            columns: columns,
           collection: answerList,
         });
 
