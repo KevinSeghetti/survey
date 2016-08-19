@@ -63,7 +63,7 @@ var CommentBox = React.createClass({
     });
   },
   getInitialState: function() {
-    return {data: []};
+    return {data: { results: []} };
   },
   componentDidMount: function() {
     this.loadCommentsFromServer();
@@ -82,10 +82,10 @@ var CommentBox = React.createClass({
 
 var CommentList = React.createClass({
   render: function() {
-    var commentNodes = this.props.data.map(function(comment) {
+    var commentNodes = this.props.data.results.map(function(comment) {
       return (
-        <Comment author={comment.author} key={comment.id}>
-          {comment.text}
+        <Comment author={comment.question_text} key={comment.id}>
+          {comment.question_detail}
         </Comment>
       );
     });
@@ -123,13 +123,13 @@ var CommentForm = React.createClass({
         <input
           type="text"
           placeholder="Your name"
-          value={this.state.author}
+          value={this.state.question_text}
           onChange={this.handleAuthorChange}
         />
         <input
           type="text"
           placeholder="Say something..."
-          value={this.state.text}
+          value={this.state.question_detail}
           onChange={this.handleTextChange}
         />
         <input type="submit" value="Post" />
@@ -139,7 +139,7 @@ var CommentForm = React.createClass({
 });
 
 ReactDOM.render(
-  <CommentBox url="/api/comments" pollInterval={2000} />,
+  <CommentBox url="/rest/questions" pollInterval={2000} />,
   document.getElementById('content')
 );
 
