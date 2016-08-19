@@ -108,6 +108,13 @@ def answers_edit(request):
 
 #===============================================================================
 
+def answers_react_edit(request):
+    answer_list = Answer.objects.order_by('-question__question_text')
+    context = {'answer_list': answer_list}
+    return render(request, 'checklist/answers_react_edit.html', context)
+
+#===============================================================================
+
 def get_answers_list (user, questions):
     print("get_answers_list: user = ",user)
     results = []
