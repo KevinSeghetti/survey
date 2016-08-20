@@ -45,12 +45,12 @@ def instructions(request):
 choices = {}
 choices['rating'] = \
 [
-    "N/A"        ,
-    "Love"        ,
-    "Like"        ,
-    "Don't Mind"  ,
-    "Dislike"     ,
-    "Hate"        ,
+    {"name":"0", "description":"N/A"         },
+    {"name":"1", "description":"Love"        },
+    {"name":"2", "description":"Like"        },
+    {"name":"3", "description":"Don't Mind"  },
+    {"name":"4", "description":"Dislike"     },
+    {"name":"5", "description":"Hate"        },
 ]
 choices['booleans'] = \
 [
@@ -110,7 +110,14 @@ def answers_edit(request):
 
 def answers_react_edit(request):
     answer_list = Answer.objects.order_by('-question__question_text')
-    context = {'answer_list': answer_list}
+
+    context = {
+        'answer_list': answer_list,
+        'choices_context': choices_context,
+        'choices': choices,
+        'user' : request.user,
+    }
+
     return render(request, 'checklist/answers_react_edit.html', context)
 
 #===============================================================================
@@ -194,6 +201,7 @@ def set(request):
 
             try:
                 selected_rating = request.POST[rating_field_name]
+                print(" selected_rating = ",selected_rating)
             except:
                 # rating is required. If no rating, then don't create an
                 # answer for this question. 
