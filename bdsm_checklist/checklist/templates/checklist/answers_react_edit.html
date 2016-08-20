@@ -7,6 +7,27 @@
 
     <script type="text/babel">
 
+var ContextAnswer = React.createClass({
+  rawMarkup: function() {
+    var md = new Remarkable();
+    var rawMarkup = md.render(this.props.children.toString());
+    return { __html: rawMarkup };
+  },
+
+  render: function() {
+       console.log("props = ",this.props)
+    return (
+        <div className='context-headline row'>
+            <div className='col-xs-12' >
+              To/For { this.props.context }
+            </div>
+        </div>
+
+    );
+  }
+});
+
+
 var Answer = React.createClass({
   rawMarkup: function() {
     var md = new Remarkable();
@@ -16,12 +37,16 @@ var Answer = React.createClass({
 
   render: function() {
     return (
-      <div className="answer">
-        <h2 className="answerAuthor">
-          {this.props.author}
-        </h2>
-        <span dangerouslySetInnerHTML={this.rawMarkup()} />
-      </div>
+        <div>
+          <div className="row" >
+              <div className='col-xs-12'>
+                <div className='topic-headline'>{ this.props.question.question_text   }</div>
+                <div className='topic-detail'  >{ this.props.question.question_detail }</div>
+              </div>
+          </div>
+            <ContextAnswer context='Self'   question={this.props.question} />
+            <ContextAnswer context='Others' question={this.props.question} />
+       </div>
     );
   }
 });
@@ -71,10 +96,21 @@ var AnswerBox = React.createClass({
   },
   render: function() {
     return (
-      <div className="answerBox">
-        <h1>Answers</h1>
+
+      <div className="answerBox question-edit">
+      <div>
+          Select A rating for each question. You don't have to fill this out all at once, you can save your progress
+          and come back to the rest later. (select resume to get a question list containing only the questions
+          you haven't answered yet.
+
+          Instructions can be found <a href="/static/checklist/instructions.html">
+          here
+          </a>
+      </div>
+       <hr />
+
         <AnswerList data={this.state.data} />
-        <AnswerForm onAnswerSubmit={this.handleAnswerSubmit} />
+//        <AnswerForm onAnswerSubmit={this.handleAnswerSubmit} />
       </div>
     );
   }
@@ -82,11 +118,9 @@ var AnswerBox = React.createClass({
 
 var AnswerList = React.createClass({
   render: function() {
-    var answerNodes = this.props.data.results.map(function(answer) {
+    var answerNodes = this.props.data.results.map(function(question) {
       return (
-        <Answer author={answer.question_text} key={answer.id}>
-          {answer.question_detail}
-        </Answer>
+        <Answer question={question} key={question.id} />
       );
     });
     return (
