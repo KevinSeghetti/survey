@@ -24,7 +24,7 @@ class Answer(models.Model):
     soft_limit = models.BooleanField(default=False)
     hard_limit = models.BooleanField(default=False)
     have_done  = models.BooleanField(default=False)
-    rating     = models.IntegerField(default=False)
+    rating     = models.TextField(default=False)
     notes      = models.TextField   (default="", blank=True)
     
     def __str__(self):              # __unicode__ on Python 2
