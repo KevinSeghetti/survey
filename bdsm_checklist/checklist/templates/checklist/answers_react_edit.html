@@ -33,11 +33,13 @@ var BooleanChoice = React.createClass({
 var RadioChoices = React.createClass({
   render: function() {
     console.log("RadioChoices",this.props.choices)
+    var that = this
     var choiceNodes = this.props.choices.map(function(choice) {
+      var selected = that.props.selected == choice.name
       return (
           <span>
-            <input type="radio"   value="{choice.name}"
-              checked="1"
+            <input type="radio"   value={choice.name}
+              checked={selected}
             ></input>
             <label >{choice.description}</label>
           </span>
