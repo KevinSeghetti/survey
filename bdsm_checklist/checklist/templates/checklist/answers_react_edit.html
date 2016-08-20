@@ -2,39 +2,120 @@
 {% block content %}
 
 {% load staticfiles %}
+{% load checklist_extras %}
+
 
     <div id="content"></div>
 
+    <script>
+
+      var choices = {{choices|jsonify}}
+      var choices_context = {{choices_context|jsonify}}
+
+      console.log("choices:",choices)
+    </script>
+
     <script type="text/babel">
 
-var ContextAnswer = React.createClass({
-  rawMarkup: function() {
-    var md = new Remarkable();
-    var rawMarkup = md.render(this.props.children.toString());
-    return { __html: rawMarkup };
-  },
-
+var BooleanChoice = React.createClass({
   render: function() {
-       console.log("props = ",this.props)
     return (
-        <div className='context-headline row'>
-            <div className='col-xs-12' >
-              To/For { this.props.context }
-            </div>
-        </div>
+        <div>
 
+        </div>
     );
   }
 });
 
 
-var Answer = React.createClass({
-  rawMarkup: function() {
-    var md = new Remarkable();
-    var rawMarkup = md.render(this.props.children.toString());
-    return { __html: rawMarkup };
-  },
 
+
+var RadioChoices = React.createClass({
+  render: function() {
+    console.log("RadioChoices",this.props.choices)
+    var choiceNodes = this.props.choices.map(function(choice) {
+      return (
+          <span>
+            <input type="radio"   value="{choice.name}"
+              checked="1"
+            ></input>
+            <label >{choice.description}</label>
+          </span>
+      );
+    });
+    return (
+      <div className='col-xs-10' >
+        {choiceNodes}
+      </div>
+    );
+
+
+
+  }
+});
+
+
+var ContextAnswer = React.createClass({
+  render: function() {
+       console.log("props = ",this.props)
+
+      console.log("ContextAnswer")
+       var choiceNodes = choices.booleans.map(function(choice) {
+         return (
+           <BooleanChoice choice={choice.description} key={choice.name} />
+         );
+       });
+
+       return (
+           <div className="answer">
+             <div className='context-headline row'>
+                 <div className='col-xs-12' >
+                   To/For { this.props.context }
+                 </div>
+             </div>
+             <div className="row">
+                <div className="col-xs-12 col-sm-12 col-md-6">
+                   <div className='row'>
+                      <div className="col-xs-12">
+                         <div className='row' >
+                            <div className='question-headline col-xs-1'>
+                            </div>
+                            <div className='question-headline col-xs-1'>
+                              Rating
+                            </div>
+                            <RadioChoices choices={choices.rating} />
+                         </div>
+                      </div>
+                   </div>
+                   <div className='row'>
+                      <div className="col-xs-12">
+                          <div className='row' >
+                            <div className='col-xs-2'>
+                            </div>
+                            <div className='col-xs-10' >
+                               <div className='booleans' >
+                                 {choiceNodes}
+                               </div>
+                            </div>
+                          </div>
+                      </div>
+                   </div>
+                </div>
+                <div className='notes col-xs-6'>
+                   Notes<input type="text"   value="{{ answer.notes }}" />
+                </div>
+             </div>
+           </div>
+
+       );
+
+     }
+
+
+});
+
+
+var Answer = React.createClass({
   render: function() {
     return (
         <div>
@@ -110,7 +191,6 @@ var AnswerBox = React.createClass({
        <hr />
 
         <AnswerList data={this.state.data} />
-//        <AnswerForm onAnswerSubmit={this.handleAnswerSubmit} />
       </div>
     );
   }
@@ -118,6 +198,7 @@ var AnswerBox = React.createClass({
 
 var AnswerList = React.createClass({
   render: function() {
+      console.log("AnswerList")
     var answerNodes = this.props.data.results.map(function(question) {
       return (
         <Answer question={question} key={question.id} />
