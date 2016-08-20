@@ -6,6 +6,12 @@ import pprint
 
 register = template.Library()
 
+
+@register.filter
+def get_type(value):
+    return type(value)
+
+
 @register.filter
 def jsonify(object):
     if isinstance(object, QuerySet):
