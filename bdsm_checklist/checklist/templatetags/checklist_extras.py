@@ -1,7 +1,16 @@
 from django import template
+from django.db.models.query import QuerySet
+from django.utils.safestring import mark_safe
+import json
 import pprint
 
 register = template.Library()
+
+@register.filter
+def jsonify(object):
+    if isinstance(object, QuerySet):
+        return mark_safe(serialize('json', object))
+    return mark_safe(json.dumps(object))
 
 @register.filter
 def addstr(arg1,arg2):
