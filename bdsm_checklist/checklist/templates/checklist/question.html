@@ -25,11 +25,11 @@
                            </div>
                            <div class='col-xs-10' >
                               {% for choice in choices.rating %}
-                                 <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ forloop.counter0 }}"
-                                 {% if answer.rating|integer == forloop.counter0  %}
+                                 <input type="radio" name="{{partial_key}}_rating" id="rating_{{ choice.name }}" value="{{ choice.name }}"
+                                 {% if answer.rating == choice.name  %}
                                      checked="checked"
                                  {% endif %}/>
-                                 <label >{{ choice }}</label>
+                                 <label >{{ choice.description }}</label>
                               {% endfor %}
                            </div>
                         </div>
