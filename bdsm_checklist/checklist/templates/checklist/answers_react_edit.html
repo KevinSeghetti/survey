@@ -20,8 +20,8 @@
 var BooleanChoice = React.createClass({
   render: function() {
     return (
-        <div>
-
+        <div className='question small'>
+           <input type="checkbox" checked /> {this.props.choice.description}
         </div>
     );
   }
@@ -62,9 +62,11 @@ var ContextAnswer = React.createClass({
        console.log("props = ",this.props)
 
       console.log("ContextAnswer")
+      console.log("ContextAnswer: booleans",choices.booleans)
        var choiceNodes = choices.booleans.map(function(choice) {
+       console.log("ContextAnswer: booleans: choice",choice)
          return (
-           <BooleanChoice choice={choice.description} key={choice.name} />
+           <BooleanChoice choice={choice} key={choice.name} />
          );
        });
 
