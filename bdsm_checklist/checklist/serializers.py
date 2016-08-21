@@ -18,12 +18,6 @@ class QuestionSerializer(serializers.HyperlinkedModelSerializer):
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
 
     question = QuestionSerializer(read_only=True)
-#    question = serializers.HyperlinkedRelatedField(
-#        many=False,
-#        read_only=True,
-#        view_name='question-detail'
-#    )
-
     user = serializers.HyperlinkedRelatedField(
     #user = serializers.PrimaryKeyRelatedField(
         many=False,
@@ -49,10 +43,11 @@ class AnswerSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
+
 # kts learn how to merge an reverse
 class QuestionWithAnswerSerializer(QuestionSerializer):
 
-    answer = AnswerSerializer()
+    answer_set = AnswerSerializer(many=True)
 
     class Meta:
         model = Question
@@ -61,7 +56,7 @@ class QuestionWithAnswerSerializer(QuestionSerializer):
             'url',
             'question_text',
             'question_detail',
-            'answer',
+            'answer_set',
         )
 
 

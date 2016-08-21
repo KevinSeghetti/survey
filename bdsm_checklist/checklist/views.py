@@ -275,7 +275,6 @@ class QuestionWithAnswerViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all().order_by('-question_text')
     serializer_class = QuestionWithAnswerSerializer
 
-
 #===============================================================================
 
 class AnswerViewSet(viewsets.ModelViewSet):
