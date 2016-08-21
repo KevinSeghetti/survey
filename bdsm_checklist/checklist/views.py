@@ -14,7 +14,12 @@ from rest_framework import (
 from django.http import HttpResponse
 #from django.template import RequestContext, loader
 from .models import Question,Answer
-from .serializers import QuestionSerializer, AnswerSerializer, UserSerializer
+from .serializers import (
+    QuestionSerializer,
+    QuestionWithAnswerSerializer,
+    AnswerSerializer,
+    UserSerializer
+)
 
 def index(request):
     latest_question_list = Question.objects.order_by('-question_text')[:5]
@@ -261,12 +266,32 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
 #===============================================================================
 
+class QuestionWithAnswerViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows questions to be viewed or edited.
+    """
+
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = Question.objects.all().order_by('-question_text')
+    serializer_class = QuestionWithAnswerSerializer
+
+
+#===============================================================================
+
 class AnswerViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows answers to be viewed or edited.
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Answer.objects.all().order_by('-question__question_text')
+    #def get_queryset(self):
+    #    """
+    #    This view should return a list of all the purchases
+    #    for the currently authenticated user.
+    #    """
+    #    user = self.request.user
+    #    return Answer.objects.filter(user=user).order_by('-question__question_text')
+
     serializer_class = AnswerSerializer
 
 #===============================================================================
