@@ -49,4 +49,21 @@ class AnswerSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
+# kts learn how to merge an reverse
+class QuestionWithAnswerSerializer(QuestionSerializer):
+
+    answer = AnswerSerializer()
+
+    class Meta:
+        model = Question
+        fields = (
+            'id',
+            'url',
+            'question_text',
+            'question_detail',
+            'answer',
+        )
+
+
+
 
