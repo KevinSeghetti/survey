@@ -19,6 +19,7 @@ urlpatterns = [
 
     # ex: /checklist/edit/
     url(r'^edit/$', views.edit, name='edit'),
+    url(r'^rest/questions$', views.rest_questions, name='rest_questions'),
     url(r'^edit_rest/$', views.edit_rest, name='edit_rest'),
     url(r'^resume/$', views.resume, name='resume'),
     # ex: /checklist/edit/unanswered

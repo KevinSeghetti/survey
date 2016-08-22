@@ -12,7 +12,7 @@
       var choices = {{choices|jsonify}}
       var choices_context = {{choices_context|jsonify}}
 
-      console.log("choices:",choices)
+      //console.log("choices:",choices)
     </script>
 
     <script type="text/babel">
@@ -32,7 +32,7 @@ var BooleanChoice = React.createClass({
 
 var RadioChoices = React.createClass({
   render: function() {
-    console.log("RadioChoices",this.props.choices)
+    //console.log("RadioChoices",this.props.choices)
     var that = this
     var choiceNodes = this.props.choices.map(function(choice) {
       var selected = that.props.selected == choice.name
@@ -59,12 +59,12 @@ var RadioChoices = React.createClass({
 
 var ContextAnswer = React.createClass({
   render: function() {
-       console.log("props = ",this.props)
+       //console.log("props = ",this.props)
 
-      console.log("ContextAnswer")
-      console.log("ContextAnswer: booleans",choices.booleans)
+      //console.log("ContextAnswer")
+      //console.log("ContextAnswer: booleans",choices.booleans)
        var choiceNodes = choices.booleans.map(function(choice) {
-       console.log("ContextAnswer: booleans: choice",choice)
+       //console.log("ContextAnswer: booleans: choice",choice)
          return (
            <BooleanChoice choice={choice} key={choice.name} />
          );
@@ -121,6 +121,14 @@ var ContextAnswer = React.createClass({
 
 var Answer = React.createClass({
   render: function() {
+    //console.log("Answer: props",this.props)
+    var to_me
+    var to_others
+    if(this.props.answers)
+    {
+        to_me     = this.props.answers['to_me'    ]
+        to_others = this.props.answers['to_others']
+    }
     return (
         <div>
           <div className="row" >
@@ -129,8 +137,8 @@ var Answer = React.createClass({
                 <div className='topic-detail'  >{ this.props.question.question_detail }</div>
               </div>
           </div>
-            <ContextAnswer context='Self'   question={this.props.question} />
-            <ContextAnswer context='Others' question={this.props.question} />
+            <ContextAnswer context='Self'   answer={ to_me     } />
+            <ContextAnswer context='Others' answer={ to_others } />
        </div>
     );
   }
@@ -177,7 +185,7 @@ var AnswerBox = React.createClass({
   },
   componentDidMount: function() {
     this.loadAnswersFromServer();
-    setInterval(this.loadAnswersFromServer, this.props.pollInterval);
+    //setInterval(this.loadAnswersFromServer, this.props.pollInterval);
   },
   render: function() {
     return (
@@ -202,10 +210,10 @@ var AnswerBox = React.createClass({
 
 var AnswerList = React.createClass({
   render: function() {
-      console.log("AnswerList")
-    var answerNodes = this.props.data.results.map(function(question) {
+      //console.log("AnswerList")
+    var answerNodes = this.props.data.results.map(function(node) {
       return (
-        <Answer question={question} key={question.id} />
+        <Answer question={node.question} key={node.question.id} answer={node.answer} />
       );
     });
     return (
@@ -258,7 +266,7 @@ var AnswerForm = React.createClass({
 });
 
 ReactDOM.render(
-  <AnswerBox url="/rest/questions" pollInterval={2000} />,
+  <AnswerBox url="/checklist/rest/questions" pollInterval={2000} />,
   document.getElementById('content')
 );
 

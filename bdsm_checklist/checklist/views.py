@@ -312,7 +312,7 @@ class UserViewSet(viewsets.ModelViewSet):
 #===============================================================================
 
 def get_rest_answers_list (request, user, questions):
-    print("get_answers_list: user = ",user)
+    print("get_rest_answers_list: user = ",user)
     results = []
     for question in questions:
         node = {}
@@ -333,18 +333,16 @@ def get_rest_answers_list (request, user, questions):
                 if 'answers' not in node:
                     node['answers'] = {}
 
-
-
-                data = AnswerSerializer(answer,context={'request':request}).data
-                pprint.pprint({"data":data})
-                json = JSONRenderer().render(data)
-                pprint.pprint({"json":json})
+                #data = AnswerSerializer(answer,context={'request':request}).data
+                #pprint.pprint({"data":data})
+                #json = JSONRenderer().render(data)
+                #pprint.pprint({"json":json})
 
                 node['answers'][context["name"]] = AnswerSerializer(answer,context={'request':request}).data
-    print("answer list results")
-    pprint.pprint(results)
-    return results
+    #print("get_rest_answerslist: results:")
+    #pprint.pprint(results)
 
+    return results
 
 @login_required
 @api_view(['GET', 'POST'])
@@ -353,5 +351,15 @@ def edit_rest(request):
     results = get_rest_answers_list(request, request.user, questions),
 
     return Response(results)
+
+@login_required
+@api_view(['GET', 'POST'])
+def rest_questions(request):
+    questions = get_list_or_404(Question)
+    results = get_rest_answers_list(request, request.user, questions)
+    print("rest_questions: results:")
+    pprint.pprint(results)
+
+    return Response({ 'results' :results} )
 
 
