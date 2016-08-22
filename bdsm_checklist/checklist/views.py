@@ -55,12 +55,12 @@ def instructions(request):
 choices = {}
 choices['rating'] = \
 [
-    {"name":"0", "description":"N/A"         },
-    {"name":"1", "description":"Love"        },
-    {"name":"2", "description":"Like"        },
-    {"name":"3", "description":"Don't Mind"  },
-    {"name":"4", "description":"Dislike"     },
-    {"name":"5", "description":"Hate"        },
+    {"name":"na"        , "description":"N/A"         },
+    {"name":"love"      , "description":"Love"        },
+    {"name":"like"      , "description":"Like"        },
+    {"name":"dont_mind" , "description":"Don't Mind"  },
+    {"name":"dislike"   , "description":"Dislike"     },
+    {"name":"hate"      , "description":"Hate"        },
 ]
 choices['booleans'] = \
 [

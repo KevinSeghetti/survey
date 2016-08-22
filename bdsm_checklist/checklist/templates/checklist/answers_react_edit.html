@@ -19,9 +19,14 @@
 
 var BooleanChoice = React.createClass({
   render: function() {
+    var checked  = false
+    if(this.props.answer)
+    {
+      checked=true
+    }
     return (
         <div className='question small'>
-           <input type="checkbox" checked /> {this.props.choice.description}
+           <input type="checkbox" checked={checked} /> {this.props.choice.description}
         </div>
     );
   }
@@ -32,7 +37,7 @@ var BooleanChoice = React.createClass({
 
 var RadioChoices = React.createClass({
   render: function() {
-    //console.log("RadioChoices",this.props.choices)
+    //console.log("RadioChoices",this.props)
     var that = this
     var choiceNodes = this.props.choices.map(function(choice) {
       var selected = that.props.selected == choice.name
@@ -61,12 +66,30 @@ var ContextAnswer = React.createClass({
   render: function() {
        //console.log("props = ",this.props)
 
+      var rating
+      var notes
+
+      // kts smell there must be a better way to do this
+      if(this.props.answers)
+      {
+        rating = this.props.answers.rating
+        notes = this.props.answers.notes
+
+      }
       //console.log("ContextAnswer")
       //console.log("ContextAnswer: booleans",choices.booleans)
+       var that = this
        var choiceNodes = choices.booleans.map(function(choice) {
        //console.log("ContextAnswer: booleans: choice",choice)
+         // look up answer, if present
+         var answer
+         if(that.props.answers && choice.name in that.props.answers)
+         {
+           answer = that.props.answers[choice.name]
+         }
+
          return (
-           <BooleanChoice choice={choice} key={choice.name} />
+           <BooleanChoice choice={choice} key={choice.name} answer={answer}/>
          );
        });
 
@@ -87,7 +110,7 @@ var ContextAnswer = React.createClass({
                             <div className='question-headline col-xs-1'>
                               Rating
                             </div>
-                            <RadioChoices choices={choices.rating} />
+                            <RadioChoices choices={choices.rating} selected={rating}/>
                          </div>
                       </div>
                    </div>
@@ -106,7 +129,7 @@ var ContextAnswer = React.createClass({
                    </div>
                 </div>
                 <div className='notes col-xs-6'>
-                   Notes<input type="text"   value="{{ answer.notes }}" />
+                   Notes<input type="text"   value={ notes } />
                 </div>
              </div>
            </div>
@@ -137,8 +160,8 @@ var Answer = React.createClass({
                 <div className='topic-detail'  >{ this.props.question.question_detail }</div>
               </div>
           </div>
-            <ContextAnswer context='Self'   answer={ to_me     } />
-            <ContextAnswer context='Others' answer={ to_others } />
+            <ContextAnswer context='Self'   answers={ to_me     } />
+            <ContextAnswer context='Others' answers={ to_others } />
        </div>
     );
   }
@@ -210,10 +233,10 @@ var AnswerBox = React.createClass({
 
 var AnswerList = React.createClass({
   render: function() {
-      //console.log("AnswerList")
+    console.log("AnswerList:render")
     var answerNodes = this.props.data.results.map(function(node) {
       return (
-        <Answer question={node.question} key={node.question.id} answer={node.answer} />
+        <Answer question={node.question} key={node.question.id} answers={node.answers} />
       );
     });
     return (
