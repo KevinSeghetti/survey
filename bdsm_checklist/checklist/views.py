@@ -9,7 +9,12 @@ from django.contrib.auth.models import User
 from rest_framework import (
     viewsets,
     permissions,
+    status
 )
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
+
 
 from django.http import HttpResponse
 #from django.template import RequestContext, loader
@@ -272,7 +277,8 @@ class QuestionWithAnswerViewSet(viewsets.ModelViewSet):
     """
 
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = Question.objects.all().order_by('-question_text')
+    #queryset = Question.objects.all().order_by('-question_text')
+    queryset = Answer.objects.all()
     serializer_class = QuestionWithAnswerSerializer
 
 #===============================================================================
@@ -304,4 +310,48 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 #===============================================================================
+
+def get_rest_answers_list (request, user, questions):
+    print("get_answers_list: user = ",user)
+    results = []
+    for question in questions:
+        node = {}
+        results.append(node)
+        node['question'] = QuestionSerializer(question,context={'request':request}).data
+        #data = QuestionSerializer(question,context={'request':request}).data
+        #pprint.pprint({"data":data})
+        #json = JSONRenderer().render(data)
+        #pprint.pprint({"json":json})
+
+        for context in choices_context:
+            try:
+                answer = Answer.objects.get(user=user,question=question,context=context['name'])
+            except:
+                # not found, don't bother setting
+                pass
+            else:
+                if 'answers' not in node:
+                    node['answers'] = {}
+
+
+
+                data = AnswerSerializer(answer,context={'request':request}).data
+                pprint.pprint({"data":data})
+                json = JSONRenderer().render(data)
+                pprint.pprint({"json":json})
+
+                node['answers'][context["name"]] = AnswerSerializer(answer,context={'request':request}).data
+    print("answer list results")
+    pprint.pprint(results)
+    return results
+
+
+@login_required
+@api_view(['GET', 'POST'])
+def edit_rest(request):
+    questions = get_list_or_404(Question)
+    results = get_rest_answers_list(request, request.user, questions),
+
+    return Response(results)
+
 
