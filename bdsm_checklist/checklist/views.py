@@ -346,14 +346,6 @@ def get_rest_answers_list (request, user, questions):
 
 @login_required
 @api_view(['GET', 'POST'])
-def edit_rest(request):
-    questions = get_list_or_404(Question)
-    results = get_rest_answers_list(request, request.user, questions),
-
-    return Response(results)
-
-@login_required
-@api_view(['GET', 'POST'])
 def rest_questions(request):
     questions = get_list_or_404(Question)
     results = get_rest_answers_list(request, request.user, questions)
