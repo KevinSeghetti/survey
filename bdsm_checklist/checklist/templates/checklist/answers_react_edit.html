@@ -42,7 +42,7 @@ var RadioChoices = React.createClass({
     var choiceNodes = this.props.choices.map(function(choice) {
       var selected = that.props.selected == choice.name
       return (
-          <span>
+          <span key={ that.props.name + '_' + choice.name }>
             <input type="radio"   value={choice.name}
               checked={selected}
             ></input>
@@ -110,7 +110,7 @@ var ContextAnswer = React.createClass({
                             <div className='question-headline col-xs-1'>
                               Rating
                             </div>
-                            <RadioChoices choices={choices.rating} selected={rating}/>
+                            <RadioChoices choices={choices.rating} selected={rating} id={this.props.id + '_rating' } />
                          </div>
                       </div>
                    </div>
@@ -160,8 +160,8 @@ var Answer = React.createClass({
                 <div className='topic-detail'  >{ this.props.question.question_detail }</div>
               </div>
           </div>
-            <ContextAnswer context='Self'   answers={ to_me     } />
-            <ContextAnswer context='Others' answers={ to_others } />
+            <ContextAnswer context='Self'   answers={ to_me     } id={this.props.id + '_to_self' }/>
+            <ContextAnswer context='Others' answers={ to_others } id={this.props.id + '_to_others' }/>
        </div>
     );
   }
@@ -236,7 +236,7 @@ var AnswerList = React.createClass({
     console.log("AnswerList:render")
     var answerNodes = this.props.data.results.map(function(node) {
       return (
-        <Answer question={node.question} key={node.question.id} answers={node.answers} />
+        <Answer question={node.question} key={node.question.id}  id={node.question.id} answers={node.answers} />
       );
     });
     return (
