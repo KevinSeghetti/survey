@@ -18,15 +18,30 @@
     <script type="text/babel">
 
 var BooleanChoice = React.createClass({
-  render: function() {
+
+  getInitialState: function() {
     var checked  = false
     if(this.props.answer)
     {
       checked=true
     }
+    return {value: checked};
+  },
+  handleChange: function(event) {
+    //console.log("BooleanChoice:handleChange:",event.target
+                )
+    this.setState({value: !this.state.value});
+  },
+
+  render: function() {
     return (
         <div className='question small'>
-           <input type="checkbox" checked={checked} /> {this.props.choice.description}
+            <input
+                type="checkbox"
+                checked={this.state.value}
+                onChange={this.handleChange}
+            />
+            {this.props.choice.description}
         </div>
     );
   }
@@ -34,15 +49,23 @@ var BooleanChoice = React.createClass({
 
 
 var RadioChoices = React.createClass({
+  getInitialState: function() {
+    return {selected: this.props.selected};
+  },
+  handleChange: function(event) {
+    //console.log("RadioChange:handleChange")
+    this.setState({selected: event.target.value});
+  },
   render: function() {
-    //console.log("RadioChoices",this.props)
+    //console.log("RadioChoices:render",this.props)
     var that = this
     var choiceNodes = this.props.choices.map(function(choice) {
-      var selected = that.props.selected == choice.name
+      var selected = that.state.selected == choice.name
       return (
           <span key={ that.props.name + '_' + choice.name }>
             <input type="radio"   value={choice.name}
               checked={selected}
+              onChange={that.handleChange}
             ></input>
             <label >{choice.description}</label>
           </span>
@@ -53,8 +76,26 @@ var RadioChoices = React.createClass({
         {choiceNodes}
       </div>
     );
+  }
+});
 
 
+var TextField = React.createClass({
+  getInitialState: function() {
+    return {value: this.props.value};
+  },
+  handleChange: function(event) {
+    console.log("TextField:handleChange")
+    this.setState({value: event.target.value});
+  },
+  render: function() {
+    return (
+      <input
+        type="text"
+        value={ this.state.value }
+        onChange={this.handleChange}
+      />
+    );
 
   }
 });
@@ -127,7 +168,7 @@ var ContextAnswer = React.createClass({
                    </div>
                 </div>
                 <div className='notes col-xs-6'>
-                   Notes<input type="text"   value={ notes } />
+                   Notes<TextField value={notes} />
                 </div>
              </div>
            </div>
