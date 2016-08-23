@@ -33,8 +33,6 @@ var BooleanChoice = React.createClass({
 });
 
 
-
-
 var RadioChoices = React.createClass({
   render: function() {
     //console.log("RadioChoices",this.props)
@@ -247,56 +245,11 @@ var AnswerList = React.createClass({
   }
 });
 
-var AnswerForm = React.createClass({
-  getInitialState: function() {
-    return {author: '', text: ''};
-  },
-  handleAuthorChange: function(e) {
-    this.setState({author: e.target.value});
-  },
-  handleTextChange: function(e) {
-    this.setState({text: e.target.value});
-  },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var author = this.state.author.trim();
-    var text = this.state.text.trim();
-    if (!text || !author) {
-      return;
-    }
-    this.props.onAnswerSubmit({author: author, text: text});
-    this.setState({author: '', text: ''});
-  },
-  render: function() {
-    return (
-      <form className="answerForm" onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          placeholder="Your name"
-          value={this.state.question_text}
-          onChange={this.handleAuthorChange}
-        />
-        <input
-          type="text"
-          placeholder="Say something..."
-          value={this.state.question_detail}
-          onChange={this.handleTextChange}
-        />
-        <input type="submit" value="Post" />
-      </form>
-    );
-  }
-});
-
 ReactDOM.render(
   <AnswerBox url="/checklist/rest/questions" pollInterval={2000} />,
   document.getElementById('content')
 );
 
-
-
-      // To get started with this tutorial running your own code, simply remove
-      // the script tag loading scripts/example.js and start writing code here.
     </script>
   </body>
 </html>
