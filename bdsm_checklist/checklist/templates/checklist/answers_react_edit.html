@@ -19,25 +19,24 @@
 
 var BooleanChoice = React.createClass({
 
-  getInitialState: function() {
+  handleChange: function(event) {
+    //console.log("BooleanChoice:handleChange:",event.target)
+    //console.log("BooleanChoice:handleChange: props",this.props)
+    this.props.onUpdate(this.props, !this.props.answer)
+  },
+
+  render: function() {
     var checked  = false
     if(this.props.answer)
     {
       checked=true
     }
-    return {value: checked};
-  },
-  handleChange: function(event) {
-    //console.log("BooleanChoice:handleChange:",event.target)
-    this.setState({value: !this.state.value});
-  },
 
-  render: function() {
     return (
         <div className='question small'>
             <input
                 type="checkbox"
-                checked={this.state.value}
+                checked={checked}
                 onChange={this.handleChange}
             />
             {this.props.choice.description}
@@ -53,13 +52,14 @@ var RadioChoices = React.createClass({
   },
   handleChange: function(event) {
     //console.log("RadioChange:handleChange")
-    this.setState({selected: event.target.value});
+    this.props.onUpdate(this.props, event.target.value)
+
   },
   render: function() {
     //console.log("RadioChoices:render",this.props)
     var that = this
     var choiceNodes = this.props.choices.map(function(choice) {
-      var selected = that.state.selected == choice.name
+      var selected = that.props.selected == choice.name
       return (
           <span key={ that.props.name + '_' + choice.name }>
             <input type="radio"   value={choice.name}
@@ -80,42 +80,49 @@ var RadioChoices = React.createClass({
 
 
 var TextField = React.createClass({
-  getInitialState: function() {
-    return {value: this.props.value};
-  },
   handleChange: function(event) {
     //console.log("TextField:handleChange")
-    this.setState({value: event.target.value});
+    this.props.onUpdate(this.props, event.target.value)
   },
   render: function() {
     return (
       <input
         type="text"
-        value={ this.state.value }
+        value={ this.props.value }
         onChange={this.handleChange}
       />
     );
-
   }
 });
 
 
 var ContextAnswer = React.createClass({
-  render: function() {
-       //console.log("props = ",this.props)
+   getInitialState: function() {
+    //console.log("ContextAnswer:initial state",this.props)
 
-      var rating
-      var notes
+    var answers = null
+    if('answers' in this.props && typeof this.props.answers != 'undefined')
+    {
+      answers = this.props.answers
+    }
+    return answers
+   },
 
-      // kts smell there must be a better way to do this
-      if(this.props.answers)
-      {
-        rating = this.props.answers.rating
-        notes = this.props.answers.notes
+   render: function() {
+        //console.log("props = ",this.props)
 
-      }
-      //console.log("ContextAnswer")
-      //console.log("ContextAnswer: booleans",choices.booleans)
+       var rating
+       var notes
+
+       // kts smell there must be a better way to do this
+       if(this.props.answers)
+       {
+         rating = this.state.rating
+         notes  = this.state.notes
+
+       }
+       //console.log("ContextAnswer")
+       //console.log("ContextAnswer: booleans",choices.booleans)
        var that = this
        var choiceNodes = choices.booleans.map(function(choice) {
        //console.log("ContextAnswer: booleans: choice",choice)
@@ -123,11 +130,11 @@ var ContextAnswer = React.createClass({
          var answer
          if(that.props.answers && choice.name in that.props.answers)
          {
-           answer = that.props.answers[choice.name]
+           answer = that.state[choice.name]
          }
 
          return (
-           <BooleanChoice choice={choice} key={choice.name} answer={answer}/>
+           <BooleanChoice choice={choice} key={choice.name} onUpdate={that.onUpdate}  answer={answer}  parentField={choice.name} />
          );
        });
 
@@ -148,7 +155,7 @@ var ContextAnswer = React.createClass({
                             <div className='question-headline col-xs-1'>
                               Rating
                             </div>
-                            <RadioChoices choices={choices.rating} selected={rating} id={this.props.id + '_rating' } />
+                            <RadioChoices choices={choices.rating} selected={rating} id={this.props.id + '_rating' }  onUpdate={this.onUpdate}  parentField='rating' />
                          </div>
                       </div>
                    </div>
@@ -167,19 +174,31 @@ var ContextAnswer = React.createClass({
                    </div>
                 </div>
                 <div className='notes col-xs-6'>
-                   Notes<TextField value={notes} />
+                   Notes<TextField value={notes}  onUpdate={this.onUpdate} parentField='notes'/>
                 </div>
              </div>
            </div>
        );
-     },
+    },
+
+    onUpdate: function(childProps, val) {
+      //console.log('ContextAnswer:onUpdate', childProps.parentField,  val)
+      var newState = {}
+      newState[childProps.parentField] = val
+      //console.log('ContextAnswer:onUpdate: existing state', this.state)
+      //console.log('ContextAnswer:onUpdate: new state', newState)
+      this.setState(newState)
+    },
 
     onBlur: function(e) {
       var currentTarget = e.currentTarget;
+      var that = this
 
       setTimeout(function() {
         if (!currentTarget.contains(document.activeElement)) {
             console.log('component officially blurred');
+            // time to send this object to the server
+            console.log('state', that.state)
         }
       }, 0);
     }
@@ -278,7 +297,7 @@ var AnswerBox = React.createClass({
 
 var AnswerList = React.createClass({
   render: function() {
-    console.log("AnswerList:render")
+    //console.log("AnswerList:render")
     var answerNodes = this.props.data.results.map(function(node) {
       return (
         <Answer question={node.question} key={node.question.id}  id={node.question.id} answers={node.answers} />
