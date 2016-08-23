@@ -28,8 +28,7 @@ var BooleanChoice = React.createClass({
     return {value: checked};
   },
   handleChange: function(event) {
-    //console.log("BooleanChoice:handleChange:",event.target
-                )
+    //console.log("BooleanChoice:handleChange:",event.target)
     this.setState({value: !this.state.value});
   },
 
@@ -85,7 +84,7 @@ var TextField = React.createClass({
     return {value: this.props.value};
   },
   handleChange: function(event) {
-    console.log("TextField:handleChange")
+    //console.log("TextField:handleChange")
     this.setState({value: event.target.value});
   },
   render: function() {
@@ -133,7 +132,7 @@ var ContextAnswer = React.createClass({
        });
 
        return (
-           <div className="answer">
+           <div className="answer" onBlur={this.onBlur} >
              <div className='context-headline row'>
                  <div className='col-xs-12' >
                    To/For { this.props.context }
@@ -172,11 +171,18 @@ var ContextAnswer = React.createClass({
                 </div>
              </div>
            </div>
-
        );
+     },
 
-     }
+    onBlur: function(e) {
+      var currentTarget = e.currentTarget;
 
+      setTimeout(function() {
+        if (!currentTarget.contains(document.activeElement)) {
+            console.log('component officially blurred');
+        }
+      }, 0);
+    }
 
 });
 
