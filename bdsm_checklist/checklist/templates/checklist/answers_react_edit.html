@@ -275,7 +275,7 @@ var Answer = React.createClass({
     });
 
     return (
-        <div>
+        <div className={this.props.parity} >
           <div className="row" >
               <div className='col-xs-12'>
                 <div className='topic-headline'>{ this.props.question.question_text   }</div>
@@ -333,9 +333,15 @@ var AnswerBox = React.createClass({
 var AnswerList = React.createClass({
   render: function() {
     //console.log("AnswerList:render")
-    var answerNodes = this.props.data.results.map(function(node) {
+    var answerNodes = this.props.data.results.map(function(node,index) {
+      var parity = 'odd'
+      if(index % 2)
+      {
+        parity = 'even'
+      }
+
       return (
-        <Answer question={node.question} key={node.question.id}  id={node.question.id} answers={node.answers} />
+        <Answer question={node.question} key={node.question.id}  id={node.question.id} answers={node.answers}  parity={parity} />
       );
     });
     return (
