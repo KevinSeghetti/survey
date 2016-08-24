@@ -298,10 +298,18 @@ class AnswerViewSet(viewsets.ModelViewSet):
     #    return Answer.objects.filter(user=user).order_by('-question__question_text')
 
     serializer_class = AnswerSerializer
+
     def perform_create(self, serializer):
         questionId =   self.request.data.get('question[id]')
         print("question id")
         pprint.pprint(questionId)
+        question = Question.objects.get(id=questionId)
+        serializer.save(question=question,user=self.request.user)
+
+    def perform_update(self, serializer):
+        questionId =   self.request.data.get('question[id]')
+        #print("question id")
+        pprint.pprint(serializer)
         question = Question.objects.get(id=questionId)
         serializer.save(question=question,user=self.request.user)
 
