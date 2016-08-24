@@ -15,10 +15,13 @@ urlpatterns = [
     url(r'^questions/edit/(?P<question_id>[0-9]+)/$', views.question_edit, name='question_edit'),
 
     url(r'^answers/edit/$', views.answers_edit, name='answers_edit'),
-    url(r'^answers_react/edit/$', views.answers_react_edit, name='answers_react_edit'),
 
-    # ex: /checklist/edit/
-    url(r'^edit/$', views.edit, name='edit'),
+
+    url(r'^edit/$', views.answers_react_edit, name='edit'),
+    #url(r'^edit/$', views.edit, name='edit'),
+    #url(r'^answers_react/edit/$', views.answers_react_edit, name='answers_react_edit'),
+
+
     url(r'^rest/questions$', views.rest_questions, name='rest_questions'),
     url(r'^resume/$', views.resume, name='resume'),
     # ex: /checklist/edit/unanswered
