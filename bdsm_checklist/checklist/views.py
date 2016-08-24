@@ -132,6 +132,20 @@ def answers_react_edit(request):
 
 #===============================================================================
 
+def answers_react_resume(request):
+    answer_list = Answer.objects.order_by('-question__question_text')
+
+    context = {
+        'answer_list': answer_list,
+        'choices_context': choices_context,
+        'choices': choices,
+        'user' : request.user,
+    }
+
+    return render(request, 'checklist/answers_react_resume.html', context)
+
+#===============================================================================
+
 def get_answers_list (user, questions):
     print("get_answers_list: user = ",user)
     results = []
@@ -368,4 +382,17 @@ def rest_questions(request):
 
     return Response({ 'results' :results} )
 
+
+@login_required
+@api_view(['GET', 'POST'])
+def rest_questions_remaining(request):
+    questions = Question.objects.exclude(
+       id__in=Question.objects.filter(answer__user=request.user, answer__question__isnull=False)
+    )
+
+    results = get_rest_answers_list(request, request.user, questions)
+    print("rest_questions: results:")
+    pprint.pprint(results)
+
+    return Response({ 'results' :results} )
 
