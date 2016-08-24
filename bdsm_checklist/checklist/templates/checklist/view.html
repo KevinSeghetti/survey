@@ -34,7 +34,7 @@
    <tbody>
       {% for node in questions %}
          {% if node.answers %}
-            <tr class='tooltip' title="{{ node.question.question_detail }}">
+            <tr class='tooltipster_tooltip' title="{{ node.question.question_detail }}">
                   <td class='topic-headline' >
                      {% if request.user.is_authenticated %}
                         <a href="{% url 'checklist:detail' node.question.id %} " >
@@ -84,7 +84,7 @@
         }
             );
 
-       $('.tooltip').tooltipster();
+       $('.tooltipster_tooltip').tooltipster();
     } );
 </script>
 
