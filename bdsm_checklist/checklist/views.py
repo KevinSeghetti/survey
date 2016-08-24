@@ -133,6 +133,7 @@ def answers_react_edit(request):
 
 #===============================================================================
 
+@login_required
 def answers_react_resume(request):
     answer_list = Answer.objects.order_by('-question__question_text')
 
@@ -188,29 +189,6 @@ def view(request,user_id):
         'choices_context': choices_context,
         'choices': choices,
         'user' : user,
-        })
-
-@login_required
-def resume(request):
-
-    questions = Question.objects.exclude(
-       id__in=Question.objects.annotate(num_answers=Count('answer')).filter(answer__user=request.user, num_answers__gt=3)
-    )
-
-    return render(request, 'checklist/edit.html', {
-        'questions': get_answers_list(request.user, questions),
-        'choices_context': choices_context,
-        'choices': choices
-        })
-
-@login_required
-def edit(request):
-    questions = get_list_or_404(Question)
-
-    return render(request, 'checklist/edit.html', {
-        'questions': get_answers_list(request.user, questions), 
-        'choices_context': choices_context, 
-        'choices': choices
         })
 
 @login_required
