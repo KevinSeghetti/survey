@@ -285,7 +285,7 @@ var AnswerBox = React.createClass({
 
       <div className="answerBox question-edit">
       <div>
-          Select A rating for each question. You don't have to fill this out all at once, you can save your progress
+          Select a rating for each question. You don't have to fill this out all at once, you can save your progress
           and come back to the rest later. (select resume to get a question list containing only the questions
           you haven't answered yet.
 
