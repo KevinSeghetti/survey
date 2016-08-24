@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404,render
 #from django.http import Http404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from rest_framework import (
@@ -193,7 +194,7 @@ def view(request,user_id):
 def resume(request):
 
     questions = Question.objects.exclude(
-       id__in=Question.objects.filter(answer__user=request.user, answer__question__isnull=False)
+       id__in=Question.objects.annotate(num_answers=Count('answer')).filter(answer__user=request.user, num_answers__gt=3)
     )
 
     return render(request, 'checklist/edit.html', {
@@ -386,8 +387,9 @@ def rest_questions(request):
 @login_required
 @api_view(['GET', 'POST'])
 def rest_questions_remaining(request):
+
     questions = Question.objects.exclude(
-       id__in=Question.objects.filter(answer__user=request.user, answer__question__isnull=False)
+       id__in=Question.objects.annotate(num_answers=Count('answer')).filter(answer__user=request.user, num_answers__gt=3)
     )
 
     results = get_rest_answers_list(request, request.user, questions)
