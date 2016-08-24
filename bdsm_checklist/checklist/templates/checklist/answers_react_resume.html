@@ -1,0 +1,29 @@
+{% extends "checklist/base.html" %}
+{% block content %}
+
+{% load staticfiles %}
+{% load checklist_extras %}
+
+  <div id="content"></div>
+
+  <script>
+    // globals from server
+    var choices = {{choices|jsonify}}
+    var choices_context = {{choices_context|jsonify}}
+    var csrfToken = "{{ csrf_token }}"
+
+    // csrf setup
+    $.ajaxSetup({
+        headers: {
+            'X-CSRFToken': csrfToken
+        }
+    })
+  </script>
+
+  <script type="text/babel">
+    window.startAnswerEditor("{% url 'checklist:rest_questions_remaining'      %}")
+  </script>
+
+{% endblock %}
+
+
