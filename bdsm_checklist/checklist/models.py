@@ -33,3 +33,8 @@ class Answer(models.Model):
           .format(self.context,self.essential,self.curious,self.soft_limit,self.hard_limit,self.have_done,self.rating)
         )
 
+    class Meta:
+        unique_together = ( ("user", "question", "context")
+     )
+
+
