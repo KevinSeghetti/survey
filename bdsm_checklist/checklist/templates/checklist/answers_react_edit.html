@@ -110,7 +110,7 @@ var ContextAnswer = React.createClass({
 
     var answers = {
       context: this.props.context,
-      question_id: this.props.question_id,
+      question: { id: this.props.question_id } ,
 
     }
     if('answers' in this.props && typeof this.props.answers != 'undefined')
@@ -121,7 +121,7 @@ var ContextAnswer = React.createClass({
    },
 
    render: function() {
-        //console.log("props = ",this.props)
+        //console.log("ContextAnswer:render: props = ",this.props)
 
        var rating
        var notes
@@ -233,6 +233,7 @@ var ContextAnswer = React.createClass({
         type: requestType,
         data: postData,
         success: function(data) {
+          console.log("saveAnswer: success:",this.props.url, "returned data = ",data);
           this.setState( data );
         }.bind(this),
         error: function(xhr, status, err) {
