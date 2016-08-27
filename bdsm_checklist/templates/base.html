@@ -33,7 +33,7 @@
    <script type="text/javascript" src="{% static 'lib/babel/babel.browser.min.js'                    %}" ></script>
    <script type="text/javascript" src="{% static 'lib/remarkable/remarkable.min.js'                  %}" ></script>
    {% block scriptincludes %}{%endblock%}
-   <title>{% block title %}BDSM Checklist{% endblock %}</title>
+   <title>{% block title %}{{ APP_NAME }}{% endblock %}</title>
 
     <meta content="authenticity_token" name="csrf-param" />
     <meta content="{{ csrf_token }}" name="csrf-token" />
@@ -45,7 +45,7 @@
 
    <div class='site-header'>
       {% block header %}
-         <div class='headline'>BDSM Checklist</div>
+         <div class='headline'>{{ APP_NAME }}</div>
          <div class='logo'>
              <img src="{% static 'images/logo.png'  %}" alt="logo" height="38" width="38">
          </div>
@@ -82,7 +82,7 @@
    <div class='site-footer'>
        {% block footer %}
        <div class ='credits'>
-           Created by Kevin Seghetti. <a href="mailto:kts@tenetti.org?Subject=BDSM checklist" target="_top">Email me</a> with questions or feedback
+           Created by Kevin Seghetti. <a href="mailto:kts@tenetti.org?Subject={{ APP_NAME }}" target="_top">Email me</a> with questions or feedback
        </div>
        {% endblock %}
    </div>
