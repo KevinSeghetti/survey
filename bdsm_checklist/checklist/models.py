@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from bdsm_checklist.settings import APP_NAME,SFW
 
 
 class Question(models.Model):
@@ -14,9 +15,9 @@ class Answer(models.Model):
     user     = models.ForeignKey(User)
     question = models.ForeignKey(Question)
     CONTEXT_CHOICES = (
-    ('to_me', 'Done to me'),
-    ('to_others', 'I have done to others'),
-)
+        ('to_me', 'Done to me'),
+        ('to_others', 'I have done to others'),
+    )
     context = models.CharField(choices = CONTEXT_CHOICES, max_length=10)       # enum, should only contained to_me, to_others
 
     essential  = models.BooleanField(default=False)

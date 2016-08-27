@@ -15,6 +15,11 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SFW = 1
+if SFW:
+    APP_NAME = "Sports Quiz"
+else:
+    APP_NAME = "BDSM Quiz"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -64,6 +69,8 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'bdsm_checklist.urls'
 
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -71,6 +78,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'checklist.context_processors.app_globals',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',

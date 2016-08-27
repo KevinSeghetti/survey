@@ -19,6 +19,8 @@ from rest_framework.renderers import JSONRenderer
 
 from django.http import HttpResponse
 #from django.template import RequestContext, loader
+from bdsm_checklist.settings import APP_NAME,SFW
+
 from .models import Question,Answer
 from .serializers import (
     QuestionSerializer,
@@ -36,10 +38,10 @@ def index(request):
         publish_url  = reverse('checklist:view',args=str(request.user.id))
         publish_url_text = request.get_host()+ publish_url
 
-    context = {'latest_question_list': latest_question_list,
-               'publish_url': publish_url,
-               'publish_url_text': publish_url_text
-               }
+    context = {
+        'publish_url': publish_url,
+        'publish_url_text': publish_url_text,
+    }
     return render(request, 'checklist/index.html', context)
     # for this
 
@@ -63,20 +65,38 @@ choices['rating'] = \
     {"name":"dislike"   , "description":"Dislike"     },
     {"name":"hate"      , "description":"Hate"        },
 ]
-choices['booleans'] = \
-[
-    # kts eventually store this in a table
-    {"name":'essential' , "description":'Essential' },
-    {"name":'curious'   , "description":'Curious'   },
-    {"name":'soft_limit', "description":'Soft Limit'},
-    {"name":'hard_limit', "description":'Hard Limit'},
-    {"name":'have_done' , "description":'Have Done' },
-]
-choices_context = \
-[
-    {"name":'to_me'     , "description":'To/For Self'         },
-    {"name":'to_others' , "description":'To/For Others' },
-]
+if SFW:
+    choices_context = \
+    [
+        {"name":'to_me'     , "description":'Do Myself'      },
+        {"name":'to_others' , "description":'Watch Others Do' },
+    ]
+
+    choices['booleans'] = \
+    [
+        # kts eventually store this in a table
+        {"name":'essential' , "description":'Essential' },
+        {"name":'curious'   , "description":'Curious'   },
+        #{"name":'soft_limit', "description":'Soft Limit'},
+        #{"name":'hard_limit', "description":'Hard Limit'},
+        {"name":'have_done' , "description":'Have Done' },
+    ]
+
+else:
+    choices_context = \
+    [
+        {"name":'to_me'     , "description":'To/For Self'         },
+        {"name":'to_others' , "description":'To/For Others' },
+    ]
+    choices['booleans'] = \
+    [
+        # kts eventually store this in a table
+        {"name":'essential' , "description":'Essential' },
+        {"name":'curious'   , "description":'Curious'   },
+        {"name":'soft_limit', "description":'Soft Limit'},
+        {"name":'hard_limit', "description":'Hard Limit'},
+        {"name":'have_done' , "description":'Have Done' },
+    ]
 
 @login_required
 def detail(request, question_id):
