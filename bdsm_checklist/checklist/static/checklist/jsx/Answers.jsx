@@ -1,4 +1,6 @@
 // this script is getting transpiled at load time
+// kts todo: integrate jsx transpiling into server side babel pipeline
+// and learn how jsx and es6 interact
 
 var BooleanChoice = React.createClass({
 
@@ -77,6 +79,11 @@ var TextField = React.createClass({
   }
 });
 
+
+// There is a one to one relationship between this component
+// and a row in the answer DB on the server
+// so this is where we store all state relating to this answer,
+// and send it to the server whenever it changes
 
 var ContextAnswer = React.createClass({
    getInitialState: function() {
@@ -183,6 +190,9 @@ var ContextAnswer = React.createClass({
 
       setTimeout(function() {
         if (!currentTarget.contains(document.activeElement)) {
+            // this checks to see if whatever is now selected
+            // is under this component. If it not, then it is time
+            // to save changes to this component
             //console.log('component officially blurred');
             // time to send this object to the server
             that.saveAnswer()
@@ -278,7 +288,6 @@ var AnswerBox = React.createClass({
   },
   componentDidMount: function() {
     this.loadAnswersFromServer();
-    //setInterval(this.loadAnswersFromServer, this.props.pollInterval);
   },
   render: function() {
     return (
