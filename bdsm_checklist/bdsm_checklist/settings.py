@@ -10,12 +10,29 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
+# default switches
+SFW = 0
+
+# pull in any switches from a local settings file
+# this file might not exist, so we ignore any errors
+# which means syntax errors in this file will quietly be
+#  ignored. For debugging, uncomment the following line,
+# which will show any errors (but also fail if there is
+# no local_settings.py file
+
+#from .local_switches import *
+
+try:
+    from .local_switches import *
+except ImportError as e:
+    pass
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SFW = 1
 if SFW:
     APP_NAME = "Sports Quiz"
 else:
@@ -182,3 +199,20 @@ STATIC_ROOT = os.path.dirname(BASE_DIR) + '/public/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+
+# pull in any overrides from a local settings file
+# this file might not exist, so we ignore any errors
+# which means syntax errors in this file will quietly be
+#  ignored. For debugging, uncomment the following line,
+# which will show any errors (but also fail if there is
+# no local_settings.py file
+
+#from .local_overrides import *
+
+try:
+    from .local_overrides import *
+except ImportError as e:
+    pass
+
+
