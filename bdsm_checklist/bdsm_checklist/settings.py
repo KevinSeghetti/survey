@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # default switches
 SFW = 0
+PRODUCTION=False
+ALLOWED_HOSTS = []
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'b!ijq8j8rfa*-rqs=lycc*69wij_+kuzda0_e7g1pu&4+i0-7l'
 
 # pull in any switches from a local settings file
 # this file might not exist, so we ignore any errors
@@ -27,6 +32,11 @@ try:
 except ImportError as e:
     pass
 
+if PRODUCTION:
+     DEBUG = False
+else:
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -35,19 +45,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 if SFW:
     APP_NAME = "Sports Quiz"
+    DBNAME = 'sports_checklist.sq3'
 else:
     APP_NAME = "BDSM Quiz"
+    DBNAME = 'bdsm_checklist.sq3'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'b!ijq8j8rfa*-rqs=lycc*69wij_+kuzda0_e7g1pu&4+i0-7l'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -119,12 +124,12 @@ WSGI_APPLICATION = 'bdsm_checklist.wsgi.application'
 #}
 
 PROJECT_DIR = os.path.dirname(__file__)
-DBNAME=os.path.join(PROJECT_DIR,'bdsm_checklist.sq3')
+DBFULLPATH=os.path.join(PROJECT_DIR,DBNAME)
 
 DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': DBNAME,
+        'NAME': DBFULLPATH,
     },
 
 
