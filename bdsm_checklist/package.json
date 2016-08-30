@@ -1,0 +1,31 @@
+{
+  "name": "checklist",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+      "chai": "*",
+      "handlebars": "*",
+      "babel": "5.8.23"
+  },
+  "devDependencies": {
+    "istanbul": "*",
+    "jasmine-core": "^2.3.4",
+    "jasmine-jquery": "*",
+    "karma": "^0.13.11",
+    "karma-babel-preprocessor": "^5.2.2",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-cli": "*",
+    "karma-coverage": "^0.5.3",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-html2js-preprocessor": "~0.1",
+    "phantomjs": "^1.9.18"
+  },
+  "scripts": {
+    "test": "karma start karma.conf.js"
+  },
+  "author": "Kevin Seghetti",
+  "license": "Proprietary"
+}
