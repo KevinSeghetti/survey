@@ -1,0 +1,1027 @@
+[
+{
+  "fields": {
+    "rating": "love",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 1,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 1,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 1,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 2,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 2,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 3,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 2,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 4,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": true,
+    "user": 1,
+    "essential": false,
+    "question": 3,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 5,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 3,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 6,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "love",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 4,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 7,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 4,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 8,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "love",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": true,
+    "question": 5,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 9,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 5,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 10,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "False",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": true,
+    "user": 1,
+    "essential": false,
+    "question": 6,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 11,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 6,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 12,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "love",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": true,
+    "question": 7,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 13,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 7,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 14,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "love",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 8,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 15,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 8,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 16,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "love",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 9,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 17,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 9,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 18,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "love",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 10,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 19,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 10,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 20,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 11,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 21,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 11,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 22,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 12,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 23,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 12,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 24,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 13,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 25,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 13,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 26,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 14,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 27,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 14,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 28,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 15,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 29,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 15,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 30,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 16,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 31,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 16,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 32,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 17,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 33,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 17,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 34,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 18,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 35,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 18,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 36,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 19,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 37,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 19,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 38,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 20,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 39,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 20,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 40,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 21,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 41,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 21,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 42,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 22,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 43,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 22,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 44,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 23,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 45,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 23,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 46,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 24,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 47,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 24,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 48,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 25,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 49,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 25,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 50,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 26,
+    "have_done": true,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 51,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 26,
+    "have_done": true,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 52,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 27,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 53,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 27,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 54,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 28,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 55,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 28,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 56,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 29,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 57,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 29,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 58,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 30,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 59,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 30,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 60,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "like",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 31,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 61,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dont_mind",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 31,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 62,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 32,
+    "have_done": false,
+    "notes": "",
+    "context": "to_me"
+  },
+  "pk": 63,
+  "model": "checklist.answer"
+},
+{
+  "fields": {
+    "rating": "dislike",
+    "soft_limit": false,
+    "hard_limit": false,
+    "curious": false,
+    "user": 1,
+    "essential": false,
+    "question": 32,
+    "have_done": false,
+    "notes": "",
+    "context": "to_others"
+  },
+  "pk": 64,
+  "model": "checklist.answer"
+}
+
+]

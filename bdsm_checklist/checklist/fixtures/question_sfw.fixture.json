@@ -1,36 +1,258 @@
-[   
-
-    { "model": "checklist.question", "fields": { "question_text": "Skydiving", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "SCUBA Diving", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Hang Gliding", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Water slides", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Roller coasters", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "BMX", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Motorcycling - Off road", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Motorcycling - On road", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Cars - Sports", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Cars - Off road - 4x4s", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Football", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Basketball", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Soccer", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Volleyball", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Tennis", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Jogging", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Snow skiing - Downhill", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Snow skiing - Cross country", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Water skiing", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Wakeboarding", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Swimming", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Mountain climbing", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Bicycling - Off road", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Bicycling - On road", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Hiking", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Paintball", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Boxing", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Skateboarding", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Rollerblading", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Surfing", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Paragliding", "question_detail": "."}},
-    { "model": "checklist.question", "fields": { "question_text": "Wrestling", "question_detail": "."}}
+[
+{
+  "fields": {
+    "question_detail": "umping from an aircraft and performing acrobatic maneuvers in the air during free fall before landing by parachute",
+    "question_text": "Skydiving"
+  },
+  "model": "checklist.question",
+  "pk": 1
+},
+{
+  "fields": {
+    "question_detail": "swimming underwater using scuba gear",
+    "question_text": "SCUBA Diving"
+  },
+  "model": "checklist.question",
+  "pk": 2
+},
+{
+  "fields": {
+    "question_detail": "recreational activity in which a pilot flies a light, non-motorized foot-launched heavier-than-air aircraft",
+    "question_text": "Hang Gliding"
+  },
+  "model": "checklist.question",
+  "pk": 3
+},
+{
+  "fields": {
+    "question_detail": "A slide into a swimming pool, typically flowing with water and incorporating a number of twists and turns.",
+    "question_text": "Water slides"
+  },
+  "model": "checklist.question",
+  "pk": 4
+},
+{
+  "fields": {
+    "question_detail": "an amusement park attraction that consists of a light railroad track with many tight turns and steep slopes, on which people ride in small fast open cars",
+    "question_text": "Roller coasters"
+  },
+  "model": "checklist.question",
+  "pk": 5
+},
+{
+  "fields": {
+    "question_detail": "organized bicycle racing on a dirt track, especially for youngsters.",
+    "question_text": "BMX"
+  },
+  "model": "checklist.question",
+  "pk": 6
+},
+{
+  "fields": {
+    "question_detail": "Riding a motorcycle off road",
+    "question_text": "Motorcycling - Off road"
+  },
+  "model": "checklist.question",
+  "pk": 7
+},
+{
+  "fields": {
+    "question_detail": "Riding a motorcycle, for sport or sightseeing.",
+    "question_text": "Motorcycling - On road"
+  },
+  "model": "checklist.question",
+  "pk": 8
+},
+{
+  "fields": {
+    "question_detail": "Driving a low-built car designed for performance at high speeds",
+    "question_text": "Cars - Sports"
+  },
+  "model": "checklist.question",
+  "pk": 9
+},
+{
+  "fields": {
+    "question_detail": "driving off road, typically difficult terrain",
+    "question_text": "Cars - Off road - 4x4s"
+  },
+  "model": "checklist.question",
+  "pk": 10
+},
+{
+  "fields": {
+    "question_detail": "a form of team game played in North America with an oval ball on a field marked out as a gridiron",
+    "question_text": "Football"
+  },
+  "model": "checklist.question",
+  "pk": 11
+},
+{
+  "fields": {
+    "question_detail": "a game played between two teams of five players in which goals are scored by throwing a ball through a netted hoop fixed above each end of the court",
+    "question_text": "Basketball"
+  },
+  "model": "checklist.question",
+  "pk": 12
+},
+{
+  "fields": {
+    "question_detail": "a game played by two teams of eleven players with a round ball that may not be touched with the hands or arms during play except by the goalkeeper",
+    "question_text": "Soccer"
+  },
+  "model": "checklist.question",
+  "pk": 13
+},
+{
+  "fields": {
+    "question_detail": "A game for two teams, usually of six players, in which a large ball is hit by hand over a high net, the aim being to score points by making the ball reach the ground on the opponent's side of the court",
+    "question_text": "Volleyball"
+  },
+  "model": "checklist.question",
+  "pk": 14
+},
+{
+  "fields": {
+    "question_detail": "A game in which two or four players strike a ball with rackets over a net stretched across a court",
+    "question_text": "Tennis"
+  },
+  "model": "checklist.question",
+  "pk": 15
+},
+{
+  "fields": {
+    "question_detail": "run at a steady gentle pace, especially on a regular basis as a form of physical exercise",
+    "question_text": "Jogging"
+  },
+  "model": "checklist.question",
+  "pk": 16
+},
+{
+  "fields": {
+    "question_detail": "sliding down snow-covered hills on skis with fixed-heel binding",
+    "question_text": "Snow skiing - Downhill"
+  },
+  "model": "checklist.question",
+  "pk": 17
+},
+{
+  "fields": {
+    "question_detail": "A form of skiing where skiers rely on their own locomotion to move across snow-covered terrain",
+    "question_text": "Snow skiing - Cross country"
+  },
+  "model": "checklist.question",
+  "pk": 18
+},
+{
+  "fields": {
+    "question_detail": "Skim the surface of water on waterskis.",
+    "question_text": "Water skiing"
+  },
+  "model": "checklist.question",
+  "pk": 19
+},
+{
+  "fields": {
+    "question_detail": "riding on a short, wide board resembling a surfboard and performing acrobatic maneuvers while being towed behind a motorboat",
+    "question_text": "Wakeboarding"
+  },
+  "model": "checklist.question",
+  "pk": 20
+},
+{
+  "fields": {
+    "question_detail": "Propelling oneself through water using the limbs",
+    "question_text": "Swimming"
+  },
+  "model": "checklist.question",
+  "pk": 21
+},
+{
+  "fields": {
+    "question_detail": "Climbing mountains, commonly requiring gear for that purpose.",
+    "question_text": "Mountain climbing"
+  },
+  "model": "checklist.question",
+  "pk": 22
+},
+{
+  "fields": {
+    "question_detail": "ride a bicycle in a particular direction off road",
+    "question_text": "Bicycling - Off road"
+  },
+  "model": "checklist.question",
+  "pk": 23
+},
+{
+  "fields": {
+    "question_detail": "ride a bicycle in a particular direction on road",
+    "question_text": "Bicycling - On road"
+  },
+  "model": "checklist.question",
+  "pk": 24
+},
+{
+  "fields": {
+    "question_detail": "walk for a long distance, especially across country or in the woods",
+    "question_text": "Hiking"
+  },
+  "model": "checklist.question",
+  "pk": 25
+},
+{
+  "fields": {
+    "question_detail": "participants simulate military combat using air guns to shoot capsules of paint at each other.",
+    "question_text": "Paintball"
+  },
+  "model": "checklist.question",
+  "pk": 26
+},
+{
+  "fields": {
+    "question_detail": " fighting with the fists, especially with padded gloves in a roped square ring according to prescribed rules",
+    "question_text": "Boxing"
+  },
+  "model": "checklist.question",
+  "pk": 27
+},
+{
+  "fields": {
+    "question_detail": "riding and performing tricks using a skateboard",
+    "question_text": "Skateboarding"
+  },
+  "model": "checklist.question",
+  "pk": 28
+},
+{
+  "fields": {
+    "question_detail": "Glide across a hard surface wearing roller blades",
+    "question_text": "Rollerblading"
+  },
+  "model": "checklist.question",
+  "pk": 29
+},
+{
+  "fields": {
+    "question_detail": "riding a wave toward the shore while standing or lying on a surfboard",
+    "question_text": "Surfing"
+  },
+  "model": "checklist.question",
+  "pk": 30
+},
+{
+  "fields": {
+    "question_detail": "a wide canopy resembling a parachute is attached to a person's body by a harness in order to allow them to glide through the air after jumping from or being lifted to a height",
+    "question_text": "Paragliding"
+  },
+  "model": "checklist.question",
+  "pk": 31
+},
+{
+  "fields": {
+    "question_detail": "the sport or activity of grappling with an opponent and trying to throw or hold them down on the ground, typically according to a code of rules.",
+    "question_text": "Wrestling"
+  },
+  "model": "checklist.question",
+  "pk": 32
+}
 ]
-
