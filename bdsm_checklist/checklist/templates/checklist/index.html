@@ -4,35 +4,12 @@
 
 {% block content %}
 
-<div>
-    <div>
+    <div class="lead">
         {% if SFW %}
         Welcome to the online sports checklist. It can be used to help people
         interested in various sports match up with others of similar interest.
 
         You will need to create an account to see most of the site.
-        <br /><br />
-        A potential client recently asked me if I had a deployed site they could
-        look at. Most of my recent work for hire projects are either not open
-        the public, or are not yet deployed.
-        So I deployed this so they would have something to look at.
-        <br /><br />
-
-        This is a small app I use to learn new technologies. It is a SFW version
-        of a NSFW site I did for a local community. (so if it seems silly, it
-        made more sense it its original context). The basic idea is: someone
-        answers a lot of questions, then shares them with others to review.
-        <br /><br />
-
-        This app is implemented using Django. It began will all pages using django forms.
-        Since then I have used it to experiment with a few technologies.
-        <br />
-        So the
-        <a href="/checklist/questions/edit/">question editor</a> uses backbone.js. <br />
-        The
-        <a href="/checklist/edit/">answer editor</a> uses ReactJS. <br />
-
-        both of those are communicating with the back end via a REST interface.
 
         {% else %}
         Welcome to the online BDSM checklist. This is an interactive version of a checklist I found
@@ -44,7 +21,10 @@
         original author, if anyone knows who that is drop me an email through the link at the bottom of this page).
         {% endif %}
         <br />
+        For an example of what the results look like after filling out the
+        form, you can view <a href="http://quiz.worldfoundry.org/checklist/view/1/" >mine</a>
 
+        <br />
 
        {% if request.user.is_authenticated %}
           <br />To publish your results for anyone to be able to view, copy the following link:
@@ -69,15 +49,44 @@
             your answers. This page can also filter for certain results, as well as sort the results.
             </p>
 
-
        {% else %}
         <br />To Create an account click on the register link on the upper right corner of the page
        {% endif %}
     </div>
+   <div>
 
-    {#<a href="{% url 'checklist:edit_with_options/unanswered' %}">Edit Unanswered</a><br /> #}
+        {% if SFW %}
+        <br /><br />
+        A potential client recently asked me if I had a deployed site they could
+        look at. Most of my recent work for hire projects are either not open
+        the public, or are not yet deployed.
+        So I deployed this so they would have something to look at.
+        <br /><br />
+
+        This is a small app I use to learn new technologies. It is a SFW version
+        of a NSFW site I did for a local community. (so if it seems silly, it
+        made more sense it its original context). The basic idea is: someone
+        answers a lot of questions, then shares them with others to review.
+        <br /><br />
+
+        This app is implemented using Django. It began will all pages using django forms.
+        Since then I have used it to experiment with a few technologies.
+        <br />
+        So the
+        <a href="/checklist/questions/edit/">question editor</a> uses backbone.js. <br />
+        The
+        <a href="/checklist/edit/">answer editor</a> uses ReactJS. <br />
+
+        both of those are communicating with the back end via a REST interface.
+
+        <br />
+        You need to be logged in to see the rest of the site. You can create
+        an account, or login to a test account with the username 'test'
+        and password of 'test'.
 
 
+       {% endif %}
+   </div>
 
 {% endblock %}
 
