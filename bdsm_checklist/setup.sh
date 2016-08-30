@@ -55,6 +55,7 @@ pip install markdown
 #pip install git+https://github.com/multiplay/mysql-connector-python
 
 pip install djangorestframework
+pip install django-static-precompiler
 
 #pip install psycopg2
 pip install django-registration-redux==1.2

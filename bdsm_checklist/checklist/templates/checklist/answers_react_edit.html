@@ -2,7 +2,11 @@
 {% block content %}
 
 {% load staticfiles %}
+{% load compile_static %}
+{% load static %}
 {% load checklist_extras %}
+
+{% include "checklist/javascript_includes.html" %}
 
   <div id="content"></div>
 
@@ -20,7 +24,7 @@
     })
   </script>
 
-  <script type="text/babel">
+  <script>
     window.startAnswerEditor("{% url 'checklist:rest_questions'      %}")
   </script>
 

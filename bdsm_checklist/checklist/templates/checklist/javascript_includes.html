@@ -1,0 +1,13 @@
+{% comment %}
+ since the es6 compiler we are using doesn't support modules, we have to
+ manually include each file from the html. That process is gathered here
+ to prevent duplication
+ {% endcomment %}
+
+{% load staticfiles %}
+{% load compile_static %}
+{% load static %}
+
+<script src='{% static "checklist/jsx/Answers.es6"|compile %}'></script>
+
+

@@ -64,6 +64,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "static_precompiler",
     'rest_framework',
     'registration',
     'checklist',
@@ -204,6 +205,40 @@ STATIC_ROOT = os.path.dirname(BASE_DIR) + '/public/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+
+
+
+if DEBUG:
+    import mimetypes
+    mimetypes.add_type("text/x-handlebars-template", ".handlebar", True)
+
+#===============================================================================
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'static_precompiler.finders.StaticPrecompilerFinder',
+)
+
+STATIC_PRECOMPILER_COMPILERS = (
+    'static_precompiler.compilers.CoffeeScript',
+    ('static_precompiler.compilers.Babel', {
+        "executable": os.path.join(BASE_DIR, "node_modules/babel-cli/bin/babel.js"),
+        # kts TODO: dev version of django-static-precompiler has support for babel sourcemaps.
+        # as soon as it is released add it here
+        # "sourcemap_enabled": True,
+        "plugins": "transform-react-jsx"
+    }),
+
+
+    'static_precompiler.compilers.SASS',
+    'static_precompiler.compilers.SCSS',
+    'static_precompiler.compilers.LESS',
+    'static_precompiler.compilers.Stylus',
+)
+
 
 
 # pull in any overrides from a local settings file
