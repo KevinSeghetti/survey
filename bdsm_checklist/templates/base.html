@@ -1,4 +1,6 @@
 {% load staticfiles %}
+{% load compile_static %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +16,7 @@
    <link rel="stylesheet" type="text/css" href="{% static 'lib/backgrid/css/backgrid.css'            %}" />
    <link rel="stylesheet" type="text/css" href="{% static 'lib/backgrid/css/backgrid-select-all.css' %}" />
    <link rel="stylesheet" type="text/css" href="{% static 'lib/backgrid/css/backgrid-paginator.css'  %}" />
-   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'                            %}" />
+   <link rel="stylesheet" type="text/css" href="{% static 'css/style.scss'|compile                   %}"  />
    {% block cssincludes %}{%endblock%}
    <script type="text/javascript" src="{% static 'js/underscore.js'                                  %}" ></script>
    <script type="text/javascript" src="{% static 'js/jquery-1.11.3.min.js'                           %}" ></script>
