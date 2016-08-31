@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load compile_static %}
+{% load static %}
+
 
        {% block cssincludes %}
-         <link rel="stylesheet" type="text/css" href="{% static 'checklist/style.css' %}" />
+         <link rel="stylesheet" type="text/css" href="{% static 'checklist/style.scss'|compile %}"  />
+
          {% block checklist_cssincludes %}
          {% endblock %}
        {% endblock %}

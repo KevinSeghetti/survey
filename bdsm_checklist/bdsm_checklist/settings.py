@@ -233,10 +233,17 @@ STATIC_PRECOMPILER_COMPILERS = (
     }),
 
 
-    #'static_precompiler.compilers.SASS',
-    #'static_precompiler.compilers.SCSS',
-    #'static_precompiler.compilers.LESS',
-    #'static_precompiler.compilers.Stylus',
+    ('static_precompiler.compilers.SCSS', {
+        "sourcemap_enabled": True,
+#        "compass_enabled": True,
+        "load_paths": [os.path.join(BASE_DIR, "static/css")],
+        "precision": 8,
+#        "output_style": "compressed",
+
+    }),
+#    'static_precompiler.compilers.SASS',
+#    'static_precompiler.compilers.LESS',
+#    'static_precompiler.compilers.Stylus',
 )
 
 
