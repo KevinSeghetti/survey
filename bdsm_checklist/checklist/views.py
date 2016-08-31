@@ -202,6 +202,7 @@ def review(request):
         'questions': get_answers_list(request.user,questions), 
         'choices_context': choices_context, 
         'choices': choices,
+        'choicesRatingDict': choicesRatingDict,
         'user' : request.user,
         })
 
