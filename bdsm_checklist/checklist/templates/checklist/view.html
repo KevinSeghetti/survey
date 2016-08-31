@@ -48,7 +48,7 @@
                      {% with answer=node.answers|keyvalue:context.name partial_key=node.question.id|addstr:'_'|addstr:context.name %}
                         {% with answerrating=answer.rating %}
                            <td data-order="{{answerrating}}">
-                              {% with choice=choices.rating|listvalue:answerrating %}
+                              {% with choice=choicesRatingDict|keyvalue:answerrating %}
                                  {{ choice }}
                               {% endwith %}
                            </td>
