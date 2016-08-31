@@ -190,8 +190,8 @@ def get_answers_list (user, questions):
                 if 'answers' not in node:
                     node['answers'] = {}
                 node['answers'][context["name"]] = answer
-    print("answer list results")
-    pprint.pprint(results)
+    #print("answer list results")
+    #pprint.pprint(results)
     return results
 
 @login_required
