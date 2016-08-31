@@ -98,6 +98,11 @@ else:
         {"name":'have_done' , "description":'Have Done' },
     ]
 
+# kts above choices layout sucks, shoud be refactored
+# in the meantime, here is how it ought to be laid out
+
+choicesRatingDict = {x['name']:x['description'] for x in choices['rating']}
+
 @login_required
 def detail(request, question_id):
     # this shortcut
@@ -208,6 +213,7 @@ def view(request,user_id):
         'questions': get_answers_list(user,questions),
         'choices_context': choices_context,
         'choices': choices,
+        'choicesRatingDict': choicesRatingDict,
         'user' : user,
         })
 
