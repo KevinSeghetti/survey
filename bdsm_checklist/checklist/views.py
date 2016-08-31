@@ -190,8 +190,8 @@ def get_answers_list (user, questions):
                 if 'answers' not in node:
                     node['answers'] = {}
                 node['answers'][context["name"]] = answer
-    print("answer list results")
-    pprint.pprint(results)
+    #print("answer list results")
+    #pprint.pprint(results)
     return results
 
 @login_required
@@ -202,6 +202,7 @@ def review(request):
         'questions': get_answers_list(request.user,questions), 
         'choices_context': choices_context, 
         'choices': choices,
+        'choicesRatingDict': choicesRatingDict,
         'user' : request.user,
         })
 
