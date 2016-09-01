@@ -98,6 +98,11 @@ else:
         {"name":'have_done' , "description":'Have Done' },
     ]
 
+# kts above choices layout sucks, shoud be refactored
+# in the meantime, here is how it ought to be laid out
+
+choicesRatingDict = {x['name']:x['description'] for x in choices['rating']}
+
 @login_required
 def detail(request, question_id):
     # this shortcut
@@ -185,8 +190,8 @@ def get_answers_list (user, questions):
                 if 'answers' not in node:
                     node['answers'] = {}
                 node['answers'][context["name"]] = answer
-    print("answer list results")
-    pprint.pprint(results)
+    #print("answer list results")
+    #pprint.pprint(results)
     return results
 
 @login_required
@@ -197,6 +202,7 @@ def review(request):
         'questions': get_answers_list(request.user,questions), 
         'choices_context': choices_context, 
         'choices': choices,
+        'choicesRatingDict': choicesRatingDict,
         'user' : request.user,
         })
 
@@ -208,6 +214,7 @@ def view(request,user_id):
         'questions': get_answers_list(user,questions),
         'choices_context': choices_context,
         'choices': choices,
+        'choicesRatingDict': choicesRatingDict,
         'user' : user,
         })
 

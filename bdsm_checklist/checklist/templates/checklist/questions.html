@@ -7,7 +7,7 @@
        <ul>
        {% for question in question_list %}
            {#<li><a href="{% url 'checklist:detail' question.id %}">{{ question.question_text }}</a> - {{question.question_detail}}</li>#}
-           <li>{{ question.question_text }} - {{question.question_detail}}</li>
+           <li><b>{{ question.question_text }}</b> - {{question.question_detail}}</li>
        {% endfor %}
        </ul>
    {% else %}
