@@ -300,7 +300,7 @@ var AnswerBox = React.createClass({
           question list containing only the questions you haven't answered yet.
 
           Instructions can be found
-          <a href="/checklist/instructions">here</a>
+          <a href="/checklist/instructions"> here</a>
       </div>
        <hr />
 
