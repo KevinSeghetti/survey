@@ -63,6 +63,9 @@ pip install django-registration-redux==1.2
 
 pip install httpie
 
+npm install
+
+
 #cd $DEST_PATH/bdsm_checklist
 
 #python manage.py createsuperuser
