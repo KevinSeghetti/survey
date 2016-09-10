@@ -218,6 +218,32 @@ def view(request,user_id):
         'user' : user,
         })
 
+
+
+@login_required
+def reactreview(request):
+    questions = get_list_or_404(Question)
+
+    return render(request, 'checklist/reactview.html', {
+        'questions': get_answers_list(request.user,questions),
+        'choices_context': choices_context,
+        'choices': choices,
+        'choicesRatingDict': choicesRatingDict,
+        'user' : request.user,
+        })
+
+def reactview(request,user_id):
+    questions = get_list_or_404(Question)
+    user = get_object_or_404(User,id=user_id)
+
+    return render(request, 'checklist/reactwview.html', {
+        'questions': get_answers_list(user,questions),
+        'choices_context': choices_context,
+        'choices': choices,
+        'choicesRatingDict': choicesRatingDict,
+        'user' : user,
+        })
+
 @login_required
 def set(request):
     questions = get_list_or_404(Question)
