@@ -3,22 +3,16 @@ var ANSWERSVIEWER = (function () {
 
   var BooleanChoice = React.createClass({
 
-    handleChange: function(event) {
-      //console.log("BooleanChoice:handleChange:",event.target)
-      //console.log("BooleanChoice:handleChange: props",this.props)
-      this.props.onUpdate(this.props, !this.props.answer)
-    },
-
     render: function() {
-      var description = ""
+      var ghosted = "ghosted"
       if(this.props.answer)
       {
-        description= this.props.choice.description
+        ghosted='selected'
       }
 
       return (
-          <div className='question small'>
-              {description}
+          <div className={'question small ' + ghosted}>
+              {this.props.choice.description}&nbsp;
           </div>
       );
     }
@@ -28,18 +22,13 @@ var ANSWERSVIEWER = (function () {
     getInitialState: function() {
       return {selected: this.props.selected};
     },
-    handleChange: function(event) {
-      //console.log("RadioChange:handleChange")
-      this.props.onUpdate(this.props, event.target.value)
-
-    },
     render: function() {
       console.log("RadioChoices:render",this.props)
       var choice = this.props.choices.find( x => x.name == this.props.selected) || { description: "?" }
 
       var rating = choice.description
       return (
-        <div className='col-xs-10' >
+        <div className='col-xs-2' >
           { rating }
         </div>
       );
@@ -48,10 +37,6 @@ var ANSWERSVIEWER = (function () {
 
 
   var TextField = React.createClass({
-    handleChange: function(event) {
-      //console.log("TextField:handleChange")
-      this.props.onUpdate(this.props, event.target.value)
-    },
     render: function() {
       return (
         <input
@@ -112,105 +97,30 @@ var ANSWERSVIEWER = (function () {
            }
 
            return (
-             <BooleanChoice choice={choice} key={choice.name} onUpdate={that.onUpdate}  answer={answer}  parentField={choice.name} />
+             <BooleanChoice choice={choice} key={choice.name} answer={answer}  parentField={choice.name} />
            );
          });
          var context = $.grep(choices_context, function(e) { return e.name == that.state.answers.context })[0]
          return (
-             <div className="answer" onBlur={this.onBlur} >
-               <div className='context-headline row'>
-                   <div className='col-xs-12' >
-                     { context.description }
-                   </div>
-               </div>
-               <div className="row">
-                  <div className="col-xs-12 col-sm-12 col-md-6">
-                     <div className='row'>
-                        <div className="col-xs-12">
-                           <div className='row' >
-                              <div className='question-headline col-xs-1'>
-                              </div>
-                              <div className='question-headline col-xs-1'>
-                                Rating
-                              </div>
-                              <RadioChoices choices={choices.rating} selected={rating} id={this.state.id + '_rating' }  onUpdate={this.onUpdate}  parentField='rating' />
-                           </div>
-                        </div>
-                     </div>
-                     <div className='row'>
-                        <div className="col-xs-12">
-                            <div className='row' >
-                              <div className='col-xs-2'>
-                              </div>
-                              <div className='col-xs-10' >
-                                 <div className='booleans' >
-                                   {choiceNodes}
-                                 </div>
-                              </div>
-                            </div>
-                        </div>
+             <div className="answer" >
+               <div className='row'>
+                  <div className='context-headline col-xs-12 col-md-2' >
+                    { context.description }
+                  </div>
+                  <RadioChoices choices={choices.rating} selected={rating} id={this.state.id + '_rating' } parentField='rating' />
+                  <div className='col-xs-4' >
+                     <div className='booleans' >
+                       {choiceNodes}
                      </div>
                   </div>
-                  <div className='notes col-xs-6'>
-                     Notes {notes}
+                  <div className='notes col-xs-4'>
+                     {notes}
                   </div>
                </div>
              </div>
          );
       },
 
-      onUpdate: function(childProps, val) {
-        //console.log('ContextAnswer:onUpdate', childProps.parentField,  val)
-        var newState = this.state.answers
-        newState[childProps.parentField] = val
-        //console.log('ContextAnswer:onUpdate: existing state', this.state)
-        //console.log('ContextAnswer:onUpdate: new state', newState)
-        this.setState({ answers: newState} )
-      },
-
-      onBlur: function(e) {
-        var currentTarget = e.currentTarget;
-        var that = this
-
-        setTimeout(function() {
-          if (!currentTarget.contains(document.activeElement)) {
-              // this checks to see if whatever is now selected
-              // is under this component. If it not, then it is time
-              // to save changes to this component
-              //console.log('component officially blurred');
-              // time to send this object to the server
-              that.saveAnswer()
-              //console.log('state', that.state)
-          }
-        }, 0);
-      },
-
-      saveAnswer: function(answer) {
-        var url = "/rest/answers/"       // for cases where we don't have an answer record yet
-        var requestType = 'POST'
-        if('url' in this.state.answers)
-        {
-          url = this.state.answers.url
-          requestType = 'PUT'
-        }
-        var postData = {}
-        postData = this.state.answers
-
-        $.ajax({
-          url: url,
-          dataType: 'json',
-          type: requestType,
-          data: postData,
-          success: function(data) {
-            //console.log("saveAnswer: success: returned data = ",data);
-            this.setState({ answers:  data} );
-          }.bind(this),
-          error: function(xhr, status, err) {
-            //this.setState({data: answers});
-            console.error(this.props.url, status, err.toString());
-          }.bind(this)
-        });
-      },
   });
 
   var Answer = React.createClass({

@@ -24,6 +24,16 @@ $color-secondary-2-4 :  #19000D;
 // end manually pasted in colors
 
 
+.ghosted {
+    color: grey;
+    font-style: italic;
+}
+
+.selected {
+    color: black;
+    font-weight: bold;
+}
+
 .question-edit,.question-detail {
 
    .odd {
