@@ -59,7 +59,7 @@ var ANSWERSVIEWER = (function () {
       //console.log("ContextAnswer:initial state",this.props)
 
       var answers = {
-        context: this.props.context,
+        description: this.props.description,
         question: { id: this.props.question_id } ,
 
       }
@@ -105,7 +105,7 @@ var ANSWERSVIEWER = (function () {
              <div className="answer" >
                <div className='row'>
                   <div className='context-headline col-xs-12 col-md-2' >
-                    { context.description }
+                    { this.state.answers['description'] }
                   </div>
                   <RadioChoices choices={choices.rating} selected={rating} id={this.state.id + '_rating' } parentField='rating' />
                   <div className='col-xs-4' >
@@ -139,8 +139,7 @@ var ANSWERSVIEWER = (function () {
 
         return (
           <ContextAnswer
-            context={context_name}
-            context_description={context['description']}
+            description={context['description']}
             answers={ answers    }
             question_id={ that.props.question.id}
             id={that.props.id + '_'+context_name }
@@ -159,6 +158,44 @@ var ANSWERSVIEWER = (function () {
             </div>
             { contextNodes }
          </div>
+      );
+    }
+  });
+
+  var AnswerListFilters = React.createClass({
+    render: function() {
+      //console.log("Answer: props",this.props)
+      return (
+          <div >
+            <ContextAnswer
+              description="Filters"
+              question_id={ 0 }
+              id={ 0  }
+              key={"filters"}
+            />
+         </div>
+      );
+    }
+  });
+
+  var AnswerList = React.createClass({
+    render: function() {
+      //console.log("AnswerList:render")
+      var answerNodes = this.props.data.results.map(function(node,index) {
+        var parity = 'odd'
+        if(index % 2)
+        {
+          parity = 'even'
+        }
+
+        return (
+          <Answer question={node.question} key={node.question.id}  id={node.question.id} answers={node.answers}  parity={parity} />
+        );
+      });
+      return (
+        <div className="answerList">
+          {answerNodes}
+        </div>
       );
     }
   });
@@ -184,37 +221,15 @@ var ANSWERSVIEWER = (function () {
       this.loadAnswersFromServer();
     },
     render: function() {
-      return (
-
-        <div className="answerBox question-edit">
-        <h1>Results of checklist for user kts</h1>
-         <hr />
-
-          <AnswerList data={this.state.data} />
-        </div>
-      );
-    }
-  });
-
-  var AnswerList = React.createClass({
-    render: function() {
-      //console.log("AnswerList:render")
-      var answerNodes = this.props.data.results.map(function(node,index) {
-        var parity = 'odd'
-        if(index % 2)
-        {
-          parity = 'even'
-        }
-
         return (
-          <Answer question={node.question} key={node.question.id}  id={node.question.id} answers={node.answers}  parity={parity} />
+            <div className="answerBox question-edit">
+            <h1>Results of checklist for user kts</h1>
+            <hr />
+            <AnswerListFilters />
+            <hr />
+            <AnswerList data={this.state.data} />
+            </div>
         );
-      });
-      return (
-        <div className="answerList">
-          {answerNodes}
-        </div>
-      );
     }
   });
 
