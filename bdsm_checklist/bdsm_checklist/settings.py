@@ -65,6 +65,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "static_precompiler",
+    'webpack_loader',
     'rest_framework',
     'registration',
     'checklist',
@@ -204,6 +205,7 @@ STATIC_ROOT = os.path.dirname(BASE_DIR) + '/public/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "assets"),       # We do this so that django's collectstatic copies or our bundles to the STATIC_ROOT or syncs them to whatever storage we use.
 )
 
 
@@ -214,6 +216,15 @@ if DEBUG:
     mimetypes.add_type("text/x-handlebars-template", ".handlebar", True)
 
 #===============================================================================
+
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}
+
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',

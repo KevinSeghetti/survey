@@ -429,3 +429,10 @@ def rest_questions_remaining(request):
 
     return Response({ 'results' :results} )
 
+
+#===============================================================================
+
+def test(request):
+    context = {}
+    return render(request, 'checklist/test.html', context)
+

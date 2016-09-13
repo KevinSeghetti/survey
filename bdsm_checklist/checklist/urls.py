@@ -31,6 +31,10 @@ urlpatterns = [
     url(r'^reactreview/$'                  , views.reactreview, name='review'),
     url(r'^reactview/(?P<user_id>[0-9]+)/$', views.reactview  , name='view'),
 
+
+    url(r'^test/$'                  , views.test, name='test'),
+
+
     # ex: /checklist/set/
     url(r'^set/$', views.set, name='set'),
 
