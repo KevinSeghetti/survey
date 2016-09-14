@@ -2,6 +2,11 @@
 // kts todo: integrate jsx transpiling into server side babel pipeline
 // and learn how jsx and es6 interact
 
+var React = require('react')
+var ReactDOM = require('react-dom')
+
+var $ = require(jquery);
+
 var BooleanChoice = React.createClass({
 
   handleChange: function(event) {
@@ -269,7 +274,7 @@ var Answer = React.createClass({
   }
 });
 
-var AnswerBox = React.createClass({
+export var AnswerBox = React.createClass({
   loadAnswersFromServer: function() {
     $.ajax({
       url: this.props.url,

@@ -6,8 +6,8 @@ module.exports = {
   context: __dirname,
 
   entry: {     // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
-    'pageA': './assets/js/index',
-    'pageB': './assets/js/answers_edit',
+    'index': './assets/js/index',
+    'answers_edit': './assets/js/answers_edit',
   },
 
   output: {
@@ -21,16 +21,22 @@ module.exports = {
 
   module: {
     loaders: [
-    {   // to transform JSX into JS
-        test: /.jsx?$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        query: {
-          presets: ['es2015', 'react']
-        }
-    }
+      {   // to transform JSX into JS
+          test: /.jsx?$/,
+          loader: 'babel-loader',
+          exclude: /node_modules/,
+          query: {
+            presets: ['es2015', 'react']
+          }
+      },
+      {
+        test: require.resolve("jquery"),
+        loader: 'expose?_'
+      },
     ],
   },
+
+
 
   resolve: {
     modulesDirectories: ['node_modules', 'bower_components'],
