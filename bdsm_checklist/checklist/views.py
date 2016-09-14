@@ -433,6 +433,9 @@ def rest_questions_remaining(request):
 #===============================================================================
 
 def test(request):
-    context = {}
+    context = {
+        'choices_context': choices_context,
+        'choices': choices,
+        }
     return render(request, 'checklist/test.html', context)
 

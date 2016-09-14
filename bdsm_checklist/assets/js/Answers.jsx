@@ -4,8 +4,7 @@
 
 var React = require('react')
 var ReactDOM = require('react-dom')
-
-var $ = require(jquery);
+var $ = require('jquery');
 
 var BooleanChoice = React.createClass({
 
@@ -96,6 +95,7 @@ var ContextAnswer = React.createClass({
 
     var answers = {
       context: this.props.context,
+      choices_context: this.props.choices_context,
       question: { id: this.props.question_id } ,
 
     }
@@ -108,7 +108,7 @@ var ContextAnswer = React.createClass({
    },
 
    render: function() {
-        //console.log("ContextAnswer:render: state = ",this.state)
+        console.log("ContextAnswer:render: state = ",this.state,", props = ",this.props)
 
        var rating
        var notes
@@ -121,9 +121,9 @@ var ContextAnswer = React.createClass({
 
        }
        //console.log("ContextAnswer")
-       //console.log("ContextAnswer: booleans",choices.booleans)
+       console.log("ContextAnswer: booleans",this.props.choices.booleans)
        var that = this
-       var choiceNodes = choices.booleans.map(function(choice) {
+       var choiceNodes = this.props.choices.booleans.map(function(choice) {
        //console.log("ContextAnswer: booleans: choice",choice)
          // look up answer, if present
          var answer
@@ -136,7 +136,7 @@ var ContextAnswer = React.createClass({
            <BooleanChoice choice={choice} key={choice.name} onUpdate={that.onUpdate}  answer={answer}  parentField={choice.name} />
          );
        });
-       var context = $.grep(choices_context, function(e) { return e.name == that.state.answers.context })[0]
+       var context = $.grep(this.props.choices_context, function(e) { return e.name == that.state.answers.context })[0]
        return (
            <div className="answer" onBlur={this.onBlur} >
              <div className='context-headline row'>
@@ -154,7 +154,7 @@ var ContextAnswer = React.createClass({
                             <div className='question-headline col-xs-1'>
                               Rating
                             </div>
-                            <RadioChoices choices={choices.rating} selected={rating} id={this.state.id + '_rating' }  onUpdate={this.onUpdate}  parentField='rating' />
+                            <RadioChoices choices={this.props.choices.rating} selected={rating} id={this.state.id + '_rating' }  onUpdate={this.onUpdate}  parentField='rating' />
                          </div>
                       </div>
                    </div>
@@ -236,41 +236,43 @@ var ContextAnswer = React.createClass({
 
 var Answer = React.createClass({
   render: function() {
-    //console.log("Answer: props",this.props)
+    console.log("Answer: props",this.props)
 
-    var that = this
-    var contextNodes = choices_context.map(function(context) {
-      var context_name = context['name']
-      // look up answer, if present
-      var answers
-      if(that.props.answers &&  context_name in that.props.answers)
-      {
-        answers = that.props.answers[context_name]
-      }
-
-      return (
-        <ContextAnswer
-          context={context_name}
-          context_description={context['description']}
-          answers={ answers    }
-          question_id={ that.props.question.id}
-          id={that.props.id + '_'+context_name }
-          key={context_name}
-        />
-      );
-    });
+  var that = this
+  var contextNodes = this.props.choices_context.map(function(context) {
+    var context_name = context['name']
+    // look up answer, if present
+    var answers
+    if(that.props.answers &&  context_name in that.props.answers)
+    {
+      answers = that.props.answers[context_name]
+    }
 
     return (
-        <div className={this.props.parity} >
-          <div className="row" >
-              <div className='col-xs-12'>
-                <div className='topic-headline'>{ this.props.question.question_text   }</div>
-                <div className='topic-detail'  >{ this.props.question.question_detail }</div>
-              </div>
-          </div>
-          { contextNodes }
-       </div>
+      <ContextAnswer
+        choices={that.props.choices}
+        choices_context={that.props.choices_context}
+        context={context_name}
+        context_description={context['description']}
+        answers={ answers    }
+        question_id={ that.props.question.id}
+        id={that.props.id + '_'+context_name }
+        key={context_name}
+      />
     );
+  });
+
+  return (
+      <div className={this.props.parity} >
+        <div className="row" >
+            <div className='col-xs-12'>
+              <div className='topic-headline'>{ this.props.question.question_text   }</div>
+              <div className='topic-detail'  >{ this.props.question.question_detail }</div>
+            </div>
+        </div>
+        { contextNodes }
+     </div>
+  );
   }
 });
 
@@ -281,6 +283,7 @@ export var AnswerBox = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
+        console.log("== josn loaded ==",data);
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -295,6 +298,7 @@ export var AnswerBox = React.createClass({
     this.loadAnswersFromServer();
   },
   render: function() {
+       console.log("thisprops",this.props)
     return (
 
       <div className="answerBox question-edit">
@@ -309,7 +313,11 @@ export var AnswerBox = React.createClass({
       </div>
        <hr />
 
-        <AnswerList data={this.state.data} />
+        <AnswerList
+            data={this.state.data}
+            choices_context={this.props.choices_context}
+            choices={this.props.choices}
+        />
       </div>
     );
   }
@@ -317,7 +325,9 @@ export var AnswerBox = React.createClass({
 
 var AnswerList = React.createClass({
   render: function() {
-    //console.log("AnswerList:render")
+    console.log("AnswerList:render: props",this.props)
+    let choices_context = this.props.choices_context
+    let choices = this.props.choices
     var answerNodes = this.props.data.results.map(function(node,index) {
       var parity = 'odd'
       if(index % 2)
@@ -325,10 +335,22 @@ var AnswerList = React.createClass({
         parity = 'even'
       }
 
+      console.log("key ",node.question.id,"text",node.question.question_text)
+
       return (
-        <Answer question={node.question} key={node.question.id}  id={node.question.id} answers={node.answers}  parity={parity} />
+      <Answer
+        question={node.question}
+        key={node.context+node.question.id}
+        id={node.question.id}
+        answers={node.answers}
+        parity={parity}
+        choices_context={choices_context}
+        choices={choices}
+      />
       );
     });
+
+    console.log("answer nodes",answerNodes)
     return (
       <div className="answerList">
         {answerNodes}
@@ -337,12 +359,6 @@ var AnswerList = React.createClass({
   }
 });
 
-window.startAnswerEditor = function(url) {
-  ReactDOM.render(
-    <AnswerBox url={url} pollInterval={2000} />,
-    document.getElementById('content')
-  );
 
-}
 
 
