@@ -5,84 +5,12 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 var $ = require('jquery');
+var editorComponents = require('./editor_components')
 
-var BooleanChoice = React.createClass({
-
-  handleChange: function(event) {
-    //console.log("BooleanChoice:handleChange:",event.target)
-    //console.log("BooleanChoice:handleChange: props",this.props)
-    this.props.onUpdate(this.props, !this.props.answer)
-  },
-
-  render: function() {
-    var checked  = false
-    if(this.props.answer)
-    {
-      checked=true
-    }
-
-    return (
-        <div className='question small'>
-            <input
-                type="checkbox"
-                checked={checked}
-                onChange={this.handleChange}
-            />
-            {this.props.choice.description}
-        </div>
-    );
-  }
-});
-
-var RadioChoices = React.createClass({
-  getInitialState: function() {
-    return {selected: this.props.selected};
-  },
-  handleChange: function(event) {
-    //console.log("RadioChange:handleChange")
-    this.props.onUpdate(this.props, event.target.value)
-
-  },
-  render: function() {
-    //console.log("RadioChoices:render",this.props)
-    var that = this
-    var choiceNodes = this.props.choices.map(function(choice) {
-      var selected = that.props.selected == choice.name
-      return (
-          <span key={ that.props.name + '_' + choice.name }>
-            <input type="radio"   value={choice.name}
-              checked={selected}
-              onChange={that.handleChange}
-            ></input>
-            <label >{choice.description}</label>
-          </span>
-      );
-    });
-    return (
-      <div className='col-xs-10' >
-        {choiceNodes}
-      </div>
-    );
-  }
-});
+var {BooleanChoice, RadioChoices, TextField} =  editorComponents
 
 
-var TextField = React.createClass({
-  handleChange: function(event) {
-    //console.log("TextField:handleChange")
-    this.props.onUpdate(this.props, event.target.value)
-  },
-  render: function() {
-    return (
-      <input
-        type="text"
-        value={ this.props.value }
-        onChange={this.handleChange}
-      />
-    );
-  }
-});
-
+console.log("**** bllnea",BooleanChoice)
 
 // There is a one to one relationship between this component
 // and a row in the answer DB on the server
@@ -217,6 +145,15 @@ var ContextAnswer = React.createClass({
       var postData = {}
       postData = this.state.answers
 
+        //kts smell
+      // csrf setup
+      console.log("x crsr",window.globs['csrfToken'])
+      $.ajaxSetup({
+          headers: {
+              'X-CSRFToken': window.globs['csrfToken']
+          }
+      })
+
       $.ajax({
         url: url,
         dataType: 'json',
@@ -276,6 +213,42 @@ var Answer = React.createClass({
   }
 });
 
+var AnswerList = React.createClass({
+  render: function() {
+    console.log("AnswerList:render: props",this.props)
+    let choices_context = this.props.choices_context
+    let choices = this.props.choices
+    var answerNodes = this.props.data.results.map(function(node,index) {
+      var parity = 'odd'
+      if(index % 2)
+      {
+        parity = 'even'
+      }
+
+      console.log("key ",node.question.id,"question text",node.question.question_text)
+
+      return (
+      <Answer
+        question={node.question}
+        key={String(node.context)+node.question.id}
+        id={node.question.id}
+        answers={node.answers}
+        parity={parity}
+        choices_context={choices_context}
+        choices={choices}
+      />
+      );
+    });
+
+    console.log("answer nodes",answerNodes)
+    return (
+      <div className="answerList">
+        {answerNodes}
+      </div>
+    );
+  }
+});
+
 export var AnswerBox = React.createClass({
   loadAnswersFromServer: function() {
     $.ajax({
@@ -283,7 +256,7 @@ export var AnswerBox = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
-        console.log("== josn loaded ==",data);
+        console.log("== json loaded ==",data);
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -318,42 +291,6 @@ export var AnswerBox = React.createClass({
             choices_context={this.props.choices_context}
             choices={this.props.choices}
         />
-      </div>
-    );
-  }
-});
-
-var AnswerList = React.createClass({
-  render: function() {
-    console.log("AnswerList:render: props",this.props)
-    let choices_context = this.props.choices_context
-    let choices = this.props.choices
-    var answerNodes = this.props.data.results.map(function(node,index) {
-      var parity = 'odd'
-      if(index % 2)
-      {
-        parity = 'even'
-      }
-
-      console.log("key ",node.question.id,"text",node.question.question_text)
-
-      return (
-      <Answer
-        question={node.question}
-        key={node.context+node.question.id}
-        id={node.question.id}
-        answers={node.answers}
-        parity={parity}
-        choices_context={choices_context}
-        choices={choices}
-      />
-      );
-    });
-
-    console.log("answer nodes",answerNodes)
-    return (
-      <div className="answerList">
-        {answerNodes}
       </div>
     );
   }
