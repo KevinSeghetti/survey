@@ -26,10 +26,10 @@ urlpatterns = [
     #url(r'^edit/(?P<option>[\w\d])+/$', views.edit, name='edit_with_option'),
     # ex: /checklist/view/
 
-    url(r'^review/$'                       , views.review, name='oldreview'),
-    url(r'^view/(?P<user_id>[0-9]+)/$'     , views.view  , name='oldview'),
-    url(r'^reactreview/$'                  , views.reactreview, name='review'),
-    url(r'^reactview/(?P<user_id>[0-9]+)/$', views.reactview  , name='view'),
+    url(r'^review/$'                       , views.review, name='review'),
+    url(r'^view/(?P<user_id>[0-9]+)/$'     , views.view  , name='view'),
+    url(r'^reactreview/$'                  , views.reactreview, name='reactreview'),
+    url(r'^reactview/(?P<user_id>[0-9]+)/$', views.reactview  , name='reactview'),
 
 
     url(r'^test/$'                  , views.test, name='test'),

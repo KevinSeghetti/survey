@@ -137,6 +137,7 @@ def question_edit(request,question_id):
 
 #===============================================================================
 
+@login_required
 def answers_edit(request):
     answer_list = Answer.objects.order_by('-question__question_text')
     context = {'answer_list': answer_list}
@@ -144,6 +145,7 @@ def answers_edit(request):
 
 #===============================================================================
 
+@login_required
 def answers_react_edit(request):
     answer_list = Answer.objects.order_by('-question__question_text')
 
