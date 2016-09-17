@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^edit/$', views.answers_react_edit, name='edit'),
     url(r'^resume/$', views.answers_react_resume, name='resume'),
 
-    url(r'^rest/questions$', views.rest_questions, name='rest_questions'),
+    url(r'^rest/questions$'          , views.rest_questions          , name='rest_questions'),
     url(r'^rest/questions_remaining$', views.rest_questions_remaining, name='rest_questions_remaining'),
 
 

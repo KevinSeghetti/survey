@@ -18,7 +18,7 @@
     window.globs['choices_context'] = {{choices_context|jsonify}}
     window.globs['csrfToken'] = "{{ csrf_token }}"
     // kts: must be a better way to pass parameters into a module
-    window.globs['questionsUrl'] = "{% url 'checklist:rest_questions'      %}"
+    window.globs['questionsUrl'] = "{{ questionsUrl }}"
   </script>
 
   {% render_bundle 'answers_edit' %}

@@ -148,10 +148,10 @@ def answers_react_edit(request):
     answer_list = Answer.objects.order_by('-question__question_text')
 
     context = {
-        'answer_list': answer_list,
         'choices_context': choices_context,
         'choices': choices,
         'user' : request.user,
+        'questionsUrl': reverse('checklist:rest_questions')
     }
 
     return render(request, 'checklist/answers_react_edit.html', context)
@@ -163,13 +163,13 @@ def answers_react_resume(request):
     answer_list = Answer.objects.order_by('-question__question_text')
 
     context = {
-        'answer_list': answer_list,
         'choices_context': choices_context,
         'choices': choices,
         'user' : request.user,
+        'questionsUrl': reverse('checklist:rest_questions_remaining')
     }
 
-    return render(request, 'checklist/answers_react_resume.html', context)
+    return render(request, 'checklist/answers_react_edit.html', context)
 
 #===============================================================================
 
