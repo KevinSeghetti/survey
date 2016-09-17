@@ -5,7 +5,7 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 var $ = require('jquery');
-var editorComponents = require('./editor_components')
+var editorComponents = require('./editorComponents')
 
 var {BooleanChoice, RadioChoices, TextField} =  editorComponents
 
