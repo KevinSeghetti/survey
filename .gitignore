@@ -6,5 +6,9 @@
 venv
 .sass-cache/
 node_modules
-assets/bundles
+bdsm_checklist/assets/bundles/
+public
+Python34
+pythonsrc/
+
 
