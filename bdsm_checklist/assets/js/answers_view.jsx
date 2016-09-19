@@ -1,6 +1,6 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
-var AnswerBox = require('./AnswersEdit').AnswerBox
+var AnswerBox = require('./AnswersView').AnswerBox
 var $ = require('jquery')
 
 ReactDOM.render(

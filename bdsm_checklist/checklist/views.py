@@ -222,11 +222,11 @@ def reactreview(request):
     questions = get_list_or_404(Question)
 
     return render(request, 'checklist/reactview.html', {
-        'questions': get_answers_list(request.user,questions),
         'choices_context': choices_context,
         'choices': choices,
-        'choicesRatingDict': choicesRatingDict,
         'user' : request.user,
+        'questionsUrl': reverse('checklist:rest_questions')
+
         })
 
 def reactview(request,user_id):

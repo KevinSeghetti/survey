@@ -4,28 +4,26 @@
 {% load staticfiles %}
 {% load compile_static %}
 {% load static %}
+
+{% load render_bundle from webpack_loader %}
 {% load checklist_extras %}
 
-  <div id="content"></div>
+
+  <div id="react-app"></div>
 
   <script>
     // globals from server
-    var choices = {{choices|jsonify}}
-    var choices_context = {{choices_context|jsonify}}
-    var csrfToken = "{{ csrf_token }}"
-
-    // csrf setup
-    $.ajaxSetup({
-        headers: {
-            'X-CSRFToken': csrfToken
-        }
-    })
+    window.globs = []
+    window.globs['choices'] = {{choices|jsonify}}
+    window.globs['choices_context'] = {{choices_context|jsonify}}
+    window.globs['csrfToken'] = "{{ csrf_token }}"
+    // kts: must be a better way to pass parameters into a module
+    window.globs['questionsUrl'] = "{{ questionsUrl }}"
   </script>
 
-  <script>
-    window.startAnswerViewer("{% url 'checklist:rest_questions'      %}")
-  </script>
+  {% render_bundle 'answers_view' %}
 
 {% endblock %}
+
 
 
