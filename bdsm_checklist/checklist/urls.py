@@ -19,8 +19,8 @@ urlpatterns = [
     # 3rd party answer review
     url(r'^view/(?P<user_id>[0-9]+)/$'     , views.view  , name='view'),
     # in progress
-    #url(r'^reactreview/$'                  , views.reactreview, name='reactreview'),
-    #url(r'^reactview/(?P<user_id>[0-9]+)/$', views.reactview  , name='reactview'),
+    url(r'^reactreview/$'                  , views.reactreview, name='reactreview'),
+    url(r'^reactview/(?P<user_id>[0-9]+)/$', views.reactview  , name='reactview'),
 
     url(r'^detail/(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
     # support for setting from detial page
