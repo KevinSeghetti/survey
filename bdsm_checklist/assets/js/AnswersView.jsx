@@ -1,6 +1,3 @@
-// this script is getting transpiled at load time
-// kts todo: integrate jsx transpiling into server side babel pipeline
-// and learn how jsx and es6 interact
 
 var React = require('react')
 var ReactDOM = require('react-dom')
@@ -8,14 +5,6 @@ var $ = require('jquery');
 var viewerComponents = require('./viewerComponents')
 
 var {BooleanChoice, RadioChoices, TextField} =  viewerComponents
-
-
-console.log("**** bllnea",BooleanChoice)
-
-// There is a one to one relationship between this component
-// and a row in the answer DB on the server
-// so this is where we store all state relating to this answer,
-// and send it to the server whenever it changes
 
 var ContextAnswer = React.createClass({
    getInitialState: function() {
@@ -66,7 +55,7 @@ var ContextAnswer = React.createClass({
        });
        var context = $.grep(this.props.choices_context, function(e) { return e.name == that.state.answers.context })[0]
        return (
-           <div className="answer" onBlur={this.onBlur} >
+           <div className="answer"  >
              <div className='context-headline row'>
                  <div className='col-xs-12' >
                    { context.description }
@@ -117,58 +106,6 @@ var ContextAnswer = React.createClass({
       this.setState({ answers: newState} )
     },
 
-    onBlur: function(e) {
-      var currentTarget = e.currentTarget;
-      var that = this
-
-      setTimeout(function() {
-        if (!currentTarget.contains(document.activeElement)) {
-            // this checks to see if whatever is now selected
-            // is under this component. If it not, then it is time
-            // to save changes to this component
-            //console.log('component officially blurred');
-            // time to send this object to the server
-            that.saveAnswer()
-            //console.log('state', that.state)
-        }
-      }, 0);
-    },
-
-    saveAnswer: function(answer) {
-      var url = "/rest/answers/"       // for cases where we don't have an answer record yet
-      var requestType = 'POST'
-      if('url' in this.state.answers)
-      {
-        url = this.state.answers.url
-        requestType = 'PUT'
-      }
-      var postData = {}
-      postData = this.state.answers
-
-        //kts smell
-      // csrf setup
-      console.log("x crsr",window.globs['csrfToken'])
-      $.ajaxSetup({
-          headers: {
-              'X-CSRFToken': window.globs['csrfToken']
-          }
-      })
-
-      $.ajax({
-        url: url,
-        dataType: 'json',
-        type: requestType,
-        data: postData,
-        success: function(data) {
-          //console.log("saveAnswer: success: returned data = ",data);
-          this.setState({ answers:  data} );
-        }.bind(this),
-        error: function(xhr, status, err) {
-          //this.setState({data: answers});
-          console.error(this.props.url, status, err.toString());
-        }.bind(this)
-      });
-    },
 });
 
 var Answer = React.createClass({
