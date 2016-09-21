@@ -17,6 +17,12 @@
     window.globs['choices'] = {{choices|jsonify}}
     window.globs['choices_context'] = {{choices_context|jsonify}}
     window.globs['csrfToken'] = "{{ csrf_token }}"
+    window.globs['defaultLoggingLevel'] = "OFF"
+    window.globs['loggingLevels'] =
+    {
+        //'AnswerView' : 'ALL',
+        //'viewerComponents' : 'ALL',
+    }
     // kts: must be a better way to pass parameters into a module
     window.globs['questionsUrl'] = "{{ questionsUrl }}"
   </script>
