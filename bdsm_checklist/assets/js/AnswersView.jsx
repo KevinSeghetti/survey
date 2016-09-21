@@ -2,20 +2,23 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 var $ = require('jquery');
-var viewerComponents = require('./viewerComponents')
-
-var {BooleanChoice, RadioChoices, TextField} =  viewerComponents
+var chai = require('chai');
+var {BooleanChoice, RadioChoices, TextField} = require('./viewerComponents')
+var log = require('./loggingConfig').CreateLogger("AnswerView")
 
 var ContextAnswer = React.createClass({
    render: function() {
-        console.log("ContextAnswer:render: props = ",this.props)
+        log.info("ContextAnswer:render: props = ",this.props)
 
-       console.log("ContextAnswer")
-       console.log("ContextAnswer: booleans",this.props.choices.booleans)
+       log.info("ContextAnswer")
+       log.info("ContextAnswer: booleans",this.props.choices.booleans)
+
+       chai.expect(this.props.answers).to.exist
+
        var that = this
        var choiceNodes = this.props.choices.booleans.map(function(choice) {
-       console.log("ContextAnswer: booleans: choice",choice)
-       console.log("ContextAnswer: booleans: answers",that.props.answers)
+       log.info("ContextAnswer: booleans: choice",choice)
+       log.info("ContextAnswer: booleans: answers",that.props.answers)
 
          return (
            <BooleanChoice choice={choice} key={choice.name} answer={that.props.answers[choice.name]}  parentField={choice.name} />
@@ -71,29 +74,39 @@ var ContextAnswer = React.createClass({
 
 var Answer = React.createClass({
   render: function() {
-    console.log("Answer::render: props",this.props)
+    log.info("Answer::render: props",this.props)
 
   var that = this
   var contextNodes = this.props.choices_context.map(function(context) {
     var context_name = context['name']
+    var answers = that.props.answers[context_name]
 
-    console.log("Answer::render:contextNode(",context_name,")")
-    console.log("Answer::render:contextNode(",context_name,"): answers",that.props.answers[context_name] )
+    log.info("Answer::render:contextNode(",context_name,")")
+
+    if(answers)
+    {
+      chai.expect(answers).to.exist
+        return (
+          <ContextAnswer
+            choices={that.props.choices}
+            choices_context={that.props.choices_context}
+            context={context_name}
+            context_description={context['description']}
+            answers={ that.props.answers[context_name] }
+            question_id={ that.props.question.id}
+            id={that.props.id + '_'+context_name }
+            key={context_name}
+          />
+        );
+
+    }
     return (
-      <ContextAnswer
-        choices={that.props.choices}
-        choices_context={that.props.choices_context}
-        context={context_name}
-        context_description={context['description']}
-        answers={ that.props.answers[context_name] }
-        question_id={ that.props.question.id}
-        id={that.props.id + '_'+context_name }
-        key={context_name}
-      />
+    <div></div>
     );
+
   });
 
-  console.log("Answer::render: final")
+  log.info("Answer::render: final")
 
   return (
       <div className={this.props.parity} >
@@ -111,7 +124,7 @@ var Answer = React.createClass({
 
 var AnswerList = React.createClass({
   render: function() {
-    console.log("AnswerList:render: props",this.props)
+    log.info("AnswerList:render: props",this.props)
     let choices_context = this.props.choices_context
     let choices = this.props.choices
     var answerNodes = this.props.data.results.map(function(node,index) {
@@ -121,10 +134,10 @@ var AnswerList = React.createClass({
         parity = 'even'
       }
 
-      console.log("AnswerList:render: node = ",node)
-      console.log("AnswerList:render: node answers = ",node.answers)
+      log.info("AnswerList:render: node = ",node)
+      log.info("AnswerList:render: node answers = ",node.answers)
 
-      console.log("AnswerList:render:key ",node.question.id,"question text",node.question.question_text)
+      log.info("AnswerList:render:key ",node.question.id,"question text",node.question.question_text)
       if(node.answers)
       {
         return (
@@ -145,7 +158,7 @@ var AnswerList = React.createClass({
       );
     });
 
-    console.log("answer nodes",answerNodes)
+    log.info("answer nodes",answerNodes)
     return (
       <div className="answerList">
         {answerNodes}
@@ -161,7 +174,7 @@ export var AnswerBox = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
-        console.log("== json loaded ==",data);
+        log.info("== json loaded ==",data);
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -176,7 +189,7 @@ export var AnswerBox = React.createClass({
     this.loadAnswersFromServer();
   },
   render: function() {
-       console.log("AnswerBox::render: props",this.props,", state = ",this.state)
+       log.info("AnswerBox::render: props",this.props,", state = ",this.state)
     return (
 
       <div className="answerBox question-edit">

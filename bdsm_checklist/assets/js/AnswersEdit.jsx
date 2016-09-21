@@ -5,12 +5,8 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 var $ = require('jquery');
-var editorComponents = require('./editorComponents')
-
-var {BooleanChoice, RadioChoices, TextField} =  editorComponents
-
-
-console.log("**** bllnea",BooleanChoice)
+var {BooleanChoice, RadioChoices, TextField} = require('./editorComponents')
+var log = require('./loggingConfig').CreateLogger("AnswerView")
 
 // There is a one to one relationship between this component
 // and a row in the answer DB on the server
@@ -19,7 +15,7 @@ console.log("**** bllnea",BooleanChoice)
 
 var ContextAnswer = React.createClass({
    getInitialState: function() {
-    //console.log("ContextAnswer:initial state",this.props)
+    //log.info("ContextAnswer:initial state",this.props)
 
     var answers = {
       context: this.props.context,
@@ -31,12 +27,12 @@ var ContextAnswer = React.createClass({
     {
       answers = this.props.answers
     }
-    //console.log("answers",answers)
+    //log.info("answers",answers)
     return { answers: answers }
    },
 
    render: function() {
-        console.log("ContextAnswer:render: state = ",this.state,", props = ",this.props)
+        log.info("ContextAnswer:render: state = ",this.state,", props = ",this.props)
 
        var rating
        var notes
@@ -48,11 +44,11 @@ var ContextAnswer = React.createClass({
          notes  = this.state.answers.notes
 
        }
-       //console.log("ContextAnswer")
-       console.log("ContextAnswer: booleans",this.props.choices.booleans)
+       //log.info("ContextAnswer")
+       log.info("ContextAnswer: booleans",this.props.choices.booleans)
        var that = this
        var choiceNodes = this.props.choices.booleans.map(function(choice) {
-       //console.log("ContextAnswer: booleans: choice",choice)
+       //log.info("ContextAnswer: booleans: choice",choice)
          // look up answer, if present
          var answer
          if(that.state.answers && choice.name in that.state.answers)
@@ -109,11 +105,11 @@ var ContextAnswer = React.createClass({
     },
 
     onUpdate: function(childProps, val) {
-      //console.log('ContextAnswer:onUpdate', childProps.parentField,  val)
+      //log.info('ContextAnswer:onUpdate', childProps.parentField,  val)
       var newState = this.state.answers
       newState[childProps.parentField] = val
-      //console.log('ContextAnswer:onUpdate: existing state', this.state)
-      //console.log('ContextAnswer:onUpdate: new state', newState)
+      //log.info('ContextAnswer:onUpdate: existing state', this.state)
+      //log.info('ContextAnswer:onUpdate: new state', newState)
       this.setState({ answers: newState} )
     },
 
@@ -126,10 +122,10 @@ var ContextAnswer = React.createClass({
             // this checks to see if whatever is now selected
             // is under this component. If it not, then it is time
             // to save changes to this component
-            //console.log('component officially blurred');
+            //log.info('component officially blurred');
             // time to send this object to the server
             that.saveAnswer()
-            //console.log('state', that.state)
+            //log.info('state', that.state)
         }
       }, 0);
     },
@@ -147,7 +143,7 @@ var ContextAnswer = React.createClass({
 
         //kts smell
       // csrf setup
-      console.log("x crsr",window.globs['csrfToken'])
+      log.info("x crsr",window.globs['csrfToken'])
       $.ajaxSetup({
           headers: {
               'X-CSRFToken': window.globs['csrfToken']
@@ -160,7 +156,7 @@ var ContextAnswer = React.createClass({
         type: requestType,
         data: postData,
         success: function(data) {
-          //console.log("saveAnswer: success: returned data = ",data);
+          //log.info("saveAnswer: success: returned data = ",data);
           this.setState({ answers:  data} );
         }.bind(this),
         error: function(xhr, status, err) {
@@ -173,7 +169,7 @@ var ContextAnswer = React.createClass({
 
 var Answer = React.createClass({
   render: function() {
-    console.log("Answer: props",this.props)
+    log.info("Answer: props",this.props)
 
   var that = this
   var contextNodes = this.props.choices_context.map(function(context) {
@@ -215,7 +211,7 @@ var Answer = React.createClass({
 
 var AnswerList = React.createClass({
   render: function() {
-    console.log("AnswerList:render: props",this.props)
+    log.info("AnswerList:render: props",this.props)
     let choices_context = this.props.choices_context
     let choices = this.props.choices
     var answerNodes = this.props.data.results.map(function(node,index) {
@@ -225,7 +221,7 @@ var AnswerList = React.createClass({
         parity = 'even'
       }
 
-      console.log("key ",node.question.id,"question text",node.question.question_text)
+      log.info("key ",node.question.id,"question text",node.question.question_text)
 
       return (
       <Answer
@@ -240,7 +236,7 @@ var AnswerList = React.createClass({
       );
     });
 
-    console.log("answer nodes",answerNodes)
+    log.info("answer nodes",answerNodes)
     return (
       <div className="answerList">
         {answerNodes}
@@ -256,7 +252,7 @@ export var AnswerBox = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
-        console.log("== json loaded ==",data);
+        log.info("== json loaded ==",data);
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -271,7 +267,7 @@ export var AnswerBox = React.createClass({
     this.loadAnswersFromServer();
   },
   render: function() {
-       console.log("thisprops",this.props)
+       log.info("thisprops",this.props)
     return (
 
       <div className="answerBox question-edit">

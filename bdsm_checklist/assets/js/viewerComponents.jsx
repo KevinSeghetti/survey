@@ -1,7 +1,10 @@
+var log = require('./loggingConfig').CreateLogger("viewerComponents")
+
 
 export var BooleanChoice = React.createClass({
 
     render: function() {
+      log.info("BooleanChoice::render")
       var ghosted = "ghosted"
       if(this.props.answer)
       {
@@ -21,7 +24,7 @@ export var RadioChoices = React.createClass({
       return {selected: this.props.selected};
     },
     render: function() {
-      console.log("RadioChoices:render",this.props)
+      log.info("RadioChoices:render",this.props)
       var choice = this.props.choices.find( x => x.name == this.props.selected) || { description: "?" }
 
       var rating = choice.description
