@@ -13,6 +13,8 @@ module.exports = {
   output: {
       path: path.resolve('./assets/bundles/'),
       filename: "[name]-[hash].js",
+      sourceMapFilename: "[name]-[hash].js.map",
+
   },
 
   plugins: [
