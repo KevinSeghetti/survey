@@ -1,30 +1,33 @@
+// review answers page
 
 var React = require('react')
 var ReactDOM = require('react-dom')
 var $ = require('jquery');
 var chai = require('chai');
 var {BooleanChoice, RadioChoices, TextField} = require('./viewerComponents')
+var {choices, choices_context} = require('./applicationData')
+
 var log = require('./loggingConfig').CreateLogger("AnswerView")
+
+//===============================================================================
 
 var ContextAnswer = React.createClass({
    render: function() {
-        log.info("ContextAnswer:render: props = ",this.props)
-
-       log.info("ContextAnswer")
-       log.info("ContextAnswer: booleans",this.props.choices.booleans)
-
+       log.trace("ContextAnswer:render:")
+       log.trace("ContextAnswer:render: props = ",JSON.stringify(this.props))
        chai.expect(this.props.answers).to.exist
 
-       var that = this
-       var choiceNodes = this.props.choices.booleans.map(function(choice) {
-       log.info("ContextAnswer: booleans: choice",choice)
-       log.info("ContextAnswer: booleans: answers",that.props.answers)
+       var {id, answers} = this.props
+
+       var choiceNodes = choices.booleans.map(function(choice) {
+       log.trace("ContextAnswer: booleans: choice",choice)
+       log.trace("ContextAnswer: booleans: answers",answers)
 
          return (
-           <BooleanChoice choice={choice} key={choice.name} answer={that.props.answers[choice.name]}  parentField={choice.name} />
+           <BooleanChoice choice={choice} key={choice.name} answer={answers[choice.name]}  parentField={choice.name} />
          );
        });
-       var context = $.grep(this.props.choices_context, function(e) { return e.name == that.props.answers.context })[0]
+       var context = $.grep(choices_context, function(e) { return e.name == answers.context })[0]
 
 
        return (
@@ -44,7 +47,7 @@ var ContextAnswer = React.createClass({
                             <div className='question-headline col-xs-1'>
                               Rating
                             </div>
-                            <RadioChoices choices={this.props.choices.rating} selected={this.props.answers.rating} id={this.props.id + '_rating' }  parentField='rating' />
+                            <RadioChoices choices={choices.rating} selected={answers.rating} id={id + '_rating' }  parentField='rating' />
                          </div>
                       </div>
                    </div>
@@ -63,7 +66,7 @@ var ContextAnswer = React.createClass({
                    </div>
                 </div>
                 <div className='notes col-xs-6'>
-                   <b>Notes</b><TextField value={this.props.answers.notes} parentField='notes'/>
+                   <b>Notes</b><TextField value={answers.notes} parentField='notes'/>
                 </div>
              </div>
            </div>
@@ -72,61 +75,60 @@ var ContextAnswer = React.createClass({
 
 });
 
+//===============================================================================
+
 var Answer = React.createClass({
   render: function() {
-    log.info("Answer::render: props",this.props)
+    log.trace("Answer::render: props",JSON.stringify(this.props))
+    var { id, question, answers,parity } = this.props
 
-  var that = this
-  var contextNodes = this.props.choices_context.map(function(context) {
-    var context_name = context['name']
-    var answers = that.props.answers[context_name]
+    var contextNodes = choices_context.map(function(context) {
+      var context_name = context['name']
+      var context_answers = answers[context_name]
 
-    log.info("Answer::render:contextNode(",context_name,")")
+      log.trace("Answer::render:contextNode(",context_name,")")
 
-    if(answers)
-    {
-      chai.expect(answers).to.exist
-        return (
-          <ContextAnswer
-            choices={that.props.choices}
-            choices_context={that.props.choices_context}
-            context={context_name}
-            context_description={context['description']}
-            answers={ that.props.answers[context_name] }
-            question_id={ that.props.question.id}
-            id={that.props.id + '_'+context_name }
-            key={context_name}
-          />
-        );
+      if(context_answers)
+      {
+        chai.expect(context_answers).to.exist
+          return (
+            <ContextAnswer
+              choices={choices}
+              answers={ context_answers }
+              question_id={ question.id}
+              id={id + '_'+context_name }
+              key={context_name}
+            />
+          );
 
-    }
+      }
+      return (
+      <div></div>
+      );
+
+    });
+
+    log.trace("Answer::render: final")
+
     return (
-    <div></div>
+        <div className={parity} >
+          <div className="row" >
+              <div className='col-xs-12'>
+                <div className='topic-headline'>{ question.question_text   }</div>
+                <div className='topic-detail'  >{ question.question_detail }</div>
+              </div>
+          </div>
+          { contextNodes }
+       </div>
     );
-
-  });
-
-  log.info("Answer::render: final")
-
-  return (
-      <div className={this.props.parity} >
-        <div className="row" >
-            <div className='col-xs-12'>
-              <div className='topic-headline'>{ this.props.question.question_text   }</div>
-              <div className='topic-detail'  >{ this.props.question.question_detail }</div>
-            </div>
-        </div>
-        { contextNodes }
-     </div>
-  );
   }
 });
 
+//===============================================================================
+
 var AnswerList = React.createClass({
   render: function() {
-    log.info("AnswerList:render: props",this.props)
-    let choices_context = this.props.choices_context
-    let choices = this.props.choices
+    log.trace("AnswerList:render: props",this.props)
     var answerNodes = this.props.data.results.map(function(node,index) {
       var parity = 'odd'
       if(index % 2)
@@ -134,10 +136,10 @@ var AnswerList = React.createClass({
         parity = 'even'
       }
 
-      log.info("AnswerList:render: node = ",node)
-      log.info("AnswerList:render: node answers = ",node.answers)
+      log.trace("AnswerList:render: node = ",node)
+      log.trace("AnswerList:render: node answers = ",node.answers)
 
-      log.info("AnswerList:render:key ",node.question.id,"question text",node.question.question_text)
+      log.trace("AnswerList:render:key ",node.question.id,"question text",node.question.question_text)
       if(node.answers)
       {
         return (
@@ -147,8 +149,6 @@ var AnswerList = React.createClass({
           id={node.question.id}
           answers={node.answers}
           parity={parity}
-          choices_context={choices_context}
-          choices={choices}
         />
         );
       }
@@ -158,7 +158,7 @@ var AnswerList = React.createClass({
       );
     });
 
-    log.info("answer nodes",answerNodes)
+    log.trace("answer nodes",answerNodes)
     return (
       <div className="answerList">
         {answerNodes}
@@ -167,6 +167,8 @@ var AnswerList = React.createClass({
   }
 });
 
+//===============================================================================
+
 export var AnswerBox = React.createClass({
   loadAnswersFromServer: function() {
     $.ajax({
@@ -174,7 +176,7 @@ export var AnswerBox = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
-        log.info("== json loaded ==",data);
+        log.trace("== json loaded ==",data);
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -189,7 +191,7 @@ export var AnswerBox = React.createClass({
     this.loadAnswersFromServer();
   },
   render: function() {
-       log.info("AnswerBox::render: props",this.props,", state = ",this.state)
+       log.trace("AnswerBox::render: props",this.props,", state = ",this.state)
     return (
 
       <div className="answerBox question-edit">
@@ -206,13 +208,13 @@ export var AnswerBox = React.createClass({
 
         <AnswerList
             data={this.state.data}
-            choices_context={this.props.choices_context}
-            choices={this.props.choices}
         />
       </div>
     );
   }
 });
+
+//===============================================================================
 
 
 

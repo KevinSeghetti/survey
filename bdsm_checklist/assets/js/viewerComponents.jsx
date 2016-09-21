@@ -1,5 +1,6 @@
 var log = require('./loggingConfig').CreateLogger("viewerComponents")
 
+//===============================================================================
 
 export var BooleanChoice = React.createClass({
 
@@ -19,6 +20,8 @@ export var BooleanChoice = React.createClass({
     }
   });
 
+//===============================================================================
+
 export var RadioChoices = React.createClass({
     getInitialState: function() {
       return {selected: this.props.selected};
@@ -36,6 +39,8 @@ export var RadioChoices = React.createClass({
     }
   });
 
+//===============================================================================
+
 export var TextField = React.createClass({
   render: function() {
     return (
@@ -46,5 +51,6 @@ export var TextField = React.createClass({
   }
 });
 
+//===============================================================================
 
 

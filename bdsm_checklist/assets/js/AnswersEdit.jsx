@@ -1,11 +1,11 @@
-// this script is getting transpiled at load time
-// kts todo: integrate jsx transpiling into server side babel pipeline
-// and learn how jsx and es6 interact
+// edit answers page
 
 var React = require('react')
 var ReactDOM = require('react-dom')
 var $ = require('jquery');
+
 var {BooleanChoice, RadioChoices, TextField} = require('./editorComponents')
+var {choices, choices_context} = require('./applicationData')
 var log = require('./loggingConfig').CreateLogger("AnswerView")
 
 // There is a one to one relationship between this component
@@ -284,8 +284,8 @@ export var AnswerBox = React.createClass({
 
         <AnswerList
             data={this.state.data}
-            choices_context={this.props.choices_context}
-            choices={this.props.choices}
+            choices_context={choices_context}
+            choices={choices}
         />
       </div>
     );
