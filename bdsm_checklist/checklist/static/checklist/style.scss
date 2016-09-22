@@ -34,7 +34,7 @@ $color-secondary-2-4 :  #19000D;
     font-weight: bold;
 }
 
-.question-edit,.question-detail {
+.question-edit,.question-detail,.question-reactview {
 
    .odd {
       background-color:   $color-primary-0;
@@ -69,6 +69,11 @@ $color-secondary-2-4 :  #19000D;
 
    .question-headline+.question {
       display:inline
+   .topic-headline {
+       display:inline;
+       font-size: 26px;
+       line-height: 40px;
+   }
    }
 
    .question.small {
@@ -82,6 +87,16 @@ $color-secondary-2-4 :  #19000D;
       font-size: 12px;
       line-height: 20px;
    }
+}
+
+
+.question-reactview {
+   .topic-headline {
+       display:inline;
+       font-size: 16px;
+       line-height: 40px;
+   }
+
 }
 
 #content .question-view {

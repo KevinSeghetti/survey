@@ -196,7 +196,7 @@ export var AnswerBox = React.createClass({
         log.trace("AnswerBox::render: props",this.props,", state = ",this.state)
         return (
 
-          <div className="answerBox question-view">
+          <div className="answerBox question-reactview">
           <div>
               Select a rating for each question. You don't have to fill this out all
               at once, your progress is saved as you move to the next question.
