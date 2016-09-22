@@ -2,12 +2,161 @@
 
 var React = require('react')
 var ReactDOM = require('react-dom')
-var $ = require('jquery');
-var chai = require('chai');
+var $ = require('jquery')
+var chai = require('chai')
 var {BooleanChoice, RadioChoices, TextField} = require('./viewerComponents')
+var {BooleanChoice: EditBooleanChoice, RadioChoices: EditRadioChoices, TextField:EditTextField} = require('./editorComponents')
+var {ContextAnswer: ContextAnswerEdit} = require('./AnswersEdit')
 var {choices, choices_context} = require('./applicationData')
 
 var log = require('./loggingConfig').CreateLogger("AnswerView")
+
+
+//===============================================================================
+
+var ContextFilters = React.createClass({
+  getInitialState: function() {
+   //log.info("ContextAnswer:initial state",this.props)
+
+   var answers = {
+     context: this.props.context,
+
+   }
+   if('answers' in this.props && typeof this.props.answers != 'undefined')
+   {
+     answers = this.props.answers
+   }
+   //log.info("answers",answers)
+   return { answers: answers }
+  },
+
+  render: function() {
+       log.info("ContextAnswer:render: state = ",this.state,", props = ",this.props)
+
+      var rating
+
+      // kts smell there must be a better way to do this
+      if(this.state.answers)
+      {
+        rating = this.state.answers.rating
+
+      }
+      //log.info("ContextAnswer")
+      log.info("ContextAnswer: booleans",choices.booleans)
+      var that = this
+      var choiceNodes = choices.booleans.map(function(choice) {
+      //log.info("ContextAnswer: booleans: choice",choice)
+        // look up answer, if present
+        var answer
+        if(that.state.answers && choice.name in that.state.answers)
+        {
+          answer = that.state.answers[choice.name]
+        }
+
+        return (
+          <EditBooleanChoice choice={choice} key={choice.name} onUpdate={that.onUpdate}  answer={answer}  parentField={choice.name} />
+        )
+      })
+
+      var ratingNodes = choices.rating.map(function(choice) {
+      //log.info("ContextAnswer: booleans: choice",choice)
+        // look up answer, if present
+        var answer
+        if(that.state.answers && choice.name in that.state.answers)
+        {
+          answer = that.state.answers[choice.name]
+        }
+
+        return (
+          <EditBooleanChoice choice={choice} key={choice.name} onUpdate={that.onUpdate}  answer={answer}  parentField={choice.name} />
+        )
+      })
+
+
+
+      var context = $.grep(choices_context, function(e) { return e.name == that.state.answers.context })[0]
+      return (
+          <div className="answer" onBlur={this.onBlur} >
+            <div className='context-headline row'>
+                <div className='col-xs-12' >
+                  { context.description }
+                </div>
+            </div>
+            <div className="row">
+               <div className="col-xs-12 col-sm-12 col-md-6">
+                  <div className='row'>
+                     <div className="col-xs-12">
+                        <div className='row' >
+                           <div className='question-headline col-xs-1'>
+                           </div>
+                           <div className='question-headline col-xs-1'>
+                             Rating
+                           </div>
+                           {ratingNodes}
+                        </div>
+                     </div>
+                  </div>
+                  <div className='row'>
+                     <div className="col-xs-12">
+                         <div className='row' >
+                           <div className='col-xs-2'>
+                           </div>
+                           <div className='col-xs-10' >
+                              <div className='booleans' >
+                                {choiceNodes}
+                              </div>
+                           </div>
+                         </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+          </div>
+      )
+   },
+})
+
+
+//===============================================================================
+
+var Filters = React.createClass({
+  render: function() {
+    log.info("Answer: props",this.props)
+
+  var that = this
+  var contextNodes = choices_context.map(function(context) {
+    var context_name = context['name']
+    // look up answer, if present
+    var answers
+    if(that.props.answers &&  context_name in that.props.answers)
+    {
+      answers = that.props.answers[context_name]
+    }
+
+    return (
+      <ContextFilters
+        context={context_name}
+        context_description={context['description']}
+        answers={ answers    }
+        id={that.props.id + '_'+context_name }
+        key={context_name}
+      />
+    )
+  })
+
+  return (
+      <div className={this.props.parity} >
+        <div className="row" >
+            <div className='col-xs-12'>
+              <div className='topic-headline'>Filters</div>
+            </div>
+        </div>
+        { contextNodes }
+     </div>
+  )
+  }
+})
+
 
 //===============================================================================
 
@@ -16,7 +165,6 @@ var ContextAnswer = React.createClass({
        log.trace("ContextAnswer:render:")
        log.trace("ContextAnswer:render: props = ",JSON.stringify(this.props))
        chai.expect(this.props.answers).to.exist
-
        var {id, answers} = this.props
 
        var choiceNodes = choices.booleans.map(function(choice) {
@@ -25,10 +173,9 @@ var ContextAnswer = React.createClass({
 
          return (
            <BooleanChoice choice={choice} key={choice.name} answer={answers[choice.name]}  parentField={choice.name} />
-         );
-       });
+         )
+       })
        var context = $.grep(choices_context, function(e) { return e.name == answers.context })[0]
-
 
        return (
            <div className="answer col-xs-5"  >
@@ -52,10 +199,9 @@ var ContextAnswer = React.createClass({
                </div>
              </div>
            </div>
-       );
+       )
     },
-
-});
+})
 
 //===============================================================================
 
@@ -84,10 +230,7 @@ var Answer = React.createClass({
           )
 
       }
-      return (
-        null
-      )
-
+      return( null )
     })
 
     log.trace("Answer::render: final")
@@ -136,24 +279,16 @@ var AnswerList = React.createClass({
         )
       }
 
-      return ( null
-      )
+      return ( null )
     })
-
-    log.trace("answer nodes",answerNodes)
 
     var headerNodes = choices_context.map(function(context) {
-
         return(
-        <div className="col-xs-5 context-headline">
+        <div className="col-xs-5 context-headline" key={context.name}>
             {context.description}
         </div>
-
         )
     })
-
-
-    log.trace("header nodes",headerNodes)
 
     return (
       <div className="answerList">
@@ -207,6 +342,9 @@ export var AnswerBox = React.createClass({
               <a href="/checklist/instructions"> here</a>
           </div>
            <hr />
+            <Filters
+            />
+            <hr />
 
             <AnswerList
                 data={this.state.data}
@@ -217,7 +355,4 @@ export var AnswerBox = React.createClass({
 })
 
 //===============================================================================
-
-
-
 

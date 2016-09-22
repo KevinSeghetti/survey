@@ -13,13 +13,12 @@ var log = require('./loggingConfig').CreateLogger("AnswerView")
 // so this is where we store all state relating to this answer,
 // and send it to the server whenever it changes
 
-var ContextAnswer = React.createClass({
+export var ContextAnswer = React.createClass({
    getInitialState: function() {
     //log.info("ContextAnswer:initial state",this.props)
 
     var answers = {
       context: this.props.context,
-      choices_context: this.props.choices_context,
       question: { id: this.props.question_id } ,
 
     }
@@ -45,9 +44,9 @@ var ContextAnswer = React.createClass({
 
        }
        //log.info("ContextAnswer")
-       log.info("ContextAnswer: booleans",this.props.choices.booleans)
+       log.info("ContextAnswer: booleans",choices.booleans)
        var that = this
-       var choiceNodes = this.props.choices.booleans.map(function(choice) {
+       var choiceNodes = choices.booleans.map(function(choice) {
        //log.info("ContextAnswer: booleans: choice",choice)
          // look up answer, if present
          var answer
@@ -60,7 +59,7 @@ var ContextAnswer = React.createClass({
            <BooleanChoice choice={choice} key={choice.name} onUpdate={that.onUpdate}  answer={answer}  parentField={choice.name} />
          )
        })
-       var context = $.grep(this.props.choices_context, function(e) { return e.name == that.state.answers.context })[0]
+       var context = $.grep(choices_context, function(e) { return e.name == that.state.answers.context })[0]
        return (
            <div className="answer" onBlur={this.onBlur} >
              <div className='context-headline row'>
@@ -78,7 +77,7 @@ var ContextAnswer = React.createClass({
                             <div className='question-headline col-xs-1'>
                               Rating
                             </div>
-                            <RadioChoices choices={this.props.choices.rating} selected={rating} id={this.state.id + '_rating' }  onUpdate={this.onUpdate}  parentField='rating' />
+                            <RadioChoices choices={choices.rating} selected={rating} id={this.state.id + '_rating' }  onUpdate={this.onUpdate}  parentField='rating' />
                          </div>
                       </div>
                    </div>
@@ -167,12 +166,12 @@ var ContextAnswer = React.createClass({
     },
 })
 
-var Answer = React.createClass({
+export var Answer = React.createClass({
   render: function() {
     log.info("Answer: props",this.props)
 
   var that = this
-  var contextNodes = this.props.choices_context.map(function(context) {
+  var contextNodes = choices_context.map(function(context) {
     var context_name = context['name']
     // look up answer, if present
     var answers
@@ -183,8 +182,6 @@ var Answer = React.createClass({
 
     return (
       <ContextAnswer
-        choices={that.props.choices}
-        choices_context={that.props.choices_context}
         context={context_name}
         context_description={context['description']}
         answers={ answers    }
@@ -212,8 +209,6 @@ var Answer = React.createClass({
 var AnswerList = React.createClass({
   render: function() {
     log.info("AnswerList:render: props",this.props)
-    let choices_context = this.props.choices_context
-    let choices = this.props.choices
     var answerNodes = this.props.data.results.map(function(node,index) {
       var parity = 'odd'
       if(index % 2)
@@ -230,8 +225,6 @@ var AnswerList = React.createClass({
         id={node.question.id}
         answers={node.answers}
         parity={parity}
-        choices_context={choices_context}
-        choices={choices}
       />
       )
     })
@@ -284,8 +277,6 @@ export var AnswerBox = React.createClass({
 
         <AnswerList
             data={this.state.data}
-            choices_context={choices_context}
-            choices={choices}
         />
       </div>
     )
