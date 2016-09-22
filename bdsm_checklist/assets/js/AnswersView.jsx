@@ -2,13 +2,14 @@
 
 var React = require('react')
 var ReactDOM = require('react-dom')
+import { createStore } from 'redux'
 var $ = require('jquery')
 var chai = require('chai')
 var {BooleanChoice, RadioChoices, TextField} = require('./viewerComponents')
 var {BooleanChoice: EditBooleanChoice, RadioChoices: EditRadioChoices, TextField:EditTextField} = require('./editorComponents')
 var {ContextAnswer: ContextAnswerEdit} = require('./AnswersEdit')
 var {choices, choices_context} = require('./applicationData')
-
+import { ACTION_LOAD,ACTION_SET_SEARCH_STRING } from './actionTypes'
 var log = require('./loggingConfig').CreateLogger("AnswerView")
 
 
@@ -160,126 +161,115 @@ var Filters = React.createClass({
 
 //===============================================================================
 
-var ContextAnswer = React.createClass({
-   render: function() {
-       log.trace("ContextAnswer:render:")
-       log.trace("ContextAnswer:render: props = ",JSON.stringify(this.props))
-       chai.expect(this.props.answers).to.exist
-       var {id, answers} = this.props
+const ContextAnswer = ({ id, answers }) => {
+    log.trace("ContextAnswer:render:")
+    chai.expect(answers).to.exist
 
-       var choiceNodes = choices.booleans.map(function(choice) {
-       log.trace("ContextAnswer: booleans: choice",choice)
-       log.trace("ContextAnswer: booleans: answers",answers)
+    var choiceNodes = choices.booleans.map(function(choice) {
+    log.trace("ContextAnswer: booleans: choice",choice)
+    log.trace("ContextAnswer: booleans: answers",answers)
 
-         return (
-           <BooleanChoice choice={choice} key={choice.name} answer={answers[choice.name]}  parentField={choice.name} />
-         )
-       })
-       var context = $.grep(choices_context, function(e) { return e.name == answers.context })[0]
+      return (
+        <BooleanChoice choice={choice} key={choice.name} answer={answers[choice.name]}  parentField={choice.name} />
+      )
+    })
+    var context = $.grep(choices_context, function(e) { return e.name == answers.context })[0]
 
-       return (
-           <div className="answer col-xs-5"  >
-             <div className="row" >
-               <div className="col-xs-10">
-                  <div className='row'>
-                     <div className="col-xs-3">
-                       <RadioChoices choices={choices.rating} selected={answers.rating} id={id + '_rating' }  parentField='rating' />
-                     </div>
-                     <div className='col-xs-9' >
-                        <div className='booleans' >
-                          {choiceNodes}
-                        </div>
-                     </div>
+    return (
+        <div className="answer col-xs-5"  >
+          <div className="row" >
+            <div className="col-xs-10">
+               <div className='row'>
+                  <div className="col-xs-3">
+                    <RadioChoices choices={choices.rating} selected={answers.rating} id={id + '_rating' }  parentField='rating' />
                   </div>
-                  <div className='row'>
-                     <div className="col-xs-12">
-                       <TextField value={answers.notes} parentField='notes'/>
+                  <div className='col-xs-9' >
+                     <div className='booleans' >
+                       {choiceNodes}
                      </div>
                   </div>
                </div>
-             </div>
-           </div>
-       )
-    },
-})
-
-//===============================================================================
-
-var Answer = React.createClass({
-  render: function() {
-    log.trace("Answer::render: props",JSON.stringify(this.props))
-    var { id, question, answers,parity } = this.props
-
-    var contextNodes = choices_context.map(function(context) {
-      var context_name = context['name']
-      var context_answers = answers[context_name]
-
-      log.trace("Answer::render:contextNode(",context_name,")")
-
-      if(context_answers)
-      {
-        chai.expect(context_answers).to.exist
-          return (
-            <ContextAnswer
-              choices={choices}
-              answers={ context_answers }
-              question_id={ question.id}
-              id={id + '_'+context_name }
-              key={context_name}
-            />
-          )
-
-      }
-      return( null )
-    })
-
-    log.trace("Answer::render: final")
-
-    return (
-        <div className={parity} >
-          <div className="row" >
-              <div className='col-xs-2'>
-                <div className='topic-headline tooltipster_tooltip' title={ question.question_detail } >{ question.question_text   }</div>
-              </div>
-              { contextNodes }
+               <div className='row'>
+                  <div className="col-xs-12">
+                    <TextField value={answers.notes} parentField='notes'/>
+                  </div>
+               </div>
+            </div>
           </div>
-       </div>
+        </div>
     )
-  }
-})
+}
 
 //===============================================================================
 
-var AnswerList = React.createClass({
-  render: function() {
-    log.trace("AnswerList:render: props",this.props)
-    var answerNodes = this.props.data.results.map(function(node,index) {
-      var parity = 'odd'
-      if(index % 2)
-      {
-        parity = 'even'
-      }
+const Answer = ({id, question, answers,parity  }) => {
 
-      log.trace("AnswerList:render: node = ",JSON.stringify(node))
-      if(node.answers)
-      {
-        log.trace("AnswerList:render: node answers = ",node.answers)
+  var contextNodes = choices_context.map(function(context) {
+    var context_name = context['name']
+    var context_answers = answers[context_name]
 
-        let key = String(node.question.id)+parity
-        log.trace("AnswerList:render:key ",key,"question text",node.question.question_text)
+    log.trace("Answer::render:contextNode(",context_name,")")
 
+    if(context_answers)
+    {
+      chai.expect(context_answers).to.exist
         return (
-        <Answer
-          question={node.question}
-          key={key}
-          id={node.question.id}
-          answers={node.answers}
-          parity={parity}
-        />
+          <ContextAnswer
+            choices={choices}
+            answers={ context_answers }
+            question_id={ question.id}
+            id={id + '_'+context_name }
+            key={context_name}
+          />
         )
-      }
+    }
+    return( null )
+  })
 
-      return ( null )
+  log.trace("Answer::render: final")
+
+  return (
+      <div className={parity} >
+        <div className="row" >
+            <div className='col-xs-2'>
+              <div className='topic-headline tooltipster_tooltip' title={ question.question_detail } >{ question.question_text   }</div>
+            </div>
+            { contextNodes }
+        </div>
+     </div>
+  )
+}
+
+//===============================================================================
+
+const AnswerList = ({ data }) => {
+    log.trace("AnswerList:render:")
+    var answerNodes = data.results.map(function(node,index) {
+        var parity = 'odd'
+        if(index % 2)
+        {
+          parity = 'even'
+        }
+
+        log.trace("AnswerList:render: node = ",JSON.stringify(node))
+        if(node.answers)
+        {
+            log.trace("AnswerList:render: node answers = ",node.answers)
+
+            let key = String(node.question.id)+parity
+            log.trace("AnswerList:render:key ",key,"question text",node.question.question_text)
+
+            return (
+            <Answer
+                question={node.question}
+                key={key}
+                id={node.question.id}
+                answers={node.answers}
+                parity={parity}
+            />
+            )
+        }
+        return ( null )
     })
 
     var headerNodes = choices_context.map(function(context) {
@@ -301,8 +291,26 @@ var AnswerList = React.createClass({
         {answerNodes}
       </div>
     )
+}
+
+//===============================================================================
+
+
+const initialState = {
+  questions: []
+}
+
+function topReducer(state = initialState, action) {
+
+  switch (action.type) {
+  case ACTION_LOAD:
+      return Object.assign({}, state, {
+          questions: action.questions
+      })
+  default:
+    return state
   }
-})
+}
 
 //===============================================================================
 
@@ -315,6 +323,10 @@ export var AnswerBox = React.createClass({
             success: function(data) {
                 log.trace("== json loaded ==",data)
                 this.setState({data: data})
+                //this.state.store.dispatch({
+                //    type: ACTION_LOAD,
+                //    data: data,
+                //})
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString())
@@ -322,7 +334,11 @@ export var AnswerBox = React.createClass({
         })
     },
     getInitialState: function() {
+
         return {data: { results: []} }
+
+        //let store = createStore(topReducer)
+        //return {data: { store: store} }
     },
     componentDidMount: function() {
         this.loadAnswersFromServer()
