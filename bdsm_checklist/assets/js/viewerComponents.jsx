@@ -32,7 +32,7 @@ export var RadioChoices = React.createClass({
 
       var rating = choice.description
       return (
-        <div className='col-xs-2' >
+        <div >
           { rating }
         </div>
       );

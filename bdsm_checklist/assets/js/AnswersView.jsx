@@ -31,43 +31,25 @@ var ContextAnswer = React.createClass({
 
 
        return (
-           <div className="answer"  >
-             <div className='context-headline row'>
-                 <div className='col-xs-12' >
-                   { context.description }
-                 </div>
-             </div>
-             <div className="row">
-                <div className="col-xs-12 col-sm-12 col-md-6">
-                   <div className='row'>
-                      <div className="col-xs-12">
-                         <div className='row' >
-                            <div className='question-headline col-xs-1'>
-                            </div>
-                            <div className='question-headline col-xs-1'>
-                              Rating
-                            </div>
-                            <RadioChoices choices={choices.rating} selected={answers.rating} id={id + '_rating' }  parentField='rating' />
-                         </div>
-                      </div>
-                   </div>
-                   <div className='row'>
-                      <div className="col-xs-12">
-                          <div className='row' >
-                            <div className='col-xs-2'>
-                            </div>
-                            <div className='col-xs-10' >
-                               <div className='booleans' >
-                                 {choiceNodes}
-                               </div>
-                            </div>
-                          </div>
-                      </div>
-                   </div>
-                </div>
-                <div className='notes col-xs-6'>
-                   <b>Notes</b><TextField value={answers.notes} parentField='notes'/>
-                </div>
+           <div className="answer col-xs-5"  >
+             <div className="row" >
+               <div className="col-xs-10">
+                  <div className='row'>
+                     <div className="col-xs-3">
+                       <RadioChoices choices={choices.rating} selected={answers.rating} id={id + '_rating' }  parentField='rating' />
+                     </div>
+                     <div className='col-xs-9' >
+                        <div className='booleans' >
+                          {choiceNodes}
+                        </div>
+                     </div>
+                  </div>
+                  <div className='row'>
+                     <div className="col-xs-12">
+                       <TextField value={answers.notes} parentField='notes'/>
+                     </div>
+                  </div>
+               </div>
              </div>
            </div>
        );
@@ -113,12 +95,11 @@ var Answer = React.createClass({
     return (
         <div className={parity} >
           <div className="row" >
-              <div className='col-xs-12'>
-                <div className='topic-headline'>{ question.question_text   }</div>
-                <div className='topic-detail'  >{ question.question_detail }</div>
+              <div className='col-xs-2'>
+                <div className='topic-headline tooltipster_tooltip' title={ question.question_detail } >{ question.question_text   }</div>
               </div>
+              { contextNodes }
           </div>
-          { contextNodes }
        </div>
     );
   }
@@ -160,8 +141,28 @@ var AnswerList = React.createClass({
     });
 
     log.trace("answer nodes",answerNodes)
+
+    var headerNodes = choices_context.map(function(context) {
+
+        return(
+        <div className="col-xs-5 context-headline">
+            {context.description}
+        </div>
+
+        )
+    })
+
+
+    log.trace("header nodes",headerNodes)
+
     return (
       <div className="answerList">
+        <div className='row'>
+          <div className="col-xs-2 context-headline">
+              Questions
+          </div>
+          {headerNodes}
+        </div>
         {answerNodes}
       </div>
     );
@@ -171,47 +172,47 @@ var AnswerList = React.createClass({
 //===============================================================================
 
 export var AnswerBox = React.createClass({
-  loadAnswersFromServer: function() {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        log.trace("== json loaded ==",data);
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
-  getInitialState: function() {
-    return {data: { results: []} };
-  },
-  componentDidMount: function() {
-    this.loadAnswersFromServer();
-  },
-  render: function() {
-       log.trace("AnswerBox::render: props",this.props,", state = ",this.state)
-    return (
+    loadAnswersFromServer: function() {
+        $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                log.trace("== json loaded ==",data);
+                this.setState({data: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
+    },
+    getInitialState: function() {
+        return {data: { results: []} };
+    },
+    componentDidMount: function() {
+        this.loadAnswersFromServer();
+    },
+    render: function() {
+        log.trace("AnswerBox::render: props",this.props,", state = ",this.state)
+        return (
 
-      <div className="answerBox question-edit">
-      <div>
-          Select a rating for each question. You don't have to fill this out all
-          at once, your progress is saved as you move to the next question.
-          So you can come back to the rest later. Select resume to get a
-          question list containing only the questions you haven't answered yet.
+          <div className="answerBox question-edit">
+          <div>
+              Select a rating for each question. You don't have to fill this out all
+              at once, your progress is saved as you move to the next question.
+              So you can come back to the rest later. Select resume to get a
+              question list containing only the questions you haven't answered yet.
 
-          Instructions can be found
-          <a href="/checklist/instructions"> here</a>
-      </div>
-       <hr />
+              Instructions can be found
+              <a href="/checklist/instructions"> here</a>
+          </div>
+           <hr />
 
-        <AnswerList
-            data={this.state.data}
-        />
-      </div>
-    );
+            <AnswerList
+                data={this.state.data}
+            />
+          </div>
+        );
   }
 });
 
