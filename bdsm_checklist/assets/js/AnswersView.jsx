@@ -103,7 +103,7 @@ var Answer = React.createClass({
 
       }
       return (
-      <div></div>
+        null
       );
 
     });
@@ -136,16 +136,18 @@ var AnswerList = React.createClass({
         parity = 'even'
       }
 
-      log.trace("AnswerList:render: node = ",node)
-      log.trace("AnswerList:render: node answers = ",node.answers)
-
-      log.trace("AnswerList:render:key ",node.question.id,"question text",node.question.question_text)
+      log.trace("AnswerList:render: node = ",JSON.stringify(node))
       if(node.answers)
       {
+        log.trace("AnswerList:render: node answers = ",node.answers)
+
+        let key = String(node.question.id)+parity
+        log.trace("AnswerList:render:key ",key,"question text",node.question.question_text)
+
         return (
         <Answer
           question={node.question}
-          key={String(node.context)+node.question.id}
+          key={key}
           id={node.question.id}
           answers={node.answers}
           parity={parity}
@@ -153,8 +155,7 @@ var AnswerList = React.createClass({
         );
       }
 
-      return (
-      <div></div>
+      return ( null
       );
     });
 
