@@ -81,14 +81,14 @@ var Answer = React.createClass({
               id={id + '_'+context_name }
               key={context_name}
             />
-          );
+          )
 
       }
       return (
         null
-      );
+      )
 
-    });
+    })
 
     log.trace("Answer::render: final")
 
@@ -101,9 +101,9 @@ var Answer = React.createClass({
               { contextNodes }
           </div>
        </div>
-    );
+    )
   }
-});
+})
 
 //===============================================================================
 
@@ -133,12 +133,12 @@ var AnswerList = React.createClass({
           answers={node.answers}
           parity={parity}
         />
-        );
+        )
       }
 
       return ( null
-      );
-    });
+      )
+    })
 
     log.trace("answer nodes",answerNodes)
 
@@ -165,9 +165,9 @@ var AnswerList = React.createClass({
         </div>
         {answerNodes}
       </div>
-    );
+    )
   }
-});
+})
 
 //===============================================================================
 
@@ -178,25 +178,25 @@ export var AnswerBox = React.createClass({
             dataType: 'json',
             cache: false,
             success: function(data) {
-                log.trace("== json loaded ==",data);
-                this.setState({data: data});
+                log.trace("== json loaded ==",data)
+                this.setState({data: data})
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
+                console.error(this.props.url, status, err.toString())
             }.bind(this)
-        });
+        })
     },
     getInitialState: function() {
-        return {data: { results: []} };
+        return {data: { results: []} }
     },
     componentDidMount: function() {
-        this.loadAnswersFromServer();
+        this.loadAnswersFromServer()
     },
     render: function() {
         log.trace("AnswerBox::render: props",this.props,", state = ",this.state)
         return (
 
-          <div className="answerBox question-edit">
+          <div className="answerBox question-view">
           <div>
               Select a rating for each question. You don't have to fill this out all
               at once, your progress is saved as you move to the next question.
@@ -212,9 +212,9 @@ export var AnswerBox = React.createClass({
                 data={this.state.data}
             />
           </div>
-        );
+        )
   }
-});
+})
 
 //===============================================================================
 
