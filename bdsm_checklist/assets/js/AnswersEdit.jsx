@@ -58,8 +58,8 @@ var ContextAnswer = React.createClass({
 
          return (
            <BooleanChoice choice={choice} key={choice.name} onUpdate={that.onUpdate}  answer={answer}  parentField={choice.name} />
-         );
-       });
+         )
+       })
        var context = $.grep(this.props.choices_context, function(e) { return e.name == that.state.answers.context })[0]
        return (
            <div className="answer" onBlur={this.onBlur} >
@@ -101,7 +101,7 @@ var ContextAnswer = React.createClass({
                 </div>
              </div>
            </div>
-       );
+       )
     },
 
     onUpdate: function(childProps, val) {
@@ -114,7 +114,7 @@ var ContextAnswer = React.createClass({
     },
 
     onBlur: function(e) {
-      var currentTarget = e.currentTarget;
+      var currentTarget = e.currentTarget
       var that = this
 
       setTimeout(function() {
@@ -122,12 +122,12 @@ var ContextAnswer = React.createClass({
             // this checks to see if whatever is now selected
             // is under this component. If it not, then it is time
             // to save changes to this component
-            //log.info('component officially blurred');
+            //log.info('component officially blurred')
             // time to send this object to the server
             that.saveAnswer()
             //log.info('state', that.state)
         }
-      }, 0);
+      }, 0)
     },
 
     saveAnswer: function(answer) {
@@ -156,16 +156,16 @@ var ContextAnswer = React.createClass({
         type: requestType,
         data: postData,
         success: function(data) {
-          //log.info("saveAnswer: success: returned data = ",data);
-          this.setState({ answers:  data} );
+          //log.info("saveAnswer: success: returned data = ",data)
+          this.setState({ answers:  data} )
         }.bind(this),
         error: function(xhr, status, err) {
-          //this.setState({data: answers});
-          console.error(this.props.url, status, err.toString());
+          //this.setState({data: answers})
+          console.error(this.props.url, status, err.toString())
         }.bind(this)
-      });
+      })
     },
-});
+})
 
 var Answer = React.createClass({
   render: function() {
@@ -192,8 +192,8 @@ var Answer = React.createClass({
         id={that.props.id + '_'+context_name }
         key={context_name}
       />
-    );
-  });
+    )
+  })
 
   return (
       <div className={this.props.parity} >
@@ -205,9 +205,9 @@ var Answer = React.createClass({
         </div>
         { contextNodes }
      </div>
-  );
+  )
   }
-});
+})
 
 var AnswerList = React.createClass({
   render: function() {
@@ -233,17 +233,17 @@ var AnswerList = React.createClass({
         choices_context={choices_context}
         choices={choices}
       />
-      );
-    });
+      )
+    })
 
     log.info("answer nodes",answerNodes)
     return (
       <div className="answerList">
         {answerNodes}
       </div>
-    );
+    )
   }
-});
+})
 
 export var AnswerBox = React.createClass({
   loadAnswersFromServer: function() {
@@ -252,19 +252,19 @@ export var AnswerBox = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
-        log.info("== json loaded ==",data);
-        this.setState({data: data});
+        log.info("== json loaded ==",data)
+        this.setState({data: data})
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
+        console.error(this.props.url, status, err.toString())
       }.bind(this)
-    });
+    })
   },
   getInitialState: function() {
-    return {data: { results: []} };
+    return {data: { results: []} }
   },
   componentDidMount: function() {
-    this.loadAnswersFromServer();
+    this.loadAnswersFromServer()
   },
   render: function() {
        log.info("thisprops",this.props)
@@ -288,9 +288,9 @@ export var AnswerBox = React.createClass({
             choices={choices}
         />
       </div>
-    );
+    )
   }
-});
+})
 
 
 
