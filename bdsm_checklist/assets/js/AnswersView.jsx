@@ -239,7 +239,7 @@ const Answer = ({id, question, answers,parity  }) => {
 
 const AnswerList = ({ data }) => {
     log.trace("AnswerList:render:")
-    var answerNodes = data.results.map(function(node,index) {
+    var answerNodes = data.questions.map(function(node,index) {
         var parity = 'odd'
         if(index % 2)
         {

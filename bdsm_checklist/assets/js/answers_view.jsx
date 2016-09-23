@@ -5,12 +5,13 @@ import { createStore } from 'redux'
 var $ = require('jquery')
 var chai = require('chai')
 
-var log = require('./loggingConfig').CreateLogger("AnswerView")
+var log = require('./loggingConfig').CreateLogger("answers_view")
 
 var AnswerPage = require('./AnswersView').AnswerPage
 
 var {choices, choices_context} = require('./applicationData')
 import { ACTION_LOAD,ACTION_SET_SEARCH_STRING } from './actionTypes'
+import { loadAction } from './actionTypes'
 
 var AnswerPage = require('./AnswersView').AnswerPage
 
@@ -24,10 +25,12 @@ const initialState = {
 
 function topReducer(state = initialState, action) {
 
+  log.trace("topReducer",JSON.stringify(action))
   switch (action.type) {
   case ACTION_LOAD:
+
       return Object.assign({}, state, {
-          questions: action.questions
+          questions: action.data.results
       })
   default:
     return state
@@ -43,61 +46,47 @@ export var AnswerBox = React.createClass({
             cache: false,
             success: function(data) {
                 log.trace("== json loaded ==",data)
-                this.setState({data: data})
-                //this.state.store.dispatch({
-                //    type: ACTION_LOAD,
-                //    data: data,
-                //})
+                this.props.onLoad(data)
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(url, status, err.toString())
             }.bind(this)
         })
     },
-    getInitialState: function() {
-
-        return {data: { results: []} }
-
-        //return {data: { store: store} }
-    },
     componentDidMount: function() {
         this.loadAnswersFromServer()
     },
     render: function() {
-        log.trace("AnswerBox::render: props",this.props,", state = ",this.state)
+        log.trace("AnswerBox::render: props",JSON.stringify(this.props))
         return (
-            <AnswerPage data={this.state.data} />
+            <AnswerPage data={this.props.data} />
         )
   }
 })
 
 
-
-
-
 const mapStateToProps = (state) => {
-  return {
-    data: state.data
-  }
+    log.trace("mapStateToProps: state = ",JSON.stringify(state))
+    return {
+        data: state
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+      onLoad: (data) => {
+          dispatch(loadAction(data))
+      }
     //onTodoClick: (id) => {
     //  dispatch(toggleTodo(id))
     //}
   }
 }
 
-
 const AnswerApp = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AnswerBox)
-
-
-
-
 
 // main entry point for answer viewer. This will go away if this project becomes
 // a single page app
@@ -110,7 +99,4 @@ render(
   </Provider>,
   document.getElementById('react-app')
 )
-
-
-
 
