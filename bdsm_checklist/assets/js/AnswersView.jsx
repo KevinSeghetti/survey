@@ -12,7 +12,6 @@ var {choices, choices_context} = require('./applicationData')
 import { ACTION_LOAD,ACTION_SET_SEARCH_STRING } from './actionTypes'
 var log = require('./loggingConfig').CreateLogger("AnswerView")
 
-
 //===============================================================================
 
 var ContextFilters = React.createClass({
@@ -295,7 +294,7 @@ const AnswerList = ({ data }) => {
 
 //===============================================================================
 
-const AnswerPage = ({ data }) => {
+export const AnswerPage = ({ data }) => {
     return(
     <div>
         <div className="answerBox question-reactview">
@@ -350,45 +349,6 @@ const mapStateToProps = (state) => {
     todos: getVisibleTodos(state.todos, state.visibilityFilter)
   }
 }
-
-//===============================================================================
-
-export var AnswerBox = React.createClass({
-    loadAnswersFromServer: function() {
-        $.ajax({
-            url: this.props.url,
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                log.trace("== json loaded ==",data)
-                this.setState({data: data})
-                //this.state.store.dispatch({
-                //    type: ACTION_LOAD,
-                //    data: data,
-                //})
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString())
-            }.bind(this)
-        })
-    },
-    getInitialState: function() {
-
-        return {data: { results: []} }
-
-        //let store = createStore(topReducer)
-        //return {data: { store: store} }
-    },
-    componentDidMount: function() {
-        this.loadAnswersFromServer()
-    },
-    render: function() {
-        log.trace("AnswerBox::render: props",this.props,", state = ",this.state)
-        return (
-            <AnswerPage data={this.state.data} />
-        )
-  }
-})
 
 //===============================================================================
 
