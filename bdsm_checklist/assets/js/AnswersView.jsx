@@ -11,7 +11,6 @@ var {choices, choices_context} = require('./applicationData')
 
 var log = require('./loggingConfig').CreateLogger("AnswerView")
 
-
 //===============================================================================
 
 var ContextFilters = React.createClass({
@@ -76,46 +75,28 @@ var ContextFilters = React.createClass({
 
       var context = $.grep(choices_context, function(e) { return e.name == that.state.answers.context })[0]
       return (
-          <div className="answer" onBlur={this.onBlur} >
-            <div className='context-headline row'>
-                <div className='col-xs-12' >
-                  { context.description }
-                </div>
+          <div className="answer col-xs-12" onBlur={this.onBlur} >
+            <div className='row'>
+               <div className="col-xs-12">
+                  <div className='row' >
+                     <div className='question-headline col-xs-2'>
+                       Rating
+                     </div>
+                     {ratingNodes}
+                  </div>
+               </div>
             </div>
-            <div className="row">
-               <div className="col-xs-12 col-sm-12 col-md-6">
-                  <div className='row'>
-                     <div className="col-xs-12">
-                        <div className='row' >
-                           <div className='question-headline col-xs-1'>
-                           </div>
-                           <div className='question-headline col-xs-1'>
-                             Rating
-                           </div>
-                           {ratingNodes}
-                        </div>
-                     </div>
-                  </div>
-                  <div className='row'>
-                     <div className="col-xs-12">
-                         <div className='row' >
-                           <div className='col-xs-2'>
-                           </div>
-                           <div className='col-xs-10' >
-                              <div className='booleans' >
-                                {choiceNodes}
-                              </div>
-                           </div>
-                         </div>
-                     </div>
-                  </div>
+            <div className='row'>
+               <div className="col-xs-12">
+                 <div className='booleans' >
+                   {choiceNodes}
+                 </div>
                </div>
             </div>
           </div>
       )
    },
 })
-
 
 //===============================================================================
 
@@ -134,29 +115,43 @@ var Filters = React.createClass({
     }
 
     return (
-      <ContextFilters
-        context={context_name}
-        context_description={context['description']}
-        answers={ answers    }
-        id={that.props.id + '_'+context_name }
-        key={context_name}
-      />
+      <div className="col-xs-5">
+        <ContextFilters
+          context={context_name}
+          context_description={context['description']}
+          answers={ answers    }
+          id={that.props.id + '_'+context_name }
+          key={context_name}
+        />
+      </div>
     )
+  })
+
+  var headerNodes = choices_context.map(function(context) {
+      return(
+      <div className="col-xs-5 context-headline" key={context.name}>
+          {context.description}
+      </div>
+      )
   })
 
   return (
       <div className={this.props.parity} >
         <div className="row" >
-            <div className='col-xs-12'>
-              <div className='topic-headline'>Filters</div>
-            </div>
+          <div className="col-xs-2 context-headline">
+              Filters
+          </div>
+          {headerNodes}
         </div>
-        { contextNodes }
+        <div className="row" >
+          <div className="col-xs-2">
+          </div>
+          { contextNodes }
+        </div>
      </div>
   )
   }
 })
-
 
 //===============================================================================
 
