@@ -295,6 +295,37 @@ const AnswerList = ({ data }) => {
 
 //===============================================================================
 
+const AnswerPage = ({ data }) => {
+    return(
+    <div>
+        <div className="answerBox question-reactview">
+        <div>
+            Select a rating for each question. You don't have to fill this out all
+            at once, your progress is saved as you move to the next question.
+            So you can come back to the rest later. Select resume to get a
+            question list containing only the questions you haven't answered yet.
+
+            Instructions can be found
+            <a href="/checklist/instructions"> here</a>
+        </div>
+         <hr />
+          <Filters
+          />
+          <hr />
+
+          <AnswerList
+              data={data}
+          />
+        </div>
+    </div>
+  )
+
+}
+
+
+
+//===============================================================================
+
 
 const initialState = {
   questions: []
@@ -309,6 +340,14 @@ function topReducer(state = initialState, action) {
       })
   default:
     return state
+  }
+}
+
+
+
+const mapStateToProps = (state) => {
+  return {
+    todos: getVisibleTodos(state.todos, state.visibilityFilter)
   }
 }
 
@@ -346,26 +385,7 @@ export var AnswerBox = React.createClass({
     render: function() {
         log.trace("AnswerBox::render: props",this.props,", state = ",this.state)
         return (
-
-          <div className="answerBox question-reactview">
-          <div>
-              Select a rating for each question. You don't have to fill this out all
-              at once, your progress is saved as you move to the next question.
-              So you can come back to the rest later. Select resume to get a
-              question list containing only the questions you haven't answered yet.
-
-              Instructions can be found
-              <a href="/checklist/instructions"> here</a>
-          </div>
-           <hr />
-            <Filters
-            />
-            <hr />
-
-            <AnswerList
-                data={this.state.data}
-            />
-          </div>
+            <AnswerPage data={this.state.data} />
         )
   }
 })
