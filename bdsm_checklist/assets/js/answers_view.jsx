@@ -1,23 +1,44 @@
 var React = require('react')
-var ReactDOM = require('react-dom')
-var $ = require('jquery')
-var AnswerPage = require('./AnswersView').AnswerPage
-
-var $ = require('jquery')
+import { render } from 'react-dom'
+import { Provider,connect } from 'react-redux'
 import { createStore } from 'redux'
+var $ = require('jquery')
 var chai = require('chai')
+
 var log = require('./loggingConfig').CreateLogger("AnswerView")
+
+var AnswerPage = require('./AnswersView').AnswerPage
 
 var {choices, choices_context} = require('./applicationData')
 import { ACTION_LOAD,ACTION_SET_SEARCH_STRING } from './actionTypes'
 
 var AnswerPage = require('./AnswersView').AnswerPage
 
+var url=window.globs['questionsUrl']
+
+//===============================================================================
+
+const initialState = {
+  questions: []
+}
+
+function topReducer(state = initialState, action) {
+
+  switch (action.type) {
+  case ACTION_LOAD:
+      return Object.assign({}, state, {
+          questions: action.questions
+      })
+  default:
+    return state
+  }
+}
+
 
 export var AnswerBox = React.createClass({
     loadAnswersFromServer: function() {
         $.ajax({
-            url: this.props.url,
+            url: url,
             dataType: 'json',
             cache: false,
             success: function(data) {
@@ -29,7 +50,7 @@ export var AnswerBox = React.createClass({
                 //})
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString())
+                console.error(url, status, err.toString())
             }.bind(this)
         })
     },
@@ -37,7 +58,6 @@ export var AnswerBox = React.createClass({
 
         return {data: { results: []} }
 
-        //let store = createStore(topReducer)
         //return {data: { store: store} }
     },
     componentDidMount: function() {
@@ -55,15 +75,42 @@ export var AnswerBox = React.createClass({
 
 
 
+const mapStateToProps = (state) => {
+  return {
+    data: state.data
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    //onTodoClick: (id) => {
+    //  dispatch(toggleTodo(id))
+    //}
+  }
+}
+
+
+const AnswerApp = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AnswerBox)
+
+
+
+
+
 // main entry point for answer viewer. This will go away if this project becomes
 // a single page app
 
-ReactDOM.render(
-    <AnswerBox
-        url={window.globs['questionsUrl']}
-        pollInterval={2000}
-    />,
-    document.getElementById('react-app')
+let store = createStore(topReducer)
+
+render(
+  <Provider store={store}>
+    <AnswerApp />
+  </Provider>,
+  document.getElementById('react-app')
 )
+
+
 
 

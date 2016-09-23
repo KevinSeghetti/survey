@@ -321,34 +321,5 @@ export const AnswerPage = ({ data }) => {
 
 }
 
-
-
-//===============================================================================
-
-
-const initialState = {
-  questions: []
-}
-
-function topReducer(state = initialState, action) {
-
-  switch (action.type) {
-  case ACTION_LOAD:
-      return Object.assign({}, state, {
-          questions: action.questions
-      })
-  default:
-    return state
-  }
-}
-
-
-
-const mapStateToProps = (state) => {
-  return {
-    todos: getVisibleTodos(state.todos, state.visibilityFilter)
-  }
-}
-
 //===============================================================================
 
