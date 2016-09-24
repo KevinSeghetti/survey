@@ -9,7 +9,7 @@ var {BooleanChoice, RadioChoices, TextField} = require('./viewerComponents')
 var {BooleanChoice: EditBooleanChoice, RadioChoices: EditRadioChoices, TextField:EditTextField} = require('./editorComponents')
 var {ContextAnswer: ContextAnswerEdit} = require('./AnswersEdit')
 var {choices, choices_context} = require('./applicationData')
-import { ACTION_LOAD,ACTION_SET_SEARCH_STRING } from './actionTypes'
+
 var log = require('./loggingConfig').CreateLogger("AnswerView")
 
 //===============================================================================
@@ -54,7 +54,13 @@ var ContextFilters = React.createClass({
         }
 
         return (
-          <EditBooleanChoice choice={choice} key={choice.name} onUpdate={that.onUpdate}  answer={answer}  parentField={choice.name} />
+          <EditBooleanChoice
+            choice={choice}
+            key={choice.name}
+            onUpdate={that.onUpdate}
+            answer={answer}
+            parentField={choice.name}
+          />
         )
       })
 
@@ -68,11 +74,15 @@ var ContextFilters = React.createClass({
         }
 
         return (
-          <EditBooleanChoice choice={choice} key={choice.name} onUpdate={that.onUpdate}  answer={answer}  parentField={choice.name} />
+          <EditBooleanChoice
+            choice={choice}
+            key={choice.name}
+            onUpdate={that.onUpdate}
+            answer={answer}
+            parentField={choice.name}
+          />
         )
       })
-
-
 
       var context = $.grep(choices_context, function(e) { return e.name == that.state.answers.context })[0]
       return (
@@ -97,6 +107,19 @@ var ContextFilters = React.createClass({
           </div>
       )
    },
+
+  onUpdate: function(childProps, val) {
+
+    this.props.onFilterClick(1)
+
+    ////log.info('ContextAnswer:onUpdate', childProps.parentField,  val)
+    //var newState = this.state.answers
+    //newState[childProps.parentField] = val
+    ////log.info('ContextAnswer:onUpdate: existing state', this.state)
+    ////log.info('ContextAnswer:onUpdate: new state', newState)
+    //this.setState({ answers: newState} )
+  },
+
 })
 
 //===============================================================================
@@ -176,7 +199,12 @@ const ContextAnswer = ({ id, answers }) => {
             <div className="col-xs-10">
                <div className='row'>
                   <div className="col-xs-3">
-                    <RadioChoices choices={choices.rating} selected={answers.rating} id={id + '_rating' }  parentField='rating' />
+                    <RadioChoices
+                      choices={choices.rating}
+                      selected={answers.rating}
+                      id={id + '_rating' }
+                      parentField='rating'
+                    />
                   </div>
                   <div className='col-xs-9' >
                      <div className='booleans' >

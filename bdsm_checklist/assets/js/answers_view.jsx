@@ -10,8 +10,8 @@ var log = require('./loggingConfig').CreateLogger("answers_view")
 var AnswerPage = require('./AnswersView').AnswerPage
 
 var {choices, choices_context} = require('./applicationData')
-import { ACTION_LOAD,ACTION_SET_SEARCH_STRING } from './actionTypes'
-import { loadAction } from './actionTypes'
+import { ACTION_LOAD,ACTION_SET_BOOLEAN_FILTER,ACTION_SET_SEARCH_STRING } from './actionTypes'
+import { loadAction, toggleBooleanFilterAction } from './actionTypes'
 
 var AnswerPage = require('./AnswersView').AnswerPage
 
@@ -20,7 +20,8 @@ var url=window.globs['questionsUrl']
 //===============================================================================
 
 const initialState = {
-  questions: []
+  questions: [],
+  filters: {}
 }
 
 function topReducer(state = initialState, action) {
@@ -32,6 +33,8 @@ function topReducer(state = initialState, action) {
       return Object.assign({}, state, {
           questions: action.data.results
       })
+  case ACTION_SET_BOOLEAN_FILTER:
+      return state //{...state,filters[]
   default:
     return state
   }
@@ -76,10 +79,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
       onLoad: (data) => {
           dispatch(loadAction(data))
-      }
-    //onTodoClick: (id) => {
-    //  dispatch(toggleTodo(id))
-    //}
+      },
+      onFilterClick: (filter) => {
+          dispatch(toggleBooleanFilterAction(filter) )
+      },
   }
 }
 

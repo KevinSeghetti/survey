@@ -56,7 +56,13 @@ export var ContextAnswer = React.createClass({
          }
 
          return (
-           <BooleanChoice choice={choice} key={choice.name} onUpdate={that.onUpdate}  answer={answer}  parentField={choice.name} />
+           <BooleanChoice
+            choice={choice}
+            key={choice.name}
+            onUpdate={that.onUpdate}
+            answer={answer}
+            parentField={choice.name}
+          />
          )
        })
        var context = $.grep(choices_context, function(e) { return e.name == that.state.answers.context })[0]
@@ -77,7 +83,13 @@ export var ContextAnswer = React.createClass({
                             <div className='question-headline col-xs-1'>
                               Rating
                             </div>
-                            <RadioChoices choices={choices.rating} selected={rating} id={this.state.id + '_rating' }  onUpdate={this.onUpdate}  parentField='rating' />
+                            <RadioChoices
+                              choices={choices.rating}
+                              selected={rating}
+                              id={this.state.id + '_rating' }
+                              onUpdate={this.onUpdate}
+                              parentField='rating'
+                            />
                          </div>
                       </div>
                    </div>

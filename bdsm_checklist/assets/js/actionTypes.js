@@ -11,3 +11,11 @@ export const loadAction = (data) => {
         data: data,
     }
 }
+
+export const toggleBooleanFilterAction = (boolean) => {
+    return {
+        type: ACTION_SET_BOOLEAN_FILTER,
+        boolean: boolean,
+    }
+}
+
