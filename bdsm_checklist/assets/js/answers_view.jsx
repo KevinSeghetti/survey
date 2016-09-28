@@ -21,12 +21,16 @@ var url=window.globs['questionsUrl']
 
 const initialState = {
   questions: [],
-  filters: {}
+  filters:
+  {
+      booleans: {},
+      rating: {}
+  }
 }
 
 function topReducer(state = initialState, action) {
 
-  log.trace("topReducer",JSON.stringify(action))
+  log.trace("topReducer: ",JSON.stringify(action))
   switch (action.type) {
   case ACTION_LOAD:
 
@@ -34,7 +38,35 @@ function topReducer(state = initialState, action) {
           questions: action.data.results
       })
   case ACTION_SET_BOOLEAN_FILTER:
-      return state //{...state,filters[]
+      log.trace("topReducer: set boolean: filter state = ",JSON.stringify(state.filters))
+
+      return Object.assign({}, state,
+      {
+          filters:
+          {
+              booleans:
+              {
+                  [action.id] : 1
+              }
+          }
+      })
+      return state //{...state,filters.booleans
+
+  case ACTION_SET_RATING_FILTER:
+      log.trace("topReducer: set ratingn: filter state = ",JSON.stringify(state.filters))
+
+      return Object.assign({}, state,
+      {
+          filters:
+          {
+              rating:
+              {
+                  [action.rating] : 1
+              }
+          }
+      })
+      return state //{...state,filters.booleans
+
   default:
     return state
   }

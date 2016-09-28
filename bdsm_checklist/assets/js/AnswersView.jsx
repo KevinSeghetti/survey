@@ -59,7 +59,7 @@ var ContextFilters = React.createClass({
           <EditBooleanChoice
             choice={choice}
             key={choice.name}
-            id={that.props.context+'_'+choice.name}
+            id={choice.name}
             onUpdate={that.onBooleanUpdate}
             answer={answer}
             parentField={choice.name}
@@ -80,7 +80,7 @@ var ContextFilters = React.createClass({
           <EditBooleanChoice
             choice={choice}
             key={choice.name}
-            id={that.props.context+'_'+choice.name}
+            id={choice.name}
             onUpdate={that.onRatingUpdate}
             answer={answer}
             parentField={choice.name}
