@@ -31,7 +31,9 @@ var ContextFilters = React.createClass({
   },
 
   render: function() {
-       log.info("ContextAnswer:render: state = ",this.state,", props = ",this.props)
+       log.info("ContextAnswer:render: state = ",this.state,", props = ",JSON.stringify(this.props))
+       chai.expect(this.props.onRatingFilterClick).to.exist
+       chai.expect(this.props.onBooleanFilterClick).to.exist
 
       var rating
 
@@ -45,7 +47,7 @@ var ContextFilters = React.createClass({
       log.info("ContextAnswer: booleans",choices.booleans)
       var that = this
       var choiceNodes = choices.booleans.map(function(choice) {
-      //log.info("ContextAnswer: booleans: choice",choice)
+      log.info("ContextFilters: booleans: choice",JSON.stringify(choice))
         // look up answer, if present
         var answer
         if(that.state.answers && choice.name in that.state.answers)
@@ -57,7 +59,8 @@ var ContextFilters = React.createClass({
           <EditBooleanChoice
             choice={choice}
             key={choice.name}
-            onUpdate={that.onUpdate}
+            id={that.props.context+'_'+choice.name}
+            onUpdate={that.onBooleanUpdate}
             answer={answer}
             parentField={choice.name}
           />
@@ -77,7 +80,8 @@ var ContextFilters = React.createClass({
           <EditBooleanChoice
             choice={choice}
             key={choice.name}
-            onUpdate={that.onUpdate}
+            id={that.props.context+'_'+choice.name}
+            onUpdate={that.onRatingUpdate}
             answer={answer}
             parentField={choice.name}
           />
@@ -108,9 +112,24 @@ var ContextFilters = React.createClass({
       )
    },
 
-  onUpdate: function(childProps, val) {
+  onRatingUpdate: function(childProps, val) {
 
-    this.props.onFilterClick(1)
+    log.info('ContextAnswer:onUpdate', childProps.id,  val)
+    log.info('ContextAnswer:onUpdate:this.props', JSON.stringify(this.props))
+    this.props.onRatingFilterClick( childProps.id )
+
+    ////log.info('ContextAnswer:onUpdate', childProps.parentField,  val)
+    //var newState = this.state.answers
+    //newState[childProps.parentField] = val
+    ////log.info('ContextAnswer:onUpdate: existing state', this.state)
+    ////log.info('ContextAnswer:onUpdate: new state', newState)
+    //this.setState({ answers: newState} )
+  },
+  onBooleanUpdate: function(childProps, val) {
+
+    log.info('ContextAnswer:onUpdate', childProps.id,  val)
+    log.info('ContextAnswer:onUpdate:this.props', JSON.stringify(this.props))
+    this.props.onBooleanFilterClick( childProps.id )
 
     ////log.info('ContextAnswer:onUpdate', childProps.parentField,  val)
     //var newState = this.state.answers
@@ -120,14 +139,18 @@ var ContextFilters = React.createClass({
     //this.setState({ answers: newState} )
   },
 
+
 })
 
 //===============================================================================
 
 var Filters = React.createClass({
   render: function() {
-    log.info("Answer: props",this.props)
+    log.info("Answer::render props",JSON.stringify(this.props))
+    chai.expect(this.props.onRatingFilterClick).to.exist
+    chai.expect(this.props.onBooleanFilterClick).to.exist
 
+  // TODO update to fat arrow function
   var that = this
   var contextNodes = choices_context.map(function(context) {
     var context_name = context['name']
@@ -139,13 +162,13 @@ var Filters = React.createClass({
     }
 
     return (
-      <div className="col-xs-5">
+      <div className="col-xs-5"  key={context_name} >
         <ContextFilters
+          onRatingFilterClick={that.props.onRatingFilterClick}
+          onBooleanFilterClick={that.props.onBooleanFilterClick}
           context={context_name}
           context_description={context['description']}
           answers={ answers    }
-          id={that.props.id + '_'+context_name }
-          key={context_name}
         />
       </div>
     )
@@ -318,7 +341,11 @@ const AnswerList = ({ data }) => {
 
 //===============================================================================
 
-export const AnswerPage = ({ data }) => {
+export const AnswerPage = (props) => {
+    log.info(' AnswerPage: toggle', JSON.stringify(props))
+    let { data, toggleRatingFilterAction, toggleBooleanFilterAction } = props
+    log.info(' AnswerPage: test', JSON.stringify(toggleRatingFilterAction))
+
     return(
     <div>
         <div className="answerBox question-reactview">
@@ -333,6 +360,9 @@ export const AnswerPage = ({ data }) => {
         </div>
          <hr />
           <Filters
+              onRatingFilterClick ={toggleRatingFilterAction}
+              onBooleanFilterClick={toggleBooleanFilterAction}
+
           />
           <hr />
 

@@ -1,3 +1,4 @@
+var log = require('./loggingConfig').CreateLogger("actions")
 
 
 export const ACTION_LOAD = 'LOAD'
@@ -13,9 +14,19 @@ export const loadAction = (data) => {
 }
 
 export const toggleBooleanFilterAction = (boolean) => {
+    log.info('toggleBooleanFilterAction', boolean)
+
     return {
         type: ACTION_SET_BOOLEAN_FILTER,
         boolean: boolean,
+    }
+}
+
+export const toggleRatingFilterAction = (rating) => {
+    log.info('toggleRatingFilterAction', rating)
+    return {
+        type: ACTION_SET_RATING_FILTER,
+        rating: rating,
     }
 }
 

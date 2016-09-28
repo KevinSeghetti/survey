@@ -11,7 +11,7 @@ var AnswerPage = require('./AnswersView').AnswerPage
 
 var {choices, choices_context} = require('./applicationData')
 import { ACTION_LOAD,ACTION_SET_BOOLEAN_FILTER,ACTION_SET_SEARCH_STRING } from './actionTypes'
-import { loadAction, toggleBooleanFilterAction } from './actionTypes'
+import { loadAction, toggleBooleanFilterAction,  toggleRatingFilterAction } from './actionTypes'
 
 var AnswerPage = require('./AnswersView').AnswerPage
 
@@ -62,7 +62,11 @@ export var AnswerBox = React.createClass({
     render: function() {
         log.trace("AnswerBox::render: props",JSON.stringify(this.props))
         return (
-            <AnswerPage data={this.props.data} />
+            <AnswerPage
+                data={this.props.data}
+                toggleRatingFilterAction  = { this.props.toggleRatingFilterAction }
+                toggleBooleanFilterAction = { this.props.toggleBooleanFilterAction}
+            />
         )
   }
 })
@@ -80,8 +84,11 @@ const mapDispatchToProps = (dispatch) => {
       onLoad: (data) => {
           dispatch(loadAction(data))
       },
-      onFilterClick: (filter) => {
+      toggleBooleanFilterAction: (filter) => {
           dispatch(toggleBooleanFilterAction(filter) )
+      },
+      toggleRatingFilterAction: (filter) => {
+          dispatch(toggleRatingFilterAction(filter) )
       },
   }
 }
