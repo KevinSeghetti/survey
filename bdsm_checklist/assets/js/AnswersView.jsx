@@ -116,7 +116,8 @@ var ContextFilters = React.createClass({
 
     log.info('ContextAnswer:onUpdate', childProps.id,  val)
     log.info('ContextAnswer:onUpdate:this.props', JSON.stringify(this.props))
-    this.props.onRatingFilterClick( childProps.id )
+    log.info('ContextAnswer:onUpdate:childProps', JSON.stringify(childProps))
+    this.props.onRatingFilterClick( this.props.context, childProps.id )
 
     ////log.info('ContextAnswer:onUpdate', childProps.parentField,  val)
     //var newState = this.state.answers
@@ -129,7 +130,9 @@ var ContextFilters = React.createClass({
 
     log.info('ContextAnswer:onUpdate', childProps.id,  val)
     log.info('ContextAnswer:onUpdate:this.props', JSON.stringify(this.props))
-    this.props.onBooleanFilterClick( childProps.id )
+    log.info('ContextAnswer:onUpdate:childProps', JSON.stringify(childProps))
+
+    this.props.onBooleanFilterClick( this.props.context, childProps.id )
 
     ////log.info('ContextAnswer:onUpdate', childProps.parentField,  val)
     //var newState = this.state.answers

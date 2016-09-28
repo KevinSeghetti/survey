@@ -84,11 +84,11 @@ const mapDispatchToProps = (dispatch) => {
       onLoad: (data) => {
           dispatch(loadAction(data))
       },
-      toggleBooleanFilterAction: (filter) => {
-          dispatch(toggleBooleanFilterAction(filter) )
+      toggleBooleanFilterAction: (context, filter) => {
+          dispatch(toggleBooleanFilterAction(context, filter) )
       },
-      toggleRatingFilterAction: (filter) => {
-          dispatch(toggleRatingFilterAction(filter) )
+      toggleRatingFilterAction: (context, rating) => {
+          dispatch(toggleRatingFilterAction(context, rating) )
       },
   }
 }

@@ -13,19 +13,21 @@ export const loadAction = (data) => {
     }
 }
 
-export const toggleBooleanFilterAction = (boolean) => {
-    log.info('toggleBooleanFilterAction', boolean)
+export const toggleBooleanFilterAction = (context, id) => {
+    log.info('toggleBooleanFilterAction', context, id)
 
     return {
         type: ACTION_SET_BOOLEAN_FILTER,
-        boolean: boolean,
+        context: context,
+        id: id,
     }
 }
 
-export const toggleRatingFilterAction = (rating) => {
-    log.info('toggleRatingFilterAction', rating)
+export const toggleRatingFilterAction = (context, rating) => {
+    log.info('toggleRatingFilterAction', context, rating)
     return {
         type: ACTION_SET_RATING_FILTER,
+        context: context,
         rating: rating,
     }
 }
