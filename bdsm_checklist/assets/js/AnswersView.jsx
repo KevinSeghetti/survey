@@ -1,4 +1,4 @@
-// review answers page
+// react version of review answers page
 
 var React = require('react')
 var ReactDOM = require('react-dom')
@@ -31,29 +31,25 @@ var ContextFilters = React.createClass({
   },
 
   render: function() {
-       log.info("ContextAnswer:render: state = ",this.state,", props = ",JSON.stringify(this.props))
-       chai.expect(this.props.onRatingFilterClick).to.exist
-       chai.expect(this.props.onBooleanFilterClick).to.exist
+      log.info("ContextAnswer:render: state = ",this.state,", props = ",JSON.stringify(this.props))
+      chai.expect(this.props.onRatingFilterClick).to.exist
+      chai.expect(this.props.onBooleanFilterClick).to.exist
 
-      var rating
+      let { filterState } = this.props
 
-      // kts smell there must be a better way to do this
-      if(this.state.answers)
-      {
-        rating = this.state.answers.rating
-
-      }
       //log.info("ContextAnswer")
       log.info("ContextAnswer: booleans",choices.booleans)
       var that = this
       var choiceNodes = choices.booleans.map(function(choice) {
       log.info("ContextFilters: booleans: choice",JSON.stringify(choice))
-        // look up answer, if present
-        var answer
-        if(that.state.answers && choice.name in that.state.answers)
-        {
-          answer = that.state.answers[choice.name]
-        }
+      log.info("ContextFilters: booleans: filterState",JSON.stringify(filterState))
+      // look up answer, if present
+      var answer
+      if(filterState && 'booleans' in filterState && choice.name in filterState.booleans)
+      {
+        answer = filterState.booleans[choice.name]
+      }
+      log.info("ContextFilters: booleans: answer",answer)
 
         return (
           <EditBooleanChoice
@@ -71,10 +67,11 @@ var ContextFilters = React.createClass({
       //log.info("ContextAnswer: booleans: choice",choice)
         // look up answer, if present
         var answer
-        if(that.state.answers && choice.name in that.state.answers)
+        if(filterState && 'rating' in filterState && choice.name in filterState.rating)
         {
-          answer = that.state.answers[choice.name]
+          answer = filterState.rating[choice.name]
         }
+        log.info("ContextFilters: rating: answer",answer)
 
         return (
           <EditBooleanChoice
@@ -152,26 +149,26 @@ var Filters = React.createClass({
     log.info("Answer::render props",JSON.stringify(this.props))
     chai.expect(this.props.onRatingFilterClick).to.exist
     chai.expect(this.props.onBooleanFilterClick).to.exist
+    let {filterState,onRatingFilterClick,onBooleanFilterClick} = this.props
 
+    log.info("Answer::render filterState",JSON.stringify(filterState))
   // TODO update to fat arrow function
   var that = this
   var contextNodes = choices_context.map(function(context) {
     var context_name = context['name']
-    // look up answer, if present
-    var answers
-    if(that.props.answers &&  context_name in that.props.answers)
-    {
-      answers = that.props.answers[context_name]
-    }
+    let contextFilterState = filterState[context_name]
+
+    log.info("Answer::render contextFilterState",JSON.stringify(contextFilterState))
+    log.info("Answer::render context_name",context_name)
 
     return (
       <div className="col-xs-5"  key={context_name} >
         <ContextFilters
-          onRatingFilterClick={that.props.onRatingFilterClick}
-          onBooleanFilterClick={that.props.onBooleanFilterClick}
+          filterState={contextFilterState}
+          onRatingFilterClick= {onRatingFilterClick}
+          onBooleanFilterClick={onBooleanFilterClick}
           context={context_name}
           context_description={context['description']}
-          answers={ answers    }
         />
       </div>
     )
@@ -365,6 +362,7 @@ export const AnswerPage = (props) => {
           <Filters
               onRatingFilterClick ={toggleRatingFilterAction}
               onBooleanFilterClick={toggleBooleanFilterAction}
+              filterState={data.filters}
 
           />
           <hr />
