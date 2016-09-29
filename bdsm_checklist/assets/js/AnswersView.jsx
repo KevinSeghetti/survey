@@ -202,6 +202,32 @@ var Filters = React.createClass({
 
 //===============================================================================
 
+// kts TODO seperate filtering from rendering
+
+function filterContextAnswer(filters, answer) {
+    log.trace("filterContextAnswer: filters",JSON.stringify(filters,2),"answer",JSON.stringify(answer,null,2))
+
+    let result = choices.booleans.find( (choice) => {
+        let name = choice['name']
+
+        log.trace("filterContextAnswer: checking boolean",JSON.stringify(choice))
+        log.trace("filterContextAnswer: checking boolean name",name)
+        log.trace("filterContextAnswer: checking boolean name in answer",name in answer)
+        log.trace("filterContextAnswer: checking boolean name in answer[name]",answer[name])
+
+        if(name && name in answer && answer[name]
+           && name in filters['booleans'] && filters['booleans'][name]
+        )
+        {
+          log.trace("filterContextAnswer: !!!returnung true")
+          return true
+        }
+        return false
+    }) !== undefined
+    log.trace("filterContextAnswer: result = ",result)
+    return result
+}
+
 const ContextAnswer = ({ id, answers }) => {
     log.trace("ContextAnswer:render:")
     chai.expect(answers).to.exist
@@ -248,7 +274,7 @@ const ContextAnswer = ({ id, answers }) => {
 
 //===============================================================================
 
-const Answer = ({id, question, answers,parity  }) => {
+const Answer = ({id, question, answers,parity,filters  }) => {
 
   var contextNodes = choices_context.map(function(context) {
     var context_name = context['name']
@@ -259,6 +285,11 @@ const Answer = ({id, question, answers,parity  }) => {
     if(context_answers)
     {
       chai.expect(context_answers).to.exist
+
+        if(!filterContextAnswer(filters[context_name], context_answers))
+        {
+          return null
+        }
         return (
           <ContextAnswer
             choices={choices}
@@ -273,31 +304,34 @@ const Answer = ({id, question, answers,parity  }) => {
   })
 
   log.trace("Answer::render: final")
-
-  return (
-      <div className={parity} >
-        <div className="row" >
-            <div className='col-xs-2'>
-              <div className='topic-headline tooltipster_tooltip' title={ question.question_detail } >{ question.question_text   }</div>
-            </div>
-            { contextNodes }
-        </div>
-     </div>
-  )
+  if(contextNodes.filter( (val) => { return val }).length)
+  {
+    return (
+        <div className={parity} >
+          <div className="row" >
+              <div className='col-xs-2'>
+                <div className='topic-headline tooltipster_tooltip' title={ question.question_detail } >{ question.question_text   }</div>
+              </div>
+              { contextNodes }
+          </div>
+       </div>
+    )
+  }
+  return null
 }
 
 //===============================================================================
 
-const AnswerList = ({ data }) => {
+const AnswerList = ({ questions, filters }) => {
     log.trace("AnswerList:render:")
-    var answerNodes = data.questions.map(function(node,index) {
+    var answerNodes = questions.map(function(node,index) {
         var parity = 'odd'
         if(index % 2)
         {
           parity = 'even'
         }
 
-        log.trace("AnswerList:render: node = ",JSON.stringify(node))
+        //log.trace("AnswerList:render: node = ",JSON.stringify(node))
         if(node.answers)
         {
             log.trace("AnswerList:render: node answers = ",node.answers)
@@ -312,6 +346,7 @@ const AnswerList = ({ data }) => {
                 id={node.question.id}
                 answers={node.answers}
                 parity={parity}
+                filters={filters}
             />
             )
         }
@@ -368,7 +403,8 @@ export const AnswerPage = (props) => {
           <hr />
 
           <AnswerList
-              data={data}
+              questions={data.questions}
+              filters={data.filters}
           />
         </div>
     </div>
