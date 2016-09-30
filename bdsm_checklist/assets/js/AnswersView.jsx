@@ -245,36 +245,44 @@ const ContextAnswer = ({ id, answers }) => {
 
 const Answer = ({id, question, answers,parity,filters  }) => {
 
+  let renderThisAnswer = false
   var contextNodes = choices_context.map(function(context) {
     var context_name = context['name']
     var context_answers = answers[context_name]
 
     log.trace("Answer::render:contextNode(",context_name,")")
 
-    if(context_answers)
+    if(context_answers && filterContextAnswer(filters[context_name], context_answers))
     {
-      chai.expect(context_answers).to.exist
-
-        if(!filterContextAnswer(filters[context_name], context_answers))
-        {
-          return null
-        }
-        return (
-          <ContextAnswer
-            choices={choices}
-            answers={ context_answers }
-            question_id={ question.id}
-            id={id + '_'+context_name }
-            key={context_name}
-          />
-        )
+      renderThisAnswer = true
     }
-    return( null )
   })
 
-  log.trace("Answer::render: final")
-  if(contextNodes.filter( (val) => { return val }).length)
+  if(renderThisAnswer)
   {
+    var contextNodes = choices_context.map(function(context) {
+      var context_name = context['name']
+      var context_answers = answers[context_name]
+
+      log.trace("Answer::render:contextNode(",context_name,")")
+
+      if(context_answers)
+      {
+        chai.expect(context_answers).to.exist
+          return (
+            <ContextAnswer
+              choices={choices}
+              answers={ context_answers }
+              question_id={ question.id}
+              id={id + '_'+context_name }
+              key={context_name}
+            />
+          )
+      }
+      return( null )
+    })
+
+    log.trace("Answer::render: final")
     return (
         <div className={parity} >
           <div className="row" >

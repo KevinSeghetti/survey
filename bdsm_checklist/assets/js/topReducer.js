@@ -35,8 +35,6 @@ const initialState = {
   }
 }
 
-
-
 //-------------------------------------------------------------------------------
 
 export function topReducer(state = initialState, action) {
