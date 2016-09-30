@@ -12,20 +12,30 @@ import { filterReducer } from './filterReducers'
 
 //===============================================================================
 
+let defaultDict = function(choices) {
+    let result = {}
+    choices.forEach( (choice) => {
+        result[choice['name']] = true
+    })
+    return result
+}
+
 const initialState = {
   questions: [],
   filters:
   {
       'to_me': {
-          booleans: {},
-          rating: {}
+          booleans: defaultDict(choices.booleans),
+          rating: defaultDict(choices.rating),
       },
       'to_others': {
-          booleans: {},
-          rating: {}
+          booleans: defaultDict(choices.booleans),
+          rating: defaultDict(choices.rating),
       }
   }
 }
+
+
 
 //-------------------------------------------------------------------------------
 
