@@ -19,7 +19,7 @@ from rest_framework.renderers import JSONRenderer
 
 from django.http import HttpResponse
 #from django.template import RequestContext, loader
-from survey.settings import APP_NAME,SFW
+from survey.settings import APP_NAME,SFW,DEBUG_LOGGING
 
 from .models import Question,Answer
 from .serializers import (
@@ -213,6 +213,7 @@ def view(request,user_id):
         'choices': choices,
         'choicesRatingDict': choicesRatingDict,
         'user' : user,
+        'logging' : DEBUG_LOGGING,
         })
 
 
@@ -225,7 +226,8 @@ def reactreview(request):
         'choices_context': choices_context,
         'choices': choices,
         'user' : request.user,
-        'questionsUrl': reverse('checklist:rest_questions')
+        'logging' : DEBUG_LOGGING,
+        'questionsUrl': reverse('checklist:rest_questions'),
 
         })
 
@@ -239,6 +241,7 @@ def reactview(request,user_id):
         'choices': choices,
         'choicesRatingDict': choicesRatingDict,
         'user' : user,
+        'logging' : DEBUG_LOGGING,
         })
 
 @login_required

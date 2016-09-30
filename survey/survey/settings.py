@@ -33,10 +33,12 @@ except ImportError as e:
     pass
 
 if PRODUCTION:
-     DEBUG = False
+    DEBUG = False
+    DEBUG_LOGGING = False
 else:
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
+    DEBUG_LOGGING = True
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
