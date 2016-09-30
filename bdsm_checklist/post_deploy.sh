@@ -1,5 +1,7 @@
 #!/bin/bash
 
+npm install
+
 node_modules/.bin/webpack -p
 
 ./manage.py migrate -v 0
