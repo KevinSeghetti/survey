@@ -103,6 +103,7 @@ else:
 
 choicesRatingDict = {x['name']:x['description'] for x in choices['rating']}
 
+# edit a single answer. Linked from the review page
 @login_required
 def detail(request, question_id):
     # this shortcut
@@ -119,7 +120,6 @@ def detail(request, question_id):
         'user' : request.user,
         })
 
-
 def questions(request):
     question_list = Question.objects.order_by('-question_text')
     context = {'question_list': question_list}
@@ -130,13 +130,9 @@ def questions_edit(request):
     context = {'question_list': question_list}
     return render(request, 'checklist/questions_edit.html', context)
 
-def question_edit(request,question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    context = {'question': question}
-    return render(request, 'checklist/question_edit.html', context)
-
 #===============================================================================
 
+@login_required
 def answers_edit(request):
     answer_list = Answer.objects.order_by('-question__question_text')
     context = {'answer_list': answer_list}
@@ -144,14 +140,15 @@ def answers_edit(request):
 
 #===============================================================================
 
+@login_required
 def answers_react_edit(request):
     answer_list = Answer.objects.order_by('-question__question_text')
 
     context = {
-        'answer_list': answer_list,
         'choices_context': choices_context,
         'choices': choices,
         'user' : request.user,
+        'questionsUrl': reverse('checklist:rest_questions')
     }
 
     return render(request, 'checklist/answers_react_edit.html', context)
@@ -163,13 +160,13 @@ def answers_react_resume(request):
     answer_list = Answer.objects.order_by('-question__question_text')
 
     context = {
-        'answer_list': answer_list,
         'choices_context': choices_context,
         'choices': choices,
         'user' : request.user,
+        'questionsUrl': reverse('checklist:rest_questions_remaining')
     }
 
-    return render(request, 'checklist/answers_react_resume.html', context)
+    return render(request, 'checklist/answers_react_edit.html', context)
 
 #===============================================================================
 
@@ -218,6 +215,32 @@ def view(request,user_id):
         'user' : user,
         })
 
+
+
+@login_required
+def reactreview(request):
+    questions = get_list_or_404(Question)
+
+    return render(request, 'checklist/reactview.html', {
+        'choices_context': choices_context,
+        'choices': choices,
+        'user' : request.user,
+        'questionsUrl': reverse('checklist:rest_questions')
+
+        })
+
+def reactview(request,user_id):
+    questions = get_list_or_404(Question)
+    user = get_object_or_404(User,id=user_id)
+
+    return render(request, 'checklist/reactwview.html', {
+        'questions': get_answers_list(user,questions),
+        'choices_context': choices_context,
+        'choices': choices,
+        'choicesRatingDict': choicesRatingDict,
+        'user' : user,
+        })
+
 @login_required
 def set(request):
     questions = get_list_or_404(Question)
@@ -234,10 +257,10 @@ def set(request):
                 print(" selected_rating = ",selected_rating)
             except:
                 # rating is required. If no rating, then don't create an
-                # answer for this question. 
+                # answer for this question.
                 pass
             else:
-                # ok, we have a rating, lets see if we can find an answer 
+                # ok, we have a rating, lets see if we can find an answer
                 # to update
 
                 try:
@@ -258,9 +281,9 @@ def set(request):
                 else:
                     answer.notes = value
 
-                # now grab any booleans which are set        
+                # now grab any booleans which are set
                 for item in choices['booleans']:
-                    field_name = str(question.id)+"_"+context["name"]+"_"+item["name"] 
+                    field_name = str(question.id)+"_"+context["name"]+"_"+item["name"]
                     print("checking for field named ",field_name)
                     try:
                         value = request.POST[field_name]
@@ -269,7 +292,7 @@ def set(request):
                         setattr(answer,item["name"],False)
                     else:
                         setattr(answer,item["name"],True)
-                
+
                 print("About to write to answer:")
                 pprint.pprint(answer)
                 answer.save()
@@ -277,6 +300,7 @@ def set(request):
                     # with POST data. This prevents data from being posted twice if a
                     # user hits the Back button.
     return HttpResponseRedirect(reverse('checklist:index'))
+
 
 #===============================================================================
 

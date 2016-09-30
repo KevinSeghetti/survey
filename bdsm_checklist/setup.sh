@@ -62,6 +62,10 @@ pip install django-registration-redux==1.2
 #pip install mysql-connector-python==2.0.4
 
 pip install httpie
+pip install django-webpack-loader
+
+npm install
+
 
 #cd $DEST_PATH/bdsm_checklist
 
