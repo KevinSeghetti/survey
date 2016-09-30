@@ -5,21 +5,21 @@ import { createStore } from 'redux'
 var $ = require('jquery')
 var chai = require('chai')
 
+//-------------------------------------------------------------------------------
+
 var log = require('./loggingConfig').CreateLogger("answers_view")
-
 var AnswerPage = require('./AnswersView').AnswerPage
-
 var {choices, choices_context} = require('./applicationData')
 import { ACTION_LOAD,ACTION_SET_BOOLEAN_FILTER,ACTION_SET_RATING_FILTER,ACTION_SET_SEARCH_STRING } from './actionTypes'
 import { loadAction, toggleBooleanFilterAction,  toggleRatingFilterAction } from './actionTypes'
 import { topReducer } from './topReducer'
-import { mapObject } from './utilities'
+
+//-------------------------------------------------------------------------------
 
 var url=window.globs['questionsUrl']
+let store = createStore(topReducer)
 
 //===============================================================================
-
-
 
 export var AnswerBox = React.createClass({
     loadAnswersFromServer: function() {
@@ -51,6 +51,7 @@ export var AnswerBox = React.createClass({
   }
 })
 
+//-------------------------------------------------------------------------------
 
 const mapStateToProps = (state) => {
     log.trace("mapStateToProps: state = ",JSON.stringify(state,null,2))
@@ -58,6 +59,8 @@ const mapStateToProps = (state) => {
         data: state
     }
 }
+
+//-------------------------------------------------------------------------------
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -73,6 +76,8 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+//-------------------------------------------------------------------------------
+
 const AnswerApp = connect(
   mapStateToProps,
   mapDispatchToProps
@@ -80,8 +85,7 @@ const AnswerApp = connect(
 
 // main entry point for answer viewer. This will go away if this project becomes
 // a single page app
-
-let store = createStore(topReducer)
+//===============================================================================
 
 render(
   <Provider store={store}>
@@ -89,4 +93,6 @@ render(
   </Provider>,
   document.getElementById('react-app')
 )
+
+//===============================================================================
 

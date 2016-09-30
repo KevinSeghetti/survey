@@ -5,36 +5,22 @@ var ReactDOM = require('react-dom')
 import { createStore } from 'redux'
 var $ = require('jquery')
 var chai = require('chai')
+
+//-------------------------------------------------------------------------------
+
 var {BooleanChoice, RadioChoices, TextField} = require('./viewerComponents')
 var {BooleanChoice: EditBooleanChoice, RadioChoices: EditRadioChoices, TextField:EditTextField} = require('./editorComponents')
 var {ContextAnswer: ContextAnswerEdit} = require('./AnswersEdit')
 var {choices, choices_context} = require('./applicationData')
-
 var log = require('./loggingConfig').CreateLogger("AnswerView")
 
 //===============================================================================
 
 var ContextFilters = React.createClass({
-  getInitialState: function() {
-   //log.info("ContextAnswer:initial state",this.props)
-
-   var answers = {
-     context: this.props.context,
-
-   }
-   if('answers' in this.props && typeof this.props.answers != 'undefined')
-   {
-     answers = this.props.answers
-   }
-   //log.info("answers",answers)
-   return { answers: answers }
-  },
-
   render: function() {
-      log.info("ContextAnswer:render: state = ",this.state,", props = ",JSON.stringify(this.props))
+      log.info("ContextAnswer:render: props = ",JSON.stringify(this.props))
       chai.expect(this.props.onRatingFilterClick).to.exist
       chai.expect(this.props.onBooleanFilterClick).to.exist
-
       let { filterState } = this.props
 
       //log.info("ContextAnswer")
@@ -85,7 +71,6 @@ var ContextFilters = React.createClass({
         )
       })
 
-      var context = $.grep(choices_context, function(e) { return e.name == that.state.answers.context })[0]
       return (
           <div className="answer col-xs-12" onBlur={this.onBlur} >
             <div className='row'>
@@ -115,13 +100,6 @@ var ContextFilters = React.createClass({
     log.info('ContextAnswer:onUpdate:this.props', JSON.stringify(this.props))
     log.info('ContextAnswer:onUpdate:childProps', JSON.stringify(childProps))
     this.props.onRatingFilterClick( this.props.context, childProps.id )
-
-    ////log.info('ContextAnswer:onUpdate', childProps.parentField,  val)
-    //var newState = this.state.answers
-    //newState[childProps.parentField] = val
-    ////log.info('ContextAnswer:onUpdate: existing state', this.state)
-    ////log.info('ContextAnswer:onUpdate: new state', newState)
-    //this.setState({ answers: newState} )
   },
   onBooleanUpdate: function(childProps, val) {
 
@@ -130,16 +108,7 @@ var ContextFilters = React.createClass({
     log.info('ContextAnswer:onUpdate:childProps', JSON.stringify(childProps))
 
     this.props.onBooleanFilterClick( this.props.context, childProps.id )
-
-    ////log.info('ContextAnswer:onUpdate', childProps.parentField,  val)
-    //var newState = this.state.answers
-    //newState[childProps.parentField] = val
-    ////log.info('ContextAnswer:onUpdate: existing state', this.state)
-    ////log.info('ContextAnswer:onUpdate: new state', newState)
-    //this.setState({ answers: newState} )
   },
-
-
 })
 
 //===============================================================================
@@ -149,7 +118,7 @@ var Filters = React.createClass({
     log.info("Answer::render props",JSON.stringify(this.props))
     chai.expect(this.props.onRatingFilterClick).to.exist
     chai.expect(this.props.onBooleanFilterClick).to.exist
-    let {filterState,onRatingFilterClick,onBooleanFilterClick} = this.props
+    let {filterState,onRatingFilterClick,onBooleanFilterClick,parity} = this.props
 
     log.info("Answer::render filterState",JSON.stringify(filterState))
   // TODO update to fat arrow function
@@ -183,7 +152,7 @@ var Filters = React.createClass({
   })
 
   return (
-      <div className={this.props.parity} >
+      <div className={parity} >
         <div className="row" >
           <div className="col-xs-2 context-headline">
               Filters
