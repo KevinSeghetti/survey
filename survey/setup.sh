@@ -14,10 +14,10 @@
 ## http://www.mixtmeta.com/blog/python-on-dreamhost-part-1
 #
 #su -c 'su - postgres' <<EOT
-#psql -c 'create database bdsm_checklist;'
+#psql -c 'create database survey;'
 #psql
-#CREATE USER bdsm_checklist WITH PASSWORD 'oj9387gy2hb0s';
-#GRANT ALL PRIVILEGES ON DATABASE bdsm_checklist to bdsm_checklist;
+#CREATE USER survey WITH PASSWORD 'oj9387gy2hb0s';
+#GRANT ALL PRIVILEGES ON DATABASE survey to survey;
 #\q
 #exit
 #EOT
@@ -67,7 +67,7 @@ pip install django-webpack-loader
 npm install
 
 
-#cd $DEST_PATH/bdsm_checklist
+#cd $DEST_PATH/survey
 
 #python manage.py createsuperuser
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('kts', 'kts@tenetti.org', 'jdo08589fj2')" | ./manage.py shell

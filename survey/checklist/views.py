@@ -19,7 +19,7 @@ from rest_framework.renderers import JSONRenderer
 
 from django.http import HttpResponse
 #from django.template import RequestContext, loader
-from bdsm_checklist.settings import APP_NAME,SFW
+from survey.settings import APP_NAME,SFW
 
 from .models import Question,Answer
 from .serializers import (

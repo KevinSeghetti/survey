@@ -11,7 +11,7 @@ sys.path.insert(0,'$HOME/venv/bin')
 sys.path.insert(0,'$HOME/venv/lib/python3.4/site-packages/django')
 sys.path.insert(0,'$HOME/venv/lib/python3.4/site-packages')
 
-os.environ['DJANGO_SETTINGS_MODULE'] = "bdsm_checklist.settings"
+os.environ['DJANGO_SETTINGS_MODULE'] = "survey.settings"
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 

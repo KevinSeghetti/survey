@@ -11,7 +11,7 @@ from django.db import transaction
 from django.core.urlresolvers import reverse
 from django.core import serializers
 
-from bdsm_checklist.settings import APP_NAME,SFW
+from survey.settings import APP_NAME,SFW
 
 def app_globals(httpRequest):
     return {

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from bdsm_checklist.settings import APP_NAME,SFW
+from survey.settings import APP_NAME,SFW
 
 
 class Question(models.Model):
