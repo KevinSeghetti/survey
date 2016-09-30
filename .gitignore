@@ -5,4 +5,10 @@
 *.vtg
 venv
 .sass-cache/
+node_modules
+bdsm_checklist/assets/bundles/
+public
+Python34
+pythonsrc/
+
 
