@@ -244,56 +244,39 @@ const ContextAnswer = ({ id, answers }) => {
 //===============================================================================
 
 const Answer = ({id, question, answers,parity,filters  }) => {
-
-  let renderThisAnswer = false
   var contextNodes = choices_context.map(function(context) {
     var context_name = context['name']
     var context_answers = answers[context_name]
 
     log.trace("Answer::render:contextNode(",context_name,")")
 
-    if(context_answers && filterContextAnswer(filters[context_name], context_answers))
+    if(context_answers)
     {
-      renderThisAnswer = true
+      chai.expect(context_answers).to.exist
+        return (
+          <ContextAnswer
+            choices={choices}
+            answers={ context_answers }
+            question_id={ question.id}
+            id={id + '_'+context_name }
+            key={context_name}
+          />
+        )
     }
+    return( null )
   })
 
-  if(renderThisAnswer)
-  {
-    var contextNodes = choices_context.map(function(context) {
-      var context_name = context['name']
-      var context_answers = answers[context_name]
-
-      log.trace("Answer::render:contextNode(",context_name,")")
-
-      if(context_answers)
-      {
-        chai.expect(context_answers).to.exist
-          return (
-            <ContextAnswer
-              choices={choices}
-              answers={ context_answers }
-              question_id={ question.id}
-              id={id + '_'+context_name }
-              key={context_name}
-            />
-          )
-      }
-      return( null )
-    })
-
-    log.trace("Answer::render: final")
-    return (
-        <div className={parity} >
-          <div className="row" >
-              <div className='col-xs-2'>
-                <div className='topic-headline tooltipster_tooltip' title={ question.question_detail } >{ question.question_text   }</div>
-              </div>
-              { contextNodes }
-          </div>
-       </div>
-    )
-  }
+  log.trace("Answer::render: final")
+  return (
+      <div className={parity} >
+        <div className="row" >
+            <div className='col-xs-2'>
+              <div className='topic-headline tooltipster_tooltip' title={ question.question_detail } >{ question.question_text   }</div>
+            </div>
+            { contextNodes }
+        </div>
+     </div>
+  )
   return null
 }
 
@@ -301,9 +284,10 @@ const Answer = ({id, question, answers,parity,filters  }) => {
 
 const AnswerList = ({ questions, filters }) => {
     log.trace("AnswerList:render:")
+    let rowIndex = 0
     var answerNodes = questions.map(function(node,index) {
         var parity = 'odd'
-        if(index % 2)
+        if(rowIndex % 2)
         {
           parity = 'even'
         }
@@ -316,16 +300,33 @@ const AnswerList = ({ questions, filters }) => {
             let key = String(node.question.id)+parity
             log.trace("AnswerList:render:key ",key,"question text",node.question.question_text)
 
-            return (
-            <Answer
-                question={node.question}
-                key={key}
-                id={node.question.id}
-                answers={node.answers}
-                parity={parity}
-                filters={filters}
-            />
-            )
+            let renderThisAnswer = false
+            var contextNodes = choices_context.map(function(context) {
+              var context_name = context['name']
+              var context_answers = node.answers[context_name]
+
+              log.trace("Answer::render:contextNode(",context_name,")")
+
+              if(context_answers && filterContextAnswer(filters[context_name], context_answers))
+              {
+                renderThisAnswer = true
+              }
+            })
+
+            if(renderThisAnswer)
+            {
+              rowIndex += 1
+              return (
+              <Answer
+                  question={node.question}
+                  key={key}
+                  id={node.question.id}
+                  answers={node.answers}
+                  parity={parity}
+                  filters={filters}
+              />
+              )
+            }
         }
         return ( null )
     })
