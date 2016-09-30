@@ -10,3 +10,5 @@ The basic idea is: someone answers a lot of questions, then shares them with oth
 Both versions of the app are in this code base, if you poke around enough in the history you will find some NSFW references. 
 
 Since it is a technology test bed, it has several different frameworks and libraries pulled into it. 
+
+A deployed copy of the SFW version can be found [here](http://quiz.worldfoundry.org/)
