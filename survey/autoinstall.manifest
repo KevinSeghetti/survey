@@ -1,0 +1,12 @@
+---
+app_base: survey
+pip:
+ - pyaml                            # http://pyyaml.org/
+ - django                           # https://www.djangoproject.com/
+ - django-static-precompiler        # https://pypi.python.org/pypi/django-static-precompiler
+ - markdown                         # https://pythonhosted.org/Markdown/
+ - django-registration-redux==1.2   # http://django-registration-redux.readthedocs.io/en/v1.2/
+ - django-webpack-loader            # https://github.com/owais/django-webpack-loader
+ - djangorestframework              # http://www.django-rest-framework.org/
+
+
