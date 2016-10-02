@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOMEDIR=`pwd`
+HOMEDIR=`pwd`/..
 export RAILS_ENV=production
 cd ..
 pwd
