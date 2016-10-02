@@ -5,7 +5,7 @@ PRODUCT = PRODUCT
 
 deb:
 	export RAILS_ENV=production
-	../survey/pipsetup.py
+	cd ../survey && ./pipsetup.py
 	bundle install --path gems
 	bundle package --all --all-platforms
 	export GEMS_HOME=`pwd`/gems/
