@@ -6,8 +6,9 @@ PRODUCT = PRODUCT
 #bundle package --all --all-platforms
 
 deb:
+	pwd
 	export RAILS_ENV=production
-	./pipsetup.py	# need local copies
+	cd .. && ./pipsetup.py	# need local copies
 	pwd
 	cd ../survey/survey && npm install
 	pwd
