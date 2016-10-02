@@ -1,6 +1,7 @@
 #!/bin/bash
 
 HOMEDIR=`pwd`/..
+export PYTHONPATH=`pwd`/localpythonlibraries/lib64/python3.5/site-packages/:`pwd`/localpythonlibraries/lib/python3.5/site-packages/
 export RAILS_ENV=production
 cd ..
 pwd
