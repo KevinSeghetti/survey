@@ -4,7 +4,7 @@ HOMEDIR=`pwd`
 export RAILS_ENV=production
 cd ..
 pwd
-./pipsetup.py	# need local copies
+./pipsetup.py `pwd`/localpythonlibraries/
 cd ${HOMEDIR}/survey/survey && npm install
 pwd
 cd ${HOMEDIR}/survey && ( ./node_modules/.bin/webpack -p; ./manage.py migrate -v 0; ./manage.py collectstatic --noinput -i jsx -i '*.scss' -v 0; ./manage.py collectstatic --clear --noinput -i jsx -i '*.scss' -v 0; ./manage.py compilestatic )
