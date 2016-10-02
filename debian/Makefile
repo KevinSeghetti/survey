@@ -7,11 +7,11 @@ PRODUCT = PRODUCT
 
 deb:
 	export RAILS_ENV=production
-	cd ../survey && ./pipsetup.py	# need local copies
+	./pipsetup.py	# need local copies
 	pwd
 	cd ../survey/survey && npm install
 	pwd
-	export GEMS_HOME=`pwd`/pip/
+	export PYTHONPATH=`pwd`/localpythonlibraries/lib64/python3.5/site-packages/:`pwd`/localpythonlibraries/lib/python3.5/site-packages/
 	cd ../survey && ( ./node_modules/.bin/webpack -p; ./manage.py migrate -v 0; ./manage.py collectstatic --noinput -i jsx -i '*.scss' -v 0; ./manage.py collectstatic --clear --noinput -i jsx -i '*.scss' -v 0; ./manage.py compilestatic )
 	export VERSION=1.0-1
 	export APP_DIR=app_${VERSION}
