@@ -17,26 +17,28 @@ deb:
 	export APP_DIR=app_${VERSION}
 	sudo rm -rf package ; mkdir package && cd package
 	pwd
-	mkdir -p ${APP_DIR}/DEBIAN
-	cp ../control ${APP_DIR}/DEBIAN/control
-	export DEB_APP_DIR=${APP_DIR}/opt/app/
-	mkdir -p ${DEB_APP_DIR}
-	cp -R ../.bundle/ ${DEB_APP_DIR}
-	rsync -avz --exclude 'app/assets/' ../app ${DEB_APP_DIR}
-	cp -R ../bin/ ${DEB_APP_DIR}
-	cp -R ../config/ ${DEB_APP_DIR}
-	cp -R ../config.ru ${DEB_APP_DIR}
-	cp -R ../db/ ${DEB_APP_DIR}
-	cp -R ../Gemfile* ${DEB_APP_DIR}
-	cp -R ../gems/ ${DEB_APP_DIR}
-	cp -R ../lib/ ${DEB_APP_DIR}
-	cp -R ../log/ ${DEB_APP_DIR}
-	cp -R ../public/ ${DEB_APP_DIR}
-	mkdir ${DEB_APP_DIR}/public/uploads
-	cp -R ../Rakefile ${DEB_APP_DIR}
-	-sudo adduser --disabled-password deployer
-	sudo chown -R deployer:staff ${APP_DIR}
-	dpkg-deb -v --build app_${VERSION}
+	( cd package &&
+		mkdir -p ${APP_DIR}/DEBIAN ;
+		cp ../control ${APP_DIR}/DEBIAN/control ;
+		export DEB_APP_DIR=${APP_DIR}/opt/app/ ;
+		mkdir -p ${DEB_APP_DIR} ;
+		cp -R ../.bundle/ ${DEB_APP_DIR} ;
+		rsync -avz --exclude 'app/assets/' ../app ${DEB_APP_DIR} ;
+		cp -R ../bin/ ${DEB_APP_DIR} ;
+		cp -R ../config/ ${DEB_APP_DIR} ;
+		cp -R ../config.ru ${DEB_APP_DIR} ;
+		cp -R ../db/ ${DEB_APP_DIR} ;
+		cp -R ../Gemfile* ${DEB_APP_DIR} ;
+		cp -R ../gems/ ${DEB_APP_DIR} ;
+		cp -R ../lib/ ${DEB_APP_DIR} ;
+		cp -R ../log/ ${DEB_APP_DIR} ;
+		cp -R ../public/ ${DEB_APP_DIR} ;
+		mkdir ${DEB_APP_DIR}/public/uploads ;
+		cp -R ../Rakefile ${DEB_APP_DIR} ;
+		-sudo adduser --disabled-password deployer ;
+		sudo chown -R deployer:staff ${APP_DIR} ;
+		dpkg-deb -v --build app_${VERSION} ;
+	)
 
 
 #upload-to-repo:
