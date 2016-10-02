@@ -5,6 +5,8 @@ PRODUCT = PRODUCT
 
 #bundle package --all --all-platforms
 
+PYTHONPATH := `pwd`/localpythonlibraries/lib64/python3.5/site-packages/:`pwd`/localpythonlibraries/lib/python3.5/site-packages/
+
 deb:
 	pwd
 	export RAILS_ENV=production
@@ -59,6 +61,10 @@ deb:
 #	    curl -s -X POST -H 'Content-Type: application/json' --data @- ${REPO_API}/api/publish/:. <<__EOF__
 #{"SourceKind": "local", "Signing":{"Skip":true}, "Sources": [{"Name": "$PRODUCT"}], "Distribution": "$PRODUCT"}
 #__EOF__
+
+
+print-%:
+        @echo '$*=$($*)'
 
 
 print:
