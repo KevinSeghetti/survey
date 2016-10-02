@@ -5,6 +5,7 @@ export PYTHONPATH=`pwd`/localpythonlibraries/lib64/python3.5/site-packages/:`pwd
 export RAILS_ENV=production
 cd ..
 pwd
+mkdir `pwd`/localpythonlibraries/
 ./pipsetup.py `pwd`/localpythonlibraries/
 cd ${HOMEDIR}/survey/survey && npm install
 pwd
