@@ -9,16 +9,23 @@ import sys
 import pprint
 import pip
 
+if len(sys.argv) < 2:
+    print("must pass in full path to directory to locally install packages")
+    sys.exit(1)
 prefix = sys.argv[1]
+
+print("Installing python libraries to",prefix)
 
 def install(package):
     print("installing module named",package)
     pip.main(['install', '--prefix',prefix, package])
 
-# instal pyaml before trying to use it
-install('pyaml')
-
-import yaml
+try:
+    import yaml
+except:
+    # instal pyaml before trying to use it
+    install('pyaml')
+    os.execl(sys.executable, sys.executable, *sys.argv)
 
 with open('autoinstall.manifest', 'r') as f:
     doc = yaml.load(f)
