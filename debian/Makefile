@@ -10,8 +10,14 @@ deb:
 	cd ../survey && ./pipsetup.py	# need local copies
 	pwd
 	cd ../survey/survey && npm install
-	export GEMS_HOME=`pwd`/gems/
-	bundle exec rake assets:precompile
+	pwd
+	export GEMS_HOME=`pwd`/pip/
+	cd ../survey
+	./node_modules/.bin/webpack -p
+	./manage.py migrate -v 0
+	./manage.py collectstatic --noinput -i jsx -i '*.scss' -v 0
+	./manage.py collectstatic --clear --noinput -i jsx -i '*.scss' -v 0	# shouldn't be needed with blue/green deployments
+	./manage.py compilestatic
 	export VERSION=1.0-1
 	export APP_DIR=app_${VERSION}
 	sudo rm -rf package ; mkdir package && cd package
