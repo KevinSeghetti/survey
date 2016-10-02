@@ -21,10 +21,10 @@ mkdir -p ${APP_DIR}/DEBIAN
 cp ../debian/control ${APP_DIR}/DEBIAN/control
 export DEB_APP_DIR=${APP_DIR}/opt/app/
 mkdir -p ${DEB_APP_DIR}
-rsync -avz --exclude 'app/assets/' ../app ${DEB_APP_DIR}
+#rsync -avz --exclude 'app/assets/' ../app ${DEB_APP_DIR}
 cp -R ../localpythonlibraries/ ${DEB_APP_DIR}
 cp -R ../public/ ${DEB_APP_DIR}
 cp -R ../survey/ ${DEB_APP_DIR}
--sudo adduser --disabled-password deployer
-sudo chown -R deployer:staff ${APP_DIR}
+#-sudo adduser --disabled-password deployer
+#sudo chown -R deployer:staff ${APP_DIR}
 dpkg-deb -v --build app_${VERSION}
