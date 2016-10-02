@@ -14,6 +14,7 @@ echo PYTHONPATH=${PYTHONPATH}
 cd ${HOMEDIR}/survey && ( ./node_modules/.bin/webpack -p; ./manage.py migrate -v 0; ./manage.py collectstatic --noinput -i jsx -i '*.scss' -v 0; ./manage.py collectstatic --clear --noinput -i jsx -i '*.scss' -v 0; ./manage.py compilestatic )
 export VERSION=1.0-1
 export APP_DIR=app_${VERSION}
+cd ${HOMEDIR}
 sudo rm -rf package ; mkdir package && cd package
 pwd
 mkdir -p ${APP_DIR}/DEBIAN
