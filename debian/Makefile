@@ -5,7 +5,7 @@ PRODUCT = PRODUCT
 
 #bundle package --all --all-platforms
 
-PYTHONPATH := `pwd`/localpythonlibraries/lib64/python3.5/site-packages/:`pwd`/localpythonlibraries/lib/python3.5/site-packages/
+PYTHONPATH := `pwd`/../localpythonlibraries/lib64/python3.5/site-packages/:`pwd`/../localpythonlibraries/lib/python3.5/site-packages/
 
 deb:
 	pwd
