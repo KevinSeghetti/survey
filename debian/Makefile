@@ -64,7 +64,7 @@ deb:
 
 
 print-%:
-        @echo '$*=$($*)'
+	@echo '$*=$($*)'
 
 
 print:
