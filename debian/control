@@ -1,0 +1,10 @@
+Package: app
+Version: $VERSION
+Section: base
+Priority: optional
+Architecture: i386
+Depends:
+Maintainer: Will Norris <will@biohack.net>
+Description: app
+ app app app app app app app
+ app app app app
