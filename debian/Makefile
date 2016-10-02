@@ -8,7 +8,7 @@ PRODUCT = PRODUCT
 deb:
 	pwd
 	export RAILS_ENV=production
-	cd .. && ./pipsetup.py	# need local copies
+	cd .. && ./pipsetup.py `pwd`/localpythonlibraries/	# need local copies
 	pwd
 	cd ../survey/survey && npm install
 	pwd
