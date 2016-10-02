@@ -12,7 +12,6 @@ deb:
 	pwd
 	cd ../survey/survey && npm install
 	pwd
-	(
 	export PYTHONPATH=`pwd`/localpythonlibraries/lib64/python3.5/site-packages/:`pwd`/localpythonlibraries/lib/python3.5/site-packages/
 	echo PYTHONPATH = $(PYTHONPATH)
 	export
@@ -21,7 +20,7 @@ deb:
 	export APP_DIR=app_${VERSION}
 	sudo rm -rf package ; mkdir package && cd package
 	pwd
-	cd package &&
+	( cd package &&
 		mkdir -p ${APP_DIR}/DEBIAN ;
 		cp ../control ${APP_DIR}/DEBIAN/control ;
 		export DEB_APP_DIR=${APP_DIR}/opt/app/ ;
