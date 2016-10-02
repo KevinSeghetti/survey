@@ -9,9 +9,11 @@ import sys
 import pprint
 import pip
 
+prefix = sys.argv[1]
+
 def install(package):
     print("installing module named",package)
-    pip.main(['install', package])
+    pip.main(['install', '--prefix',prefix, package])
 
 # instal pyaml before trying to use it
 install('pyaml')
