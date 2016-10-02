@@ -3,11 +3,13 @@ PRODUCT = PRODUCT
 
 # survey/survey/local_switches...
 
+#bundle package --all --all-platforms
+
 deb:
 	export RAILS_ENV=production
-	cd ../survey && ./pipsetup.py
-	bundle install --path gems
-	bundle package --all --all-platforms
+	cd ../survey && ./pipsetup.py	# need local copies
+	pwd
+	cd ../survey/survey && npm install
 	export GEMS_HOME=`pwd`/gems/
 	bundle exec rake assets:precompile
 	export VERSION=1.0-1
