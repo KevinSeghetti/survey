@@ -10,15 +10,12 @@ PYTHONPATH := `pwd`/../localpythonlibraries/lib64/python3.5/site-packages/:`pwd`
 deb:
 	pwd
 	export RAILS_ENV=production
+	export
+	echo PYTHONPATH = ${PYTHONPATH}
 	cd .. && ./pipsetup.py `pwd`/localpythonlibraries/	# need local copies
 	pwd
 	cd ../survey/survey && npm install
 	pwd
-	export
-	export PYTHONPATH=`pwd`/../localpythonlibraries/lib64/python3.5/site-packages/:`pwd`/../localpythonlibraries/lib/python3.5/site-packages/
-	pwd
-	export
-	echo PYTHONPATH = ${PYTHONPATH}
 	cd ../survey && ( ./node_modules/.bin/webpack -p; ./manage.py migrate -v 0; ./manage.py collectstatic --noinput -i jsx -i '*.scss' -v 0; ./manage.py collectstatic --clear --noinput -i jsx -i '*.scss' -v 0; ./manage.py compilestatic )
 	export VERSION=1.0-1
 	export APP_DIR=app_${VERSION}
