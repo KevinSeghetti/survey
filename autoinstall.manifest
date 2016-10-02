@@ -2,7 +2,7 @@
 app_base: survey
 pip:
  - pyaml                            # http://pyyaml.org/
- - django                           # https://www.djangoproject.com/
+ - django==1.8.4                    # https://www.djangoproject.com/
  - django-static-precompiler        # https://pypi.python.org/pypi/django-static-precompiler
  - markdown                         # https://pythonhosted.org/Markdown/
  - django-registration-redux==1.2   # http://django-registration-redux.readthedocs.io/en/v1.2/
