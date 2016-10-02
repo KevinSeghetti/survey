@@ -15,7 +15,7 @@ deb:
 	cd ../survey/survey && npm install
 	pwd
 	export
-	( cd .. && export PYTHONPATH=`pwd`/localpythonlibraries/lib64/python3.5/site-packages/:`pwd`/localpythonlibraries/lib/python3.5/site-packages/ )
+	export PYTHONPATH=`pwd`/../localpythonlibraries/lib64/python3.5/site-packages/:`pwd`/../localpythonlibraries/lib/python3.5/site-packages/
 	pwd
 	export
 	echo PYTHONPATH = ${PYTHONPATH}
