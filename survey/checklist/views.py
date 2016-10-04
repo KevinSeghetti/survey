@@ -235,7 +235,7 @@ def reactview(request,user_id):
     questions = get_list_or_404(Question)
     user = get_object_or_404(User,id=user_id)
 
-    return render(request, 'checklist/reactwview.html', {
+    return render(request, 'checklist/reactview.html', {
         'questions': get_answers_list(user,questions),
         'choices_context': choices_context,
         'choices': choices,
