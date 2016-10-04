@@ -27,15 +27,15 @@ var ContextFilters = React.createClass({
       log.info("ContextAnswer: booleans",choices.booleans)
       var that = this
       var choiceNodes = choices.booleans.map(function(choice) {
-      log.info("ContextFilters: booleans: choice",JSON.stringify(choice))
-      log.info("ContextFilters: booleans: filterState",JSON.stringify(filterState))
+      //log.info("ContextFilters: booleans: choice",JSON.stringify(choice))
+      //log.info("ContextFilters: booleans: filterState",JSON.stringify(filterState))
       // look up answer, if present
       var answer
       if(filterState && 'booleans' in filterState && choice.name in filterState.booleans)
       {
         answer = filterState.booleans[choice.name]
       }
-      log.info("ContextFilters: booleans: answer",answer)
+      //log.info("ContextFilters: booleans: answer",answer)
 
         return (
           <EditBooleanChoice
@@ -96,9 +96,9 @@ var ContextFilters = React.createClass({
 
   onRatingUpdate: function(childProps, val) {
 
-    log.info('ContextAnswer:onUpdate', childProps.id,  val)
-    log.info('ContextAnswer:onUpdate:this.props', JSON.stringify(this.props))
-    log.info('ContextAnswer:onUpdate:childProps', JSON.stringify(childProps))
+    //log.info('ContextAnswer:onUpdate', childProps.id,  val)
+    //log.info('ContextAnswer:onUpdate:this.props', JSON.stringify(this.props))
+    //log.info('ContextAnswer:onUpdate:childProps', JSON.stringify(childProps))
     this.props.onRatingFilterClick( this.props.context, childProps.id )
   },
   onBooleanUpdate: function(childProps, val) {
@@ -174,15 +174,22 @@ var Filters = React.createClass({
 // kts TODO seperate filtering from rendering
 
 function filterContextAnswer(filters, answer) {
-    log.trace("filterContextAnswer: filters",JSON.stringify(filters,2),"answer",JSON.stringify(answer,null,2))
+    log.trace("filterContextAnswer:")
+    //log.trace("filterContextAnswer: filters",JSON.stringify(filters,null,2))
+    //log.trace("filterContextAnswer: answer",JSON.stringify(answer,null,2))
+
+    if(filters['rating'][answer.rating])
+    {
+        return true
+    }
 
     let result = choices.booleans.find( (choice) => {
         let name = choice['name']
 
-        log.trace("filterContextAnswer: checking boolean",JSON.stringify(choice))
-        log.trace("filterContextAnswer: checking boolean name",name)
-        log.trace("filterContextAnswer: checking boolean name in answer",name in answer)
-        log.trace("filterContextAnswer: checking boolean name in answer[name]",answer[name])
+        //log.trace("filterContextAnswer: checking boolean",JSON.stringify(choice))
+        //log.trace("filterContextAnswer: checking boolean name",name)
+        //log.trace("filterContextAnswer: checking boolean name in answer",name in answer)
+        //log.trace("filterContextAnswer: checking boolean name in answer[name]",answer[name])
 
         if(name && name in answer && answer[name]
            && name in filters['booleans'] && filters['booleans'][name]
@@ -194,6 +201,7 @@ function filterContextAnswer(filters, answer) {
         return false
     }) !== undefined
     log.trace("filterContextAnswer: result = ",result)
+
     return result
 }
 
