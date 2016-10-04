@@ -10,17 +10,13 @@ $color-primary-2 :  #F09891;
 $color-primary-3 :  #640D06;
 $color-primary-4 :  #1F0200;
 
-$color-secondary-1-0 :  #AA6F39; 	/* Main Secondary color (1) */
-$color-secondary-1-1 :  #FFEFE0;
-$color-secondary-1-2 :  #F0BF91;
-$color-secondary-1-3 :  #643306;
-$color-secondary-1-4 :  #1F0F00;
 
-$color-secondary-2-0 :  #8C2F5E; 	/* Main Secondary color (2) */
-$color-secondary-2-1 :  #EFD2E1;
-$color-secondary-2-2 :  #C5789F;
-$color-secondary-2-3 :  #52052C;
-$color-secondary-2-4 :  #19000D;
+// http://paletton.com/#uid=b0i0x5s0kiDds5MvWcXkIq68lL720
+$color-secondary-1-0 :  #6B412D; 	/* Main Secondary color (1) */
+$color-secondary-1-1 :  #FEDFD1;
+$color-secondary-1-2 :  #A57862;
+$color-secondary-1-3 :  #421E0C;
+$color-secondary-1-4 :  #100500;
 
 // end manually imported colors
 
@@ -62,25 +58,25 @@ div.site-header {
                display: block;
                padding:5px 0px;
                width:120px;
-               background:$color-secondary-2-3;
-               color:$color-secondary-2-1;
+               background:$color-secondary-1-3;
+               color:$color-secondary-1-1;
                float:left;
                text-align:center;
-               //border-left:1px solid $color-secondary-2-3;
+               //border-left:1px solid $color-secondary-1-3;
 
-               border-top:   2px solid  $color-secondary-2-0;
-               border-right: 2px solid  $color-secondary-2-4;
-               border-bottom:2px solid  $color-secondary-2-4;
-               border-left:  2px solid  $color-secondary-2-0;
+               border-top:   2px solid  $color-secondary-1-0;
+               border-right: 2px solid  $color-secondary-1-4;
+               border-bottom:2px solid  $color-secondary-1-4;
+               border-left:  2px solid  $color-secondary-1-0;
             }
             a:hover {
-                 background:$color-secondary-2-0;
-                 color:$color-secondary-2-4;
+                 background:$color-secondary-1-0;
+                 color:$color-secondary-1-4;
 
-               border-top:   2px solid  $color-secondary-2-4;
-               border-right: 2px solid  $color-secondary-2-0;
-               border-bottom:2px solid  $color-secondary-2-0;
-               border-left:  2px solid  $color-secondary-2-4;
+               border-top:   2px solid  $color-secondary-1-4;
+               border-right: 2px solid  $color-secondary-1-0;
+               border-bottom:2px solid  $color-secondary-1-0;
+               border-left:  2px solid  $color-secondary-1-4;
 
             }
          }
@@ -119,7 +115,7 @@ div.entire-page {
    box-sizing: border-box;
    min-height: 100%;
 
-   padding: 20px 20px 20px 20px;
+   padding: 20px 40px 20px 40px;
    position: relative;
 
    background-color:  $color-primary-1;
@@ -150,10 +146,10 @@ div.entire-page {
    background-color:   $color-secondary-1-0;
 }
 
-a {
-   color: #990033;
-   
-}
+//a {
+//   color: #990033;
+//
+//}
 
 div.entire-page .headline {
     font-size: 30px;
