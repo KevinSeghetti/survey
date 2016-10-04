@@ -68,7 +68,7 @@
                {% if request.user.is_authenticated %}
                   <li><a href="{% url 'checklist:edit'      %}">Fill out checklist</a></li>
                   <li><a href="{% url 'checklist:resume'    %}">Resume checklist  </a></li>
-                  <li><a href="{% url 'checklist:review'    %}">View Results      </a></li>
+                  <li><a href="{% url 'checklist:reactreview'    %}">View Results      </a></li>
                 {% endif %}
                <li><a href="{% url 'checklist:questions' %}">View question list</a></li>
             </ul>

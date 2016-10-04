@@ -27,15 +27,15 @@ var ContextFilters = React.createClass({
       log.info("ContextAnswer: booleans",choices.booleans)
       var that = this
       var choiceNodes = choices.booleans.map(function(choice) {
-      log.info("ContextFilters: booleans: choice",JSON.stringify(choice))
-      log.info("ContextFilters: booleans: filterState",JSON.stringify(filterState))
+      //log.info("ContextFilters: booleans: choice",JSON.stringify(choice))
+      //log.info("ContextFilters: booleans: filterState",JSON.stringify(filterState))
       // look up answer, if present
       var answer
       if(filterState && 'booleans' in filterState && choice.name in filterState.booleans)
       {
         answer = filterState.booleans[choice.name]
       }
-      log.info("ContextFilters: booleans: answer",answer)
+      //log.info("ContextFilters: booleans: answer",answer)
 
         return (
           <EditBooleanChoice
@@ -96,9 +96,9 @@ var ContextFilters = React.createClass({
 
   onRatingUpdate: function(childProps, val) {
 
-    log.info('ContextAnswer:onUpdate', childProps.id,  val)
-    log.info('ContextAnswer:onUpdate:this.props', JSON.stringify(this.props))
-    log.info('ContextAnswer:onUpdate:childProps', JSON.stringify(childProps))
+    //log.info('ContextAnswer:onUpdate', childProps.id,  val)
+    //log.info('ContextAnswer:onUpdate:this.props', JSON.stringify(this.props))
+    //log.info('ContextAnswer:onUpdate:childProps', JSON.stringify(childProps))
     this.props.onRatingFilterClick( this.props.context, childProps.id )
   },
   onBooleanUpdate: function(childProps, val) {
@@ -131,7 +131,7 @@ var Filters = React.createClass({
     log.info("Answer::render context_name",context_name)
 
     return (
-      <div className="col-xs-5"  key={context_name} >
+      <div className="col-xs-6"  key={context_name} >
         <ContextFilters
           filterState={contextFilterState}
           onRatingFilterClick= {onRatingFilterClick}
@@ -143,25 +143,34 @@ var Filters = React.createClass({
     )
   })
 
+  var headerDivStyle = {
+    fontSize: '16px',
+    textAlign: 'center'
+  }
+
   var headerNodes = choices_context.map(function(context) {
       return(
-      <div className="col-xs-5 context-headline" key={context.name}>
+      <div className="col-xs-6 context-headline" key={context.name} style={headerDivStyle} >
           {context.description}
       </div>
       )
   })
 
+    var divStyle = {
+      fontSize: '28px',
+      textAlign: 'center'
+    }
   return (
       <div className={parity} >
         <div className="row" >
-          <div className="col-xs-2 context-headline">
+          <div className="col-xs-12 context-headline" style={divStyle}>
               Filters
           </div>
+        </div>
+        <div className="row" >
           {headerNodes}
         </div>
         <div className="row" >
-          <div className="col-xs-2">
-          </div>
           { contextNodes }
         </div>
      </div>
@@ -174,15 +183,22 @@ var Filters = React.createClass({
 // kts TODO seperate filtering from rendering
 
 function filterContextAnswer(filters, answer) {
-    log.trace("filterContextAnswer: filters",JSON.stringify(filters,2),"answer",JSON.stringify(answer,null,2))
+    log.trace("filterContextAnswer:")
+    //log.trace("filterContextAnswer: filters",JSON.stringify(filters,null,2))
+    //log.trace("filterContextAnswer: answer",JSON.stringify(answer,null,2))
+
+    if(filters['rating'][answer.rating])
+    {
+        return true
+    }
 
     let result = choices.booleans.find( (choice) => {
         let name = choice['name']
 
-        log.trace("filterContextAnswer: checking boolean",JSON.stringify(choice))
-        log.trace("filterContextAnswer: checking boolean name",name)
-        log.trace("filterContextAnswer: checking boolean name in answer",name in answer)
-        log.trace("filterContextAnswer: checking boolean name in answer[name]",answer[name])
+        //log.trace("filterContextAnswer: checking boolean",JSON.stringify(choice))
+        //log.trace("filterContextAnswer: checking boolean name",name)
+        //log.trace("filterContextAnswer: checking boolean name in answer",name in answer)
+        //log.trace("filterContextAnswer: checking boolean name in answer[name]",answer[name])
 
         if(name && name in answer && answer[name]
            && name in filters['booleans'] && filters['booleans'][name]
@@ -194,6 +210,7 @@ function filterContextAnswer(filters, answer) {
         return false
     }) !== undefined
     log.trace("filterContextAnswer: result = ",result)
+
     return result
 }
 
@@ -362,14 +379,7 @@ export const AnswerPage = (props) => {
     return(
     <div>
         <div className="answerBox question-reactview">
-        <div>
-            Select a rating for each question. You don't have to fill this out all
-            at once, your progress is saved as you move to the next question.
-            So you can come back to the rest later. Select resume to get a
-            question list containing only the questions you haven't answered yet.
-
-            Instructions can be found
-            <a href="/checklist/instructions"> here</a>
+        <div>Uncheck boxes to not show anwers with that value
         </div>
          <hr />
           <Filters

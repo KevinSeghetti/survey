@@ -19,6 +19,20 @@
     window.globs['csrfToken'] = "{{ csrf_token }}"
     // kts: must be a better way to pass parameters into a module
     window.globs['questionsUrl'] = "{{ questionsUrl }}"
+    window.globs['defaultLoggingLevel'] = "OFF"
+    var loggingLevel='ERROR'
+    {%if logging %}
+        var loggingLevel='ALL'
+    {% endif %}
+    window.globs['loggingLevels'] =
+    {
+        'AnswerView' : loggingLevel,
+        //'viewerComponents' : loggingLevel,
+        'answers_view' : loggingLevel,
+        'actions' : loggingLevel,
+        'reducers' : loggingLevel,
+    }
+
   </script>
 
   {% render_bundle 'answers_edit' %}
