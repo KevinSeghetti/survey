@@ -121,7 +121,7 @@ def detail(request, question_id):
         })
 
 def questions(request):
-    question_list = Question.objects.order_by('-question_text')
+    question_list = Question.objects.order_by('question_text')
     context = {'question_list': question_list}
     return render(request, 'checklist/questions.html', context)
 
