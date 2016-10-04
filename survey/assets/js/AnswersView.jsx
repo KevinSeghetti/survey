@@ -161,7 +161,7 @@ var Filters = React.createClass({
       textAlign: 'center'
     }
   return (
-      <div className={parity} >
+      <div className='filters' >
         <div className="row" >
           <div className="col-xs-12 context-headline" style={divStyle}>
               Filters
