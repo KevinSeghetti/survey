@@ -131,7 +131,7 @@ var Filters = React.createClass({
     log.info("Answer::render context_name",context_name)
 
     return (
-      <div className="col-xs-5"  key={context_name} >
+      <div className="col-xs-6"  key={context_name} >
         <ContextFilters
           filterState={contextFilterState}
           onRatingFilterClick= {onRatingFilterClick}
@@ -143,25 +143,34 @@ var Filters = React.createClass({
     )
   })
 
+  var headerDivStyle = {
+    fontSize: '16px',
+    textAlign: 'center'
+  }
+
   var headerNodes = choices_context.map(function(context) {
       return(
-      <div className="col-xs-5 context-headline" key={context.name}>
+      <div className="col-xs-6 context-headline" key={context.name} style={headerDivStyle} >
           {context.description}
       </div>
       )
   })
 
+    var divStyle = {
+      fontSize: '28px',
+      textAlign: 'center'
+    }
   return (
       <div className={parity} >
         <div className="row" >
-          <div className="col-xs-2 context-headline">
+          <div className="col-xs-12 context-headline" style={divStyle}>
               Filters
           </div>
+        </div>
+        <div className="row" >
           {headerNodes}
         </div>
         <div className="row" >
-          <div className="col-xs-2">
-          </div>
           { contextNodes }
         </div>
      </div>
@@ -370,14 +379,7 @@ export const AnswerPage = (props) => {
     return(
     <div>
         <div className="answerBox question-reactview">
-        <div>
-            Select a rating for each question. You don't have to fill this out all
-            at once, your progress is saved as you move to the next question.
-            So you can come back to the rest later. Select resume to get a
-            question list containing only the questions you haven't answered yet.
-
-            Instructions can be found
-            <a href="/checklist/instructions"> here</a>
+        <div>Uncheck boxes to not show anwers with that value
         </div>
          <hr />
           <Filters
