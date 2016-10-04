@@ -10,6 +10,12 @@
         interested in various sports match up with others of similar interest.
 
         You will need to create an account to see most of the site.
+        <br />
+        For an example of what the results look like after filling out the
+        form, you can view <a href="/checklist/view/3/" >mine</a>
+
+        <br />
+
 
         {% else %}
         Welcome to the online BDSM checklist. This is an interactive version of a checklist I found
@@ -29,13 +35,13 @@
 
         There are some directions <a href="/checklist/instructions" >here</a>
 
-
-        {% endif %}
         <br />
         For an example of what the results look like after filling out the
         form, you can view <a href="/checklist/view/1/" >mine</a>
 
         <br />
+
+        {% endif %}
 
        {% if request.user.is_authenticated %}
           <br />To publish your results for anyone to be able to view, copy the following link:
@@ -89,7 +95,7 @@
         <a href="/checklist/edit/">answer editor</a> uses ReactJS. <br />
         <a href="/checklist/review/">results viewer </a> uses ReactJS & Redux. <br />
         <a href="/checklist/oldreview/">older version of results viewer </a> uses js DataTables.<br />
-        <a href="/checklist/oldview/1">older version of public results viewer </a> uses js DataTables.<br />
+        <a href="/checklist/oldview/3">older version of public results viewer </a> uses js DataTables.<br />
 
         both of those are communicating with the back end via a REST interface.
 
