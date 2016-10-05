@@ -9,7 +9,7 @@ var chai = require('chai')
 //-------------------------------------------------------------------------------
 
 var {BooleanChoice, RadioChoices, TextField} = require('./viewerComponents')
-var {BooleanChoice: EditBooleanChoice, RadioChoices: EditRadioChoices, TextField:EditTextField} = require('./editorComponents')
+var {BooleanChoice: EditBooleanChoice, RadioChoices: EditRadioChoices, TextField:EditTextField, ClickableButton} = require('./editorComponents')
 var {ContextAnswer: ContextAnswerEdit} = require('./AnswersEdit')
 var {choices, choices_context} = require('./applicationData')
 var log = require('./loggingConfig').CreateLogger("AnswerView")
@@ -21,7 +21,14 @@ var ContextFilters = React.createClass({
       log.info("ContextAnswer:render: props = ",JSON.stringify(this.props))
       chai.expect(this.props.onRatingFilterClick).to.exist
       chai.expect(this.props.onBooleanFilterClick).to.exist
-      let { filterState } = this.props
+      chai.expect(this.props.onRatingClearClick).to.exist
+      chai.expect(this.props.onBooleanClearClick).to.exist
+      let {
+          filterState,
+          onBooleanClearClick,
+          onRatingClearClick,
+
+      } = this.props
 
       //log.info("ContextAnswer")
       log.info("ContextAnswer: booleans",choices.booleans)
@@ -60,22 +67,28 @@ var ContextFilters = React.createClass({
         log.info("ContextFilters: rating: answer",answer)
 
         return (
-          <EditBooleanChoice
-            choice={choice}
-            key={choice.name}
-            id={choice.name}
-            onUpdate={that.onRatingUpdate}
-            answer={answer}
-            parentField={choice.name}
-          />
+            <EditBooleanChoice
+              choice={choice}
+              key={choice.name}
+              id={choice.name}
+              onUpdate={that.onRatingUpdate}
+              answer={answer}
+              parentField={choice.name}
+            />
         )
       })
 
       return (
-          <div className="answer col-xs-12" onBlur={this.onBlur} >
+          <div className="answer col-xs-12" >
             <div className='row'>
                <div className="col-xs-12">
                   <div className='row' >
+                     <div className="col-xs-2" >
+                         <ClickableButton
+                             value="Clear"
+                             handleClick={onRatingClearClick}
+                         />
+                     </div>
                      <div className='question-headline col-xs-2'>
                        Rating
                      </div>
@@ -85,6 +98,12 @@ var ContextFilters = React.createClass({
             </div>
             <div className='row'>
                <div className="col-xs-12">
+                 <div className="col-xs-6" >
+                     <ClickableButton
+                         value="Clear"
+                         handleClick={onBooleanClearClick}
+                     />
+                 </div>
                  <div className='booleans' >
                    {choiceNodes}
                  </div>
@@ -118,7 +137,14 @@ var Filters = React.createClass({
     log.info("Answer::render props",JSON.stringify(this.props))
     chai.expect(this.props.onRatingFilterClick).to.exist
     chai.expect(this.props.onBooleanFilterClick).to.exist
-    let {filterState,onRatingFilterClick,onBooleanFilterClick,parity} = this.props
+    chai.expect(this.props.onBooleanClearClick).to.exist
+    chai.expect(this.props.onRatingClearClick).to.exist
+    let {
+            filterState,onRatingFilterClick,
+            onBooleanFilterClick,parity,
+            onBooleanClearClick,
+            onRatingClearClick,
+         } = this.props
 
     log.info("Answer::render filterState",JSON.stringify(filterState))
   // TODO update to fat arrow function
@@ -136,6 +162,9 @@ var Filters = React.createClass({
           filterState={contextFilterState}
           onRatingFilterClick= {onRatingFilterClick}
           onBooleanFilterClick={onBooleanFilterClick}
+          onRatingClearClick= {onRatingClearClick}
+          onBooleanClearClick={onBooleanClearClick}
+
           context={context_name}
           context_description={context['description']}
         />
@@ -175,7 +204,8 @@ var Filters = React.createClass({
         </div>
      </div>
   )
-  }
+  },
+
 })
 
 //===============================================================================
@@ -373,7 +403,7 @@ const AnswerList = ({ questions, filters }) => {
 
 export const AnswerPage = (props) => {
     log.info(' AnswerPage: toggle', JSON.stringify(props))
-    let { data, toggleRatingFilterAction, toggleBooleanFilterAction } = props
+    let { data, toggleRatingFilterAction, toggleBooleanFilterAction, clearRatingFilterAction, clearBooleanFilterAction } = props
     log.info(' AnswerPage: test', JSON.stringify(toggleRatingFilterAction))
 
     return(
@@ -385,6 +415,8 @@ export const AnswerPage = (props) => {
           <Filters
               onRatingFilterClick ={toggleRatingFilterAction}
               onBooleanFilterClick={toggleBooleanFilterAction}
+              onBooleanClearClick={clearBooleanFilterAction}
+              onRatingClearClick={clearRatingFilterAction}
               filterState={data.filters}
 
           />
