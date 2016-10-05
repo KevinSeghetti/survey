@@ -77,6 +77,10 @@ var ContextFilters = React.createClass({
         )
       })
 
+      let labelStyle = {
+          fontSize: '18px',
+          fontWeight:'bold',
+      }
       return (
           <div className="col-xs-12" >
             <div className='row'>
@@ -86,10 +90,10 @@ var ContextFilters = React.createClass({
                       handleClick={this.onRatingClearClick}
                   />
               </div>
-              <div className=' col-xs-2'>
-                Rating
+              <div className='form-group' >
+                <span style={labelStyle} >Rating</span>
+                {ratingNodes}
               </div>
-              {ratingNodes}
             </div>
             <div className='row'>
                <div className="col-xs-2" >
@@ -98,10 +102,8 @@ var ContextFilters = React.createClass({
                        handleClick={this.onBooleanClearClick}
                    />
                </div>
-               <div className='booleans' >
-                 <div className=' col-xs-2'>
-                   Selections
-                 </div>
+               <div className='form-group' >
+                 <span style={labelStyle} >Selections</span>
                  {choiceNodes}
                </div>
             </div>
@@ -145,7 +147,7 @@ var Filters = React.createClass({
     chai.expect(this.props.onRatingClearClick).to.exist
     let {
             filterState,onRatingFilterClick,
-            onBooleanFilterClick,parity,
+            onBooleanFilterClick,
             onBooleanClearClick,
             onRatingClearClick,
          } = this.props
@@ -181,8 +183,8 @@ var Filters = React.createClass({
 
   var headerNodes = choices_context.map( (context) => {
       return(
-      <div className="col-xs-6 context-headline" key={context.name} style={headerDivStyle} >
-          {context.description}
+      <div className="col-xs-6" key={context.name} style={headerDivStyle} >
+          <h3>{context.description}</h3>
       </div>
       )
   })
@@ -192,17 +194,20 @@ var Filters = React.createClass({
       textAlign: 'center'
     }
   return (
-      <div className='filters' >
-        <div className="row" >
-          <div className="col-xs-12 context-headline" style={divStyle}>
-              Filters
-          </div>
+      <div className='panel panel-default' >
+        <div className="panel-heading">
+              <h2 className="text-center">Filters</h2>
         </div>
-        <div className="row" >
-          {headerNodes}
-        </div>
-        <div className="row" >
-          { contextNodes }
+        <div className="panel-body">
+            <div className="row" >
+                  <div className="col-xs-12"> <p>Uncheck boxes to not show anwers with that value</p></div>
+            </div>
+            <div className="row" >
+              {headerNodes}
+            </div>
+            <div className="row" >
+              { contextNodes }
+            </div>
         </div>
      </div>
   )
@@ -292,7 +297,7 @@ const ContextAnswer = ({ id, answers }) => {
 
 //===============================================================================
 
-const Answer = ({id, question, answers,parity,filters  }) => {
+const Answer = ({id, question, answers,filters  }) => {
   var contextNodes = choices_context.map( (context) => {
     var context_name = context['name']
     var context_answers = answers[context_name]
@@ -303,13 +308,17 @@ const Answer = ({id, question, answers,parity,filters  }) => {
     {
       chai.expect(context_answers).to.exist
         return (
-          <ContextAnswer
-            choices={choices}
-            answers={ context_answers }
-            question_id={ question.id}
-            id={id + '_'+context_name }
-            key={context_name}
-          />
+          <td key={context_name}>
+            <div className="row">
+                <ContextAnswer
+                  choices={choices}
+                  answers={ context_answers }
+                  question_id={ question.id}
+                  id={id + '_'+context_name }
+
+                />
+            </div>
+          </td>
         )
     }
     return( null )
@@ -317,14 +326,10 @@ const Answer = ({id, question, answers,parity,filters  }) => {
 
   log.trace("Answer::render: final")
   return (
-      <div className={parity} >
-        <div className="row" >
-            <div className='col-xs-2'>
-              <div className='topic-headline tooltipster_tooltip' title={ question.question_detail } >{ question.question_text   }</div>
-            </div>
-            { contextNodes }
-        </div>
-     </div>
+      <tr>
+          <td className='topic-headline tooltipster_tooltip' title={ question.question_detail } >{ question.question_text   }</td>
+          { contextNodes }
+     </tr>
   )
   return null
 }
@@ -335,18 +340,13 @@ const AnswerList = ({ questions, filters }) => {
     log.trace("AnswerList:render:")
     let rowIndex = 0
     var answerNodes = questions.map( (node,index) => {
-        var parity = 'odd'
-        if(rowIndex % 2)
-        {
-          parity = 'even'
-        }
 
         //log.trace("AnswerList:render: node = ",JSON.stringify(node))
         if(node.answers)
         {
             log.trace("AnswerList:render: node answers = ",node.answers)
 
-            let key = String(node.question.id)+parity
+            let key = String(node.question.id)+rowIndex
             log.trace("AnswerList:render:key ",key,"question text",node.question.question_text)
 
             let renderThisAnswer = false
@@ -371,7 +371,6 @@ const AnswerList = ({ questions, filters }) => {
                   key={key}
                   id={node.question.id}
                   answers={node.answers}
-                  parity={parity}
                   filters={filters}
               />
               )
@@ -382,22 +381,24 @@ const AnswerList = ({ questions, filters }) => {
 
     var headerNodes = choices_context.map( (context) => {
         return(
-        <div className="col-xs-5 context-headline" key={context.name}>
+        <th key={context.name}>
             {context.description}
-        </div>
+        </th>
         )
     })
 
     return (
-      <div className="answerList">
-        <div className='row'>
-          <div className="col-xs-2 context-headline">
-              Questions
-          </div>
-          {headerNodes}
-        </div>
-        {answerNodes}
-      </div>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Questions</th>
+            {headerNodes}
+          </tr>
+        </thead>
+        <tbody>
+          {answerNodes}
+        </tbody>
+      </table>
     )
 }
 
@@ -411,16 +412,12 @@ export const AnswerPage = (props) => {
     return(
     <div>
         <div className="answerBox question-reactview">
-        <div>Uncheck boxes to not show anwers with that value
-        </div>
-         <hr />
           <Filters
               onRatingFilterClick ={toggleRatingFilterAction}
               onBooleanFilterClick={toggleBooleanFilterAction}
               onBooleanClearClick={clearBooleanFilterAction}
               onRatingClearClick={clearRatingFilterAction}
               filterState={data.filters}
-
           />
           <hr />
 
