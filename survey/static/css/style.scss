@@ -111,16 +111,7 @@ div.site-footer .credits {
     text-align: center;
 }
 
-div.entire-page {
-   box-sizing: border-box;
-   min-height: 100%;
-
-   padding: 20px 40px 20px 40px;
-   position: relative;
-
-   background-color:  $color-primary-1;
-   color: #000000;
-
+div.old-css {
    input[type='checkbox']
    {
       margin: 5px 3px 3px 6px;
@@ -141,17 +132,26 @@ div.entire-page {
 
 }
 
+div.entire-page {
+   box-sizing: border-box;
+   min-height: 100%;
+
+   padding: 20px 40px 20px 40px;
+   position: relative;
+
+   background-color:  $color-primary-1;
+   color: #000000;
+
+
+}
+
 #content .question-view th
 {
    background-color:   $color-secondary-1-0;
 }
 
-//a {
-//   color: #990033;
-//
-//}
 
-div.entire-page .headline {
+div.old-css .headline {
     font-size: 30px;
     line-height: 32px;
     text-align: center
@@ -165,57 +165,30 @@ body {
 }
 
 
+
 body { padding-top: 40px; }
 @media screen and (max-width: 768px) {
     body { padding-top: 0px; }
 }
 
-//div.main-page {
-//   min-height: 100%;
-//   background: url('../images/background.png');
-//}
-
-
-
-/* kts didn't work
-.entire-page {
-    position: relative;
-    background: #F0F0FF;
-    overflow: hidden;
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
 }
-*/
-/* You could use :after - it doesn't really matter */
-/*
-.entire-page:before {
-    content: ' ';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.2;
-    background-image: url('images/background.png');
-    background-repeat: no-repeat;
-    background-position: 50% 0;
-    -ms-background-size: cover;
-    -o-background-size: cover;
-    -moz-background-size: cover;
-    -webkit-background-size: cover;
-    background-size: cover;
-}
-*/
 
-/*
-html {
-   background: url('images/background.png') no-repeat center center fixed;
-   -webkit-background-size: cover;
-   -o-background-size: cover;
-   background-size: cover;
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
 }
-*/
 
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.theme-showcase .navbar .container {
+  width: auto;
+}
 
 
 

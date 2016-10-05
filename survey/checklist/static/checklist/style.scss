@@ -32,7 +32,7 @@ $color-secondary-1-4 :  #100500;
     font-weight: bold;
 }
 
-.question-edit,.question-detail,.question-reactview {
+.question-edit,.question-detail {
 
    .odd {
       background-color:   $color-secondary-1-1;
@@ -92,17 +92,6 @@ $color-secondary-1-4 :  #100500;
    .filters {
       background-color:   $color-primary-0;
        padding: 5px 5px;
-   }
-   .context-headline {
-       display:inline;
-       font-size: 16px;
-       line-height: 40px;
-   }
-
-   .topic-headline {
-       display:inline;
-       font-size: 16px;
-       line-height: 40px;
    }
 
 }

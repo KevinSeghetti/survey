@@ -78,7 +78,7 @@ var ContextFilters = React.createClass({
       })
 
       return (
-          <div className="answer col-xs-12" >
+          <div className="col-xs-12" >
             <div className='row'>
               <div className="col-xs-2" >
                   <ClickableButton
@@ -86,7 +86,7 @@ var ContextFilters = React.createClass({
                       handleClick={this.onRatingClearClick}
                   />
               </div>
-              <div className='question-headline col-xs-2'>
+              <div className=' col-xs-2'>
                 Rating
               </div>
               {ratingNodes}
@@ -99,7 +99,7 @@ var ContextFilters = React.createClass({
                    />
                </div>
                <div className='booleans' >
-                 <div className='question-headline col-xs-2'>
+                 <div className=' col-xs-2'>
                    Selections
                  </div>
                  {choiceNodes}

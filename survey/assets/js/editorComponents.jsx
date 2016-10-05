@@ -1,4 +1,5 @@
 var chai = require('chai')
+import {default as UUID} from "node-uuid";
 
 //===============================================================================
 
@@ -18,7 +19,7 @@ export var BooleanChoice = React.createClass({
     }
 
     return (
-        <div className='question small'>
+        <div className='checkbox-inline'>
             <input
                 type="checkbox"
                 checked={checked}
@@ -47,17 +48,24 @@ export var RadioChoices = React.createClass({
     var choiceNodes = this.props.choices.map(function(choice) {
       var selected = that.props.selected == choice.name
       return (
-          <span key={ that.props.name + '_' + choice.name }>
-            <input type="radio"   value={choice.name}
-              checked={selected}
-              onChange={that.handleChange}
-            ></input>
-            <label >{choice.description}</label>
-          </span>
+          <div
+            key={ that.props.name + '_' + choice.name }
+            className='radio-inline'
+          >
+            <label >
+                <input type="radio"
+                  value={choice.name}
+                  checked={selected}
+                  onChange={that.handleChange}
+                ></input>
+                {choice.description}
+            </label>
+          </div>
       )
     })
     return (
-      <div className='col-xs-10' >
+      <div className='form-group' >
+        <h4>{this.props.label}</h4>
         {choiceNodes}
       </div>
     )
@@ -67,21 +75,27 @@ export var RadioChoices = React.createClass({
 //-------------------------------------------------------------------------------
 
 export var TextField = React.createClass({
+//  componentWillMount() {
+//    this.id = UUID.v4();
+//  },
   handleChange: function(event) {
     //console.log("TextField:handleChange")
     this.props.onUpdate(this.props, event.target.value)
   },
   render: function() {
     return (
-      <input
-        type="text"
-        value={ this.props.value }
-        onChange={this.handleChange}
-      />
+      <div className="input-group-inline col-xs-12">
+        <h4>{this.props.label}</h4>
+        <input
+          className='form-control'
+          type="text"
+          value={ this.props.value }
+          onChange={this.handleChange}
+        />
+      </div>
     )
   }
 })
-
 
 //-------------------------------------------------------------------------------
 

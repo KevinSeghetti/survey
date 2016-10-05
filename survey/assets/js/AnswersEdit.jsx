@@ -67,49 +67,37 @@ export var ContextAnswer = React.createClass({
        })
        var context = $.grep(choices_context, function(e) { return e.name == that.state.answers.context })[0]
        return (
-           <div className="answer" onBlur={this.onBlur} >
-             <div className='context-headline row'>
+           <div className="" onBlur={this.onBlur} >
+             <div className='row'>
                  <div className='col-xs-12' >
-                   { context.description }
+                   <h3>{ context.description }</h3>
                  </div>
              </div>
              <div className="row">
-                <div className="col-xs-12 col-sm-12 col-md-6">
-                   <div className='row'>
-                      <div className="col-xs-12">
-                         <div className='row' >
-                            <div className='question-headline col-xs-1'>
-                            </div>
-                            <div className='question-headline col-xs-1'>
-                              Rating
-                            </div>
-                            <RadioChoices
-                              choices={choices.rating}
-                              selected={rating}
-                              id={this.state.id + '_rating' }
-                              onUpdate={this.onUpdate}
-                              parentField='rating'
-                            />
-                         </div>
-                      </div>
-                   </div>
-                   <div className='row'>
-                      <div className="col-xs-12">
-                          <div className='row' >
-                            <div className='col-xs-2'>
-                            </div>
-                            <div className='col-xs-10' >
-                               <div className='booleans' >
-                                 {choiceNodes}
-                               </div>
-                            </div>
-                          </div>
-                      </div>
-                   </div>
+                <div className="col-xs-12">
+                    <RadioChoices
+                        label="Rating"
+                        choices={choices.rating}
+                        selected={rating}
+                        id={this.state.id + '_rating' }
+                        onUpdate={this.onUpdate}
+                        parentField='rating'
+                    />
                 </div>
-                <div className='notes col-xs-6'>
-                   Notes<TextField value={notes}  onUpdate={this.onUpdate} parentField='notes'/>
+             </div>
+             <div className='row'>
+                <div className="col-xs-12">
+                   <h4>Selections</h4>
+                   {choiceNodes}
                 </div>
+             </div>
+             <div className='row'>
+               <TextField
+                   label="Notes"
+                   value={notes}
+                   onUpdate={this.onUpdate}
+                   parentField='notes'
+               />
              </div>
            </div>
        )
@@ -205,14 +193,16 @@ export var Answer = React.createClass({
   })
 
   return (
-      <div className={this.props.parity} >
-        <div className="row" >
-            <div className='col-xs-12'>
-              <div className='topic-headline'>{ this.props.question.question_text   }</div>
-              <div className='topic-detail'  >{ this.props.question.question_detail }</div>
-            </div>
+      <div className={this.props.parity+" panel panel-default"} >
+        <div className="panel-heading" >
+              <h2>
+                { this.props.question.question_text }
+                &nbsp;<small>{ this.props.question.question_detail }</small>
+             </h2>
         </div>
-        { contextNodes }
+        <div className="panel-body" >
+            { contextNodes }
+        </div>
      </div>
   )
   }
@@ -231,13 +221,13 @@ var AnswerList = React.createClass({
       log.info("key ",node.question.id,"question text",node.question.question_text)
 
       return (
-      <Answer
-        question={node.question}
-        key={String(node.context)+node.question.id}
-        id={node.question.id}
-        answers={node.answers}
-        parity={parity}
-      />
+        <Answer
+          question={node.question}
+          key={String(node.context)+node.question.id}
+          id={node.question.id}
+          answers={node.answers}
+          parity={parity}
+        />
       )
     })
 
