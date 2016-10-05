@@ -32,8 +32,7 @@ var ContextFilters = React.createClass({
 
       //log.info("ContextAnswer")
       log.info("ContextAnswer: booleans",choices.booleans)
-      var that = this
-      var choiceNodes = choices.booleans.map(function(choice) {
+      var choiceNodes = choices.booleans.map( (choice) => {
       //log.info("ContextFilters: booleans: choice",JSON.stringify(choice))
       //log.info("ContextFilters: booleans: filterState",JSON.stringify(filterState))
       // look up answer, if present
@@ -49,14 +48,14 @@ var ContextFilters = React.createClass({
             choice={choice}
             key={choice.name}
             id={choice.name}
-            onUpdate={that.onBooleanUpdate}
+            onUpdate={this.onBooleanUpdate}
             answer={answer}
             parentField={choice.name}
           />
         )
       })
 
-      var ratingNodes = choices.rating.map(function(choice) {
+      var ratingNodes = choices.rating.map((choice) => {
       //log.info("ContextAnswer: booleans: choice",choice)
         // look up answer, if present
         var answer
@@ -71,7 +70,7 @@ var ContextFilters = React.createClass({
               choice={choice}
               key={choice.name}
               id={choice.name}
-              onUpdate={that.onRatingUpdate}
+              onUpdate={this.onRatingUpdate}
               answer={answer}
               parentField={choice.name}
             />
@@ -152,9 +151,7 @@ var Filters = React.createClass({
          } = this.props
 
     log.info("Answer::render filterState",JSON.stringify(filterState))
-  // TODO update to fat arrow function
-  var that = this
-  var contextNodes = choices_context.map(function(context) {
+  var contextNodes = choices_context.map( (context) => {
     var context_name = context['name']
     let contextFilterState = filterState[context_name]
 
@@ -182,7 +179,7 @@ var Filters = React.createClass({
     textAlign: 'center'
   }
 
-  var headerNodes = choices_context.map(function(context) {
+  var headerNodes = choices_context.map( (context) => {
       return(
       <div className="col-xs-6 context-headline" key={context.name} style={headerDivStyle} >
           {context.description}
@@ -253,7 +250,7 @@ const ContextAnswer = ({ id, answers }) => {
     log.trace("ContextAnswer:render:")
     chai.expect(answers).to.exist
 
-    var choiceNodes = choices.booleans.map(function(choice) {
+    var choiceNodes = choices.booleans.map( (choice) => {
     log.trace("ContextAnswer: booleans: choice",choice)
     log.trace("ContextAnswer: booleans: answers",answers)
 
@@ -261,7 +258,7 @@ const ContextAnswer = ({ id, answers }) => {
         <BooleanChoice choice={choice} key={choice.name} answer={answers[choice.name]}  parentField={choice.name} />
       )
     })
-    var context = $.grep(choices_context, function(e) { return e.name == answers.context })[0]
+    var context = $.grep(choices_context, (e) => { return e.name == answers.context })[0]
 
     return (
         <div className="answer col-xs-5"  >
@@ -296,7 +293,7 @@ const ContextAnswer = ({ id, answers }) => {
 //===============================================================================
 
 const Answer = ({id, question, answers,parity,filters  }) => {
-  var contextNodes = choices_context.map(function(context) {
+  var contextNodes = choices_context.map( (context) => {
     var context_name = context['name']
     var context_answers = answers[context_name]
 
@@ -337,7 +334,7 @@ const Answer = ({id, question, answers,parity,filters  }) => {
 const AnswerList = ({ questions, filters }) => {
     log.trace("AnswerList:render:")
     let rowIndex = 0
-    var answerNodes = questions.map(function(node,index) {
+    var answerNodes = questions.map( (node,index) => {
         var parity = 'odd'
         if(rowIndex % 2)
         {
@@ -353,7 +350,7 @@ const AnswerList = ({ questions, filters }) => {
             log.trace("AnswerList:render:key ",key,"question text",node.question.question_text)
 
             let renderThisAnswer = false
-            var contextNodes = choices_context.map(function(context) {
+            var contextNodes = choices_context.map( (context) => {
               var context_name = context['name']
               var context_answers = node.answers[context_name]
 
@@ -383,7 +380,7 @@ const AnswerList = ({ questions, filters }) => {
         return ( null )
     })
 
-    var headerNodes = choices_context.map(function(context) {
+    var headerNodes = choices_context.map( (context) => {
         return(
         <div className="col-xs-5 context-headline" key={context.name}>
             {context.description}
