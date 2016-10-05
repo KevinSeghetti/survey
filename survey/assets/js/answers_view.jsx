@@ -80,11 +80,11 @@ const mapDispatchToProps = (dispatch) => {
       toggleRatingFilterAction: (context, rating) => {
           dispatch(toggleRatingFilterAction(context, rating) )
       },
-      clearRatingFilterAction: () => {
-          dispatch(clearRatingFilterAction() )
+      clearRatingFilterAction: (context) => {
+          dispatch(clearRatingFilterAction(context) )
       },
-      clearBooleanFilterAction: () => {
-          dispatch(clearBooleanFilterAction() )
+      clearBooleanFilterAction: (context) => {
+          dispatch(clearBooleanFilterAction(context) )
       },
   }
 }

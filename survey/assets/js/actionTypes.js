@@ -47,19 +47,21 @@ export const toggleRatingFilterAction = (context, rating) => {
 
 //-------------------------------------------------------------------------------
 
-export const clearRatingFilterAction = () => {
+export const clearRatingFilterAction = (context) => {
     log.info('clearRatingFilterAction')
     return {
         type: ACTION_CLEAR_RATING_FILTER,
+        context: context,
     }
 }
 
 //-------------------------------------------------------------------------------
 
-export const clearBooleanFilterAction = () => {
+export const clearBooleanFilterAction = (context) => {
     log.info('clearBooleanFilterAction')
     return {
         type: ACTION_CLEAR_BOOLEAN_FILTER,
+        context: context,
     }
 }
 

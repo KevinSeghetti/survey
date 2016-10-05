@@ -22,7 +22,7 @@ import {
        clearRatingFilterAction,
        clearBooleanFilterAction,
        } from './actionTypes'
-import { mapObject } from './utilities'
+import { mapObject,defaultDict } from './utilities'
 
 //-------------------------------------------------------------------------------
 
@@ -79,7 +79,7 @@ function contextFilterReducer(state,action) {
             {
                 let result = mapObject(state, (contents,key) => {
                     if (key == 'booleans') {
-                        return Object.assign({}, state[key], { [action.id] : 0 })
+                        return defaultDict(choices.booleans,false)
                     }
                     return contents
                 })
@@ -90,7 +90,7 @@ function contextFilterReducer(state,action) {
             {
                 let result = mapObject(state, (contents,key) => {
                     if (key == 'rating') {
-                        return Object.assign({}, state[key], { [action.id] : 0 })
+                        return Object.assign({} )
                     }
                     return contents
                 })
@@ -104,20 +104,22 @@ function contextFilterReducer(state,action) {
 }
 
 export function filterReducer(state,action) {
-    log.trace("filterReducer: filter state = ",JSON.stringify(state,null,2))
+    log.trace("filterReducer: action = ",JSON.stringify(action),", filter state = ",JSON.stringify(state,null,2))
     switch (action.type) {
         case ACTION_TOGGLE_BOOLEAN_FILTER:
         case ACTION_TOGGLE_RATING_FILTER:
         case ACTION_CLEAR_BOOLEAN_FILTER:
         case ACTION_CLEAR_RATING_FILTER:
-            let result = mapObject(state, (contents,key) => {
-                if (key == action.context) {
-                    return contextFilterReducer(state[key],action)
-                }
-                return contents
-            })
-            log.debug("filterReducer:ACTION_TOGGLE_BOOLEAN_FILTER: result ",JSON.stringify(result,null,2))
-            return result
+            {
+                let result = mapObject(state, (contents,key) => {
+                    if (key == action.context) {
+                        return contextFilterReducer(state[key],action)
+                    }
+                    return contents
+                })
+                log.debug("filterReducer:ACTION_TOGGLE_*_FILTER: result ",JSON.stringify(result,null,2))
+                return result
+            }
 
         default:
           return state

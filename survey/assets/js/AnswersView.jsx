@@ -81,32 +81,29 @@ var ContextFilters = React.createClass({
       return (
           <div className="answer col-xs-12" >
             <div className='row'>
-               <div className="col-xs-12">
-                  <div className='row' >
-                     <div className="col-xs-2" >
-                         <ClickableButton
-                             value="Clear"
-                             handleClick={onRatingClearClick}
-                         />
-                     </div>
-                     <div className='question-headline col-xs-2'>
-                       Rating
-                     </div>
-                     {ratingNodes}
-                  </div>
-               </div>
+              <div className="col-xs-2" >
+                  <ClickableButton
+                      value="Clear"
+                      handleClick={this.onRatingClearClick}
+                  />
+              </div>
+              <div className='question-headline col-xs-2'>
+                Rating
+              </div>
+              {ratingNodes}
             </div>
             <div className='row'>
-               <div className="col-xs-12">
-                 <div className="col-xs-6" >
-                     <ClickableButton
-                         value="Clear"
-                         handleClick={onBooleanClearClick}
-                     />
+               <div className="col-xs-2" >
+                   <ClickableButton
+                       value="Clear"
+                       handleClick={this.onBooleanClearClick}
+                   />
+               </div>
+               <div className='booleans' >
+                 <div className='question-headline col-xs-2'>
+                   Selections
                  </div>
-                 <div className='booleans' >
-                   {choiceNodes}
-                 </div>
+                 {choiceNodes}
                </div>
             </div>
           </div>
@@ -127,6 +124,14 @@ var ContextFilters = React.createClass({
     log.info('ContextAnswer:onUpdate:childProps', JSON.stringify(childProps))
 
     this.props.onBooleanFilterClick( this.props.context, childProps.id )
+  },
+  onRatingClearClick: function(childProps, val) {
+
+    this.props.onRatingClearClick( this.props.context)
+  },
+  onBooleanClearClick: function(childProps, val) {
+
+    this.props.onBooleanClearClick( this.props.context )
   },
 })
 

@@ -14,30 +14,23 @@ import {
         ACTION_SET_SEARCH_STRING,
     } from './actionTypes'
 import { loadAction, toggleBooleanFilterAction,  toggleRatingFilterAction } from './actionTypes'
-import { mapObject } from './utilities'
+import { mapObject, defaultDict } from './utilities'
 import { filterReducer } from './filterReducers'
 
 //===============================================================================
 
-let defaultDict = function(choices) {
-    let result = {}
-    choices.forEach( (choice) => {
-        result[choice['name']] = true
-    })
-    return result
-}
 
 const initialState = {
   questions: [],
   filters:
   {
       'to_me': {
-          booleans: defaultDict(choices.booleans),
-          rating: defaultDict(choices.rating),
+          booleans: defaultDict(choices.booleans,true),
+          rating: defaultDict(choices.rating,true),
       },
       'to_others': {
-          booleans: defaultDict(choices.booleans),
-          rating: defaultDict(choices.rating),
+          booleans: defaultDict(choices.booleans,true),
+          rating: defaultDict(choices.rating,true),
       }
   }
 }
