@@ -15,11 +15,11 @@ urlpatterns = [
     # needs to be converted to react
 
     # answer review
-    url(r'^oldreview/$'                       , views.review, name='review'),
+    url(r'^oldreview/$'                       , views.review, name='oldreview'),
     # 3rd party answer review
     url(r'^oldview/(?P<user_id>[0-9]+)/$'     , views.view  , name='view'),
     # in progress
-    url(r'^review/$'                  , views.reactreview, name='reactreview'),
+    url(r'^review/$'                  , views.reactreview, name='review'),
     url(r'^view/(?P<user_id>[0-9]+)/$', views.reactview  , name='reactview'),
 
     url(r'^detail/(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
