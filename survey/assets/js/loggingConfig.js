@@ -28,7 +28,7 @@ var lookupLevel = function(loggingLevel)
      {
           return logLevels[loggingLevel]
      }
-     console.error(`error in logging system: logging level ${loggingLevel} "not found`)
+     console.error(`error in logging system: logging level ${loggingLevel} not found`)
 
      return log4javascript.Level.OFF
 }
@@ -49,6 +49,8 @@ export var CreateLogger = function(loggerName) {
     }
 
     log.setLevel(loggingLevel)
+    //console.error(`logging system: creating new logger named ${loggerName} with level ${loggingLevel} `)
+
     var popUpLayout = new log4javascript.PatternLayout("%c - %d{HH:mm:ss} %-5p - %m%n");
     popUpAppender.setLayout(popUpLayout);
     log.addAppender(popUpAppender);
