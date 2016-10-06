@@ -55,7 +55,7 @@
         {% url 'checklist:index'       as urlIndex       %}
         {% url 'checklist:edit'        as urlEdit        %}
         {% url 'checklist:resume'      as urlResume      %}
-        {% url 'checklist:reactreview' as urlReactreview %}
+        {% url 'checklist:review'      as urlReview %}
         {% url 'checklist:questions'   as urlQuestions   %}
 
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -76,9 +76,9 @@
               <ul class="nav navbar-nav">
                 <li class="{% ifequal request.path urlIndex        %}active{% endifequal %}"><a href="{{ urlIndex }}">Home</a></li>
                 {% if request.user.is_authenticated %}
-                   <li class="{% ifequal request.path urlEdit        %}active{% endifequal %}"><a  href="{{ urlEdit        }}">Fill out checklist</a></li>
-                   <li class="{% ifequal request.path urlResume      %}active{% endifequal %}"><a  href="{{ urlResume      }}">Resume checklist  </a></li>
-                   <li class="{% ifequal request.path urlReactreview %}active{% endifequal %}"><a  href="{{ urlReactreview }}">View Results      </a></li>
+                   <li class="{% ifequal request.path urlEdit        %}active{% endifequal %}"><a  href="{{ urlEdit    }}">Fill out checklist</a></li>
+                   <li class="{% ifequal request.path urlResume      %}active{% endifequal %}"><a  href="{{ urlResume  }}">Resume checklist  </a></li>
+                   <li class="{% ifequal request.path urlReactreview %}active{% endifequal %}"><a  href="{{ urlReview  }}">View Results      </a></li>
                  {% endif %}
                 <li class="{% ifequal request.path urlQuestions        %}active{% endifequal %}"><a href="{{ urlQuestions }}">View question list</a></li>
               </ul>
