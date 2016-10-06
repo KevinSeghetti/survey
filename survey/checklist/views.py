@@ -148,7 +148,8 @@ def answers_react_edit(request):
         'choices_context': choices_context,
         'choices': choices,
         'user' : request.user,
-        'questionsUrl': reverse('checklist:rest_questions')
+        'questionsUrl': reverse('checklist:rest_questions'),
+        'logging' : DEBUG_LOGGING,
     }
 
     return render(request, 'checklist/answers_react_edit.html', context)
@@ -163,7 +164,8 @@ def answers_react_resume(request):
         'choices_context': choices_context,
         'choices': choices,
         'user' : request.user,
-        'questionsUrl': reverse('checklist:rest_questions_remaining')
+        'questionsUrl': reverse('checklist:rest_questions_remaining'),
+        'logging' : DEBUG_LOGGING,
     }
 
     return render(request, 'checklist/answers_react_edit.html', context)
@@ -201,6 +203,7 @@ def review(request):
         'choices': choices,
         'choicesRatingDict': choicesRatingDict,
         'user' : request.user,
+        'logging' : DEBUG_LOGGING,
         })
 
 def view(request,user_id):
@@ -228,7 +231,6 @@ def reactreview(request):
         'user' : request.user,
         'logging' : DEBUG_LOGGING,
         'questionsUrl': reverse('checklist:rest_questions'),
-
         })
 
 def reactview(request,user_id):
