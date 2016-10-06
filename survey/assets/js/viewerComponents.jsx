@@ -13,9 +13,9 @@ export var BooleanChoice = React.createClass({
       }
 
       return (
-          <div className={'question small ' + ghosted}>
+          <span className={'small ' + ghosted}>
               {this.props.choice.description}&nbsp;
-          </div>
+          </span>
       );
     }
   });

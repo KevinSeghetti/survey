@@ -251,9 +251,14 @@ function filterContextAnswer(filters, answer) {
     return result
 }
 
-const ContextAnswer = ({ id, answers }) => {
+//===============================================================================
+
+var Answer = React.createClass({
+  renderContextAnswer: function({ id, answers }) {
     log.trace("ContextAnswer:render:")
     chai.expect(answers).to.exist
+
+    let columns = []
 
     var choiceNodes = choices.booleans.map( (choice) => {
     log.trace("ContextAnswer: booleans: choice",choice)
@@ -264,75 +269,68 @@ const ContextAnswer = ({ id, answers }) => {
       )
     })
     var context = $.grep(choices_context, (e) => { return e.name == answers.context })[0]
-
-    return (
-        <div className="answer col-xs-5"  >
-          <div className="row" >
-            <div className="col-xs-10">
-               <div className='row'>
-                  <div className="col-xs-3">
-                    <RadioChoices
-                      choices={choices.rating}
-                      selected={answers.rating}
-                      id={id + '_rating' }
-                      parentField='rating'
-                    />
-                  </div>
-                  <div className='col-xs-9' >
-                     <div className='booleans' >
-                       {choiceNodes}
-                     </div>
-                  </div>
-               </div>
-               <div className='row'>
-                  <div className="col-xs-12">
-                    <TextField value={answers.notes} parentField='notes'/>
-                  </div>
-               </div>
-            </div>
-          </div>
-        </div>
+    columns.push(
+        <td>
+            <RadioChoices
+              choices={choices.rating}
+              selected={answers.rating}
+              id={id + '_rating' }
+              parentField='rating'
+            />
+        </td>
     )
-}
+    columns.push(
+        <td>
+            {choiceNodes}
+        </td>
+    )
+    columns.push(
+        <td>
+              <TextField value={answers.notes} parentField='notes'/>
+        </td>
 
-//===============================================================================
+    )
+    return columns
 
-const Answer = ({id, question, answers,filters  }) => {
-  var contextNodes = choices_context.map( (context) => {
-    var context_name = context['name']
-    var context_answers = answers[context_name]
+  },
+  render: function() {
+      let {id, question, answers,filters  } = this.props
+      var contextNodes = choices_context.map( (context) => {
+        var context_name = context['name']
+        var context_answers = answers[context_name]
 
-    log.trace("Answer::render:contextNode(",context_name,")")
+        log.trace("Answer::render:contextNode(",context_name,")")
 
-    if(context_answers)
-    {
-      chai.expect(context_answers).to.exist
-        return (
-          <td key={context_name}>
-            <div className="row">
-                <ContextAnswer
-                  choices={choices}
-                  answers={ context_answers }
-                  question_id={ question.id}
-                  id={id + '_'+context_name }
+        if(context_answers)
+        {
+          chai.expect(context_answers).to.exist
+            return (  this.renderContextAnswer(
+                {
+                    'answers':context_answers,
+                    'question_id':question.id,
+                    'id': id + '_'+context_name
+                })
+            )
+        }
+        return( null )
+      })
 
-                />
-            </div>
-          </td>
-        )
+      log.trace("Answer::render: final")
+      return (
+          <tr>
+              <td
+                className='topic-headline tooltipster_tooltip'
+                title={ question.question_detail } >
+                    <h3>{ question.question_text }&nbsp;
+                        <small>{ question.question_detail }</small>
+                    </h3>
+              </td>
+              { contextNodes }
+         </tr>
+      )
+      return null
     }
-    return( null )
-  })
-
-  log.trace("Answer::render: final")
-  return (
-      <tr>
-          <td className='topic-headline tooltipster_tooltip' title={ question.question_detail } >{ question.question_text   }</td>
-          { contextNodes }
-     </tr>
-  )
-  return null
-}
+})
 
 //===============================================================================
 
@@ -381,7 +379,7 @@ const AnswerList = ({ questions, filters }) => {
 
     var headerNodes = choices_context.map( (context) => {
         return(
-        <th key={context.name}>
+        <th key={context.name} colSpan='3' >
             {context.description}
         </th>
         )
