@@ -16,8 +16,8 @@ import {
     toggleRatingFilterAction,
     clearBooleanFilterAction,
     clearRatingFilterAction,
-    } from './actionTypes'
-import { topReducer } from './topReducer'
+    } from './actionTypesAnswerViewer'
+import { topReducer } from './topReducerAnswerViewer'
 
 //-------------------------------------------------------------------------------
 

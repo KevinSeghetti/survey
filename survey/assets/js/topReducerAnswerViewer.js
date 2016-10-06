@@ -1,5 +1,5 @@
 //===============================================================================
-// top level state reducer
+// top level state reducer for the answer viewer
 
 var chai = require('chai')
 var log = require('./loggingConfig').CreateLogger("reducers")
@@ -12,8 +12,12 @@ import {
         ACTION_CLEAR_BOOLEAN_FILTER,
         ACTION_CLEAR_RATING_FILTER,
         ACTION_SET_SEARCH_STRING,
-    } from './actionTypes'
-import { loadAction, toggleBooleanFilterAction,  toggleRatingFilterAction } from './actionTypes'
+    } from './actionTypesAnswerViewer'
+import {
+    loadAction,
+    toggleBooleanFilterAction,
+    toggleRatingFilterAction
+    } from './actionTypesAnswerViewer'
 import { mapObject, defaultDict } from './utilities'
 import { filterReducer } from './filterReducers'
 

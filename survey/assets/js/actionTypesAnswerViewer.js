@@ -1,4 +1,5 @@
 //===============================================================================
+// action types for the answer viewer page
 
 var log = require('./loggingConfig').CreateLogger("actions")
 

@@ -3,10 +3,38 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 var $ = require('jquery');
+var chai = require('chai')
 
-var {BooleanChoice, RadioChoices, TextField} = require('./editorComponents')
+var {BooleanChoice, RadioChoices, TextField, ClickableButton} = require('./editorComponents')
 var {choices, choices_context} = require('./applicationData')
+//var log = require('./loggingConfig').CreateLogger("AnswerEdit")
 var log = require('./loggingConfig').CreateLogger("AnswerView")
+
+//===============================================================================
+// transport controls
+
+const TransportControls = ({ currentQuestion,nextQuestionAction,prevQuestionAction }) => {
+    chai.expect(prevQuestionAction).to.exist
+    chai.expect(nextQuestionAction).to.exist
+
+    log.trace("TransportControls:render:")
+    return(
+        <div>
+          <ClickableButton
+              value="Prev"
+              handleClick={prevQuestionAction}
+          />
+            <p>Current question {currentQuestion+1}</p>
+          <ClickableButton
+              value="Next"
+              handleClick={nextQuestionAction}
+          />
+
+        </div>
+    )
+}
+
+//===============================================================================
 
 // There is a one to one relationship between this component
 // and a row in the answer DB on the server
@@ -168,36 +196,37 @@ export var ContextAnswer = React.createClass({
 
 export var Answer = React.createClass({
   render: function() {
-    log.info("Answer: props",this.props)
+    log.info("Answer: props",JSON.stringify(this.props,null,2))
+    let {question,answers} = this.props
+    log.info("Answer: question.question_text ",question.question_text )
 
-  var that = this
-  var contextNodes = choices_context.map(function(context) {
+  var contextNodes = choices_context.map((context) => {
     var context_name = context['name']
     // look up answer, if present
-    var answers
-    if(that.props.answers &&  context_name in that.props.answers)
+    var contextanswers
+    if(answers && context_name in answers)
     {
-      answers = that.props.answers[context_name]
+      contextanswers = answers[context_name]
     }
 
     return (
       <ContextAnswer
         context={context_name}
         context_description={context['description']}
-        answers={ answers    }
-        question_id={ that.props.question.id}
-        id={that.props.id + '_'+context_name }
+        answers={ contextanswers    }
+        question_id={ question.id}
+        id={question.id + '_'+context_name }
         key={context_name}
       />
     )
   })
 
   return (
-      <div className={this.props.parity+" panel panel-default"} >
+      <div className= "panel panel-default" >
         <div className="panel-heading" >
               <h2>
-                { this.props.question.question_text }
-                &nbsp;<small>{ this.props.question.question_detail }</small>
+                { question.question_text }
+                &nbsp;<small>{ question.question_detail }</small>
              </h2>
         </div>
         <div className="panel-body" >
@@ -208,61 +237,25 @@ export var Answer = React.createClass({
   }
 })
 
-var AnswerList = React.createClass({
-  render: function() {
-    log.info("AnswerList:render: props",this.props)
-    var answerNodes = this.props.data.results.map(function(node,index) {
-      var parity = 'odd'
-      if(index % 2)
-      {
-        parity = 'even'
-      }
+//===============================================================================
 
-      log.info("key ",node.question.id,"question text",node.question.question_text)
+export const AnswerPage = ({questions, currentQuestion,nextQuestionAction,prevQuestionAction }) => {
+    log.info("AnswerPage: currentQuestion",currentQuestion)
+    //log.info("AnswerPage: currentQuestion",currentQuestion,", questions: ",JSON.stringify(questions))
+    chai.expect(questions).to.exist
+    chai.expect(currentQuestion).to.exist
+    chai.expect(prevQuestionAction).to.exist
+    chai.expect(nextQuestionAction).to.exist
+    if(currentQuestion >= questions.length)
+    {
+      return null
+    }
 
-      return (
-        <Answer
-          question={node.question}
-          key={String(node.context)+node.question.id}
-          id={node.question.id}
-          answers={node.answers}
-          parity={parity}
-        />
-      )
-    })
+    let question = questions[currentQuestion]
+    chai.expect(question).to.exist
 
-    log.info("answer nodes",answerNodes)
-    return (
-      <div className="answerList">
-        {answerNodes}
-      </div>
-    )
-  }
-})
+    log.info("AnswerPage: rendering ",JSON.stringify(question,null,2))
 
-export var AnswerBox = React.createClass({
-  loadAnswersFromServer: function() {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        log.info("== json loaded ==",data)
-        this.setState({data: data})
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString())
-      }.bind(this)
-    })
-  },
-  getInitialState: function() {
-    return {data: { results: []} }
-  },
-  componentDidMount: function() {
-    this.loadAnswersFromServer()
-  },
-  render: function() {
-       log.info("thisprops",this.props)
     return (
 
       <div className="answerBox question-edit">
@@ -277,13 +270,20 @@ export var AnswerBox = React.createClass({
       </div>
        <hr />
 
-        <AnswerList
-            data={this.state.data}
-        />
+       <Answer
+         question={question.question}
+         answers={question.answers}
+       />
+
+       <TransportControls
+         currentQuestion    = { currentQuestion     }
+         nextQuestionAction = { nextQuestionAction  }
+         prevQuestionAction = { prevQuestionAction  }
+       />
+
       </div>
     )
-  }
-})
+}
 
 
 

@@ -13,7 +13,7 @@ import {
     ACTION_CLEAR_BOOLEAN_FILTER,
     ACTION_CLEAR_RATING_FILTER,
     ACTION_SET_SEARCH_STRING
-    } from './actionTypes'
+    } from './actionTypesAnswerViewer'
 
 import {
        loadAction,
@@ -21,7 +21,7 @@ import {
        toggleRatingFilterAction,
        clearRatingFilterAction,
        clearBooleanFilterAction,
-       } from './actionTypes'
+       } from './actionTypesAnswerViewer'
 import { mapObject,defaultDict } from './utilities'
 
 //-------------------------------------------------------------------------------
