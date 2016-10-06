@@ -12,10 +12,6 @@ var AnswerPage = require('./AnswersView').AnswerPage
 var {choices, choices_context} = require('./applicationData')
 import {
     loadAction,
-    toggleBooleanFilterAction,
-    toggleRatingFilterAction,
-    clearBooleanFilterAction,
-    clearRatingFilterAction,
     } from './actionTypesAnswerViewer'
 import { topReducer } from './topReducerAnswerViewer'
 
@@ -25,6 +21,7 @@ var url=window.globs['questionsUrl']
 let store = createStore(topReducer)
 
 //===============================================================================
+// kts TODO: this is all wrong. using connect, the functional portions shouldn't be in this presentational class
 
 export var AnswerBox = React.createClass({
     loadAnswersFromServer: function() {
@@ -34,7 +31,7 @@ export var AnswerBox = React.createClass({
             cache: false,
             success: function(data) {
                 log.trace("== json loaded ==",data)
-                this.props.onLoad(data)
+                store.dispatch(loadAction(data))
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(url, status, err.toString())
@@ -42,17 +39,12 @@ export var AnswerBox = React.createClass({
         })
     },
     componentDidMount: function() {
+        log.trace("AnswerBox::componentDidMount")
         this.loadAnswersFromServer()
     },
     render: function() {
-        log.trace("AnswerBox::render: props",JSON.stringify(this.props,null,2))
         return (
             <AnswerPage
-                data={this.props.data}
-                toggleRatingFilterAction  = { this.props.toggleRatingFilterAction }
-                toggleBooleanFilterAction = { this.props.toggleBooleanFilterAction}
-                clearRatingFilterAction  = { this.props.clearRatingFilterAction }
-                clearBooleanFilterAction = { this.props.clearBooleanFilterAction}
             />
         )
   }
@@ -61,39 +53,17 @@ export var AnswerBox = React.createClass({
 //-------------------------------------------------------------------------------
 
 const mapStateToProps = (state) => {
-    log.trace("mapStateToProps: state = ",JSON.stringify(state,null,2))
+    //log.trace("mapStateToProps: state = ",JSON.stringify(state,null,2))
+    //log.trace("mapStateToProps: state type = ",typeof(state))
     return {
-        data: state
+        state: state
     }
 }
 
 //-------------------------------------------------------------------------------
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-      onLoad: (data) => {
-          dispatch(loadAction(data))
-      },
-      toggleBooleanFilterAction: (context, filter) => {
-          dispatch(toggleBooleanFilterAction(context, filter) )
-      },
-      toggleRatingFilterAction: (context, rating) => {
-          dispatch(toggleRatingFilterAction(context, rating) )
-      },
-      clearRatingFilterAction: (context) => {
-          dispatch(clearRatingFilterAction(context) )
-      },
-      clearBooleanFilterAction: (context) => {
-          dispatch(clearBooleanFilterAction(context) )
-      },
-  }
-}
-
-//-------------------------------------------------------------------------------
-
 const AnswerApp = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(AnswerBox)
 
 // main entry point for answer viewer. This will go away if this project becomes

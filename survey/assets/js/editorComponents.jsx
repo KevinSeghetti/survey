@@ -100,10 +100,13 @@ export var TextField = React.createClass({
 //-------------------------------------------------------------------------------
 
 export var ClickableButton = React.createClass({
+  handleChange: function(event) {
+    this.props.handleClick(this.props, event.target.value)
+  },
   render: function() {
     chai.expect(this.props.handleClick).to.exist
     return (
-      <button onClick={this.props.handleClick}>
+      <button onClick={this.handleChange}>
           { this.props.value }
       </button>
     )

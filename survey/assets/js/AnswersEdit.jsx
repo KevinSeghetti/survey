@@ -72,7 +72,7 @@ export var ContextAnswer = React.createClass({
 
        }
        //log.info("ContextAnswer")
-       log.info("ContextAnswer: booleans",choices.booleans)
+       //log.info("ContextAnswer: booleans",choices.booleans)
        var that = this
        var choiceNodes = choices.booleans.map(function(choice) {
        //log.info("ContextAnswer: booleans: choice",choice)
@@ -198,7 +198,7 @@ export var Answer = React.createClass({
   render: function() {
     log.info("Answer: props",JSON.stringify(this.props,null,2))
     let {question,answers} = this.props
-    log.info("Answer: question.question_text ",question.question_text )
+    log.info("Answer: question.id ",question.id )
 
   var contextNodes = choices_context.map((context) => {
     var context_name = context['name']
@@ -222,7 +222,7 @@ export var Answer = React.createClass({
   })
 
   return (
-      <div className= "panel panel-default" >
+      <div className= "panel panel-default" id={question.id}  >
         <div className="panel-heading" >
               <h2>
                 { question.question_text }

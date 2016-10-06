@@ -3,6 +3,8 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 import { createStore } from 'redux'
+import { Provider,connect } from 'react-redux'
+
 var $ = require('jquery')
 var chai = require('chai')
 
@@ -12,6 +14,13 @@ var {BooleanChoice, RadioChoices, TextField} = require('./viewerComponents')
 var {BooleanChoice: EditBooleanChoice, RadioChoices: EditRadioChoices, TextField:EditTextField, ClickableButton} = require('./editorComponents')
 var {ContextAnswer: ContextAnswerEdit} = require('./AnswersEdit')
 var {choices, choices_context} = require('./applicationData')
+import {
+    toggleBooleanFilterAction,
+    toggleRatingFilterAction,
+    clearBooleanFilterAction,
+    clearRatingFilterAction,
+    } from './actionTypesAnswerViewer'
+
 var log = require('./loggingConfig').CreateLogger("AnswerView")
 
 //===============================================================================
@@ -19,19 +28,22 @@ var log = require('./loggingConfig').CreateLogger("AnswerView")
 var ContextFilters = React.createClass({
   render: function() {
       log.info("ContextAnswer:render: props = ",JSON.stringify(this.props))
-      chai.expect(this.props.onRatingFilterClick).to.exist
-      chai.expect(this.props.onBooleanFilterClick).to.exist
-      chai.expect(this.props.onRatingClearClick).to.exist
-      chai.expect(this.props.onBooleanClearClick).to.exist
+      chai.expect(this.props.toggleRatingFilterAction).to.exist
+      chai.expect(this.props.toggleBooleanFilterAction).to.exist
+      chai.expect(this.props.clearBooleanFilterAction).to.exist
+      chai.expect(this.props.clearRatingFilterAction).to.exist
       let {
           filterState,
-          onBooleanClearClick,
-          onRatingClearClick,
+          toggleRatingFilterAction  ,
+          toggleBooleanFilterAction ,
+          clearBooleanFilterAction  ,
+          clearRatingFilterAction   ,
+          context,
 
       } = this.props
 
       //log.info("ContextAnswer")
-      log.info("ContextAnswer: booleans",choices.booleans)
+      //log.info("ContextAnswer: booleans",choices.booleans)
       var choiceNodes = choices.booleans.map( (choice) => {
       //log.info("ContextFilters: booleans: choice",JSON.stringify(choice))
       //log.info("ContextFilters: booleans: filterState",JSON.stringify(filterState))
@@ -46,9 +58,10 @@ var ContextFilters = React.createClass({
         return (
           <EditBooleanChoice
             choice={choice}
+            context={context}
             key={choice.name}
             id={choice.name}
-            onUpdate={this.onBooleanUpdate}
+            onUpdate={toggleBooleanFilterAction}
             answer={answer}
             parentField={choice.name}
           />
@@ -63,14 +76,15 @@ var ContextFilters = React.createClass({
         {
           answer = filterState.rating[choice.name]
         }
-        log.info("ContextFilters: rating: answer",answer)
+        //log.info("ContextFilters: rating: answer",answer)
 
         return (
             <EditBooleanChoice
               choice={choice}
+              context={context}
               key={choice.name}
               id={choice.name}
-              onUpdate={this.onRatingUpdate}
+              onUpdate={toggleRatingFilterAction}
               answer={answer}
               parentField={choice.name}
             />
@@ -87,7 +101,8 @@ var ContextFilters = React.createClass({
               <div className="col-xs-2" >
                   <ClickableButton
                       value="Clear"
-                      handleClick={this.onRatingClearClick}
+                      context={context}
+                      handleClick={clearRatingFilterAction}
                   />
               </div>
               <div className='form-group' >
@@ -99,7 +114,8 @@ var ContextFilters = React.createClass({
                <div className="col-xs-2" >
                    <ClickableButton
                        value="Clear"
-                       handleClick={this.onBooleanClearClick}
+                       context={context}
+                       handleClick={clearBooleanFilterAction}
                    />
                </div>
                <div className='form-group' >
@@ -111,29 +127,6 @@ var ContextFilters = React.createClass({
       )
    },
 
-  onRatingUpdate: function(childProps, val) {
-
-    //log.info('ContextAnswer:onUpdate', childProps.id,  val)
-    //log.info('ContextAnswer:onUpdate:this.props', JSON.stringify(this.props))
-    //log.info('ContextAnswer:onUpdate:childProps', JSON.stringify(childProps))
-    this.props.onRatingFilterClick( this.props.context, childProps.id )
-  },
-  onBooleanUpdate: function(childProps, val) {
-
-    log.info('ContextAnswer:onUpdate', childProps.id,  val)
-    log.info('ContextAnswer:onUpdate:this.props', JSON.stringify(this.props))
-    log.info('ContextAnswer:onUpdate:childProps', JSON.stringify(childProps))
-
-    this.props.onBooleanFilterClick( this.props.context, childProps.id )
-  },
-  onRatingClearClick: function(childProps, val) {
-
-    this.props.onRatingClearClick( this.props.context)
-  },
-  onBooleanClearClick: function(childProps, val) {
-
-    this.props.onBooleanClearClick( this.props.context )
-  },
 })
 
 //===============================================================================
@@ -141,15 +134,17 @@ var ContextFilters = React.createClass({
 var Filters = React.createClass({
   render: function() {
     log.info("Answer::render props",JSON.stringify(this.props))
-    chai.expect(this.props.onRatingFilterClick).to.exist
-    chai.expect(this.props.onBooleanFilterClick).to.exist
-    chai.expect(this.props.onBooleanClearClick).to.exist
-    chai.expect(this.props.onRatingClearClick).to.exist
+    chai.expect(this.props.toggleRatingFilterAction).to.exist
+    chai.expect(this.props.toggleBooleanFilterAction).to.exist
+    chai.expect(this.props.clearBooleanFilterAction).to.exist
+    chai.expect(this.props.clearRatingFilterAction).to.exist
     let {
-            filterState,onRatingFilterClick,
-            onBooleanFilterClick,
-            onBooleanClearClick,
-            onRatingClearClick,
+            filterState,
+            toggleRatingFilterAction  ,
+            toggleBooleanFilterAction ,
+            clearBooleanFilterAction  ,
+            clearRatingFilterAction   ,
+
          } = this.props
 
     log.info("Answer::render filterState",JSON.stringify(filterState))
@@ -164,10 +159,10 @@ var Filters = React.createClass({
       <div className="col-xs-6"  key={context_name} >
         <ContextFilters
           filterState={contextFilterState}
-          onRatingFilterClick= {onRatingFilterClick}
-          onBooleanFilterClick={onBooleanFilterClick}
-          onRatingClearClick= {onRatingClearClick}
-          onBooleanClearClick={onBooleanClearClick}
+          toggleRatingFilterAction   = {toggleRatingFilterAction }
+          toggleBooleanFilterAction  = {toggleBooleanFilterAction}
+          clearBooleanFilterAction   = {clearBooleanFilterAction }
+          clearRatingFilterAction    = {clearRatingFilterAction  }
 
           context={context_name}
           context_description={context['description']}
@@ -215,6 +210,44 @@ var Filters = React.createClass({
 
 })
 
+
+const filterMapStateToProps = (state) => {
+    //log.trace("mapStateToProps: state = ",JSON.stringify(state,null,2))
+    //log.trace("mapStateToProps: state type = ",typeof(state))
+    return {
+        state: state
+    }
+}
+
+//-------------------------------------------------------------------------------
+
+const filterMapDispatchToProps = (dispatch) => {
+  return {
+      onLoad: (data) => {
+          dispatch(loadAction(data))
+      },
+      toggleBooleanFilterAction: (childProps, val) => {
+          dispatch(toggleBooleanFilterAction(childProps.context, childProps.id) )
+      },
+      toggleRatingFilterAction: (childProps, val) => {
+          dispatch(toggleRatingFilterAction(childProps.context, childProps.id) )
+      },
+      clearRatingFilterAction: (childProps, val) => {
+          dispatch(clearRatingFilterAction(childProps.context) )
+      },
+      clearBooleanFilterAction: (childProps, val) => {
+          dispatch(clearBooleanFilterAction(childProps.context) )
+      },
+  }
+}
+
+//-------------------------------------------------------------------------------
+
+const FilterView = connect(
+  filterMapStateToProps,
+  filterMapDispatchToProps
+)(Filters)
+
 //===============================================================================
 
 // kts TODO seperate filtering from rendering
@@ -261,8 +294,8 @@ var Answer = React.createClass({
     let columns = []
 
     var choiceNodes = choices.booleans.map( (choice) => {
-    log.trace("ContextAnswer: booleans: choice",choice)
-    log.trace("ContextAnswer: booleans: answers",answers)
+    //log.trace("ContextAnswer: booleans: choice",choice)
+    //log.trace("ContextAnswer: booleans: answers",answers)
 
       return (
         <BooleanChoice choice={choice} key={choice.name} answer={answers[choice.name]}  parentField={choice.name} />
@@ -402,31 +435,26 @@ const AnswerList = ({ questions, filters }) => {
 
 //===============================================================================
 
-export const AnswerPage = (props) => {
-    log.info(' AnswerPage: toggle', JSON.stringify(props))
-    let { data, toggleRatingFilterAction, toggleBooleanFilterAction, clearRatingFilterAction, clearBooleanFilterAction } = props
-    log.info(' AnswerPage: test', JSON.stringify(toggleRatingFilterAction))
+export const AnswerPage = (props,context) => {
+    console.log("props",props)
+    console.log("context",context)
+    log.info(' AnswerPage: props', JSON.stringify(props,null,2))
+    let state = context.store.getState()
 
     return(
-    <div>
-        <div className="answerBox question-reactview">
-          <Filters
-              onRatingFilterClick ={toggleRatingFilterAction}
-              onBooleanFilterClick={toggleBooleanFilterAction}
-              onBooleanClearClick={clearBooleanFilterAction}
-              onRatingClearClick={clearRatingFilterAction}
-              filterState={data.filters}
-          />
-          <hr />
-
-          <AnswerList
-              questions={data.questions}
-              filters={data.filters}
-          />
+        <div>
+            <FilterView
+                filterState={state.filters}
+            />
+            <AnswerList
+                questions={state.questions}
+                filters={state.filters}
+            />
         </div>
-    </div>
   )
 }
+
+AnswerPage.contextTypes = { store: React.PropTypes.object }
 
 //===============================================================================
 
