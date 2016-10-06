@@ -22,13 +22,15 @@
     window.globs['defaultLoggingLevel'] = "OFF"
     var loggingLevel='ERROR'
     {%if logging %}
-        var loggingLevel='ALL'
+        loggingLevel='ALL'
     {% endif %}
     window.globs['loggingLevels'] =
     {
         'AnswerView' : loggingLevel,
+        'AnswerEdit' : loggingLevel,
         //'viewerComponents' : loggingLevel,
         'answers_view' : loggingLevel,
+        'answers_edit' : loggingLevel,
         'actions' : loggingLevel,
         'reducers' : loggingLevel,
     }
