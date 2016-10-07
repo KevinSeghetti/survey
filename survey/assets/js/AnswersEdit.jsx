@@ -74,14 +74,11 @@ const TransportControlsWrapper = connect(
 
 // There is a one to one relationship between this component
 // and a row in the answer DB on the server
-// so this is where we store all state relating to this answer,
-// and send it to the server whenever it changes
 
 export var ContextAnswer = React.createClass({
    render: function() {
         log.info("ContextAnswer:render: props = ",this.props)
         let {onUpdate,id, questionId, context  } = this.props
-        console.log("@@",this.props)
         chai.expect(onUpdate).to.exist
 
         var answers = {
@@ -89,7 +86,7 @@ export var ContextAnswer = React.createClass({
           question: { id: questionId } ,
 
         }
-        if('answers' in this.props && typeof answers != 'undefined')
+        if('answers' in this.props && typeof this.props.answers != 'undefined')
         {
           answers = this.props.answers
         }
