@@ -18,8 +18,8 @@ let store = createStore(topReducer)
 
 //===============================================================================
 
-export var AnswerEditPage = React.createClass({
-    loadAnswersFromServer: function() {
+export class AnswerEditPage extends React.Component {
+    loadAnswersFromServer() {
         $.ajax({
             url: url,
             dataType: 'json',
@@ -32,18 +32,18 @@ export var AnswerEditPage = React.createClass({
                 console.error(url, status, err.toString())
             }.bind(this)
         })
-    },
-    componentDidMount: function() {
+    }
+    componentDidMount() {
         this.loadAnswersFromServer()
-    },
-    render: function() {
+    }
+    render() {
         //log.trace("AnswerEditPage::render: props",JSON.stringify(this.props,null,2))
         return (
             <AnswerApp
             />
         )
   }
-})
+}
 
 // main entry point for answer viewer. This will go away if this project becomes
 // a single page app
