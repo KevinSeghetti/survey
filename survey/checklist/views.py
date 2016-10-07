@@ -24,7 +24,6 @@ from survey.settings import APP_NAME,SFW,DEBUG_LOGGING
 from .models import Question,Answer
 from .serializers import (
     QuestionSerializer,
-    QuestionWithAnswerSerializer,
     AnswerSerializer,
     UserSerializer
 )
@@ -317,18 +316,6 @@ class QuestionViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Question.objects.all().order_by('-question_text')
     serializer_class = QuestionSerializer
-
-#===============================================================================
-
-class QuestionWithAnswerViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows questions to be viewed or edited.
-    """
-
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    #queryset = Question.objects.all().order_by('-question_text')
-    queryset = Answer.objects.all()
-    serializer_class = QuestionWithAnswerSerializer
 
 #===============================================================================
 
