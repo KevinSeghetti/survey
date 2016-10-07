@@ -8,7 +8,7 @@ var chai = require('chai')
 //-------------------------------------------------------------------------------
 
 var log = require('./loggingConfig').CreateLogger("answers_view")
-var AnswerPage = require('./AnswersView').AnswerPage
+var { AnswerApp } = require('./AnswersView')
 var {choices, choices_context} = require('./applicationData')
 import { loadAction, } from './actionTypesAnswerViewer'
 import { topReducer } from './topReducerAnswerViewer'
@@ -19,9 +19,8 @@ var url=window.globs['questionsUrl']
 let store = createStore(topReducer)
 
 //===============================================================================
-// kts TODO: this is all wrong. using connect, the functional portions shouldn't be in this presentational class
 
-export var AnswerBox = React.createClass({
+export var AnswerViewPage = React.createClass({
     loadAnswersFromServer: function() {
         $.ajax({
             url: url,
@@ -37,35 +36,17 @@ export var AnswerBox = React.createClass({
         })
     },
     componentDidMount: function() {
-        log.trace("AnswerBox::componentDidMount")
+        log.trace("AnswerViewPage::componentDidMount")
         this.loadAnswersFromServer()
     },
     render: function() {
-        log.trace("AnswerBox::render")
+        log.trace("AnswerViewPage::render")
         return (
-            <AnswerPage
+            <AnswerApp
             />
         )
   }
 })
-
-//-------------------------------------------------------------------------------
-// apparently using this to subscribe top level to store updates.
-// TODO: learn how to do that directly instead
-
-const mapStateToProps = (state) => {
-    //log.trace("mapStateToProps: state = ",JSON.stringify(state,null,2))
-    //log.trace("mapStateToProps: state type = ",typeof(state))
-    return {
-        state: state
-    }
-}
-
-//-------------------------------------------------------------------------------
-
-const AnswerApp = connect(
-  mapStateToProps
-)(AnswerBox)
 
 // main entry point for answer viewer. This will go away if this project becomes
 // a single page app
@@ -73,7 +54,7 @@ const AnswerApp = connect(
 
 render(
   <Provider store={store}>
-    <AnswerApp />
+    <AnswerViewPage />
   </Provider>,
   document.getElementById('react-app')
 )

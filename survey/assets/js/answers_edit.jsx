@@ -7,8 +7,7 @@ var chai = require('chai')
 //-------------------------------------------------------------------------------
 
 var log = require('./loggingConfig').CreateLogger("answers_view")
-var AnswerPage = require('./AnswersEdit').AnswerPage
-var {choices, choices_context} = require('./applicationData')
+var { AnswerApp } = require('./AnswersEdit')
 import { loadAction, } from './actionTypesAnswerEditor'
 import { topReducer } from './topReducerAnswerEditor'
 
@@ -19,7 +18,7 @@ let store = createStore(topReducer)
 
 //===============================================================================
 
-export var AnswerBox = React.createClass({
+export var AnswerEditPage = React.createClass({
     loadAnswersFromServer: function() {
         $.ajax({
             url: url,
@@ -38,34 +37,13 @@ export var AnswerBox = React.createClass({
         this.loadAnswersFromServer()
     },
     render: function() {
-        //log.trace("AnswerBox::render: props",JSON.stringify(this.props,null,2))
-        chai.expect(this.props.questions).to.exist
-        chai.expect(this.props.currentQuestion).to.exist
-
+        //log.trace("AnswerEditPage::render: props",JSON.stringify(this.props,null,2))
         return (
-            <AnswerPage
-                {...this.props }
+            <AnswerApp
             />
         )
   }
 })
-
-//-------------------------------------------------------------------------------
-
-const mapStateToProps = (state) => {
-    log.trace("mapStateToProps: ")
-    //log.trace("mapStateToProps: state = ",JSON.stringify(state,null,2))
-    return {
-        questions: state.questions,
-        currentQuestion: state.currentQuestion,
-    }
-}
-
-//-------------------------------------------------------------------------------
-
-const AnswerApp = connect(
-  mapStateToProps,
-)(AnswerBox)
 
 // main entry point for answer viewer. This will go away if this project becomes
 // a single page app
@@ -73,7 +51,7 @@ const AnswerApp = connect(
 
 render(
   <Provider store={store}>
-    <AnswerApp />
+    <AnswerEditPage />
   </Provider>,
   document.getElementById('react-app')
 )

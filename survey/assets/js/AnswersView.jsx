@@ -433,11 +433,11 @@ const AnswerList = ({ questions, filters }) => {
 
 //===============================================================================
 
-export const AnswerPage = (props,context) => {
+const AnswerPage = (props,context) => {
     console.log("props",props)
     console.log("context",context)
     log.info(' AnswerPage: props', JSON.stringify(props,null,2))
-    let state = context.store.getState()
+    let {state, } = props
 
     return(
         <div>
@@ -452,7 +452,19 @@ export const AnswerPage = (props,context) => {
   )
 }
 
-AnswerPage.contextTypes = { store: React.PropTypes.object }
+//-------------------------------------------------------------------------------
+
+const answerPageMapStateToProps = (state) => {
+    return {
+        state: state
+    }
+}
+
+//-------------------------------------------------------------------------------
+
+export const AnswerApp = connect(
+  answerPageMapStateToProps
+)(AnswerPage)
 
 //===============================================================================
 

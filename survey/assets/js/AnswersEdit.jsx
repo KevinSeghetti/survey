@@ -44,14 +44,14 @@ const TransportControls = ({ currentQuestion,nextQuestionAction,prevQuestionActi
 
 //-------------------------------------------------------------------------------
 
-const mapStateToProps = (state) => {
+const transportControlsMapStateToProps = (state) => {
     return {
     }
 }
 
 //-------------------------------------------------------------------------------
 
-const mapDispatchToProps = (dispatch) => {
+const transportControlsMapDispatchToProps = (dispatch) => {
   return {
       prevQuestionAction: () => {
           dispatch(prevQuestionAction() )
@@ -65,8 +65,8 @@ const mapDispatchToProps = (dispatch) => {
 //-------------------------------------------------------------------------------
 
 const TransportControlsWrapper = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  transportControlsMapStateToProps,
+  transportControlsMapDispatchToProps
 )(TransportControls)
 
 
@@ -253,7 +253,7 @@ export var Answer = React.createClass({
 
 //===============================================================================
 
-export const AnswerPage = ({questions, currentQuestion }) => {
+const AnswerPage = ({questions, currentQuestion }) => {
     log.info("AnswerPage: currentQuestion",currentQuestion)
     //log.info("AnswerPage: currentQuestion",currentQuestion,", questions: ",JSON.stringify(questions))
     chai.expect(questions).to.exist
@@ -294,6 +294,23 @@ export const AnswerPage = ({questions, currentQuestion }) => {
       </div>
     )
 }
+
+//===============================================================================
+
+const answerPageMapStateToProps = (state) => {
+    log.trace("answerPageMapStateToProps: ")
+    //log.trace("mapStateToProps: state = ",JSON.stringify(state,null,2))
+    return {
+        questions: state.questions,
+        currentQuestion: state.currentQuestion,
+    }
+}
+
+//-------------------------------------------------------------------------------
+
+export const AnswerApp = connect(
+  answerPageMapStateToProps,
+)(AnswerPage)
 
 //===============================================================================
 
