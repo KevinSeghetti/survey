@@ -11,6 +11,7 @@ export const ACTION_LOAD = PAGENAME+'LOAD'
 export const ACTION_NEXT_QUESTION = PAGENAME+'_NEXT_QUESTION'
 export const ACTION_PREV_QUESTION = PAGENAME+'_PREV_QUESTION'
 export const ACTION_SET_ANSWER_FIELD = PAGENAME+'_SET_ANSWER_FIELD'
+export const ACTION_SAVE_ANSWERS = PAGENAME+'_SAVE_ANSWERS'
 
 //-------------------------------------------------------------------------------
 
@@ -52,6 +53,17 @@ export const setField = (questionId, context,field,value) => {
         context: context,
         field: field,
         value: value,
+    }
+}
+
+//-------------------------------------------------------------------------------
+
+export const saveAnswers = (questionId, ) => {
+    log.info('saveAnswers',questionId)
+
+    return {
+        type: ACTION_SAVE_ANSWERS,
+        questionId: questionId,
     }
 }
 

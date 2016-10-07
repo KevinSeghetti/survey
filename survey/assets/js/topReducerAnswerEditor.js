@@ -29,6 +29,44 @@ const initialState = {
 
 //-------------------------------------------------------------------------------
 
+function saveAnswer(answers) {
+  var url = "/rest/answers/"       // for cases where we don't have an answer record yet
+  var requestType = 'POST'
+  if('url' in  answers)
+  {
+    url = answers.url
+    requestType = 'PUT'
+  }
+  var postData = {}
+  postData = answers
+
+    //kts smell
+  // csrf setup
+  log.info("x crsr",window.globs['csrfToken'])
+  $.ajaxSetup({
+      headers: {
+          'X-CSRFToken': window.globs['csrfToken']
+      }
+  })
+
+  $.ajax({
+    url: url,
+    dataType: 'json',
+    type: requestType,
+    data: postData,
+    success: (data) => {
+      //log.info("saveAnswer: success: returned data = ",data)
+    },
+    error: (xhr, status, err) => {
+      //this.setState({data: answers})
+      console.error(url, status, err.toString())
+    }
+  })
+}
+
+
+//-------------------------------------------------------------------------------
+
 export function topReducer(state = initialState, action) {
 
     log.trace("topReducer: ",JSON.stringify(action,null,2))
@@ -41,11 +79,14 @@ export function topReducer(state = initialState, action) {
 
     case ACTION_PREV_QUESTION:
         if(state.currentQuestion > 0) {
+            saveAnswer(state.questions[state.currentQuestion])
             return Object.assign({}, state, { currentQuestion: state.currentQuestion-1})
         }
         return state
     case ACTION_NEXT_QUESTION:
+
         if(state.currentQuestion < state.questions.length) {
+            saveAnswer(state.questions[state.currentQuestion])
             return Object.assign({}, state, { currentQuestion: state.currentQuestion+1})
         }
         return state

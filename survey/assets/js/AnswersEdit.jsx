@@ -169,57 +169,6 @@ export var ContextAnswer = React.createClass({
        )
     },
 
-    onBlur: function(e) {
-      var currentTarget = e.currentTarget
-
-      setTimeout(() => {
-        if (!currentTarget.contains(document.activeElement)) {
-            // this checks to see if whatever is now selected
-            // is under this component. If it not, then it is time
-            // to save changes to this component
-            //log.info('component officially blurred')
-            // time to send this object to the server
-            this.saveAnswer()
-            //log.info('state', that.state)
-        }
-      }, 0)
-    },
-
-    saveAnswer: function(answer) {
-      var url = "/rest/answers/"       // for cases where we don't have an answer record yet
-      var requestType = 'POST'
-      if('url' in this.state.answers)
-      {
-        url = this.state.answers.url
-        requestType = 'PUT'
-      }
-      var postData = {}
-      postData = this.state.answers
-
-        //kts smell
-      // csrf setup
-      log.info("x crsr",window.globs['csrfToken'])
-      $.ajaxSetup({
-          headers: {
-              'X-CSRFToken': window.globs['csrfToken']
-          }
-      })
-
-      $.ajax({
-        url: url,
-        dataType: 'json',
-        type: requestType,
-        data: postData,
-        success: function(data) {
-          //log.info("saveAnswer: success: returned data = ",data)
-          this.setState({ answers:  data} )
-        }.bind(this),
-        error: function(xhr, status, err) {
-          //this.setState({data: answers})
-          console.error(this.props.url, status, err.toString())
-        }.bind(this)
-      })
-    },
 })
 
 //===============================================================================
