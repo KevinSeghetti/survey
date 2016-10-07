@@ -129,7 +129,7 @@ export var ContextAnswer = React.createClass({
        })
        var answersContext = $.grep(choices_context, function(e) { return e.name == answers.context })[0]
        return (
-           <div className="" onBlur={this.onBlur} >
+           <div >
              <div className='row'>
                  <div className='col-xs-12' >
                    <h3>{ answersContext.description }</h3>
@@ -269,28 +269,25 @@ const AnswerPage = ({questions, currentQuestion }) => {
     log.info("AnswerPage: rendering ",JSON.stringify(question,null,2))
 
     return (
-
-      <div className="answerBox question-edit">
       <div>
-          Select a rating for each question. You don't have to fill this out all
-          at once, your progress is saved as you move to the next question.
-          So you can come back to the rest later. Select resume to get a
-          question list containing only the questions you haven't answered yet.
+          <TransportControlsWrapper
+            currentQuestion    = { currentQuestion     }
+          />
 
-          Instructions can be found
-          <a href="/checklist/instructions"> here</a>
-      </div>
-       <hr />
+          <Answer
+            question={question.question}
+            answers={question.answers}
+          />
 
-       <Answer
-         question={question.question}
-         answers={question.answers}
-       />
+          <div>
+              Select a rating for each question. You don't have to fill this out all
+              at once, your progress is saved as you move to the next question.
+              So you can come back to the rest later. Select resume to get a
+              question list containing only the questions you haven't answered yet.
 
-       <TransportControlsWrapper
-         currentQuestion    = { currentQuestion     }
-       />
-
+              Instructions can be found
+              <a href="/checklist/instructions"> here</a>
+          </div>
       </div>
     )
 }
