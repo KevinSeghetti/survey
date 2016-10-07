@@ -42,10 +42,12 @@ export function topReducer(state = initialState, action) {
         if(state.currentQuestion > 0) {
             return Object.assign({}, state, { currentQuestion: state.currentQuestion-1})
         }
+        return state
     case ACTION_NEXT_QUESTION:
         if(state.currentQuestion < state.questions.length) {
             return Object.assign({}, state, { currentQuestion: state.currentQuestion+1})
         }
+        return state
     default:
       return state
     }
