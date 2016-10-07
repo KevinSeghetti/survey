@@ -9,6 +9,7 @@ import {
     ACTION_LOAD,
         ACTION_PREV_QUESTION,
         ACTION_NEXT_QUESTION,
+        ACTION_SET_ANSWER_FIELD,
     } from './actionTypesAnswerEditor'
 import {
     loadAction,
@@ -48,6 +49,33 @@ export function topReducer(state = initialState, action) {
             return Object.assign({}, state, { currentQuestion: state.currentQuestion+1})
         }
         return state
+    case ACTION_SET_ANSWER_FIELD:
+        let {questionId,context,field,value } = action
+        chai.expect(questionId).to.exist
+        chai.expect(context).to.exist
+        chai.expect(field).to.exist
+        chai.expect(value).to.exist
+
+        // look up index of question
+        var questionIndex = state.questions.findIndex( x => x.question.id == questionId )
+
+        if(questionIndex >= 0 ) {
+            let question = state.questions[questionIndex]
+
+            let newContextObject =  Object.assign({},question.answers[context],{ [field] : value })
+            let newAnswerObject =  Object.assign({},question.answers,{ [context] : newContextObject })
+            let newQuestionObject = Object.assign({},question, { "answers" : newAnswerObject })
+            return(
+                Object.assign({}, state, { questions:
+                    state.questions.slice(0,questionIndex).concat(
+                        newQuestionObject,
+                       state.questions.slice(questionIndex+1)
+                    )
+                })
+            )
+        }
+        return state
+
     default:
       return state
     }

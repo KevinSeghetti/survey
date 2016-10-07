@@ -10,6 +10,7 @@ let PAGENAME="ANSWER_EDITOR"
 export const ACTION_LOAD = PAGENAME+'LOAD'
 export const ACTION_NEXT_QUESTION = PAGENAME+'_NEXT_QUESTION'
 export const ACTION_PREV_QUESTION = PAGENAME+'_PREV_QUESTION'
+export const ACTION_SET_ANSWER_FIELD = PAGENAME+'_SET_ANSWER_FIELD'
 
 //-------------------------------------------------------------------------------
 
@@ -37,6 +38,20 @@ export const nextQuestionAction = () => {
 
     return {
         type: ACTION_NEXT_QUESTION,
+    }
+}
+
+//-------------------------------------------------------------------------------
+
+export const setField = (questionId, context,field,value) => {
+    log.info('setField')
+
+    return {
+        type: ACTION_SET_ANSWER_FIELD,
+        questionId: questionId,
+        context: context,
+        field: field,
+        value: value,
     }
 }
 

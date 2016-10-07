@@ -12,6 +12,7 @@ var {choices, choices_context} = require('./applicationData')
 import {
     prevQuestionAction,
     nextQuestionAction,
+    setField
     } from './actionTypesAnswerEditor'
 
 var log = require('./loggingConfig').CreateLogger("AnswerEdit")
@@ -77,63 +78,61 @@ const TransportControlsWrapper = connect(
 // and send it to the server whenever it changes
 
 export var ContextAnswer = React.createClass({
-   getInitialState: function() {
-    //log.info("ContextAnswer:initial state",this.props)
-
-    var answers = {
-      context: this.props.context,
-      question: { id: this.props.question_id } ,
-
-    }
-    if('answers' in this.props && typeof this.props.answers != 'undefined')
-    {
-      answers = this.props.answers
-    }
-    //log.info("answers",answers)
-    return { answers: answers }
-   },
-
    render: function() {
-        log.info("ContextAnswer:render: state = ",this.state,", props = ",this.props)
+        log.info("ContextAnswer:render: props = ",this.props)
+        let {onUpdate,id, questionId, context  } = this.props
+        console.log("@@",this.props)
+        chai.expect(onUpdate).to.exist
+
+        var answers = {
+          context: context,
+          question: { id: questionId } ,
+
+        }
+        if('answers' in this.props && typeof answers != 'undefined')
+        {
+          answers = this.props.answers
+        }
 
        var rating
        var notes
 
        // kts smell there must be a better way to do this
-       if(this.state.answers)
+       if(answers)
        {
-         rating = this.state.answers.rating
-         notes  = this.state.answers.notes
+         rating = answers.rating
+         notes  = answers.notes
 
        }
        //log.info("ContextAnswer")
        //log.info("ContextAnswer: booleans",choices.booleans)
-       var that = this
-       var choiceNodes = choices.booleans.map(function(choice) {
+       var choiceNodes = choices.booleans.map( (choice) => {
        //log.info("ContextAnswer: booleans: choice",choice)
          // look up answer, if present
          var answer
-         if(that.state.answers && choice.name in that.state.answers)
+         if(answers && choice.name in answers)
          {
-           answer = that.state.answers[choice.name]
+           answer = answers[choice.name]
          }
 
          return (
            <BooleanChoice
             choice={choice}
             key={choice.name}
-            onUpdate={that.onUpdate}
+            onUpdate={onUpdate}
+            questionId={questionId}
+            context={context}
             answer={answer}
             parentField={choice.name}
           />
          )
        })
-       var context = $.grep(choices_context, function(e) { return e.name == that.state.answers.context })[0]
+       var answersContext = $.grep(choices_context, function(e) { return e.name == answers.context })[0]
        return (
            <div className="" onBlur={this.onBlur} >
              <div className='row'>
                  <div className='col-xs-12' >
-                   <h3>{ context.description }</h3>
+                   <h3>{ answersContext.description }</h3>
                  </div>
              </div>
              <div className="row">
@@ -142,8 +141,10 @@ export var ContextAnswer = React.createClass({
                         label="Rating"
                         choices={choices.rating}
                         selected={rating}
-                        id={this.state.id + '_rating' }
-                        onUpdate={this.onUpdate}
+                        id={id + '_rating' }
+                        questionId={questionId}
+                        context={context}
+                        onUpdate={onUpdate}
                         parentField='rating'
                     />
                 </div>
@@ -158,7 +159,9 @@ export var ContextAnswer = React.createClass({
                <TextField
                    label="Notes"
                    value={notes}
-                   onUpdate={this.onUpdate}
+                   onUpdate={onUpdate}
+                   context={context}
+                   questionId={questionId}
                    parentField='notes'
                />
              </div>
@@ -166,27 +169,17 @@ export var ContextAnswer = React.createClass({
        )
     },
 
-    onUpdate: function(childProps, val) {
-      //log.info('ContextAnswer:onUpdate', childProps.parentField,  val)
-      var newState = this.state.answers
-      newState[childProps.parentField] = val
-      //log.info('ContextAnswer:onUpdate: existing state', this.state)
-      //log.info('ContextAnswer:onUpdate: new state', newState)
-      this.setState({ answers: newState} )
-    },
-
     onBlur: function(e) {
       var currentTarget = e.currentTarget
-      var that = this
 
-      setTimeout(function() {
+      setTimeout(() => {
         if (!currentTarget.contains(document.activeElement)) {
             // this checks to see if whatever is now selected
             // is under this component. If it not, then it is time
             // to save changes to this component
             //log.info('component officially blurred')
             // time to send this object to the server
-            that.saveAnswer()
+            this.saveAnswer()
             //log.info('state', that.state)
         }
       }, 0)
@@ -229,6 +222,43 @@ export var ContextAnswer = React.createClass({
     },
 })
 
+//===============================================================================
+
+const contextAnswerMapStateToProps = (state) => {
+    //log.trace("mapStateToProps: state = ",JSON.stringify(state,null,2))
+    //log.trace("mapStateToProps: state type = ",typeof(state))
+    return {
+        state: state
+    }
+}
+
+//-------------------------------------------------------------------------------
+
+const contextAnswerMapDispatchToProps = (dispatch) => {
+  return {
+      onUpdate: (childProps, value) => {
+          console.log(childProps)
+          let {questionId, context, parentField} = childProps
+          chai.expect(questionId).to.exist
+          chai.expect(context).to.exist
+          chai.expect(parentField).to.exist
+          chai.expect(value).to.exist
+
+          dispatch(setField(questionId, context, parentField, value) )
+      },
+  }
+}
+
+//-------------------------------------------------------------------------------
+
+const ContextAnswerWrapper = connect(
+  contextAnswerMapStateToProps,
+  contextAnswerMapDispatchToProps
+)(ContextAnswer)
+
+//===============================================================================
+
+
 export var Answer = React.createClass({
   render: function() {
     log.info("Answer: props",JSON.stringify(this.props,null,2))
@@ -245,11 +275,11 @@ export var Answer = React.createClass({
     }
 
     return (
-      <ContextAnswer
+      <ContextAnswerWrapper
         context={context_name}
         context_description={context['description']}
         answers={ contextanswers    }
-        question_id={ question.id}
+        questionId={ question.id}
         id={question.id + '_'+context_name }
         key={context_name}
       />

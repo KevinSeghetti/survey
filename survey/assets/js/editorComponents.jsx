@@ -79,7 +79,6 @@ export var TextField = React.createClass({
 //    this.id = UUID.v4();
 //  },
   handleChange: function(event) {
-    //console.log("TextField:handleChange")
     this.props.onUpdate(this.props, event.target.value)
   },
   render: function() {
