@@ -65,8 +65,10 @@ export var RadioChoices = React.createClass({
     })
     return (
       <div className='form-group' >
-        <h4>{this.props.label}</h4>
-        {choiceNodes}
+        <label className="col-sm-4 control-label">{this.props.label}</label>
+        <div className="col-sm-8">
+            {choiceNodes}
+        </div>
       </div>
     )
   }
@@ -83,14 +85,17 @@ export var TextField = React.createClass({
   },
   render: function() {
     return (
-      <div className="input-group-inline col-xs-12">
-        <h4>{this.props.label}</h4>
-        <input
-          className='form-control'
-          type="text"
-          value={ this.props.value }
-          onChange={this.handleChange}
-        />
+
+      <div className='form-group' >
+        <label className="col-sm-4 control-label">{this.props.label}</label>
+        <div className="col-sm-8">
+            <input
+              className='form-control'
+              type="text"
+              value={ this.props.value }
+              onChange={this.handleChange}
+            />
+        </div>
       </div>
     )
   }

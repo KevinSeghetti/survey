@@ -146,11 +146,11 @@ export var ContextAnswer = React.createClass({
                     />
                 </div>
              </div>
-             <div className='row'>
-                <div className="col-xs-12">
-                   <h4>Selections</h4>
+             <div className='form-group' >
+               <label className="col-sm-4 control-label">Selections</label>
+               <div className="col-sm-8">
                    {choiceNodes}
-                </div>
+               </div>
              </div>
              <div className='row'>
                <TextField
@@ -266,7 +266,7 @@ const AnswerPage = ({questions, currentQuestion }) => {
     log.info("AnswerPage: rendering ",JSON.stringify(question,null,2))
 
     return (
-      <div>
+      <form className="form-horizontal">
           <TransportControlsWrapper
             currentQuestion    = { currentQuestion     }
           />
@@ -285,7 +285,7 @@ const AnswerPage = ({questions, currentQuestion }) => {
               Instructions can be found
               <a href="/checklist/instructions"> here</a>
           </div>
-      </div>
+      </form>
     )
 }
 
