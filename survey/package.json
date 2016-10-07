@@ -5,9 +5,12 @@
   "main": "index.js",
   "private": true,
   "dependencies": {
-    "babel": "*",
     "babel-cli": "*",
+    "babel-plugin-transform-es2015-spread": "*",
     "babel-plugin-transform-react-jsx": "*",
+    "babel-preset-latest": "*",
+    "babel-preset-react": "*",
+    "babel-preset-stage-2": "^6.17.0",
     "chai": "*",
     "handlebars": "*",
     "jquery": "^3.1.0",
@@ -16,8 +19,6 @@
     "redux": "^3.6.0"
   },
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-core": "^6.14.0",
     "babel-jest": "^15.0.0",
     "babel-loader": "^6.2.5",
     "babel-polyfill": "^6.16.0",
