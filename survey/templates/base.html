@@ -67,26 +67,28 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-               <div class="navbar-left">
-                  <img src="{% static 'images/logo.png'  %}" alt="logo" height="38" width="38"> &nbsp;
-               </div>
-              <a class="navbar-brand" href="{% url 'checklist:index'  %}">{{ APP_NAME }}</a>
+              <div class="navbar-left">
+                <img src="{% static 'images/logo.png'  %}" alt="logo" height="38" width="38"> &nbsp;
+              </div>
+              <div class="navbar-left">
+                <a class="navbar-brand" href="{% url 'checklist:index'  %}">{{ APP_NAME }}</a>
+              </div>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <li class="{% ifequal request.path urlIndex        %}active{% endifequal %}"><a href="{{ urlIndex }}">Home</a></li>
                 {% if request.user.is_authenticated %}
-                   <li class="{% ifequal request.path urlEdit        %}active{% endifequal %}"><a  href="{{ urlEdit    }}">Fill out checklist</a></li>
-                   <li class="{% ifequal request.path urlResume      %}active{% endifequal %}"><a  href="{{ urlResume  }}">Resume checklist  </a></li>
-                   <li class="{% ifequal request.path urlReactreview %}active{% endifequal %}"><a  href="{{ urlReview  }}">View Results      </a></li>
+                   <li class="{% ifequal request.path urlEdit        %}active{% endifequal %}"><a  href="{{ urlEdit    }}">Checklist</a></li>
+                   <li class="{% ifequal request.path urlResume      %}active{% endifequal %}"><a  href="{{ urlResume  }}">Resume </a></li>
+                   <li class="{% ifequal request.path urlReactreview %}active{% endifequal %}"><a  href="{{ urlReview  }}">Results      </a></li>
                  {% endif %}
-                <li class="{% ifequal request.path urlQuestions        %}active{% endifequal %}"><a href="{{ urlQuestions }}">View question list</a></li>
+                <li class="{% ifequal request.path urlQuestions        %}active{% endifequal %}"><a href="{{ urlQuestions }}">Questions</a></li>
               </ul>
 
               <ul class="nav navbar-nav navbar-right">
               {# kts todo can't figure out how to reverse lookup logout #}
               {% if request.user.is_authenticated %}
-                <li><p class="navbar-text">Logged in as {{ request.user }}</p></li>
+                <li><p class="navbar-text">User {{ request.user }}</p></li>
                 <li><a href=/accounts/logout>Logout</a></li>
               {% else %}
                 <li><a href=/accounts/login>Login</a>   </li>
