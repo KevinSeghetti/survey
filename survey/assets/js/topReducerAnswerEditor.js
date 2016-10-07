@@ -29,7 +29,7 @@ const initialState = {
 
 //-------------------------------------------------------------------------------
 
-function saveAnswer(answers) {
+function saveContextAnswer(answers) {
   var url = "/rest/answers/"       // for cases where we don't have an answer record yet
   var requestType = 'POST'
   if('url' in  answers)
@@ -64,6 +64,24 @@ function saveAnswer(answers) {
   })
 }
 
+function saveAnswers(question)
+{
+    log.trace("saveAnswers:",JSON.stringify(question,null,2))
+    if('answers' in question) {
+        let { answers } = question
+        var contextNodes = choices_context.map((context) => {
+          var contextName = context['name']
+              log.trace("saveAnswers:context:",contextName)
+          // look up answer, if present
+          var contextanswers
+          if(contextName in answers)
+          {
+            let contextAnswers = answers[contextName]
+            saveContextAnswer(contextAnswers)
+          }
+        })
+    }
+}
 
 //-------------------------------------------------------------------------------
 
@@ -79,14 +97,14 @@ export function topReducer(state = initialState, action) {
 
     case ACTION_PREV_QUESTION:
         if(state.currentQuestion > 0) {
-            saveAnswer(state.questions[state.currentQuestion])
+            saveAnswers(state.questions[state.currentQuestion])
             return Object.assign({}, state, { currentQuestion: state.currentQuestion-1})
         }
         return state
     case ACTION_NEXT_QUESTION:
 
         if(state.currentQuestion < state.questions.length) {
-            saveAnswer(state.questions[state.currentQuestion])
+            saveAnswers(state.questions[state.currentQuestion])
             return Object.assign({}, state, { currentQuestion: state.currentQuestion+1})
         }
         return state
