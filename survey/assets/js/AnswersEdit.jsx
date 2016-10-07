@@ -4,11 +4,18 @@ var React = require('react')
 var ReactDOM = require('react-dom')
 var $ = require('jquery');
 var chai = require('chai')
+import { Provider,connect } from 'react-redux'
 
 var {BooleanChoice, RadioChoices, TextField, ClickableButton} = require('./editorComponents')
 var {choices, choices_context} = require('./applicationData')
-//var log = require('./loggingConfig').CreateLogger("AnswerEdit")
-var log = require('./loggingConfig').CreateLogger("AnswerView")
+
+import {
+    prevQuestionAction,
+    nextQuestionAction,
+    } from './actionTypesAnswerEditor'
+
+var log = require('./loggingConfig').CreateLogger("AnswerEdit")
+
 
 //===============================================================================
 // transport controls
@@ -33,6 +40,34 @@ const TransportControls = ({ currentQuestion,nextQuestionAction,prevQuestionActi
         </div>
     )
 }
+
+//-------------------------------------------------------------------------------
+
+const mapStateToProps = (state) => {
+    return {
+    }
+}
+
+//-------------------------------------------------------------------------------
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      prevQuestionAction: () => {
+          dispatch(prevQuestionAction() )
+      },
+      nextQuestionAction: () => {
+          dispatch(nextQuestionAction() )
+      },
+  }
+}
+
+//-------------------------------------------------------------------------------
+
+const TransportControlsWrapper = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TransportControls)
+
 
 //===============================================================================
 
@@ -239,13 +274,11 @@ export var Answer = React.createClass({
 
 //===============================================================================
 
-export const AnswerPage = ({questions, currentQuestion,nextQuestionAction,prevQuestionAction }) => {
+export const AnswerPage = ({questions, currentQuestion }) => {
     log.info("AnswerPage: currentQuestion",currentQuestion)
     //log.info("AnswerPage: currentQuestion",currentQuestion,", questions: ",JSON.stringify(questions))
     chai.expect(questions).to.exist
     chai.expect(currentQuestion).to.exist
-    chai.expect(prevQuestionAction).to.exist
-    chai.expect(nextQuestionAction).to.exist
     if(currentQuestion >= questions.length)
     {
       return null
@@ -275,16 +308,13 @@ export const AnswerPage = ({questions, currentQuestion,nextQuestionAction,prevQu
          answers={question.answers}
        />
 
-       <TransportControls
+       <TransportControlsWrapper
          currentQuestion    = { currentQuestion     }
-         nextQuestionAction = { nextQuestionAction  }
-         prevQuestionAction = { prevQuestionAction  }
        />
 
       </div>
     )
 }
 
-
-
+//===============================================================================
 

@@ -9,11 +9,7 @@ var chai = require('chai')
 var log = require('./loggingConfig').CreateLogger("answers_view")
 var AnswerPage = require('./AnswersEdit').AnswerPage
 var {choices, choices_context} = require('./applicationData')
-import {
-    loadAction,
-    prevQuestionAction,
-    nextQuestionAction,
-    } from './actionTypesAnswerEditor'
+import { loadAction, } from './actionTypesAnswerEditor'
 import { topReducer } from './topReducerAnswerEditor'
 
 //-------------------------------------------------------------------------------
@@ -31,7 +27,7 @@ export var AnswerBox = React.createClass({
             cache: false,
             success: function(data) {
                 log.trace("== json loaded ==",data)
-                this.props.onLoad(data)
+                store.dispatch(loadAction(data))
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(url, status, err.toString())
@@ -45,8 +41,6 @@ export var AnswerBox = React.createClass({
         //log.trace("AnswerBox::render: props",JSON.stringify(this.props,null,2))
         chai.expect(this.props.questions).to.exist
         chai.expect(this.props.currentQuestion).to.exist
-        chai.expect(this.props.prevQuestionAction).to.exist
-        chai.expect(this.props.nextQuestionAction).to.exist
 
         return (
             <AnswerPage
@@ -69,25 +63,8 @@ const mapStateToProps = (state) => {
 
 //-------------------------------------------------------------------------------
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-      onLoad: (data) => {
-          dispatch(loadAction(data))
-      },
-      prevQuestionAction: () => {
-          dispatch(prevQuestionAction() )
-      },
-      nextQuestionAction: () => {
-          dispatch(nextQuestionAction() )
-       },
-  }
-}
-
-//-------------------------------------------------------------------------------
-
 const AnswerApp = connect(
   mapStateToProps,
-  mapDispatchToProps
 )(AnswerBox)
 
 // main entry point for answer viewer. This will go away if this project becomes

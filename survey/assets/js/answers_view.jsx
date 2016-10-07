@@ -10,9 +10,7 @@ var chai = require('chai')
 var log = require('./loggingConfig').CreateLogger("answers_view")
 var AnswerPage = require('./AnswersView').AnswerPage
 var {choices, choices_context} = require('./applicationData')
-import {
-    loadAction,
-    } from './actionTypesAnswerViewer'
+import { loadAction, } from './actionTypesAnswerViewer'
 import { topReducer } from './topReducerAnswerViewer'
 
 //-------------------------------------------------------------------------------
@@ -43,6 +41,7 @@ export var AnswerBox = React.createClass({
         this.loadAnswersFromServer()
     },
     render: function() {
+        log.trace("AnswerBox::render")
         return (
             <AnswerPage
             />
@@ -51,6 +50,8 @@ export var AnswerBox = React.createClass({
 })
 
 //-------------------------------------------------------------------------------
+// apparently using this to subscribe top level to store updates.
+// TODO: learn how to do that directly instead
 
 const mapStateToProps = (state) => {
     //log.trace("mapStateToProps: state = ",JSON.stringify(state,null,2))

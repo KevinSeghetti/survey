@@ -126,7 +126,6 @@ var ContextFilters = React.createClass({
           </div>
       )
    },
-
 })
 
 //===============================================================================
@@ -207,7 +206,6 @@ var Filters = React.createClass({
      </div>
   )
   },
-
 })
 
 
