@@ -15,12 +15,12 @@ urlpatterns = [
     # needs to be converted to react
 
     # answer review
-    url(r'^review/$'                       , views.review, name='review'),
+    url(r'^oldreview/$'                       , views.review, name='review'),
     # 3rd party answer review
-    url(r'^view/(?P<user_id>[0-9]+)/$'     , views.view  , name='view'),
+    url(r'^oldview/(?P<user_id>[0-9]+)/$'     , views.view  , name='view'),
     # in progress
-    url(r'^reactreview/$'                  , views.reactreview, name='reactreview'),
-    url(r'^reactview/(?P<user_id>[0-9]+)/$', views.reactview  , name='reactview'),
+    url(r'^review/$'                  , views.reactreview, name='reactreview'),
+    url(r'^view/(?P<user_id>[0-9]+)/$', views.reactview  , name='reactview'),
 
     url(r'^detail/(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
     # support for setting from detial page

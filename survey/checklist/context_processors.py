@@ -11,12 +11,16 @@ from django.db import transaction
 from django.core.urlresolvers import reverse
 from django.core import serializers
 
-from survey.settings import APP_NAME,SFW
+from survey.settings import APP_NAME,SFW,DEBUG_LOGGING,DEBUG,PRODUCTION
+
 
 def app_globals(httpRequest):
     return {
-        'APP_NAME': APP_NAME,
-        'SFW'     : SFW,
+        'APP_NAME'    : APP_NAME,
+        'SFW'         : SFW,
+        'DEBUG'       : DEBUG,
+        'PRODUCTION'  : PRODUCTION,
+
     }
 
 

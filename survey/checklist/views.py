@@ -24,7 +24,6 @@ from survey.settings import APP_NAME,SFW,DEBUG_LOGGING
 from .models import Question,Answer
 from .serializers import (
     QuestionSerializer,
-    QuestionWithAnswerSerializer,
     AnswerSerializer,
     UserSerializer
 )
@@ -121,7 +120,7 @@ def detail(request, question_id):
         })
 
 def questions(request):
-    question_list = Question.objects.order_by('-question_text')
+    question_list = Question.objects.order_by('question_text')
     context = {'question_list': question_list}
     return render(request, 'checklist/questions.html', context)
 
@@ -235,7 +234,7 @@ def reactview(request,user_id):
     questions = get_list_or_404(Question)
     user = get_object_or_404(User,id=user_id)
 
-    return render(request, 'checklist/reactwview.html', {
+    return render(request, 'checklist/reactview.html', {
         'questions': get_answers_list(user,questions),
         'choices_context': choices_context,
         'choices': choices,
@@ -315,18 +314,6 @@ class QuestionViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Question.objects.all().order_by('-question_text')
     serializer_class = QuestionSerializer
-
-#===============================================================================
-
-class QuestionWithAnswerViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows questions to be viewed or edited.
-    """
-
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    #queryset = Question.objects.all().order_by('-question_text')
-    queryset = Answer.objects.all()
-    serializer_class = QuestionWithAnswerSerializer
 
 #===============================================================================
 

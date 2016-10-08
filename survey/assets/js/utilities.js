@@ -10,4 +10,15 @@ export function mapObject(obj, callback) {
     return result;
 }
 
+//===============================================================================
+
+export function defaultDict (choices,value) {
+    let result = {}
+    choices.forEach( (choice) => {
+        result[choice['name']] = value
+    })
+    return result
+}
+
+//===============================================================================
 

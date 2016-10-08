@@ -1,3 +1,7 @@
+var chai = require('chai')
+
+//===============================================================================
+
 export var BooleanChoice = React.createClass({
 
   handleChange: function(event) {
@@ -22,13 +26,15 @@ export var BooleanChoice = React.createClass({
             />
             {this.props.choice.description}
         </div>
-    );
+    )
   }
-});
+})
+
+//-------------------------------------------------------------------------------
 
 export var RadioChoices = React.createClass({
   getInitialState: function() {
-    return {selected: this.props.selected};
+    return {selected: this.props.selected}
   },
   handleChange: function(event) {
     //console.log("RadioChange:handleChange")
@@ -48,16 +54,17 @@ export var RadioChoices = React.createClass({
             ></input>
             <label >{choice.description}</label>
           </span>
-      );
-    });
+      )
+    })
     return (
       <div className='col-xs-10' >
         {choiceNodes}
       </div>
-    );
+    )
   }
-});
+})
 
+//-------------------------------------------------------------------------------
 
 export var TextField = React.createClass({
   handleChange: function(event) {
@@ -71,9 +78,23 @@ export var TextField = React.createClass({
         value={ this.props.value }
         onChange={this.handleChange}
       />
-    );
+    )
   }
-});
+})
 
 
+//-------------------------------------------------------------------------------
+
+export var ClickableButton = React.createClass({
+  render: function() {
+    chai.expect(this.props.handleClick).to.exist
+    return (
+      <button onClick={this.props.handleClick}>
+          { this.props.value }
+      </button>
+    )
+  },
+})
+
+//===============================================================================
 

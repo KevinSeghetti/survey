@@ -10,8 +10,13 @@ var chai = require('chai')
 var log = require('./loggingConfig').CreateLogger("answers_view")
 var AnswerPage = require('./AnswersView').AnswerPage
 var {choices, choices_context} = require('./applicationData')
-import { ACTION_LOAD,ACTION_SET_BOOLEAN_FILTER,ACTION_SET_RATING_FILTER,ACTION_SET_SEARCH_STRING } from './actionTypes'
-import { loadAction, toggleBooleanFilterAction,  toggleRatingFilterAction } from './actionTypes'
+import {
+    loadAction,
+    toggleBooleanFilterAction,
+    toggleRatingFilterAction,
+    clearBooleanFilterAction,
+    clearRatingFilterAction,
+    } from './actionTypes'
 import { topReducer } from './topReducer'
 
 //-------------------------------------------------------------------------------
@@ -46,6 +51,8 @@ export var AnswerBox = React.createClass({
                 data={this.props.data}
                 toggleRatingFilterAction  = { this.props.toggleRatingFilterAction }
                 toggleBooleanFilterAction = { this.props.toggleBooleanFilterAction}
+                clearRatingFilterAction  = { this.props.clearRatingFilterAction }
+                clearBooleanFilterAction = { this.props.clearBooleanFilterAction}
             />
         )
   }
@@ -72,6 +79,12 @@ const mapDispatchToProps = (dispatch) => {
       },
       toggleRatingFilterAction: (context, rating) => {
           dispatch(toggleRatingFilterAction(context, rating) )
+      },
+      clearRatingFilterAction: (context) => {
+          dispatch(clearRatingFilterAction(context) )
+      },
+      clearBooleanFilterAction: (context) => {
+          dispatch(clearBooleanFilterAction(context) )
       },
   }
 }
