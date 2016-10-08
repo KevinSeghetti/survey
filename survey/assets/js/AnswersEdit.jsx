@@ -194,7 +194,6 @@ const contextAnswerMapStateToProps = (state) => {
 const contextAnswerMapDispatchToProps = (dispatch) => {
   return {
       onUpdate: (childProps, value) => {
-          console.log(childProps)
           let {questionId, context, parentField} = childProps
           chai.expect(questionId).to.exist
           chai.expect(context).to.exist
