@@ -88,7 +88,7 @@ const TransportControlsWrapper = connect(
 
 export var ContextAnswer = React.createClass({
    render: function() {
-        log.info("ContextAnswer:render: props = ",this.props)
+        log.info("ContextAnswer:render: props = ",JSON.stringify(this.props))
         let {onUpdate,id, questionId, context  } = this.props
         chai.expect(onUpdate).to.exist
 
@@ -101,7 +101,6 @@ export var ContextAnswer = React.createClass({
         {
           answers = this.props.answers
         }
-
        var rating
        var notes
 
@@ -135,6 +134,7 @@ export var ContextAnswer = React.createClass({
           />
          )
        })
+       chai.expect( answers.context ).to.exist
        var answersContext = $.grep(choices_context, function(e) { return e.name == answers.context })[0]
        return (
            <div >

@@ -120,8 +120,17 @@ export function topReducer(state = initialState, action) {
 
         if(questionIndex >= 0 ) {
             let question = state.questions[questionIndex]
+            let existingContext = {
+                'context': context,
+                'question': { id: questionId },
+            }
 
-            let newContextObject =  Object.assign({},question.answers[context],{ [field] : value })
+            if('answers' in question) {
+                if(context in question.answers) {
+                    existingContext = question.answers[context]
+                }
+            }
+            let newContextObject =  Object.assign({},existingContext,{ [field] : value })
             let newAnswerObject =  Object.assign({},question.answers,{ [context] : newContextObject })
             let newQuestionObject = Object.assign({},question, { "answers" : newAnswerObject })
             return(
