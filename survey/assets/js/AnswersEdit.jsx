@@ -21,23 +21,34 @@ var log = require('./loggingConfig').CreateLogger("AnswerEdit")
 //===============================================================================
 // transport controls
 
-const TransportControls = ({ currentQuestion,nextQuestionAction,prevQuestionAction }) => {
+const TransportControls = ({ questions, currentQuestion,nextQuestionAction,prevQuestionAction }) => {
     chai.expect(prevQuestionAction).to.exist
     chai.expect(nextQuestionAction).to.exist
 
+    let questionCount = questions.length
+    let answeredQuestionCount = questions.reduce(
+        (accumulator, obj) =>
+            { return accumulator + ('answers' in obj ? 1 : 0) }
+        , 0)
     log.trace("TransportControls:render:")
     return(
-        <div>
-          <ClickableButton
-              value="Prev"
-              handleClick={prevQuestionAction}
-          />
-            <p>Current question {currentQuestion+1}</p>
-          <ClickableButton
-              value="Next"
-              handleClick={nextQuestionAction}
-          />
+        <div className="btn-toolbar">
+            <div className="btn-group" role="group" aria-label="...">
+                <ClickableButton
+                    value="Prev"
+                    handleClick={prevQuestionAction}
+                />
+            </div>
+            <div className="btn-group" role="group" aria-label="...">
+                  <span className="form-control-static">Current question {currentQuestion+1} of {answeredQuestionCount} answered questions of {questionCount}</span>
+            </div>
+            <div className="btn-group" role="group" aria-label="...">
+                <ClickableButton
+                    value="Next"
+                    handleClick={nextQuestionAction}
+                />
 
+            </div>
         </div>
     )
 }
@@ -268,7 +279,8 @@ const AnswerPage = ({questions, currentQuestion }) => {
     return (
       <form className="form-horizontal">
           <TransportControlsWrapper
-            currentQuestion    = { currentQuestion     }
+            questions        = { questions }
+            currentQuestion  = { currentQuestion }
           />
 
           <Answer

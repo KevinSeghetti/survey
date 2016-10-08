@@ -110,7 +110,11 @@ export var ClickableButton = React.createClass({
   render: function() {
     chai.expect(this.props.handleClick).to.exist
     return (
-      <button onClick={this.handleChange}>
+      <button
+        onClick={this.handleChange}
+        type="button"
+        className="btn btn-default"
+       >
           { this.props.value }
       </button>
     )
