@@ -14,7 +14,8 @@ import { topReducer } from './topReducerAnswerEditor'
 //-------------------------------------------------------------------------------
 
 var url=window.globs['questionsUrl']
-let store = createStore(topReducer)
+//let store = createStore(topReducer)
+const store = createStore(topReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 //===============================================================================
 
