@@ -84,15 +84,15 @@ export var TextField = React.createClass({
     this.props.onUpdate(this.props, event.target.value)
   },
   render: function() {
+    let value = (typeof this.props.value != 'undefined')?this.props.value:""
     return (
-
       <div className='form-group' >
         <label className="col-sm-4 control-label">{this.props.label}</label>
         <div className="col-sm-8">
             <input
               className='form-control'
               type="text"
-              value={ this.props.value }
+              value={ value }
               onChange={this.handleChange}
             />
         </div>
