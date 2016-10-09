@@ -219,25 +219,23 @@ const filterMapStateToProps = (state) => {
 
 //-------------------------------------------------------------------------------
 
-const filterMapDispatchToProps = (dispatch) => {
-  return {
-      onLoad: (data) => {
-          dispatch(loadAction(data))
-      },
-      toggleBooleanFilterAction: (childProps, val) => {
-          dispatch(toggleBooleanFilterAction(childProps.context, childProps.id) )
-      },
-      toggleRatingFilterAction: (childProps, val) => {
-          dispatch(toggleRatingFilterAction(childProps.context, childProps.id) )
-      },
-      clearRatingFilterAction: (childProps, val) => {
-          dispatch(clearRatingFilterAction(childProps.context) )
-      },
-      clearBooleanFilterAction: (childProps, val) => {
-          dispatch(clearBooleanFilterAction(childProps.context) )
-      },
-  }
-}
+const filterMapDispatchToProps = (dispatch) => ({
+    onLoad(data) {
+        dispatch(loadAction(data))
+    },
+    toggleBooleanFilterAction(childProps, val) {
+        dispatch(toggleBooleanFilterAction(childProps.context, childProps.id) )
+    },
+    toggleRatingFilterAction(childProps, val) {
+        dispatch(toggleRatingFilterAction(childProps.context, childProps.id) )
+    },
+    clearRatingFilterAction(childProps, val) {
+        dispatch(clearRatingFilterAction(childProps.context) )
+    },
+    clearBooleanFilterAction(childProps, val) {
+        dispatch(clearBooleanFilterAction(childProps.context) )
+    },
+})
 
 //-------------------------------------------------------------------------------
 

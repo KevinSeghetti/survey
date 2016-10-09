@@ -62,16 +62,14 @@ const transportControlsMapStateToProps = (state) => {
 
 //-------------------------------------------------------------------------------
 
-const transportControlsMapDispatchToProps = (dispatch) => {
-  return {
-      prevQuestionAction: () => {
-          dispatch(prevQuestionAction() )
-      },
-      nextQuestionAction: () => {
-          dispatch(nextQuestionAction() )
-      },
-  }
-}
+const transportControlsMapDispatchToProps = (dispatch) => ({
+    prevQuestionAction() {
+        dispatch(prevQuestionAction() )
+    },
+    nextQuestionAction() {
+        dispatch(nextQuestionAction() )
+    },
+})
 
 //-------------------------------------------------------------------------------
 
@@ -191,19 +189,17 @@ const contextAnswerMapStateToProps = (state) => {
 
 //-------------------------------------------------------------------------------
 
-const contextAnswerMapDispatchToProps = (dispatch) => {
-  return {
-      onUpdate: (childProps, value) => {
-          let {questionId, context, parentField} = childProps
-          chai.expect(questionId).to.exist
-          chai.expect(context).to.exist
-          chai.expect(parentField).to.exist
-          chai.expect(value).to.exist
+const contextAnswerMapDispatchToProps = (dispatch) => ({
+    onUpdate(childProps, value) {
+        let {questionId, context, parentField} = childProps
+        chai.expect(questionId).to.exist
+        chai.expect(context).to.exist
+        chai.expect(parentField).to.exist
+        chai.expect(value).to.exist
 
-          dispatch(setField(questionId, context, parentField, value) )
-      },
-  }
-}
+        dispatch(setField(questionId, context, parentField, value) )
+    },
+})
 
 //-------------------------------------------------------------------------------
 
