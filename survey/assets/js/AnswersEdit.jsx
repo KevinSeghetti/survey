@@ -16,8 +16,7 @@ var {
 var {choices, choices_context} = require('./applicationData')
 
 import {
-    prevQuestionAction,
-    nextQuestionAction,
+    moveCursorAction,
     setField
     } from './actionTypesAnswerEditor'
 
@@ -27,9 +26,8 @@ var log = require('./loggingConfig').CreateLogger("AnswerEdit")
 //===============================================================================
 // transport controls
 
-const TransportControls = ({ questions, navigationState,nextQuestionAction,prevQuestionAction }) => {
-    chai.expect(prevQuestionAction).to.exist
-    chai.expect(nextQuestionAction).to.exist
+const TransportControls = ({ questions, navigationState,moveCursorAction }) => {
+    chai.expect(moveCursorAction).to.exist
     chai.expect(questions).to.exist
     chai.expect(navigationState).to.exist
 
@@ -44,8 +42,20 @@ const TransportControls = ({ questions, navigationState,nextQuestionAction,prevQ
             <div className="btn-toolbar">
                 <div className="btn-group" role="group" aria-label="...">
                     <ClickableButton
+                        icon="glyphicon glyphicon-fast-backward"
+                        delta={Number.NEGATIVE_INFINITY}
+                        handleClick={moveCursorAction}
+                    />
+
+                    <ClickableButton
+                        icon="glyphicon glyphicon-backward"
+                        delta={-(questionCount/10)}
+                        handleClick={moveCursorAction}
+                    />
+                    <ClickableButton
                         icon="glyphicon glyphicon-step-backward"
-                        handleClick={prevQuestionAction}
+                        delta={-1}
+                        handleClick={moveCursorAction}
                     />
                 </div>
                 <div className="btn-group" role="group" aria-label="...">
@@ -54,7 +64,18 @@ const TransportControls = ({ questions, navigationState,nextQuestionAction,prevQ
                 <div className="btn-group" role="group" aria-label="...">
                     <ClickableButton
                         icon="glyphicon glyphicon-step-forward"
-                        handleClick={nextQuestionAction}
+                        delta={1}
+                        handleClick={moveCursorAction}
+                    />
+                    <ClickableButton
+                        icon="glyphicon glyphicon-forward"
+                        delta={(questionCount/10)}
+                        handleClick={moveCursorAction}
+                    />
+                    <ClickableButton
+                        icon="glyphicon glyphicon-fast-forward"
+                        delta={Number.POSITIVE_INFINITY}
+                        handleClick={moveCursorAction}
                     />
 
                 </div>
@@ -62,10 +83,9 @@ const TransportControls = ({ questions, navigationState,nextQuestionAction,prevQ
             <div >
                 <ProgressBar
                     value={answeredQuestionCount }
-                    handleClick={nextQuestionAction}
+                    max={questionCount}
                 />
             </div>
-
         </div>
     )
 }
@@ -80,11 +100,8 @@ const transportControlsMapStateToProps = (state) => {
 //-------------------------------------------------------------------------------
 
 const transportControlsMapDispatchToProps = (dispatch) => ({
-    prevQuestionAction() {
-        dispatch(prevQuestionAction() )
-    },
-    nextQuestionAction() {
-        dispatch(nextQuestionAction() )
+    moveCursorAction(childProps) {
+        dispatch(moveCursorAction(childProps.delta) )
     },
 })
 

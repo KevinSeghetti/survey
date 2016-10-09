@@ -9,8 +9,7 @@ var {choices, choices_context} = require('./applicationData')
 import {
     ACTION_LOAD,
     ACTION_LOAD_SINGLE_ANSWER,
-    ACTION_PREV_QUESTION,
-    ACTION_NEXT_QUESTION,
+    ACTION_MOVE_CURSOR,
     ACTION_SET_ANSWER_FIELD,
     } from './actionTypesAnswerEditor'
 import {
@@ -97,20 +96,21 @@ function saveAnswers(question)
 export function navigationReducer(state = navigationInitialState, action, questions) {
     log.trace("navigationReducer: ",JSON.stringify(action,null,2))
     switch (action.type) {
-        case ACTION_PREV_QUESTION:
+        case ACTION_MOVE_CURSOR:
             {
-                if(state.currentQuestion > 0) {
+                let newCursor = Math.min(Math.max(parseInt(state.currentQuestion+action.delta), 0), questions.length-1)
+                if(action.delta == Number.POSITIVE_INFINITY) {
+                    newCursor = questions.length-1
+                }
+                if(action.delta == Number.NEGATIVE_INFINITY) {
+                    newCursor = 0
+                }
+
+                if(newCursor != state.currentQuestion) {
                     saveAnswers(questions[state.currentQuestion])
-                    return Object.assign({}, state, { currentQuestion: state.currentQuestion-1})
+                    return Object.assign({}, state, { currentQuestion: newCursor})
                 }
                 return state
-            }
-        case ACTION_NEXT_QUESTION:
-            {
-                if(state.currentQuestion < questions.length) {
-                    saveAnswers(questions[state.currentQuestion])
-                    return Object.assign({}, state, { currentQuestion: state.currentQuestion+1})
-                }
             }
             return state
         default:
