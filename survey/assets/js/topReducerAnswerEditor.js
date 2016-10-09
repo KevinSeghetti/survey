@@ -7,12 +7,14 @@ var log = require('./loggingConfig').CreateLogger("reducers")
 var {choices, choices_context} = require('./applicationData')
 import {
     ACTION_LOAD,
-        ACTION_PREV_QUESTION,
-        ACTION_NEXT_QUESTION,
-        ACTION_SET_ANSWER_FIELD,
+    ACTION_LOAD_SINGLE_ANSWER,
+    ACTION_PREV_QUESTION,
+    ACTION_NEXT_QUESTION,
+    ACTION_SET_ANSWER_FIELD,
     } from './actionTypesAnswerEditor'
 import {
     loadAction,
+    loadSingleAnswerAction,
     oggleBooleanFilterAction,
     oggleRatingFilterAction
     } from './actionTypesAnswerEditor'
@@ -55,7 +57,14 @@ function saveContextAnswer(answers) {
     type: requestType,
     data: postData,
     success: (data) => {
-      //log.info("saveAnswer: success: returned data = ",data)
+      log.info("saveAnswer: success: returned data = ",JSON.stringify(data))
+      // we have updated data from the server side, need to look up where to put it
+
+      store.dispatch(loadSingleAnswerAction(data))
+
+      log.info("== json loaded ==",data)
+      //this.setState({data: data})
+
     },
     error: (xhr, status, err) => {
       //this.setState({data: answers})
@@ -95,44 +104,17 @@ export function topReducer(state = initialState, action) {
             questions: action.data.results
         })
 
-    case ACTION_PREV_QUESTION:
-        if(state.currentQuestion > 0) {
-            saveAnswers(state.questions[state.currentQuestion])
-            return Object.assign({}, state, { currentQuestion: state.currentQuestion-1})
-        }
-        return state
-    case ACTION_NEXT_QUESTION:
+    case ACTION_LOAD_SINGLE_ANSWER:
+        {
+            let {context } = action
+            chai.expect(context).to.exist
+            let questionId = action.data.question.questionId
+            chai.expect(questionId).to.exist
+            var questionIndex = state.questions.findIndex( x => x.question.id == questionId )
 
-        if(state.currentQuestion < state.questions.length) {
-            saveAnswers(state.questions[state.currentQuestion])
-            return Object.assign({}, state, { currentQuestion: state.currentQuestion+1})
-        }
-        return state
-    case ACTION_SET_ANSWER_FIELD:
-        let {questionId,context,field,value } = action
-        chai.expect(questionId).to.exist
-        chai.expect(context).to.exist
-        chai.expect(field).to.exist
-        chai.expect(value).to.exist
-
-        // look up index of question
-        var questionIndex = state.questions.findIndex( x => x.question.id == questionId )
-
-        if(questionIndex >= 0 ) {
-            let question = state.questions[questionIndex]
-            let existingContext = {
-                'context': context,
-                'question': { id: questionId },
-            }
-
-            if('answers' in question) {
-                if(context in question.answers) {
-                    existingContext = question.answers[context]
-                }
-            }
-            let newContextObject =  Object.assign({},existingContext,{ [field] : value })
-            let newAnswerObject =  Object.assign({},question.answers,{ [context] : newContextObject })
+            let newAnswerObject =  Object.assign({},question.answers,{ [context] : action.data })
             let newQuestionObject = Object.assign({},question, { "answers" : newAnswerObject })
+
             return(
                 Object.assign({}, state, { questions:
                     state.questions.slice(0,questionIndex).concat(
@@ -142,8 +124,60 @@ export function topReducer(state = initialState, action) {
                 })
             )
         }
-        return state
 
+    case ACTION_PREV_QUESTION:
+        {
+            if(state.currentQuestion > 0) {
+                saveAnswers(state.questions[state.currentQuestion])
+                return Object.assign({}, state, { currentQuestion: state.currentQuestion-1})
+            }
+            return state
+        }
+    case ACTION_NEXT_QUESTION:
+        {
+            if(state.currentQuestion < state.questions.length) {
+                saveAnswers(state.questions[state.currentQuestion])
+                return Object.assign({}, state, { currentQuestion: state.currentQuestion+1})
+            }
+        }
+        return state
+    case ACTION_SET_ANSWER_FIELD:
+        {
+            let {questionId,context,field,value } = action
+            chai.expect(questionId).to.exist
+            chai.expect(context).to.exist
+            chai.expect(field).to.exist
+            chai.expect(value).to.exist
+
+            // look up index of question
+            var questionIndex = state.questions.findIndex( x => x.question.id == questionId )
+
+            if(questionIndex >= 0 ) {
+                let question = state.questions[questionIndex]
+                let existingContext = {
+                    'context': context,
+                    'question': { id: questionId },
+                }
+
+                if('answers' in question) {
+                    if(context in question.answers) {
+                        existingContext = question.answers[context]
+                    }
+                }
+                let newContextObject =  Object.assign({},existingContext,{ [field] : value })
+                let newAnswerObject =  Object.assign({},question.answers,{ [context] : newContextObject })
+                let newQuestionObject = Object.assign({},question, { "answers" : newAnswerObject })
+                return(
+                    Object.assign({}, state, { questions:
+                        state.questions.slice(0,questionIndex).concat(
+                            newQuestionObject,
+                           state.questions.slice(questionIndex+1)
+                        )
+                    })
+                )
+            }
+            return state
+        }
     default:
       return state
     }

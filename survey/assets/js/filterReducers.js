@@ -2,12 +2,10 @@
 // filter reducers
 
 var chai = require('chai')
-
 var log = require('./loggingConfig').CreateLogger("reducers")
 
-var {choices, choices_context} = require('./applicationData')
+var {choices} = require('./applicationData')
 import {
-    ACTION_LOAD,
     ACTION_TOGGLE_BOOLEAN_FILTER,
     ACTION_TOGGLE_RATING_FILTER,
     ACTION_CLEAR_BOOLEAN_FILTER,
@@ -15,13 +13,6 @@ import {
     ACTION_SET_SEARCH_STRING
     } from './actionTypesAnswerViewer'
 
-import {
-       loadAction,
-       toggleBooleanFilterAction,
-       toggleRatingFilterAction,
-       clearRatingFilterAction,
-       clearBooleanFilterAction,
-       } from './actionTypesAnswerViewer'
 import { mapObject,defaultDict } from './utilities'
 
 //-------------------------------------------------------------------------------
@@ -103,7 +94,19 @@ function contextFilterReducer(state,action) {
     }
 }
 
-export function filterReducer(state,action) {
+const initialFilterState = {
+  'to_me': {
+      booleans: defaultDict(choices.booleans,true),
+      rating: defaultDict(choices.rating,true),
+  },
+  'to_others': {
+      booleans: defaultDict(choices.booleans,true),
+      rating: defaultDict(choices.rating,true),
+  }
+}
+
+
+export function filterReducer(state= initialFilterState, action) {
     log.trace("filterReducer: action = ",JSON.stringify(action),", filter state = ",JSON.stringify(state,null,2))
     switch (action.type) {
         case ACTION_TOGGLE_BOOLEAN_FILTER:
