@@ -26,7 +26,7 @@ const store = createStore(topReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && win
 
 //===============================================================================
 
-export class IndexPage extends React.Component {
+export class IndexPagePresentational extends React.Component {
     loadAnswersFromServer() {
         $.ajax({
             url: url,
@@ -47,7 +47,8 @@ export class IndexPage extends React.Component {
     }
     render() {
         log.trace("IndexPage::render")
-        //let { store } = this.props
+        let {navigation} = this.props
+        chai.expect(navigation).to.exist
 
         let appPages =
         {
@@ -57,22 +58,36 @@ export class IndexPage extends React.Component {
             //PAGE_QUESTION_VIEWER: < App />,
         }
 
-        let appPage = HomePage
-        if(store.navigation && store.navigation.currentPage)
+        let AppPage = HomePage
+        if(navigation && navigation.currentPage)
         {
-            appPage = appPages[store.navigation.currentPage]
+            AppPage = appPages[navigation.currentPage]
         }
 
-        let foo = HomePage
         return (
             <div> top level of app
             <NavigationBar />
-            <HomePage />
-            <AnswerEditorPage />
+            <AppPage />
             </div>
         )
   }
 }
+
+//-------------------------------------------------------------------------------
+
+const mapStateToProps = (state) => {
+    log.trace("indexMapStateToProps: state = ",JSON.stringify(state,null,2))
+    return {
+        navigation: state.navigation,
+    }
+}
+
+//-------------------------------------------------------------------------------
+
+const IndexPage = connect(
+  mapStateToProps,
+)(IndexPagePresentational)
+
 
 //===============================================================================
 

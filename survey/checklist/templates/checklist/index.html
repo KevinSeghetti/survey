@@ -19,6 +19,9 @@
     window.globs['csrfToken'] = "{{ csrf_token }}"
     // kts: must be a better way to pass parameters into a module
     window.globs['questionsUrl'] = "{{ questionsUrl }}"
+    window.globs['appName'] = "{{ APP_NAME }}"
+    window.globs['userName'] = "{{ userName }}"
+
     window.globs['defaultLoggingLevel'] = "OFF"
     var loggingLevel='ERROR'
     {%if logging %}

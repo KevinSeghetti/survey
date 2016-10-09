@@ -109,13 +109,18 @@ export var ClickableButton = React.createClass({
   },
   render: function() {
     chai.expect(this.props.handleClick).to.exist
+    let icon = ""
+   if(this.props.icon)
+   {
+       icon = <span className ={"glyphicon " + this.props.icon} aria-hidden="true" />
+   }
     return (
       <button
         onClick={this.handleChange}
         type="button"
         className="btn btn-default"
        >
-          <span className ={"glyphicon " + this.props.icon} aria-hidden="true"></span>{ this.props.value }
+          { icon} { this.props.value }
       </button>
     )
   },

@@ -8,7 +8,7 @@ var log = require('./loggingConfig').CreateLogger("actions")
 export const ACTION_LOAD = 'LOAD'
 export const ACTION_LOAD_SINGLE_ANSWER = 'LOAD_SINGLE_ANSWER'
 export const ACTION_SET_ANSWER_FIELD = 'SET_ANSWER_FIELD'
-export const CHANGE_PAGE = 'CHANGE_PAGE'
+export const ACTION_CHANGE_PAGE = 'CHANGE_PAGE'
 
 //-------------------------------------------------------------------------------
 
