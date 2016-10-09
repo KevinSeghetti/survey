@@ -23,10 +23,12 @@ export function questionReducer(state = [], action) {
 
 //-------------------------------------------------------------------------------
 
-export const topReducer = combineReducers({
+const topReducer = combineReducers({
     questions: questionReducer,
     filters: filterReducer
 })
 
 //===============================================================================
+
+export default topReducer
 

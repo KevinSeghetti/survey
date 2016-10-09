@@ -17,8 +17,11 @@ var {choices, choices_context} = require('./applicationData')
 
 import {
     moveCursorAction,
-    setField
     } from './actionTypesAnswerEditor'
+
+import {
+    setField
+    } from './actionTypes'
 
 var log = require('./loggingConfig').CreateLogger("AnswerEdit")
 
@@ -290,11 +293,13 @@ export var Answer = React.createClass({
 
 //===============================================================================
 
-const AnswerPage = ({questions, navigationState }) => {
+const AnswerPage = ({questions, answerPageNavigationState: navigationState }) => {
     log.info("AnswerPage: navigationState",JSON.stringify(navigationState))
+    log.info("AnswerPage: questions",JSON.stringify(questions))
     //log.info("AnswerPage: navigationState",JSON.stringify(navigationState), questions: ",JSON.stringify(questions))
     chai.expect(questions).to.exist
     chai.expect(navigationState).to.exist
+    chai.expect(navigationState.currentQuestion).to.exist
     if(navigationState.currentQuestion >= questions.length)
     {
       return null
@@ -332,19 +337,18 @@ const AnswerPage = ({questions, navigationState }) => {
 
 //===============================================================================
 
-const answerPageMapStateToProps = (state) => {
-    log.trace("answerPageMapStateToProps: ")
-    //log.trace("mapStateToProps: state = ",JSON.stringify(state,null,2))
+const mapStateToProps = (state) => {
+    log.trace("answerPageMapStateToProps: state = ",JSON.stringify(state,null,2))
     return {
+        answerPageNavigationState: state.answerEditPage.navigation,
         questions: state.questions,
-        navigationState: state.navigation,
     }
 }
 
 //-------------------------------------------------------------------------------
 
-export const AnswerApp = connect(
-  answerPageMapStateToProps,
+export const AnswerEditorPage = connect(
+  mapStateToProps,
 )(AnswerPage)
 
 //===============================================================================

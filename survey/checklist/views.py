@@ -28,28 +28,6 @@ from .serializers import (
     UserSerializer
 )
 
-def index(request):
-    latest_question_list = Question.objects.order_by('-question_text')[:5]
-    # this is a shortcut
-    publish_url = ""
-    publish_url_text =""
-    if(request.user.is_authenticated() ):
-        publish_url  = reverse('checklist:view',args=str(request.user.id))
-        publish_url_text = request.get_host()+ publish_url
-
-    context = {
-        'publish_url': publish_url,
-        'publish_url_text': publish_url_text,
-    }
-    return render(request, 'checklist/index.html', context)
-    # for this
-
-    #template = loader.get_template('checklist/index.html')
-    #context = RequestContext(request, {
-    #    'latest_question_list': latest_question_list,
-    #})
-    #return HttpResponse(template.render(context))
-
 def instructions(request):
     return render(request, 'checklist/instructions.html')
 
@@ -152,6 +130,28 @@ def answers_react_edit(request):
     }
 
     return render(request, 'checklist/answers_react_edit.html', context)
+
+#===============================================================================
+
+def index(request):
+   #latest_question_list = Question.objects.order_by('-question_text')[:5]
+   # this is a shortcut
+   publish_url = ""
+   publish_url_text =""
+   if(request.user.is_authenticated() ):
+       publish_url  = reverse('checklist:view',args=str(request.user.id))
+       publish_url_text = request.get_host()+ publish_url
+
+   context = {
+       'publish_url': publish_url,
+       'publish_url_text': publish_url_text,
+       'choices_context': choices_context,
+       'choices': choices,
+       'user' : request.user,
+       'questionsUrl': reverse('checklist:rest_questions'),
+       'logging' : DEBUG_LOGGING,
+   }
+   return render(request, 'checklist/index.html', context)
 
 #===============================================================================
 

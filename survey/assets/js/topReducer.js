@@ -1,6 +1,5 @@
 //===============================================================================
-// top level state reducer for the answer editor
-
+// top level state reducer
 var chai = require('chai')
 var log = require('./loggingConfig').CreateLogger("reducers")
 import { combineReducers } from 'redux'
@@ -9,22 +8,20 @@ var {choices, choices_context} = require('./applicationData')
 import {
     ACTION_LOAD,
     ACTION_LOAD_SINGLE_ANSWER,
-    ACTION_MOVE_CURSOR,
     ACTION_SET_ANSWER_FIELD,
-    } from './actionTypesAnswerEditor'
+    ACTION_CHANGE_PAGE,
+    } from './actionTypes'
 import {
     loadAction,
-    loadSingleAnswerAction,
-    oggleBooleanFilterAction,
-    oggleRatingFilterAction
-    } from './actionTypesAnswerEditor'
+    } from './actionTypes'
 import { mapObject, defaultDict } from './utilities'
-import { filterReducer } from './filterReducers'
+import answerEditorReducer from './topReducerAnswerEditor'
+import answerViewerReducer from './topReducerAnswerViewer'
 
 //===============================================================================
 
 const navigationInitialState = {
-   currentQuestion: 0
+   currentPage: 'Home'
 }
 
 //-------------------------------------------------------------------------------
@@ -72,9 +69,10 @@ function saveContextAnswer(answers) {
   })
 }
 
+//-------------------------------------------------------------------------------
+
 function saveAnswers(question)
 {
-    chai.expect(question).to.exist
     log.trace("saveAnswers:",JSON.stringify(question,null,2))
     if('answers' in question) {
         let { answers } = question
@@ -94,31 +92,20 @@ function saveAnswers(question)
 
 //-------------------------------------------------------------------------------
 
-export function navigationReducer(state = navigationInitialState, action, questions) {
+export function navigationReducer(state = navigationInitialState, action) {
     log.trace("navigationReducer: ",JSON.stringify(action,null,2))
     switch (action.type) {
-        case ACTION_MOVE_CURSOR:
+        case ACTION_CHANGE_PAGE:
             {
-                chai.expect(questions).to.exist
-                let newCursor = Math.min(Math.max(parseInt(state.currentQuestion+action.delta), 0), questions.length-1)
-                if(action.delta == Number.POSITIVE_INFINITY) {
-                    newCursor = questions.length-1
-                }
-                if(action.delta == Number.NEGATIVE_INFINITY) {
-                    newCursor = 0
-                }
-
-                if(newCursor != state.currentQuestion) {
-                    saveAnswers(questions[state.currentQuestion])
-                    return Object.assign({}, state, { currentQuestion: newCursor})
-                }
-                return state
+                return Object.assign({}, state, { currentPage: action.page})
             }
             return state
         default:
           return state
         }
 }
+
+//===============================================================================
 
 export function questionReducer(state = [], action) {
 
@@ -191,12 +178,12 @@ export function questionReducer(state = [], action) {
 
 //-------------------------------------------------------------------------------
 
-const topReducer = (state = {}, action, questions) => ({
+export const topReducer = (state = {}, action) => ({
     questions: questionReducer(state.questions,action),
-    navigation: navigationReducer(state.navigation,action,questions)
+    navigation: navigationReducer(state.navigation,action,state.questions),
+    answerEditPage: answerEditorReducer(state.answerEditPage,action,state.questions),
+    answerViewPage: answerViewerReducer(state.answerViewPage,action,state.questions),
 })
-
-export default topReducer
 
 //===============================================================================
 

@@ -458,7 +458,7 @@ const answerPageMapStateToProps = (state) => {
 
 //-------------------------------------------------------------------------------
 
-export const AnswerApp = connect(
+export const AnswerViewerView = connect(
   answerPageMapStateToProps
 )(AnswerPage)
 

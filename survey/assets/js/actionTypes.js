@@ -1,16 +1,14 @@
 //===============================================================================
-// action types for the answer editor page
+// top level action types
 
 var log = require('./loggingConfig').CreateLogger("actions")
 
 //-------------------------------------------------------------------------------
 
-let PAGENAME="ANSWER_EDITOR"
-
-export const ACTION_LOAD = PAGENAME+'LOAD'
-export const ACTION_LOAD_SINGLE_ANSWER = PAGENAME+'LOADSINGLEANSWER'
-export const ACTION_MOVE_CURSOR = PAGENAME+'_MOVE_CURSOR'
-export const ACTION_SAVE_ANSWERS = PAGENAME+'_SAVE_ANSWERS'
+export const ACTION_LOAD = 'LOAD'
+export const ACTION_LOAD_SINGLE_ANSWER = 'LOAD_SINGLE_ANSWER'
+export const ACTION_SET_ANSWER_FIELD = 'SET_ANSWER_FIELD'
+export const CHANGE_PAGE = 'CHANGE_PAGE'
 
 //-------------------------------------------------------------------------------
 
@@ -32,23 +30,24 @@ export const loadSingleAnswerAction = (data) => {
 
 //-------------------------------------------------------------------------------
 
-export const moveCursorAction = (delta) => {
-    log.info('moveCursorAction')
+export const setField = (questionId, context,field,value) => {
+    log.info('setField')
 
     return {
-        type: ACTION_MOVE_CURSOR,
-        delta: delta
+        type: ACTION_SET_ANSWER_FIELD,
+        questionId: questionId,
+        context: context,
+        field: field,
+        value: value,
     }
 }
 
 //-------------------------------------------------------------------------------
 
-export const saveAnswers = (questionId, ) => {
-    log.info('saveAnswers',questionId)
-
+export const changePage = (page) => {
     return {
-        type: ACTION_SAVE_ANSWERS,
-        questionId: questionId,
+        type: ACTION_CHANGE_PAGE,
+        page: page,
     }
 }
 
