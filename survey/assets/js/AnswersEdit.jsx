@@ -21,9 +21,11 @@ var log = require('./loggingConfig').CreateLogger("AnswerEdit")
 //===============================================================================
 // transport controls
 
-const TransportControls = ({ questions, currentQuestion,nextQuestionAction,prevQuestionAction }) => {
+const TransportControls = ({ questions, navigationState,nextQuestionAction,prevQuestionAction }) => {
     chai.expect(prevQuestionAction).to.exist
     chai.expect(nextQuestionAction).to.exist
+    chai.expect(questions).to.exist
+    chai.expect(navigationState).to.exist
 
     let questionCount = questions.length
     let answeredQuestionCount = questions.reduce(
@@ -40,7 +42,7 @@ const TransportControls = ({ questions, currentQuestion,nextQuestionAction,prevQ
                 />
             </div>
             <div className="btn-group" role="group" aria-label="...">
-                  <span className="form-control-static">Current question {currentQuestion+1} of {answeredQuestionCount} answered questions of {questionCount}</span>
+                  <span className="form-control-static">Current question {navigationState.currentQuestion+1} of {answeredQuestionCount} answered questions of {questionCount}</span>
             </div>
             <div className="btn-group" role="group" aria-label="...">
                 <ClickableButton
@@ -256,17 +258,17 @@ export var Answer = React.createClass({
 
 //===============================================================================
 
-const AnswerPage = ({questions, currentQuestion }) => {
-    log.info("AnswerPage: currentQuestion",currentQuestion)
-    //log.info("AnswerPage: currentQuestion",currentQuestion,", questions: ",JSON.stringify(questions))
+const AnswerPage = ({questions, navigationState }) => {
+    log.info("AnswerPage: navigationState",JSON.stringify(navigationState))
+    //log.info("AnswerPage: navigationState",JSON.stringify(navigationState), questions: ",JSON.stringify(questions))
     chai.expect(questions).to.exist
-    chai.expect(currentQuestion).to.exist
-    if(currentQuestion >= questions.length)
+    chai.expect(navigationState).to.exist
+    if(navigationState.currentQuestion >= questions.length)
     {
       return null
     }
 
-    let question = questions[currentQuestion]
+    let question = questions[navigationState.currentQuestion]
     chai.expect(question).to.exist
 
     log.info("AnswerPage: rendering ",JSON.stringify(question,null,2))
@@ -275,7 +277,7 @@ const AnswerPage = ({questions, currentQuestion }) => {
       <form className="form-horizontal">
           <TransportControlsWrapper
             questions        = { questions }
-            currentQuestion  = { currentQuestion }
+            navigationState  = { navigationState }
           />
 
           <Answer
@@ -303,7 +305,7 @@ const answerPageMapStateToProps = (state) => {
     //log.trace("mapStateToProps: state = ",JSON.stringify(state,null,2))
     return {
         questions: state.questions,
-        currentQuestion: state.currentQuestion,
+        navigationState: state.navigation,
     }
 }
 

@@ -3,6 +3,7 @@
 
 var chai = require('chai')
 var log = require('./loggingConfig').CreateLogger("reducers")
+import { combineReducers } from 'redux'
 
 var {choices, choices_context} = require('./applicationData')
 import {
@@ -23,10 +24,8 @@ import { filterReducer } from './filterReducers'
 
 //===============================================================================
 
-
-const initialState = {
-    questions: [],
-    currentQuestion: 0,
+const navigationInitialState = {
+   currentQuestion: 0
 }
 
 //-------------------------------------------------------------------------------
@@ -60,7 +59,8 @@ function saveContextAnswer(answers) {
       log.info("saveAnswer: success: returned data = ",JSON.stringify(data))
       // we have updated data from the server side, need to look up where to put it
 
-      store.dispatch(loadSingleAnswerAction(data))
+      // kts todo
+      //store.dispatch(loadSingleAnswerAction(data))
 
       log.info("== json loaded ==",data)
       //this.setState({data: data})
@@ -94,54 +94,60 @@ function saveAnswers(question)
 
 //-------------------------------------------------------------------------------
 
-export function topReducer(state = initialState, action) {
+export function navigationReducer(state = navigationInitialState, action, questions) {
+    log.trace("navigationReducer: ",JSON.stringify(action,null,2))
+    switch (action.type) {
+        case ACTION_PREV_QUESTION:
+            {
+                if(state.currentQuestion > 0) {
+                    saveAnswers(questions[state.currentQuestion])
+                    return Object.assign({}, state, { currentQuestion: state.currentQuestion-1})
+                }
+                return state
+            }
+        case ACTION_NEXT_QUESTION:
+            {
+                if(state.currentQuestion < questions.length) {
+                    saveAnswers(questions[state.currentQuestion])
+                    return Object.assign({}, state, { currentQuestion: state.currentQuestion+1})
+                }
+            }
+            return state
+        default:
+          return state
+        }
+}
 
-    log.trace("topReducer: ",JSON.stringify(action,null,2))
+export function questionReducer(state = [], action) {
+
+    log.trace("questionReducer: ",JSON.stringify(action,null,2))
     switch (action.type) {
     case ACTION_LOAD:
+            return(action.data.results)
 
-        return Object.assign({}, state, {
-            questions: action.data.results
-        })
-
+        // kts not tested
     case ACTION_LOAD_SINGLE_ANSWER:
         {
             let {context } = action
             chai.expect(context).to.exist
             let questionId = action.data.question.questionId
             chai.expect(questionId).to.exist
-            var questionIndex = state.questions.findIndex( x => x.question.id == questionId )
+            var questionIndex = state.findIndex( x => x.question.id == questionId )
 
             let newAnswerObject =  Object.assign({},question.answers,{ [context] : action.data })
             let newQuestionObject = Object.assign({},question, { "answers" : newAnswerObject })
 
             return(
                 Object.assign({}, state, { questions:
-                    state.questions.slice(0,questionIndex).concat(
+                    state.slice(0,questionIndex).concat(
                         newQuestionObject,
-                       state.questions.slice(questionIndex+1)
+                       state.slice(questionIndex+1)
                     )
                 })
             )
         }
 
-    case ACTION_PREV_QUESTION:
-        {
-            if(state.currentQuestion > 0) {
-                saveAnswers(state.questions[state.currentQuestion])
-                return Object.assign({}, state, { currentQuestion: state.currentQuestion-1})
-            }
-            return state
-        }
-    case ACTION_NEXT_QUESTION:
-        {
-            if(state.currentQuestion < state.questions.length) {
-                saveAnswers(state.questions[state.currentQuestion])
-                return Object.assign({}, state, { currentQuestion: state.currentQuestion+1})
-            }
-        }
-        return state
-    case ACTION_SET_ANSWER_FIELD:
+   case ACTION_SET_ANSWER_FIELD:
         {
             let {questionId,context,field,value } = action
             chai.expect(questionId).to.exist
@@ -150,10 +156,10 @@ export function topReducer(state = initialState, action) {
             chai.expect(value).to.exist
 
             // look up index of question
-            var questionIndex = state.questions.findIndex( x => x.question.id == questionId )
+            var questionIndex = state.findIndex( x => x.question.id == questionId )
 
             if(questionIndex >= 0 ) {
-                let question = state.questions[questionIndex]
+                let question = state[questionIndex]
                 let existingContext = {
                     'context': context,
                     'question': { id: questionId },
@@ -168,12 +174,10 @@ export function topReducer(state = initialState, action) {
                 let newAnswerObject =  Object.assign({},question.answers,{ [context] : newContextObject })
                 let newQuestionObject = Object.assign({},question, { "answers" : newAnswerObject })
                 return(
-                    Object.assign({}, state, { questions:
-                        state.questions.slice(0,questionIndex).concat(
-                            newQuestionObject,
-                           state.questions.slice(questionIndex+1)
-                        )
-                    })
+                    state.slice(0,questionIndex).concat(
+                        newQuestionObject,
+                        state.slice(questionIndex+1)
+                    )
                 )
             }
             return state
@@ -182,6 +186,13 @@ export function topReducer(state = initialState, action) {
       return state
     }
 }
+
+//-------------------------------------------------------------------------------
+
+export const topReducer = (state = {}, action) => ({
+    questions: questionReducer(state.questions,action),
+    navigation: navigationReducer(state.navigation,action,state.questions)
+})
 
 //===============================================================================
 
