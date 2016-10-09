@@ -432,8 +432,6 @@ const AnswerList = ({ questions, filters }) => {
 //===============================================================================
 
 const AnswerPage = (props,context) => {
-    console.log("props",props)
-    console.log("context",context)
     log.info(' AnswerPage: props', JSON.stringify(props,null,2))
     let {state, } = props
 
