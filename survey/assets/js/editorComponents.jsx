@@ -115,11 +115,37 @@ export var ClickableButton = React.createClass({
         type="button"
         className="btn btn-default"
        >
-          { this.props.value }
+          <span className ={"glyphicon " + this.props.icon} aria-hidden="true"></span>{ this.props.value }
       </button>
     )
   },
 })
+
+//===============================================================================
+
+export var ProgressBar = (props) =>
+{
+    let min = props.min || 0
+    let max = props.max || 100
+    let percent = (props.value - min) / (max-min)
+    let text = `{percent}% Complete`
+    let style =  {
+        width: (percent*100)+'%'
+    }
+    return (
+      <div className="progress">
+        <div className="progress-bar"
+          role="progressbar"
+          aria-valuenow={ props.value }
+              aria-valuemin={ min }
+          aria-valuemax={ max }
+          style={style}
+        >
+            <span className="sr-only">{text}</span>
+        </div>
+      </div>
+    )
+}
 
 //===============================================================================
 

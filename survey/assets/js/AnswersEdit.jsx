@@ -6,7 +6,13 @@ var $ = require('jquery');
 var chai = require('chai')
 import { Provider,connect } from 'react-redux'
 
-var {BooleanChoice, RadioChoices, TextField, ClickableButton} = require('./editorComponents')
+var {
+        BooleanChoice,
+        RadioChoices,
+        TextField,
+        ClickableButton,
+        ProgressBar
+    } = require('./editorComponents')
 var {choices, choices_context} = require('./applicationData')
 
 import {
@@ -35,22 +41,31 @@ const TransportControls = ({ questions, navigationState,nextQuestionAction,prevQ
     log.trace("TransportControls:render:")
     return(
         <div className="btn-toolbar">
-            <div className="btn-group" role="group" aria-label="...">
-                <ClickableButton
-                    value="Prev"
-                    handleClick={prevQuestionAction}
-                />
+            <div className="btn-toolbar">
+                <div className="btn-group" role="group" aria-label="...">
+                    <ClickableButton
+                        icon="glyphicon glyphicon-step-backward"
+                        handleClick={prevQuestionAction}
+                    />
+                </div>
+                <div className="btn-group" role="group" aria-label="...">
+                      <span className="form-control-static">Current question {navigationState.currentQuestion+1} of {questionCount} (of {answeredQuestionCount} answered questions)</span>
+                </div>
+                <div className="btn-group" role="group" aria-label="...">
+                    <ClickableButton
+                        icon="glyphicon glyphicon-step-forward"
+                        handleClick={nextQuestionAction}
+                    />
+
+                </div>
             </div>
-            <div className="btn-group" role="group" aria-label="...">
-                  <span className="form-control-static">Current question {navigationState.currentQuestion+1} of {answeredQuestionCount} answered questions of {questionCount}</span>
-            </div>
-            <div className="btn-group" role="group" aria-label="...">
-                <ClickableButton
-                    value="Next"
+            <div >
+                <ProgressBar
+                    value={answeredQuestionCount }
                     handleClick={nextQuestionAction}
                 />
-
             </div>
+
         </div>
     )
 }
