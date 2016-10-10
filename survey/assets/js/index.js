@@ -64,6 +64,8 @@ export class IndexPagePresentational extends React.Component {
             AppPage = appPages[navigation.currentPage]
         }
 
+        chai.expect(AppPage).to.exist
+
         return (
             <div> top level of app
             <NavigationBar />

@@ -431,18 +431,15 @@ const AnswerList = ({ questions, filters }) => {
 
 //===============================================================================
 
-const AnswerPage = (props,context) => {
-    log.info(' AnswerPage: props', JSON.stringify(props,null,2))
-    let {state, } = props
-
+const AnswerPage = ({filters,questions }) => {
     return(
         <div>
             <FilterView
-                filterState={state.filters}
+                filterState={filters}
             />
             <AnswerList
-                questions={state.questions}
-                filters={state.filters}
+                questions={questions}
+                filters={filters}
             />
         </div>
   )
@@ -452,13 +449,14 @@ const AnswerPage = (props,context) => {
 
 const answerPageMapStateToProps = (state) => {
     return {
-        state: state
+        filters: state.answerViewPage.filters,
+        questions: state.questions,
     }
 }
 
 //-------------------------------------------------------------------------------
 
-export const AnswerViewerView = connect(
+export const AnswerViewerPage = connect(
   answerPageMapStateToProps
 )(AnswerPage)
 
