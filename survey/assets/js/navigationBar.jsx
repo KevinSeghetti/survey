@@ -15,8 +15,7 @@ var log = require('./loggingConfig').CreateLogger("NavigationBar")
 
 //===============================================================================
 
-const NavigationBarPresentation = ({navBarClick}) => {
-
+const NavigationBarPresentation = ({navBarClick,currentPage}) => {
     return(
         <nav className="navbar navbar-inverse navbar-fixed-top">
           <div className="container">
@@ -36,10 +35,10 @@ const NavigationBarPresentation = ({navBarClick}) => {
             </div>
             <div id="navbar" className="navbar-collapse collapse">
               <ul className="nav navbar-nav">
-                    <li className="active"><LinkButton value="Home"      handleClick={navBarClick} nav={Page.PAGE_MAIN           } /></li>
-                    <li className=""      ><LinkButton value="Checklist" handleClick={navBarClick} nav={Page.PAGE_ANSWER_EDITOR  } /></li>
-                    <li className=""      ><LinkButton value="Results  " handleClick={navBarClick} nav={Page.PAGE_ANSWER_VIEWER  } /></li>
-                    <li className=""      ><LinkButton value="Questions" handleClick={navBarClick} nav={Page.PAGE_QUESTION_VIEWER} /></li>
+                    <li className={currentPage==Page.PAGE_MAIN           ?'active':''}><LinkButton value="Home"      handleClick={navBarClick} nav={Page.PAGE_MAIN           } /></li>
+                    <li className={currentPage==Page.PAGE_ANSWER_EDITOR  ?'active':''}><LinkButton value="Checklist" handleClick={navBarClick} nav={Page.PAGE_ANSWER_EDITOR  } /></li>
+                    <li className={currentPage==Page.PAGE_ANSWER_VIEWER  ?'active':''}><LinkButton value="Results  " handleClick={navBarClick} nav={Page.PAGE_ANSWER_VIEWER  } /></li>
+                    <li className={currentPage==Page.PAGE_QUESTION_VIEWER?'active':''}><LinkButton value="Questions" handleClick={navBarClick} nav={Page.PAGE_QUESTION_VIEWER} /></li>
               </ul>
 
               <ul className="nav navbar-nav navbar-right">
@@ -57,7 +56,7 @@ const NavigationBarPresentation = ({navBarClick}) => {
 
 const mapStateToProps = (state) => {
     return {
-        state: state
+        currentPage: state.navigation.currentPage
     }
 }
 
