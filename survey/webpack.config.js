@@ -13,6 +13,7 @@ module.exports = {
 
   output: {
       path: path.resolve('./assets/bundles/'),
+      publicPath: '/static/bundles/',
       filename: "[name]-[hash].js",
       sourceMapFilename: "[name]-[hash].js.map",
 
@@ -36,6 +37,11 @@ module.exports = {
         test: require.resolve("jquery"),
         loader: 'expose?_'
       },
+      {
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader?limit=8192&name=[hash].[ext]'
+      } // inline base64 URLs for <=8k images, direct URLs for the rest
+
     ],
   },
 

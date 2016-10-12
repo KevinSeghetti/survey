@@ -12,6 +12,7 @@ var { appName,userAuthenticated, userName } = require('./applicationData')
 var { LinkButton, } = require('./uiComponents')
 
 var log = require('./loggingConfig').CreateLogger("NavigationBar")
+var logo = require('../images/logo.png')
 
 //===============================================================================
 
@@ -45,7 +46,7 @@ const NavigationBarPresentation = ({navBarClick,currentPage}) => {
                 <span className="icon-bar"></span>
               </button>
               <div className="navbar-left">
-                <img src="images/logo.png" alt="logo" height="38" width="38"></img>&nbsp;
+                <img src={logo} alt="logo" height="38" width="38"></img>&nbsp;
               </div>
               <div className="navbar-left">
                 <a className="navbar-brand" href="" >{ appName }</a>
