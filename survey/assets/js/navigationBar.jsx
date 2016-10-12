@@ -8,7 +8,7 @@ var chai = require('chai')
 
 import * as Page from './pageTypes'
 import { changePage, } from './actionTypes'
-var { appName,userName } = require('./applicationData')
+var { appName,userAuthenticated, userName } = require('./applicationData')
 var { LinkButton, } = require('./uiComponents')
 
 var log = require('./loggingConfig').CreateLogger("NavigationBar")
@@ -16,6 +16,24 @@ var log = require('./loggingConfig').CreateLogger("NavigationBar")
 //===============================================================================
 
 const NavigationBarPresentation = ({navBarClick,currentPage}) => {
+    let loggedInOptions = []
+    let userOptions = [
+            <li key='navbar-user-login' ><a href="/accounts/login">Login</a>   </li>,
+            <li key='navbar-user-register' ><a href="/accounts/register">Register</a></li>
+        ]
+        if(userAuthenticated)
+        {
+            userOptions = [
+                <li key='navbar-user-name'><p className="navbar-text">User { userName }</p></li>,
+                <li key='navbar-user-logout'><a href="/accounts/logout">Logout</a></li>
+           ]
+           loggedInOptions = [
+                    <li key='navbar-checklist' className={currentPage==Page.PAGE_ANSWER_EDITOR  ?'active':''}><LinkButton value="Checklist" handleClick={navBarClick} nav={Page.PAGE_ANSWER_EDITOR  } /></li>,
+                    <li key='navbar-result' className={currentPage==Page.PAGE_ANSWER_VIEWER  ?'active':''}><LinkButton value="Results  " handleClick={navBarClick} nav={Page.PAGE_ANSWER_VIEWER  } /></li>
+           ]
+
+        }
+
     return(
         <nav className="navbar navbar-inverse navbar-fixed-top">
           <div className="container">
@@ -35,15 +53,13 @@ const NavigationBarPresentation = ({navBarClick,currentPage}) => {
             </div>
             <div id="navbar" className="navbar-collapse collapse">
               <ul className="nav navbar-nav">
-                    <li className={currentPage==Page.PAGE_MAIN           ?'active':''}><LinkButton value="Home"      handleClick={navBarClick} nav={Page.PAGE_MAIN           } /></li>
-                    <li className={currentPage==Page.PAGE_ANSWER_EDITOR  ?'active':''}><LinkButton value="Checklist" handleClick={navBarClick} nav={Page.PAGE_ANSWER_EDITOR  } /></li>
-                    <li className={currentPage==Page.PAGE_ANSWER_VIEWER  ?'active':''}><LinkButton value="Results  " handleClick={navBarClick} nav={Page.PAGE_ANSWER_VIEWER  } /></li>
-                    <li className={currentPage==Page.PAGE_QUESTION_VIEWER?'active':''}><LinkButton value="Questions" handleClick={navBarClick} nav={Page.PAGE_QUESTION_VIEWER} /></li>
+                    <li key='navbar-home' className={currentPage==Page.PAGE_MAIN           ?'active':''}><LinkButton value="Home"      handleClick={navBarClick} nav={Page.PAGE_MAIN           } /></li>
+                    {loggedInOptions}
+                    <li key='navbar-questions' className={currentPage==Page.PAGE_QUESTION_VIEWER?'active':''}><LinkButton value="Questions" handleClick={navBarClick} nav={Page.PAGE_QUESTION_VIEWER} /></li>
               </ul>
 
-              <ul className="nav navbar-nav navbar-right">
-                <li><p className="navbar-text">User { userName }</p></li>
-                <li><a href="/accounts/logout">Logout</a></li>
+              <ul key='navbar-right' className="nav navbar-nav navbar-right">
+                    { userOptions }
               </ul>
 
             </div>

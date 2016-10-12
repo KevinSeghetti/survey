@@ -20,8 +20,8 @@
     // kts: must be a better way to pass parameters into a module
     window.globs['questionsUrl'] = "{{ questionsUrl }}"
     window.globs['appName'] = "{{ APP_NAME }}"
-    window.globs['userName'] = "{{ userName }}"
-
+    window.globs['userName'] = "{{ request.user }}"
+    window.globs['userAuthenticated'] = '{{ request.user.is_authenticated  }}' == 'True'
     window.globs['defaultLoggingLevel'] = "OFF"
     var loggingLevel='ERROR'
     {%if logging %}

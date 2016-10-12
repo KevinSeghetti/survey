@@ -20,7 +20,7 @@ import * as Page from './pageTypes'
 
 //-------------------------------------------------------------------------------
 
-var url=window.globs['questionsUrl']
+var {questionsUrl, userName, userAuthenticated } = require('./applicationData')
 //let store = createStore(topReducer)
 const store = createStore(topReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
@@ -29,7 +29,7 @@ const store = createStore(topReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && win
 export class IndexPagePresentational extends React.Component {
     loadAnswersFromServer() {
         $.ajax({
-            url: url,
+            url: questionsUrl,
             dataType: 'json',
             cache: false,
             success: function(data) {
@@ -37,13 +37,16 @@ export class IndexPagePresentational extends React.Component {
                 store.dispatch(loadAction(data))
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error(url, status, err.toString())
+                console.error(questionsUrl, status, err.toString())
             }.bind(this)
         })
     }
     componentDidMount() {
         log.trace("IndexPage::componentDidMount")
-        this.loadAnswersFromServer()
+        if(userAuthenticated)
+        {
+            this.loadAnswersFromServer()
+        }
     }
     render() {
         log.trace("IndexPage::render")

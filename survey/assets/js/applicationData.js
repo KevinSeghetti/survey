@@ -5,6 +5,8 @@
 
 export var appName = window.globs['appName']
 export var userName = window.globs['userName']
+export var questionsUrl = window.globs['questionsUrl']
+export var userAuthenticated = window.globs['userAuthenticated']
 export var choices = window.globs['choices']
 export var choices_context = window.globs['choices_context']
 export var csrfToken = window.globs['csrfToken']
