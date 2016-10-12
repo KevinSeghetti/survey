@@ -1,5 +1,3 @@
 #!/bin/bash
 
-gnome-terminal --tab -e ./runserver.sh
-gnome-terminal --window -e 'webpack --watch -d'
-
+gnome-terminal  --tab -e 'webpack --watch -d' --tab -e ./runserver.sh
