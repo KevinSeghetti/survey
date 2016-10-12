@@ -55,7 +55,7 @@ export class IndexPagePresentational extends React.Component {
 
         let appPages =
         {
-            [Page.PAGE_MAIN          ]: HomePage         ,
+            [Page.PAGE_HOME          ]: HomePage         ,
             [Page.PAGE_ANSWER_EDITOR ]: AnswerEditorPage ,
             [Page.PAGE_ANSWER_VIEWER ]: AnswerViewerPage ,
             //PAGE_QUESTION_VIEWER: < App />,
