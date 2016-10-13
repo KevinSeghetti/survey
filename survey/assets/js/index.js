@@ -70,7 +70,7 @@ export class IndexPagePresentational extends React.Component {
         chai.expect(AppPage).to.exist
 
         return (
-            <div> top level of app
+            <div>
             <NavigationBar />
             <AppPage />
             </div>

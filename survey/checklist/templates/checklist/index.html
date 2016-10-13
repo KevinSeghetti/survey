@@ -21,6 +21,9 @@
     window.globs['questionsUrl'] = "{{ questionsUrl }}"
     window.globs['appName'] = "{{ APP_NAME }}"
     window.globs['userName'] = "{{ request.user }}"
+    window.globs['publishUrl'    ] = "{{ publish_url      }}"
+    window.globs['publishUrlText'] = "{{ publish_url_text }}"
+    window.globs['SFW'] = '{{ SFW }}' == 'True'
     window.globs['userAuthenticated'] = '{{ request.user.is_authenticated  }}' == 'True'
     window.globs['defaultLoggingLevel'] = "OFF"
     var loggingLevel='ERROR'
