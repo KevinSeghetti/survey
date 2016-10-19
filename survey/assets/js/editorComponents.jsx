@@ -133,7 +133,7 @@ export var ProgressBar = (props) =>
     let min = props.min || 0
     let max = props.max || 100
     let percent = (props.value - min) / (max-min)
-    let text = `{percent}% Complete`
+    let text = `${percent}% Complete`
     let style =  {
         width: (percent*100)+'%'
     }
