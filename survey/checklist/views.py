@@ -117,22 +117,6 @@ def answers_edit(request):
 
 #===============================================================================
 
-@login_required
-def answers_react_edit(request):
-    answer_list = Answer.objects.order_by('-question__question_text')
-
-    context = {
-        'choices_context': choices_context,
-        'choices': choices,
-        'user' : request.user,
-        'questionsUrl': reverse('checklist:rest_questions'),
-        'logging' : DEBUG_LOGGING,
-    }
-
-    return render(request, 'checklist/answers_react_edit.html', context)
-
-#===============================================================================
-
 def index(request):
    #latest_question_list = Question.objects.order_by('-question_text')[:5]
    # this is a shortcut
@@ -152,22 +136,6 @@ def index(request):
        'logging' : DEBUG_LOGGING,
    }
    return render(request, 'checklist/index.html', context)
-
-#===============================================================================
-
-@login_required
-def answers_react_resume(request):
-    answer_list = Answer.objects.order_by('-question__question_text')
-
-    context = {
-        'choices_context': choices_context,
-        'choices': choices,
-        'user' : request.user,
-        'questionsUrl': reverse('checklist:rest_questions_remaining'),
-        'logging' : DEBUG_LOGGING,
-    }
-
-    return render(request, 'checklist/answers_react_edit.html', context)
 
 #===============================================================================
 
@@ -210,33 +178,6 @@ def view(request,user_id):
     user = get_object_or_404(User,id=user_id)
 
     return render(request, 'checklist/view.html', {
-        'questions': get_answers_list(user,questions),
-        'choices_context': choices_context,
-        'choices': choices,
-        'choicesRatingDict': choicesRatingDict,
-        'user' : user,
-        'logging' : DEBUG_LOGGING,
-        })
-
-
-
-@login_required
-def reactreview(request):
-    questions = get_list_or_404(Question)
-
-    return render(request, 'checklist/reactview.html', {
-        'choices_context': choices_context,
-        'choices': choices,
-        'user' : request.user,
-        'logging' : DEBUG_LOGGING,
-        'questionsUrl': reverse('checklist:rest_questions'),
-        })
-
-def reactview(request,user_id):
-    questions = get_list_or_404(Question)
-    user = get_object_or_404(User,id=user_id)
-
-    return render(request, 'checklist/reactview.html', {
         'questions': get_answers_list(user,questions),
         'choices_context': choices_context,
         'choices': choices,
