@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gnome-terminal  --tab -e 'webpack --watch -d' --tab -e ./runserver.sh
+gnome-terminal  --tab -e 'node server.js' --tab -e ./runserver.sh

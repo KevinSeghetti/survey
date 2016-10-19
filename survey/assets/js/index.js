@@ -103,6 +103,8 @@ render(
   document.getElementById('react-app')
 )
 
+module.hot.accept()
+
 //===============================================================================
 
 

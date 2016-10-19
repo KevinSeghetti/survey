@@ -5,21 +5,23 @@ var BundleTracker = require('webpack-bundle-tracker')
 module.exports = {
   context: __dirname,
 
-  entry: {     // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
-    'index': './assets/js/index',
-    'answers_edit': './assets/js/answers_edit',
-    'answers_view': './assets/js/answers_view',
-  },
+  entry: [     // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    './assets/js/index',
+  ],
 
   output: {
       path: path.resolve('./assets/bundles/'),
-      publicPath: '/static/bundles/',
+      publicPath: 'http://localhost:3000/assets/bundles/',
       filename: "[name]-[hash].js",
       sourceMapFilename: "[name]-[hash].js.map",
 
   },
 
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(), // don't reload if there is an error
     new BundleTracker({filename: './webpack-stats.json'}),
   ],
 
@@ -27,11 +29,8 @@ module.exports = {
     loaders: [
       {   // to transform JSX into JS
           test: /.jsx?$/,
-          loader: 'babel-loader',
+          loaders: [ 'babel'],
           exclude: /node_modules/,
-          query: {
-            presets: ['es2015', 'react', 'stage-2' ]
-          }
       },
       {
         test: require.resolve("jquery"),
