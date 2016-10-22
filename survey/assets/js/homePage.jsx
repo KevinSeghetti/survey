@@ -35,9 +35,12 @@ const HomePagePresentation = ({questions, navigationState }) => {
     log.info("HomePage: navigationState",JSON.stringify(navigationState))
 
     let heading = <div>
-            Welcome to the online BDSM checklist. This is an interactive version of a checklist I found
-            <a href="https://web.archive.org/web/20150128121457/http://www.cepemo.com/checklist.html">
-            here</a>. <br />
+            <div className="page-header">
+                <h1>Welcome to the online BDSM checklist. <small>This is an interactive version of a checklist I found
+                &nbsp;<a href="https://web.archive.org/web/20150128121457/http://www.cepemo.com/checklist.html">
+                here</a>.</small></h1>
+            </div>
+             <br />
             I love this checklist, but found using it on paper cumbersome. For example, once filled
             out, I wanted a quick way to view all items marked 'love'.<br />
             All of the questions and instructions are blatently taken from there (I have been looking for the
@@ -56,9 +59,11 @@ const HomePagePresentation = ({questions, navigationState }) => {
     {
         heading =
             <div>
-                Welcome to the online sports checklist. It can be used to help people
-                interested in various sports match up with others of similar interest.
-
+                <div className="page-header">
+                    <h1>Welcome to the online sports checklist. <small>It can be used to help people
+                    interested in various sports match up with others of similar interest.
+                    </small></h1>
+                </div>
                 You will need to create an account to see most of the site.
             </div>
     }
@@ -98,19 +103,15 @@ const HomePagePresentation = ({questions, navigationState }) => {
             </div>
     }
 
-     let authUser = <div>
+     let authUser = <div className="jumbotron">
+
              <br />To Create an account click on the register link on the upper right corner of the page
          </div>
 
     if(userAuthenticated)
     {
         authUser =
-            <div>
-            <br />To publish your results for anyone to be able to view, copy the following link:
-            <a href="{ publishUrl }">
-                     { publishUrlText }
-            </a>
-          <br />
+            <div className="jumbotron">
               <p>To use: The first step is to click the Fill out checklist button, and start answering questions.
               You do not have to answer all of the questions in a single sitting, but you do need to
               scroll to the bottom of the page and click submit to save what answered you have filled out.
@@ -120,12 +121,13 @@ const HomePagePresentation = ({questions, navigationState }) => {
               to view only the questioms you have not answered yet.
               </p>
               <p>
-
-              You may return at any time and edit your answers by clicking 'Fill out checklist' again.
+                You may return at any time and edit your answers by clicking 'Fill out checklist' again.
               </p>
               <p>
-              Once you have finished the questionaire, the "View Results" page can be used to display/print/download
-              your answers. This page can also filter for certain results, as well as sort the results.
+                Once you have finished the questionaire, the "View Results" page can be used to display/print/download
+                your answers. This page can also filter for certain results, as well as sort the results.
+                To publish your results for anyone to be able to view, copy the following link:
+                <a href="{ publishUrl }"> { publishUrlText } </a>
               </p>
             </div>
     }
@@ -134,11 +136,11 @@ const HomePagePresentation = ({questions, navigationState }) => {
     return (
         <div>
             { heading }
-            <br />
-            For an example of what the results look like after filling out the
-            form, you can view <a href="/checklist/view/1/" >mine</a>
 
-            <br />
+            <div className="jumbotron">
+                For an example of what the results look like after filling out the
+                form, you can view <a href="/checklist/view/1/" >mine</a>
+            </div>
 
             { authUser }
             { playground }
