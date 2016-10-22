@@ -11,6 +11,7 @@ import {
     ACTION_LOAD_SINGLE_ANSWER,
     ACTION_MOVE_CURSOR,
     ACTION_SET_ANSWER_FIELD,
+    ACTION_NEXT_UNANSWERED_QUESTION,
     } from './actionTypesAnswerEditor'
 import {
     loadAction,
@@ -115,6 +116,31 @@ export function navigationReducer(state = navigationInitialState, action, questi
                 return state
             }
             return state
+        case ACTION_NEXT_UNANSWERED_QUESTION:
+            {
+                chai.expect(questions).to.exist
+                log.trace("ACTION_NEXT_UNANSWERED_QUESTION: currentQuestion = ",state.currentQuestion)
+                console.log("ACTION_NEXT_UNANSWERED_QUESTION: questions = ",questions)
+
+                let localQuestionArray = questions.slice(state.currentQuestion+1).concat(questions.slice(0,state.currentQuestion))
+                console.log("ACTION_NEXT_UNANSWERED_QUESTION: localquestions = ",localQuestionArray)
+                // find next unanswered question
+                let unansweredQuestionIndex = localQuestionArray.findIndex(
+                    (obj) =>
+                        { return !('answers' in obj)  }
+                    )
+
+                let newCursor = unansweredQuestionIndex
+
+                log.trace("newcursor = ",newCursor)
+                if(newCursor != state.currentQuestion) {
+                    saveAnswers(questions[state.currentQuestion])
+                    return Object.assign({}, state, { currentQuestion: newCursor})
+                }
+                return state
+            }
+            return state
+
         default:
           return state
         }

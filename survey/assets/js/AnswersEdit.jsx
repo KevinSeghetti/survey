@@ -17,6 +17,7 @@ var {choices, choices_context} = require('./applicationData')
 
 import {
     moveCursorAction,
+    nextUnansweredQuestionAction,
     } from './actionTypesAnswerEditor'
 
 import {
@@ -251,7 +252,7 @@ const ContextAnswerWrapper = connect(
 export var Answer = React.createClass({
   render: function() {
     log.info("Answer: props",JSON.stringify(this.props,null,2))
-    let {question,answers} = this.props
+    let {question,answers,nextUnansweredQuestionAction,} = this.props
     log.info("Answer: question.id ",question.id )
 
   var contextNodes = choices_context.map((context) => {
@@ -285,6 +286,11 @@ export var Answer = React.createClass({
         </div>
         <div className="panel-body" >
             { contextNodes }
+            <ClickableButton
+                icon="glyphicon glyphicon-play"
+                classAppend="pull-right"
+                handleClick={nextUnansweredQuestionAction}
+            />
         </div>
      </div>
   )
@@ -293,7 +299,9 @@ export var Answer = React.createClass({
 
 //===============================================================================
 
-const AnswerPage = ({questions, answerPageNavigationState: navigationState }) => {
+const AnswerPage = ({questions, nextUnansweredQuestionAction,
+    answerPageNavigationState: navigationState
+}) => {
     log.info("AnswerPage: navigationState",JSON.stringify(navigationState))
     log.info("AnswerPage: questions",JSON.stringify(questions))
     //log.info("AnswerPage: navigationState",JSON.stringify(navigationState), questions: ",JSON.stringify(questions))
@@ -320,6 +328,7 @@ const AnswerPage = ({questions, answerPageNavigationState: navigationState }) =>
           <Answer
             question={question.question}
             answers={question.answers}
+            nextUnansweredQuestionAction={nextUnansweredQuestionAction}
           />
 
           <div>
@@ -347,8 +356,17 @@ const mapStateToProps = (state) => {
 
 //-------------------------------------------------------------------------------
 
+const mapDispatchToProps = (dispatch) => ({
+    nextUnansweredQuestionAction(childProps) {
+        dispatch(nextUnansweredQuestionAction(childProps.delta) )
+    },
+})
+
+//-------------------------------------------------------------------------------
+
 export const AnswerEditorPage = connect(
   mapStateToProps,
+  mapDispatchToProps
 )(AnswerPage)
 
 //===============================================================================

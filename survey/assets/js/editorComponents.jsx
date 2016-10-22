@@ -118,7 +118,7 @@ export var ClickableButton = React.createClass({
       <button
         onClick={this.handleChange}
         type="button"
-        className="btn btn-default"
+        className={"btn btn-default "+this.props.classAppend }
        >
           { icon} { this.props.value }
       </button>
