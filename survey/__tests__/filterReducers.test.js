@@ -1,12 +1,6 @@
-console.log("!!!!!!!!!!!!!!!")
 
-//import { contextBooleanFilterReducer } from '../assets/js/filterReducers.js'
-//import { ACTION_LOAD,ACTION_SET_BOOLEAN_FILTER,ACTION_SET_RATING_FILTER,ACTION_SET_SEARCH_STRING } from '../assets/js/actionTypes'
-
-global.fred = "Hello"
-global.window = {}
-global.window.globs = []
-
+import  contextBooleanFilterReducer  from '../assets/js/filterReducers.js'
+//import  * as types from '../assets/js/actionTypes';
 
 console.log("!!!!!!!!!!!!!!!")
 //
