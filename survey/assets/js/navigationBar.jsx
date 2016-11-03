@@ -7,7 +7,7 @@ var $ = require('jquery')
 var chai = require('chai')
 
 import * as Page from './pageTypes'
-import { changePage, } from './actionTypes'
+import { changePage, } from 'constants/actionTypes'
 var { appName,userAuthenticated, userName } = require('./applicationData')
 var { LinkButton, } = require('./uiComponents')
 

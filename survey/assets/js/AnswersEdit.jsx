@@ -22,7 +22,7 @@ import {
 
 import {
     setField
-    } from './actionTypes'
+    } from 'constants/actionTypes'
 
 var log = require('./loggingConfig').CreateLogger("AnswerEdit")
 

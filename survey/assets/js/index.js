@@ -14,7 +14,7 @@ var { AnswerEditorPage } = require('./AnswersEdit')
 var { AnswerViewerPage } = require('./AnswersView')
 var { HomePage } = require('./homePage')
 
-import { loadAction, } from './actionTypes'
+import { loadAction, } from 'constants/actionTypes'
 import { topReducer } from './topReducer'
 import * as Page from './pageTypes'
 

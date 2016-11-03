@@ -1,6 +1,7 @@
 // helpers to make logging easier in this application
 
 var {defaultLoggingLevel, loggingLevels } = require('./applicationData')
+var log4javascript = require('log4javascript')
 
 // http://www.log4javascript.org/docs/manual.html
 var popUpAppender = new log4javascript.PopUpAppender();

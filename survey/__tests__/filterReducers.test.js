@@ -1,6 +1,6 @@
 
-import  contextBooleanFilterReducer  from '../assets/js/filterReducers.js'
-//import  * as types from '../assets/js/actionTypes';
+import  contextBooleanFilterReducer  from 'filterReducers'
+import * as types from 'constants/actionTypes';
 
 console.log("!!!!!!!!!!!!!!!")
 //

@@ -48,7 +48,10 @@ module.exports = {
 
 
   resolve: {
-    modulesDirectories: ['node_modules', 'bower_components'],
+    root: [
+      path.resolve( './static/js')
+    ],
+    modulesDirectories: ['node_modules', 'bower_components', 'assets/js'],
     extensions: ['', '.js', '.jsx']
   },
 }

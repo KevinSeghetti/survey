@@ -10,8 +10,8 @@ import {
     ACTION_LOAD_SINGLE_ANSWER,
     ACTION_SET_ANSWER_FIELD,
     ACTION_CHANGE_PAGE,
-    } from './actionTypes'
-import { loadAction, } from './actionTypes'
+    } from 'constants/actionTypes'
+import { loadAction, } from 'constants/actionTypes'
 import * as Page from './pageTypes'
 import { mapObject, defaultDict } from './utilities'
 import answerEditorReducer from './topReducerAnswerEditor'

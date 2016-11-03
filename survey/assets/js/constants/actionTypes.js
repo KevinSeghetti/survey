@@ -1,7 +1,7 @@
 //===============================================================================
 // top level action types
 
-var log = require('./loggingConfig').CreateLogger("actions")
+var log = require('loggingConfig').CreateLogger("actions")
 
 //-------------------------------------------------------------------------------
 

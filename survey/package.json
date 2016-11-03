@@ -53,6 +53,14 @@
     "webpack-dashboard": "^0.2.0",
     "webpack-dev-server": "^1.15.1"
   },
+  "jest": {
+    "moduleFileExtensions": ["js", "jsx"],
+    "moduleDirectories": ["node_modules", "static/js", "assets/js"],
+    "moduleNameMapper": {
+      "^.+\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
+      "^.+\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
+    }
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "npm test -- --watch"
