@@ -120,10 +120,10 @@ export function navigationReducer(state = navigationInitialState, action, questi
             {
                 chai.expect(questions).to.exist
                 log.trace("ACTION_NEXT_UNANSWERED_QUESTION: currentQuestion = ",state.currentQuestion)
-                console.log("ACTION_NEXT_UNANSWERED_QUESTION: questions = ",questions)
+                log.trace("ACTION_NEXT_UNANSWERED_QUESTION: questions = ",questions)
 
                 let localQuestionArray = questions.slice(state.currentQuestion+1).concat(questions.slice(0,state.currentQuestion))
-                console.log("ACTION_NEXT_UNANSWERED_QUESTION: localquestions = ",localQuestionArray)
+                log.trace("ACTION_NEXT_UNANSWERED_QUESTION: localquestions = ",localQuestionArray)
                 // find next unanswered question
                 let unansweredQuestionIndex = localQuestionArray.findIndex(
                     (obj) =>
@@ -147,8 +147,12 @@ export function navigationReducer(state = navigationInitialState, action, questi
 }
 
 export function questionReducer(state = [], action) {
+    log.trace("!questionReducer: state = ",state,", action = ",action)
+    chai.expect(state).to.exist
+    chai.expect(state).to.be.an.array
+    chai.expect(action).to.exist
+    chai.expect(action.type).to.exist
 
-    log.trace("questionReducer: ",JSON.stringify(action,null,2))
     switch (action.type) {
     case ACTION_LOAD:
             return(action.data.results)
@@ -221,6 +225,15 @@ const topReducer = (state = {}, action, questions) => ({
     questions: questionReducer(state.questions,action),
     navigation: navigationReducer(state.navigation,action,questions)
 })
+
+//function topReducer(state = {}, action, questions) {
+//    log.trace("topReducerAnswerEditor: state = ",state,", action = ",action,", questions = ",questions)
+//    return (
+//    {
+//        questions: questionReducer(state.questions,action),
+//        navigation: navigationReducer(state.navigation,action,questions)
+//    } )
+//}
 
 export default topReducer
 
