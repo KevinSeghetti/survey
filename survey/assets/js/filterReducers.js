@@ -17,31 +17,43 @@ import { mapObject,defaultDict } from './utilities'
 
 //-------------------------------------------------------------------------------
 
-function contextBooleanFilterReducer(state,action) {
-    log.trace("contextlBooleanFilterReducer: filter state = ",JSON.stringify(state,null,2))
+export function contextBooleanFilterReducer(state={},action) {
+    log.trace ("contextlBooleanFilterReducer: filter state = ",JSON.stringify(state,null,2),", action = ",JSON.stringify(action,null,2))
     let newValue = true
-    if(action.id in state) {
-        newValue = !state[action.id]
+    let result = state
+    switch (action.type) {
+        case ACTION_TOGGLE_BOOLEAN_FILTER:
+        {
+            log.trace ("contextlBooleanFilterReducer:ACTION_TOGGLE_RATING_FILTER action id = ",action.id)
+            if(action.id in state) {
+                newValue = !state[action.id]
+            }
+            result = Object.assign({}, state, { [action.id] : newValue })
+        }
     }
-    let result = Object.assign({}, state, { [action.id] : newValue })
     log.debug("contextBooleanFilterReducer:ACTION_TOGGLE_BOOLEAN_FILTER: result ",JSON.stringify(result,null,2))
     return result
 
 }
 
-function contextRatingFilterReducer(state,action) {
-    log.trace("contextlBooleanFilterReducer: filter state = ",JSON.stringify(state,null,2))
+export function contextRatingFilterReducer(state={},action) {
+    log.trace ("contextRatingFilterReducer: filter state = ",JSON.stringify(state,null,2))
     let newValue = true
-    if(action.rating in state) {
-        newValue = !state[action.rating]
+    let result = state
+    switch (action.type) {
+        case ACTION_TOGGLE_RATING_FILTER:
+        {
+            if(action.rating in state) {
+                newValue = !state[action.rating]
+            }
+            result = Object.assign({}, state, { [action.rating] : newValue })
+        }
     }
-    let result = Object.assign({}, state, { [action.rating] : newValue })
     log.debug("contextBooleanFilterReducer:ACTION_TOGGLE_BOOLEAN_FILTER: result ",JSON.stringify(result,null,2))
     return result
-
 }
 
-function contextFilterReducer(state,action) {
+export function contextFilterReducer(state,action) {
     log.trace("contextFilterReducer: filter state = ",JSON.stringify(state,null,2))
     switch (action.type) {
         case ACTION_TOGGLE_BOOLEAN_FILTER:
