@@ -39,7 +39,6 @@ describe('contextBooleanFilterReducer',() => {
     it('should return initial state', () => {
 
         var result = contextBooleanFilterReducer(undefined, { type: '@@INIT' } )
-        console.log("result =", result)
 
         expect(
           contextBooleanFilterReducer(undefined, { type: '@@INIT' } )
@@ -84,7 +83,6 @@ describe('contextBooleanFilterReducer',() => {
 describe('contextRatingFilterReducer', () => {
     it('should return initial state', () => {
         var result = contextRatingFilterReducer(undefined, { type: '@@INIT' } )
-        console.log("result =", result)
 
         expect(
           contextRatingFilterReducer(undefined, { type: '@@INIT' } )
