@@ -1,8 +1,13 @@
 //var $ = require('jquery');
 
-import reducer from 'topReducerAnswerEditor'
+import {topReducer,questionReducer} from 'topReducerAnswerEditor'
 import  contextBooleanFilterReducer  from 'filterReducers'
-import * as types from 'constants/actionTypes';
+import * as types from 'constants/actionTypes'
+
+import {
+    setField
+    } from 'constants/actionTypes'
+
 
 //import {
 //    ACTION_LOAD,
@@ -21,21 +26,34 @@ import * as types from 'constants/actionTypes';
 describe('topReducer', () => {
   it('should return the initial state', () => {
     expect(
-      reducer(undefined, { type: '@@INIT' } )
+      topReducer(undefined, { type: '@@INIT' } )
     ).toEqual(
         {"questions":[],"navigation":{"currentQuestion":0}}
     )
   })
 
+  it('should set an answer field', () => {
+      let input =
+      [{"question":{"id":1,"url":"http://localhost:8000/rest/questions/1/","question_text":"Anal Play","question_detail":"Acts in which the anus is involved."},"answers":{"to_me":{"id":1,"url":"http://localhost:8000/rest/answers/1/","user":"http://localhost:8000/rest/users/1/","question":{"id":1,"url":"http://localhost:8000/rest/questions/1/","question_text":"Anal Play","question_detail":"Acts in which the anus is involved."},"context":"to_me","essential":false,"curious":false,"soft_limit":false,"hard_limit":false,"have_done":true,"rating":"like","notes":""}}},
+       {"question":{"id":2,"url":"http://localhost:8000/rest/questions/2/","question_text":"Beating (General)","question_detail":"Acts in which one partner is beaten."}},
+       {"question":{"id":3,"url":"http://localhost:8000/rest/questions/3/","question_text":"Beating - Canes","question_detail":"Acts in which one partner is beaten with a cane."}},
+       {"question":{"id":4,"url":"http://localhost:8000/rest/questions/4/","question_text":"Beating - Crops","question_detail":"Acts in which one partner is beaten with a crop."}}
+      ]
 
+      let action = setField(1, 'to_me', 'essential', true)
+      let output = questionReducer(input,action)
+      expect(output).toEqual(
 
-  it('should return the initial state', () => {
-    expect(
-      reducer(undefined, { type: '@@INIT' } )
-    ).toEqual(
-        {"questions":[],"navigation":{"currentQuestion":0}}
-    )
+          [{"question":{"id":1,"url":"http://localhost:8000/rest/questions/1/","question_text":"Anal Play","question_detail":"Acts in which the anus is involved."},"answers":{"to_me":{"id":1,"url":"http://localhost:8000/rest/answers/1/","user":"http://localhost:8000/rest/users/1/","question":{"id":1,"url":"http://localhost:8000/rest/questions/1/","question_text":"Anal Play","question_detail":"Acts in which the anus is involved."},"context":"to_me","essential":true,"curious":false,"soft_limit":false,"hard_limit":false,"have_done":true,"rating":"like","notes":""}}},
+           {"question":{"id":2,"url":"http://localhost:8000/rest/questions/2/","question_text":"Beating (General)","question_detail":"Acts in which one partner is beaten."}},
+           {"question":{"id":3,"url":"http://localhost:8000/rest/questions/3/","question_text":"Beating - Canes","question_detail":"Acts in which one partner is beaten with a cane."}},
+           {"question":{"id":4,"url":"http://localhost:8000/rest/questions/4/","question_text":"Beating - Crops","question_detail":"Acts in which one partner is beaten with a crop."}}
+          ]
+      )
+
   })
+
+
 
 });
 
@@ -54,31 +72,4 @@ describe('topReducer', () => {
 //}
 //window.globs['questionsUrl'] = "questionsUrl"
 //
-test('contentRatingFilterReducer', () => {
-//
-//  let input =
-//  {
-//      "essential": true,
-//      "curious": true,
-//      "soft_limit": true,
-//      "hard_limit": true,
-//      "have_done": true
-//    }
-//  let action =
-//  {
-//      type: ACTION_TOGGLE_BOOLEAN_FILTER,
-//      id: 'have_done'
-//
-//  }
-//  let output = contextBooleanFilterReducer(input,action)
-//  expect(ouput).toEqual(
-//        {
-//          "essential": true,
-//          "curious": true,
-//          "soft_limit": true,
-//          "hard_limit": true,
-//          "have_done": false
-//        }
-//      )
-});
 
