@@ -6,7 +6,11 @@
 venv
 .sass-cache/
 node_modules
-bdsm_checklist/assets/bundles/
+survey/assets/bundles/
+survey/webpack-stats.json
+survey/checklist/static/checklist/style.css
+survey/static/css/style.css
+survey/survey/local_switches.py
 public
 Python34
 pythonsrc/
