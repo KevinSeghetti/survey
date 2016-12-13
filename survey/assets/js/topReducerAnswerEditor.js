@@ -7,12 +7,15 @@ import { combineReducers } from 'redux'
 
 var {choices, choices_context} = require('./applicationData')
 import {
-    ACTION_LOAD,
-    ACTION_LOAD_SINGLE_ANSWER,
     ACTION_MOVE_CURSOR,
-    ACTION_SET_ANSWER_FIELD,
     ACTION_NEXT_UNANSWERED_QUESTION,
     } from './actionTypesAnswerEditor'
+import {
+    ACTION_LOAD,
+    ACTION_LOAD_SINGLE_ANSWER,
+    ACTION_SET_ANSWER_FIELD,
+    } from './constants/actionTypes'
+
 import {
     loadAction,
     loadSingleAnswerAction,
@@ -147,18 +150,18 @@ export function navigationReducer(state = navigationInitialState, action, questi
 }
 
 export function questionReducer(state = [], action) {
-    log.trace("!questionReducer: state = ",state,", action = ",action)
+    log.trace("questionReducer: state = ",state,", action = ",action)
     chai.expect(state).to.exist
     chai.expect(state).to.be.an.array
     chai.expect(action).to.exist
     chai.expect(action.type).to.exist
 
     switch (action.type) {
-    case ACTION_LOAD:
+        case ACTION_LOAD:
             return(action.data.results)
 
-        // kts not tested
-    case ACTION_LOAD_SINGLE_ANSWER:
+            // kts not tested
+        case ACTION_LOAD_SINGLE_ANSWER:
         {
             let {context } = action
             chai.expect(context).to.exist
@@ -179,7 +182,7 @@ export function questionReducer(state = [], action) {
             )
         }
 
-   case ACTION_SET_ANSWER_FIELD:
+        case ACTION_SET_ANSWER_FIELD:
         {
             let {questionId,context,field,value } = action
             chai.expect(questionId).to.exist
@@ -190,6 +193,7 @@ export function questionReducer(state = [], action) {
             // look up index of question
             var questionIndex = state.findIndex( x => x.question.id == questionId )
 
+            chai.expect(questionIndex).to.be.at.least(0)
             if(questionIndex >= 0 ) {
                 let question = state[questionIndex]
                 let existingContext = {
@@ -214,14 +218,14 @@ export function questionReducer(state = [], action) {
             }
             return state
         }
-    default:
-      return state
+        default:
+          return state
     }
 }
 
 //-------------------------------------------------------------------------------
 
-const topReducer = (state = {}, action, questions) => ({
+export const topReducer = (state = {}, action, questions) => ({
     questions: questionReducer(state.questions,action),
     navigation: navigationReducer(state.navigation,action,questions)
 })
