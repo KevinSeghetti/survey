@@ -5,7 +5,7 @@ var chai = require('chai')
 var log = require('./loggingConfig').CreateLogger("reducers")
 import { combineReducers } from 'redux'
 
-var {choices, choices_context} = require('./applicationData')
+var {choices_context} = require('./applicationData')
 import {
     ACTION_MOVE_CURSOR,
     ACTION_NEXT_UNANSWERED_QUESTION,
@@ -23,131 +23,10 @@ import {
     oggleRatingFilterAction
     } from './actionTypesAnswerEditor'
 import { mapObject, defaultDict } from './utilities'
-import { filterReducer } from './filterReducers'
+import { navigationReducer } from './navigationReducers'
+
 
 //===============================================================================
-
-const navigationInitialState = {
-   currentQuestion: 0
-}
-
-//-------------------------------------------------------------------------------
-
-function saveContextAnswer(answers) {
-  var url = "/rest/answers/"       // for cases where we don't have an answer record yet
-  var requestType = 'POST'
-  if('url' in  answers)
-  {
-    url = answers.url
-    requestType = 'PUT'
-  }
-  var postData = {}
-  postData = answers
-
-    //kts smell
-  // csrf setup
-  log.info("x crsr",window.globs['csrfToken'])
-  $.ajaxSetup({
-      headers: {
-          'X-CSRFToken': window.globs['csrfToken']
-      }
-  })
-
-  $.ajax({
-    url: url,
-    dataType: 'json',
-    type: requestType,
-    data: postData,
-    success: (data) => {
-      log.info("saveAnswer: success: returned data = ",JSON.stringify(data))
-      // we have updated data from the server side, need to look up where to put it
-
-      // kts todo
-      //store.dispatch(loadSingleAnswerAction(data))
-
-      log.info("== json loaded ==",data)
-      //this.setState({data: data})
-
-    },
-    error: (xhr, status, err) => {
-      //this.setState({data: answers})
-      console.error(url, status, err.toString())
-    }
-  })
-}
-
-function saveAnswers(question)
-{
-    chai.expect(question).to.exist
-    log.trace("saveAnswers:",JSON.stringify(question,null,2))
-    if('answers' in question) {
-        let { answers } = question
-        var contextNodes = choices_context.map((context) => {
-          var contextName = context['name']
-              log.trace("saveAnswers:context:",contextName)
-          // look up answer, if present
-          var contextanswers
-          if(contextName in answers)
-          {
-            let contextAnswers = answers[contextName]
-            saveContextAnswer(contextAnswers)
-          }
-        })
-    }
-}
-
-//-------------------------------------------------------------------------------
-
-export function navigationReducer(state = navigationInitialState, action, questions) {
-    log.trace("navigationReducer: ",JSON.stringify(action,null,2))
-    switch (action.type) {
-        case ACTION_MOVE_CURSOR:
-            {
-                chai.expect(questions).to.exist
-                let newCursor = Math.min(Math.max(parseInt(state.currentQuestion+action.delta), 0), questions.length-1)
-                if(action.delta == Number.POSITIVE_INFINITY) {
-                    newCursor = questions.length-1
-                }
-                if(action.delta == Number.NEGATIVE_INFINITY) {
-                    newCursor = 0
-                }
-
-                if(newCursor != state.currentQuestion) {
-                    saveAnswers(questions[state.currentQuestion])
-                    return Object.assign({}, state, { currentQuestion: newCursor})
-                }
-                return state
-            }
-            return state
-        case ACTION_NEXT_UNANSWERED_QUESTION:
-            {
-                chai.expect(questions).to.exist
-                log.trace("ACTION_NEXT_UNANSWERED_QUESTION: currentQuestion = ",state.currentQuestion)
-                log.trace("ACTION_NEXT_UNANSWERED_QUESTION: questions = ",questions)
-
-                let localQuestionArray = questions.slice(state.currentQuestion+1).concat(questions.slice(0,state.currentQuestion))
-                log.trace("ACTION_NEXT_UNANSWERED_QUESTION: localquestions = ",localQuestionArray)
-                // find next unanswered question
-                let unansweredQuestionIndex = localQuestionArray.findIndex(
-                    (obj) =>
-                        { return !('answers' in obj)  }
-                    )
-
-                let newCursor = unansweredQuestionIndex
-
-                log.trace("newcursor = ",newCursor)
-                if(newCursor != state.currentQuestion) {
-                    saveAnswers(questions[state.currentQuestion])
-                    return Object.assign({}, state, { currentQuestion: newCursor})
-                }
-                return state
-            }
-            return state
-
-        default:
-          return state
-        }
-}
 
 export function questionReducer(state = [], action) {
     log.trace("questionReducer: state = ",state,", action = ",action)
