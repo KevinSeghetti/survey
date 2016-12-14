@@ -1,14 +1,15 @@
 
 
 example enviroment when using locally installed packages:
-setenv PYTHONPATH "/home/kts/kts/localpythonlibraries/lib64/python3.5/site-packages/:/home/kts/kts/localpythonlibraries/lib/python3.5/site-packages/"
+setenv PYTHONPATH "/home/kts/kts/survey/venv/lib64/python3.5/site-packages/:/home/kts/kts/survey/venv/lib/python3.5/site-packages/"
+
 
 when using pipsetup.sh, need to pass in location of local libraries. To match the above, use
 /home/kts/kts/localpythonlibraries/
 note this has to be set *before* running pipsetup, since it installs and then tries to use pyaml
 
 # pipsetup for my local dev environment when using venv
-./pipsetup.py /home/kts/kts/venv/
+./pipsetup.py /home/kts/kts/survey/venv/
 
 -------------------------------------------------------------------------------
 
