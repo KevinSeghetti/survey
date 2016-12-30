@@ -1,5 +1,6 @@
 //var $ = require('jquery');
 
+jest.mock('serverCommunication')
 import {topReducer,questionReducer} from 'topReducerAnswerEditor'
 import {navigationReducer} from 'navigationReducers'
 

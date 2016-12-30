@@ -1,4 +1,6 @@
 
+jest.mock('serverCommunication')
+
 import reducer from 'topReducerAnswerEditor'
 import {
     contextBooleanFilterReducer,
