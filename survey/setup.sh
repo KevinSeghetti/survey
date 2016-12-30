@@ -6,8 +6,9 @@
 
 pip install --upgrade pip
 
-../pipsetup.py
-
+pushd ..
+./pipsetup.py /home/kts/kts/survey/venv/
+popd
 #pip install django==1.8.4
 #pip install django-mysql==0.2.2
 #pip install djangorestframework
