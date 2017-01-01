@@ -20,6 +20,16 @@ const navigationInitialState = {
    currentQuestion: 0
 }
 
+function setCurrentQuestion(state,questions,newCursor)
+{
+    log.trace("newcursor = ",newCursor)
+    if(newCursor != state.currentQuestion) {
+        saveAnswers(questions[state.currentQuestion])
+        return Object.assign({}, state, { currentQuestion: newCursor})
+    }
+    return state
+
+}
 //-------------------------------------------------------------------------------
 // actrion types answer editor navigation reducer
 
@@ -36,12 +46,8 @@ export function navigationReducer(state = navigationInitialState, action, questi
                 if(action.delta == Number.NEGATIVE_INFINITY) {
                     newCursor = 0
                 }
+                return setCurrentQuestion(state,questions,newCursor)
 
-                if(newCursor != state.currentQuestion) {
-                    saveAnswers(questions[state.currentQuestion])
-                    return Object.assign({}, state, { currentQuestion: newCursor})
-                }
-                return state
             }
             return state
         case ACTION_NEXT_UNANSWERED_QUESTION:
@@ -58,14 +64,18 @@ export function navigationReducer(state = navigationInitialState, action, questi
                         { return !('answers' in obj)  }
                     )
 
-                let newCursor = unansweredQuestionIndex
+                // kts smell: I'm sure there is a better way to do this, wrote when I didn't have network access
+                // we now have the index in tne newly constructed array, but that doesn't directly map to the old array
+                // so we need to find that
+                // proper solution to this is probably to zip the new array with the old indexes
 
-                log.trace("newcursor = ",newCursor)
-                if(newCursor != state.currentQuestion) {
-                    saveAnswers(questions[state.currentQuestion])
-                    return Object.assign({}, state, { currentQuestion: newCursor})
-                }
-                return state
+                let newCursorIndex = questions.findIndex(
+                    (obj) =>
+                        {return obj === localQuestionArray[unansweredQuestionIndex]}
+                    )
+
+
+                return setCurrentQuestion(state,questions,newCursorIndex)
             }
             return state
 
