@@ -13,7 +13,8 @@ import {
 
 
  import {
-    moveCursorAction
+    moveCursorAction,
+    nextUnansweredQuestionAction,
 } from 'actionTypesAnswerEditor'
 
 
@@ -89,6 +90,24 @@ describe('navigationReducer', () => {
       let output = navigationReducer(input,action,questions)
       expect(output).toEqual(
           {"currentQuestion":1}
+      )
+
+  })
+
+  it('should move the cursor to an unswered question', () => {
+      let input =
+          {"currentQuestion":0}
+      let questions =
+      [{"question":{"id":1,"url":"http://localhost:8000/rest/questions/1/","question_text":"Anal Play","question_detail":"Acts in which the anus is involved."},"answers":{"to_me":{"id":1,"url":"http://localhost:8000/rest/answers/1/","user":"http://localhost:8000/rest/users/1/","question":{"id":1,"url":"http://localhost:8000/rest/questions/1/","question_text":"Anal Play","question_detail":"Acts in which the anus is involved."},"context":"to_me","essential":false,"curious":false,"soft_limit":false,"hard_limit":false,"have_done":true,"rating":"like","notes":""}}},
+       {"question":{"id":2,"url":"http://localhost:8000/rest/questions/2/","question_text":"Beating (General)","question_detail":"Acts in which one partner is beaten."},"answers":{"to_me":{"id":1,"url":"http://localhost:8000/rest/answers/1/","user":"http://localhost:8000/rest/users/1/","question":{"id":1,"url":"http://localhost:8000/rest/questions/1/","question_text":"Anal Play","question_detail":"Acts in which the anus is involved."},"context":"to_me","essential":false,"curious":false,"soft_limit":false,"hard_limit":false,"have_done":true,"rating":"like","notes":""}}},
+       {"question":{"id":3,"url":"http://localhost:8000/rest/questions/3/","question_text":"Beating - Canes","question_detail":"Acts in which one partner is beaten with a cane."}},
+       {"question":{"id":4,"url":"http://localhost:8000/rest/questions/4/","question_text":"Beating - Crops","question_detail":"Acts in which one partner is beaten with a crop."}}
+      ]
+
+      let action = nextUnansweredQuestionAction()
+      let output = navigationReducer(input,action,questions)
+      expect(output).toEqual(
+          {"currentQuestion":2}
       )
 
   })
