@@ -1,5 +1,16 @@
 
 
+
+AWS:
+
+connect:
+ssh -i .ssh/AWSDemo.pem ubuntu@quiz.worldfoundry.org
+
+
+
+-------------------------------------------------------------------------------
+
+
 example enviroment when using locally installed packages:
 setenv PYTHONPATH "/home/kts/kts/survey/venv/lib64/python3.5/site-packages/:/home/kts/kts/survey/venv/lib/python3.5/site-packages/"
 
